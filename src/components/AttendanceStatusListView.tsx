@@ -18,7 +18,6 @@ const Root = styled('div')(({ }) => ({
     [`&.${classes.root}`]: {
         display: 'flex',
         height: 56,
-        // width: 296,
         borderBottom: '1px solid #EDE1CF',
         padding: 8
     },

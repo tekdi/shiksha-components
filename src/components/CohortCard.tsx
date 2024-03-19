@@ -18,7 +18,6 @@ const Root = styled('div')(({ }) => ({
   [`&.${classes.root}`]: {
     display: 'flex',
     height: 56,
-    // width: 296,
     border: '1px solid #EDE1CF',
     borderRadius: 8,
     cursor: 'pointer'
@@ -51,27 +50,27 @@ const Root = styled('div')(({ }) => ({
 
 
 interface CohortCardProps {
-  isNewCohort: boolean;
+  showBackground: boolean;
   isRemote: boolean;
   cohortName: string;
 }
 
-const CohortCard: React.FC<CohortCardProps> = ({ isNewCohort, isRemote, cohortName }) => {
+const CohortCard: React.FC<CohortCardProps> = ({ showBackground, isRemote, cohortName }) => {
 
   return (
     <Root className={classes.root}>
       <CardMedia
         className={classes.media}
-        sx={{backgroundColor: isNewCohort ? "#FFFFFF" : "#FFDEA1"}}
+        sx={{backgroundColor: !showBackground ? "#FFFFFF" : "#FFDEA1"}}
         title="Class Image">
         {isRemote ? <SmartDisplayIcon /> : <ApartmentIcon />}
       </CardMedia>
       <CardContent className={classes.content}>
         <Typography>
-        {isNewCohort ? isRemote ? "New Remote Class" : "New Physical Class" : `${cohortName}`}
+        {!showBackground ? isRemote ? "New Remote Class" : "New Physical Class" : `${cohortName}`}
         </Typography>
       </CardContent>
-      <ArrowForwardIosIcon className={classes.arrow} sx={{display: isNewCohort ? 'none' : 'block'}} />
+      <ArrowForwardIosIcon className={classes.arrow} sx={{display: showBackground ? 'none' : 'block'}} />
     </Root>
   );
 };

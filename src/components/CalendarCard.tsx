@@ -6,11 +6,9 @@ type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-interface CalenderProps{};
-
-const CalenderCard: React.FC<CalenderProps> = ({  }) =>  {
+const CalendarCard = () =>  {
   const [value, onChange] = useState<Value>(new Date());
-  // console.log({value})
+
   return (
     <div>
       <Calendar onChange={onChange} value={value} />
@@ -18,4 +16,4 @@ const CalenderCard: React.FC<CalenderProps> = ({  }) =>  {
   );
 }
 
-export default CalenderCard;
+export default CalendarCard;
