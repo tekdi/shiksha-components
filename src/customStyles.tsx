@@ -1,6 +1,6 @@
 import { createTheme } from '@mui/material/styles';
 
-const theme = createTheme({
+const customTheme = createTheme({
     palette: {
         primary: {
             main: '#1976d2', // Example primary color
@@ -49,7 +49,8 @@ const theme = createTheme({
         MuiButton: {
             styleOverrides: {
                 root: {
-                    borderRadius: '8px',
+                    borderRadius: '5px',
+                    color: "red"
                 },
                 containedPrimary: {
                     backgroundColor: '#1976d2',
@@ -75,4 +76,4 @@ const theme = createTheme({
     },
 });
 
-export default theme;
+export default customTheme;
