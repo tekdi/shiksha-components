@@ -1,7 +1,9 @@
 {
-
+    "COMMON": {
+        "LANGUAGE": "भाषा"
+    },
     "LOGIN_PAGE": {
         "USERNAME": "उपयोगकर्ता नाम",
         "PASSWORD": "पासवर्ड"
-        }
+    }
 }
