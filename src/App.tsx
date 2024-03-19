@@ -5,16 +5,19 @@ import StudentList from './components/StudentList';
 import AttendanceStatusListView from './components/AttendanceStatusListView';
 import CalenderCard from './components/CalenderCard';
 import './App.css';
+import Header from './components/Header';
+import ModalUsage from './pages/ModalUsage';
 
 const ENUM_ITEMS = {
   CLASSES: "Classes",
   STUDENT_SELECTION: "Student Selection",
   STUDENT_ATTENDANCE: "Student Attendance",
   CALENDER: "Calender",
+  OTHERS: "Others"
 }
 
 function App() {
-  const [view, setView] = useState(ENUM_ITEMS.CLASSES);
+  const [view, setView] = useState(ENUM_ITEMS.OTHERS);
 
   const getView = () => {
     switch (view) {
@@ -48,12 +51,24 @@ function App() {
             <CalenderCard />
           </>
         )
+        case ENUM_ITEMS.OTHERS:
+        return (
+          <>
+          <Header
+            label1="Attendance"
+            value1="78%"
+            label2={true}
+            value2={"02/01/2022"}
+          />
+          <ModalUsage />
+        </>
+        )
       default:
         <>
-          <CohortCard isNewCohort={false} isRemote={true} cohortName='Class A' />
-          <CohortCard isNewCohort={true} isRemote={false} cohortName='Class B' />
-          <CohortCard isNewCohort={false} isRemote={false} cohortName='Class C' />
-        </>
+            <CohortCard isNewCohort={false} isRemote={true} cohortName='Class A' />
+            <CohortCard isNewCohort={true} isRemote={false} cohortName='Class B' />
+            <CohortCard isNewCohort={false} isRemote={false} cohortName='Class C' />
+          </>
     }
   }
 
@@ -77,6 +92,9 @@ function App() {
         <Button variant={view === ENUM_ITEMS.CALENDER ? "contained" : "outlined"} onClick={() => setView(ENUM_ITEMS.CALENDER)}>
           Calender
         </Button>
+        <Button variant={view === ENUM_ITEMS.OTHERS ? "contained" : "outlined"} onClick={() => setView(ENUM_ITEMS.OTHERS)}>
+          Others
+        </Button>
       </Stack>
       {getView()}
 
@@ -84,4 +102,4 @@ function App() {
   )
 }
 
-export default App
+export default App;

@@ -1,8 +1,9 @@
 {
-
-    "LOGIN_PAGE": {
-        "USERNAME": "Username",
-        "PASSWORD": "Password"
-       
-      }
+  "COMMON": {
+    "LANGUAGE": "Language"
+  },
+  "LOGIN_PAGE": {
+    "USERNAME": "Username",
+    "PASSWORD": "Password"
+  }
 }
