@@ -19,20 +19,20 @@ const StudentStatsCard: React.FC<StudentStatsCard> = ({
       width="9rem"
       height="5rem"
       gap="1rem"
-      border="1px solid #D0C5B4"
+      border="1px solid #D0C5B4" //Add color from colorScheme
       borderRadius="1rem"
       display="flex"
       justifyContent="flex-start"
       alignItems="center"
       margin="0px"
-      textAlign='left'
+      textAlign="left"
     >
       <Stack padding="1rem">
         <Typography
           fontSize="0.6875rem"
           fontWeight="bold"
           lineHeight="1rem"
-          color="#1F1B13"
+          color="#1F1B13" //Add color from colorScheme
         >
           {label1}
         </Typography>
@@ -40,7 +40,7 @@ const StudentStatsCard: React.FC<StudentStatsCard> = ({
           fontSize="1.375rem"
           fontWeight="bold"
           lineHeight="1.75rem"
-          color="#1F1B13"
+          color="#1F1B13" //Add color from colorScheme
         >
           {value1}
         </Typography>
@@ -49,7 +49,7 @@ const StudentStatsCard: React.FC<StudentStatsCard> = ({
             fontSize="0.675rem"
             fontWeight="bold"
             lineHeight="1rem"
-            color="#7C766F"
+            color="#7C766F" //Add color from colorScheme
           >
             Held on: {value2}
           </Typography>
