@@ -1,16 +1,16 @@
 import React from "react";
 
 import { Box, Link, Stack, Typography } from "@mui/material";
-interface StudentsStatsListViewProps {
-  studentName: string;
+interface StudentsStatsListProps {
+  name: string;
   label1: string;
   value1: string;
   label2: string;
   value2: string;
 }
 
-const StudentsStatsListView: React.FC<StudentsStatsListViewProps> = ({
-  studentName,
+const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
+  name,
   label1,
   value1,
   label2,
@@ -38,7 +38,7 @@ const StudentsStatsListView: React.FC<StudentsStatsListViewProps> = ({
         lineHeight="1.25rem"
         padding="1rem"
       >
-        {studentName}
+        {name}
       </Link>
       <Stack padding="1rem">
         <Typography
@@ -80,4 +80,4 @@ const StudentsStatsListView: React.FC<StudentsStatsListViewProps> = ({
   );
 };
 
-export default StudentsStatsListView;
+export default StudentsStatsList;

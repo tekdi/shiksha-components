@@ -7,14 +7,14 @@ import { Box, Stack } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useTranslation } from "react-i18next";
 
-interface PageHeaderComponent {
+interface Header {
   label1: string;
   value1: string;
   label2: boolean;
   value2: string;
 }
 
-const PageHeaderComponent: React.FC<PageHeaderComponent> = () => {
+const Header: React.FC<Header> = () => {
   const [age, setAge] = React.useState("");
   const { t } = useTranslation();
 
@@ -54,7 +54,7 @@ const PageHeaderComponent: React.FC<PageHeaderComponent> = () => {
         </Select>
       </FormControl>
       <Box sx={{ margin: "0 auto" }}>
-        <img src="../../public/prathamlogo.svg" alt="PrathamLogo" />
+        <img src="/appLogo.svg" alt="logo" />
       </Box>
       <Box>
         <AccountCircleIcon fontSize="large" color="action" />
@@ -62,4 +62,4 @@ const PageHeaderComponent: React.FC<PageHeaderComponent> = () => {
     </Stack>
   );
 };
-export default PageHeaderComponent;
+export default Header;
