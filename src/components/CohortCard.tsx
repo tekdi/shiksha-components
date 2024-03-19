@@ -5,7 +5,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import SmartDisplayIcon from '@mui/icons-material/SmartDisplay';
 
-const PREFIX = "ClassCard";
+const PREFIX = "CohortCard";
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -50,30 +50,30 @@ const Root = styled('div')(({ }) => ({
 }))
 
 
-interface ClassCardProps {
-  isNewClass: boolean;
+interface CohortCardProps {
+  isNewCohort: boolean;
   isRemote: boolean;
-  className: string;
+  cohortName: string;
 }
 
-const ClassCard: React.FC<ClassCardProps> = ({ isNewClass, isRemote, className }) => {
+const CohortCard: React.FC<CohortCardProps> = ({ isNewCohort, isRemote, cohortName }) => {
 
   return (
     <Root className={classes.root}>
       <CardMedia
         className={classes.media}
-        sx={{backgroundColor: isNewClass ? "#FFFFFF" : "#FFDEA1"}}
+        sx={{backgroundColor: isNewCohort ? "#FFFFFF" : "#FFDEA1"}}
         title="Class Image">
         {isRemote ? <SmartDisplayIcon /> : <ApartmentIcon />}
       </CardMedia>
       <CardContent className={classes.content}>
         <Typography>
-        {isNewClass ? isRemote ? "New Remote Class" : "New Physical Class" : `${className}`}
+        {isNewCohort ? isRemote ? "New Remote Class" : "New Physical Class" : `${cohortName}`}
         </Typography>
       </CardContent>
-      <ArrowForwardIosIcon className={classes.arrow} sx={{display: isNewClass ? 'none' : 'block'}} />
+      <ArrowForwardIosIcon className={classes.arrow} sx={{display: isNewCohort ? 'none' : 'block'}} />
     </Root>
   );
 };
 
-export default ClassCard;
+export default CohortCard;

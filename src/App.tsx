@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Stack, Button, Divider } from '@mui/material';
-import ClassCard from './components/ClassCard';
+import ClassCard from './components/CohortCard';
 import StudentSelectListView from './components/StudentSelectListView';
 import AttendanceStatsListView from './components/AttendanceStatusListView';
 import CalenderCard from './components/CalenderCard';
@@ -21,9 +21,9 @@ function App() {
       case ENUM_ITEMS.CLASSES:
         return (
           <>
-            <ClassCard isNewClass={false} isRemote={true} className='Class A' />
-            <ClassCard isNewClass={true} isRemote={false} className='Class B' />
-            <ClassCard isNewClass={false} isRemote={false} className='Class C' />
+            <ClassCard isNewCohort={false} isRemote={true} cohortName='Class A' />
+            <ClassCard isNewCohort={true} isRemote={false} cohortName='Class B' />
+            <ClassCard isNewCohort={false} isRemote={false} cohortName='Class C' />
           </>
         );
       case ENUM_ITEMS.STUDENT_SELECTION:
@@ -50,9 +50,9 @@ function App() {
         )
       default:
         <>
-          <ClassCard isNewClass={false} isRemote={true} className='Class A' />
-          <ClassCard isNewClass={true} isRemote={false} className='Class B' />
-          <ClassCard isNewClass={false} isRemote={false} className='Class C' />
+          <ClassCard isNewCohort={false} isRemote={true} cohortName='Class A' />
+          <ClassCard isNewCohort={true} isRemote={false} cohortName='Class B' />
+          <ClassCard isNewCohort={false} isRemote={false} cohortName='Class C' />
         </>
     }
   }
