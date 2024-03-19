@@ -35,8 +35,8 @@ const Root = styled('div')(({ }) => ({
   [`& .${classes.content}`]: {
     display: 'flex',
     alignItems: 'center',
-    size: 16,
-    weight: 400,
+    fontSize: 16,
+    fontWeight: 400,
     color: "#1F1B13",
     flexGrow: 1,
   },

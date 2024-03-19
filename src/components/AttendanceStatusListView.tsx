@@ -6,7 +6,7 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CancelIcon from '@mui/icons-material/Cancel'; //absent
 import CloseIcon from '@mui/icons-material/Close';
 
-const PREFIX = "AttendanceStatsListView";
+const PREFIX = "AttendanceStatusListView";
 
 const classes = {
     root: `${PREFIX}-root`,
@@ -40,12 +40,12 @@ const Root = styled('div')(({ }) => ({
     },
 }))
 
-interface AttendanceStatsListViewProps {
+interface AttendanceStatusListViewProps {
     isPresent: boolean;
     studentName: string;
 }
 
-const AttendanceStatsListView: React.FC<AttendanceStatsListViewProps> = ({ isPresent, studentName }) => {
+const AttendanceStatusListView: React.FC<AttendanceStatusListViewProps> = ({ isPresent, studentName }) => {
     const [checked, setChecked] = React.useState(isPresent);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,4 +79,4 @@ const AttendanceStatsListView: React.FC<AttendanceStatsListViewProps> = ({ isPre
     );
 };
 
-export default AttendanceStatsListView;
+export default AttendanceStatusListView;

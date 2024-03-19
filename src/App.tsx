@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Stack, Button, Divider } from '@mui/material';
-import ClassCard from './components/CohortCard';
-import StudentSelectListView from './components/StudentSelectListView';
-import AttendanceStatsListView from './components/AttendanceStatusListView';
+import CohortCard from './components/CohortCard';
+import StudentList from './components/StudentList';
+import AttendanceStatusListView from './components/AttendanceStatusListView';
 import CalenderCard from './components/CalenderCard';
 import './App.css';
 
@@ -21,25 +21,25 @@ function App() {
       case ENUM_ITEMS.CLASSES:
         return (
           <>
-            <ClassCard isNewCohort={false} isRemote={true} cohortName='Class A' />
-            <ClassCard isNewCohort={true} isRemote={false} cohortName='Class B' />
-            <ClassCard isNewCohort={false} isRemote={false} cohortName='Class C' />
+            <CohortCard isNewCohort={false} isRemote={true} cohortName='Class A' />
+            <CohortCard isNewCohort={true} isRemote={false} cohortName='Class B' />
+            <CohortCard isNewCohort={false} isRemote={false} cohortName='Class C' />
           </>
         );
       case ENUM_ITEMS.STUDENT_SELECTION:
         return (
           <>
-            <StudentSelectListView isSelected={true} studentName="Student A" />
-            <StudentSelectListView isSelected={false} studentName="Student B" />
-            <StudentSelectListView isSelected={false} studentName="Student C" />
+            <StudentList isSelected={true} studentName="Student A" />
+            <StudentList isSelected={false} studentName="Student B" />
+            <StudentList isSelected={false} studentName="Student C" />
           </>
         );
       case ENUM_ITEMS.STUDENT_ATTENDANCE:
         return (
           <>
-            <AttendanceStatsListView isPresent={true} studentName="Student X" />
-            <AttendanceStatsListView isPresent={false} studentName="Student Y" />
-            <AttendanceStatsListView isPresent={false} studentName="Student Z" />
+            <AttendanceStatusListView isPresent={true} studentName="Student X" />
+            <AttendanceStatusListView isPresent={false} studentName="Student Y" />
+            <AttendanceStatusListView isPresent={false} studentName="Student Z" />
           </>
         )
       case ENUM_ITEMS.CALENDER:
@@ -50,9 +50,9 @@ function App() {
         )
       default:
         <>
-          <ClassCard isNewCohort={false} isRemote={true} cohortName='Class A' />
-          <ClassCard isNewCohort={true} isRemote={false} cohortName='Class B' />
-          <ClassCard isNewCohort={false} isRemote={false} cohortName='Class C' />
+          <CohortCard isNewCohort={false} isRemote={true} cohortName='Class A' />
+          <CohortCard isNewCohort={true} isRemote={false} cohortName='Class B' />
+          <CohortCard isNewCohort={false} isRemote={false} cohortName='Class C' />
         </>
     }
   }
