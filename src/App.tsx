@@ -1,14 +1,12 @@
-import React from 'react'
-import ModalUsage from './pages/ModalUsage'
+import React from "react";
+import AllRoutes from "./routes/routes";
 
 function App() {
-
-
   return (
     <>
-      <ModalUsage />
+      <AllRoutes />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
