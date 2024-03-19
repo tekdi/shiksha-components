@@ -4,6 +4,7 @@
   },
   "LOGIN_PAGE": {
     "USERNAME": "Username",
-    "PASSWORD": "Password"
+    "PASSWORD": "Password",
+    "LOGIN":"Login"
   }
 }
