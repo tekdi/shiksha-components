@@ -1,12 +1,14 @@
 import React from 'react';
 import { Box, Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from '@mui/material';
-import prathamlogo from '../assets/Pratham Logo white-2.png';
+import appLogo from '../assets/appLogo.svg';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useState } from 'react';
 import '../App.css';
 import { login } from '../services/LoginService';
+import { useTranslation } from 'react-i18next';
 
 const LoginPage = () => {
+    const { t } = useTranslation();
     const [showPassword, setShowPassword] = useState(false);
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
@@ -26,13 +28,7 @@ const LoginPage = () => {
 
     const handlePasswordChange = (event) => {
         const { value } = event.target;
-        const trimmedValue = value.trim();
-        setPassword(trimmedValue);
-        if (trimmedValue.includes(' ')) {
-            setPasswordError(true);
-        } else {
-            setPasswordError(false);
-        }
+        setPassword(value);
     };
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -65,7 +61,7 @@ const LoginPage = () => {
     return (
         <Box display="flex" flexDirection="column" height="100vh" width="100vw" >
             <Box display={'flex'} flexGrow={1} bgcolor="black" overflow="auto" height="30vh" alignItems={'center'} justifyContent={'center'} zIndex={99} >
-                <img src={prathamlogo} />
+                <img src={appLogo} />
             </Box>
             <Box flexGrow={1}
                 display={'flex'}
@@ -80,7 +76,7 @@ const LoginPage = () => {
                 <Box position={"relative"}>
                     <Box marginY={'1rem'} >
                         <FormControl variant="outlined" fullWidth={true} className="CssTextField" >
-                            <InputLabel htmlFor="outlined-adornment-username">Username</InputLabel>
+                            <InputLabel htmlFor="outlined-adornment-username">{t('LOGIN_PAGE.USERNAME')}</InputLabel>
                             <OutlinedInput
                                 id="outlined-adornment-username"
                                 type={'text'}
@@ -94,7 +90,7 @@ const LoginPage = () => {
                     </Box>
                     <Box marginY={'1rem'}>
                         <FormControl variant="outlined" className="CssTextField">
-                            <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                            <InputLabel htmlFor="outlined-adornment-password">{t('LOGIN_PAGE.PASSWORD')}</InputLabel>
                             <OutlinedInput
                                 id="outlined-adornment-password"
                                 type={showPassword ? 'text' : 'password'}
@@ -137,7 +133,7 @@ const LoginPage = () => {
                                 alignContent: 'center',
                                 padding: "8px",
                             }} >
-                            Login
+                            {t('LOGIN_PAGE.LOGIN')}
                         </Button>
                     </Box>
                 </Box>
