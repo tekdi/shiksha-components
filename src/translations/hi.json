@@ -1,10 +1,11 @@
 {
-    "COMMON": {
-        "LANGUAGE": "भाषा"
-    },
-    "LOGIN_PAGE": {
-        "USERNAME": "उपयोगकर्ता नाम",
-        "PASSWORD": "पासवर्ड",
-        "LOGIN": "लॉग इन करें"
-    }
+  "COMMON": {
+    "LANGUAGE": "भाषा",
+    "LOADING": "लोडिंग"
+  },
+  "LOGIN_PAGE": {
+    "USERNAME": "उपयोगकर्ता नाम",
+    "PASSWORD": "पासवर्ड",
+    "LOGIN": "लॉग इन करें"
+  }
 }
