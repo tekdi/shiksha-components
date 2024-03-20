@@ -1,7 +1,6 @@
 import AllRoutes from "./routes/routes";
 import "./App.css";
 import { ThemeProvider } from "@mui/material/styles";
-import "./App.css";
 
 import customTheme from "./customStyles.tsx";
 
