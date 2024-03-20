@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { TextField } from "@mui/material";
 
-const Test = lazy(() => import("../components/Test"));
+const LoginPage = lazy(() => import("../pages/LoginPage"));
 
 function AllRoutes(): JSX.Element {
   const { t } = useTranslation();
@@ -12,7 +12,7 @@ function AllRoutes(): JSX.Element {
     <Router>
       <Suspense fallback={<TextField>{t("COMMON.LOADING")}</TextField>}>
         <Routes>
-          <Route path="/test" element={<Test />} />
+          <Route path="/" element={<LoginPage />} />
         </Routes>
       </Suspense>
     </Router>
