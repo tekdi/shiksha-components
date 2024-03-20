@@ -24,6 +24,7 @@ const StudentStatsCard: React.FC<StudentStatsCard> = ({
       display="flex"
       justifyContent="flex-start"
       alignItems="center"
+      bgcolor="white" 
       margin="0px"
       textAlign="left"
     >
