@@ -1,3 +1,29 @@
+#root {
+  max-width: 550px;
+  margin: 0 auto;
+  height: 100vh;
+  /* min-height: 100vh; */
+  /* box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1); */
+}
+
+@media only screen and (max-width: 767px) {
+  #root {
+    padding: 0rem;
+    height: 100vh;
+  }
+}
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
 
 .CssTextField {
   & label.Mui-focused {
