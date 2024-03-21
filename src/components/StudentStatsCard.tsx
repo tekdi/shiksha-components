@@ -24,23 +24,22 @@ const StudentStatsCard: React.FC<StudentStatsCard> = ({
       display="flex"
       justifyContent="flex-start"
       alignItems="center"
-      bgcolor="white" 
+      bgcolor="white"
       margin="0px"
       textAlign="left"
     >
-      <Stack padding="1rem">
+      <Stack sx={{ padding: "1rem" }}>
         <Typography
-          fontSize="0.6875rem"
-          fontWeight="bold"
-          lineHeight="1rem"
-          color="#1F1B13" //Add color from colorScheme
+          fontSize="11px"
+          fontWeight={600}
+          color="#7C766F" //Add color from colorScheme
         >
           {label1}
         </Typography>
         <Typography
           fontSize="1.375rem"
-          fontWeight="bold"
-          lineHeight="1.75rem"
+          fontWeight={500}
+          lineHeight="16px"
           color="#1F1B13" //Add color from colorScheme
         >
           {value1}
