@@ -19,7 +19,9 @@ const Root = styled('div')(({ }) => ({
         display: 'flex',
         height: 56,
         borderBottom: '1px solid #EDE1CF',
-        padding: 8
+        padding: 8,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     [`& .${classes.content}`]: {
         display: 'flex',
@@ -74,6 +76,7 @@ const AttendanceStatusListView: React.FC<AttendanceStatusListViewProps> = ({ isP
                 {isPresent ? <CloseIcon /> : <CancelIcon />}
                 <Typography className={classes.label}>Absent</Typography>
             </Box>
+           
         </Root>
     );
 };

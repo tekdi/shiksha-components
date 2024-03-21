@@ -20,7 +20,8 @@ const Root = styled('div')(({ }) => ({
     height: 56,
     border: '1px solid #EDE1CF',
     borderRadius: 8,
-    cursor: 'pointer'
+    cursor: 'pointer',
+    backgroundColor: "#FFFFFF",
   },
   [`& .${classes.media}`]: {
     display: 'flex',
@@ -42,8 +43,8 @@ const Root = styled('div')(({ }) => ({
   [`& .${classes.arrow}`]: {
     alignSelf: 'center',
     marginLeft: 'auto',
-    height: 12,
-    width: 8,
+    height: '1rem',
+    width: '1rem',
     marginRight: 10,
   },
 }))
@@ -70,7 +71,7 @@ const CohortCard: React.FC<CohortCardProps> = ({ showBackground, isRemote, cohor
         {!showBackground ? isRemote ? "New Remote Class" : "New Physical Class" : `${cohortName}`}
         </Typography>
       </CardContent>
-      <ArrowForwardIosIcon className={classes.arrow} sx={{display: showBackground ? 'none' : 'block'}} />
+      <ArrowForwardIosIcon className={classes.arrow} sx={{display: !showBackground ? 'none' : 'block'}} />
     </Root>
   );
 };

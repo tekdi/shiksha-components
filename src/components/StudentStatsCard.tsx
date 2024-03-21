@@ -1,4 +1,5 @@
 import React from "react";
+import { useTheme } from '@mui/material/styles';
 
 import { Box, Stack, Typography } from "@mui/material";
 interface StudentStatsCard {
@@ -14,6 +15,8 @@ const StudentStatsCard: React.FC<StudentStatsCard> = ({
   label2,
   value2,
 }) => {
+  const theme = useTheme<any>();
+
   return (
     <Box
       width="9rem"
@@ -49,7 +52,7 @@ const StudentStatsCard: React.FC<StudentStatsCard> = ({
             fontSize="0.675rem"
             fontWeight="bold"
             lineHeight="1rem"
-            color="#7C766F" //Add color from colorScheme
+            sx={{color: theme.palette.warning["400"]}}
           >
             Held on: {value2}
           </Typography>

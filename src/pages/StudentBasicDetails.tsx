@@ -4,10 +4,14 @@ import StudentStatsCard from "../components/StudentStatsCard";
 import Header from "../components/Header";
 import CustomSelect from "../components/CustomSelect";
 import EastIcon from "@mui/icons-material/East";
+import { useTheme } from "@mui/material/styles";
 
 const StudentDetails = () => {
+  const theme = useTheme();
+
   const [studentData, setStudentData] = useState([
     {
+      id: 1,
       dob_title: "Date of Birth",
       dob: "22/12/1998",
       latest_education: "Latest Education",
@@ -15,14 +19,23 @@ const StudentDetails = () => {
     },
   ]);
 
+  const renderStatsCard = (label1, value1) => (
+    <StudentStatsCard
+      label1={label1}
+      value1={value1}
+      label2={false}
+      value2="5"
+    />
+  );
+
   return (
     <>
       <Header label1="hi" label2={false} value1="1" value2="2" />
       <Card
         sx={{
-          bgcolor: "#E7F3F8",
-          borderRadius: "24px",
-          marginTop: "20px",
+          bgcolor: theme.palette.secondary.light,
+          borderRadius: theme.spacing(3),
+          marginTop: theme.spacing(4),
           boxShadow: "none",
         }}
       >
@@ -35,7 +48,11 @@ const StudentDetails = () => {
             }}
           >
             <Typography
-              sx={{ fontSize: "16px", fontWeight: 600, color: "#4D4639" }}
+              sx={{
+                color: theme.palette.warning.main,
+                fontSize: "16px",
+                fontWeight: 500,
+              }}
               variant="h6"
               gutterBottom
             >
@@ -45,7 +62,11 @@ const StudentDetails = () => {
               sx={{ display: "flex", alignItems: "center", marginLeft: "10px" }}
             >
               <Typography
-                sx={{ color: "#0D599E", fontSize: "16px", marginRight: "4px" }}
+                sx={{
+                  color: theme.palette.secondary.main,
+                  fontSize: "16px",
+                  marginRight: "4px",
+                }}
                 variant="h6"
                 gutterBottom
               >
@@ -53,12 +74,19 @@ const StudentDetails = () => {
               </Typography>
               <EastIcon
                 fontSize="inherit"
-                sx={{ color: "#0D599E", marginBottom: "5px" }}
+                sx={{
+                  color: theme.palette.secondary.main,
+                  marginBottom: "5px",
+                }}
               />
             </Box>
           </Box>
           <Typography
-            sx={{ fontSize: "14px", fontWeight: 600, color: "#969088" }}
+            sx={{
+              color: theme.palette.text.secondary,
+              fontSize: "14px",
+              fontWeight: 600,
+            }}
             variant="h6"
             gutterBottom
           >
@@ -72,32 +100,26 @@ const StudentDetails = () => {
               display: "flex",
             }}
           >
-            <StudentStatsCard
-              label1="Attendance"
-              value1="78%"
-              label2={false}
-              value2="5"
-            />
-            <StudentStatsCard
-              label1="Classes Missed"
-              value1="2"
-              label2={false}
-              value2="5"
-            />
+            {renderStatsCard("Attendance", "78%")}
+            {renderStatsCard("Classes Missed", "2")}
           </Box>
         </CardContent>
-      </Card>{" "}
+      </Card>
       <Card
         sx={{
-          bgcolor: "#E7F3F8",
-          borderRadius: "24px",
-          marginTop: "20px",
+          bgcolor: theme.palette.secondary.light,
+          borderRadius: theme.spacing(3),
+          marginTop: theme.spacing(4),
           boxShadow: "none",
         }}
       >
         <CardContent>
           <Typography
-            sx={{ fontSize: "16px", fontWeight: 600, color: "#4D4639" }}
+            sx={{
+              color: theme.palette.text.secondary,
+              fontSize: "16px",
+              fontWeight: 500,
+            }}
             variant="h6"
             gutterBottom
           >
@@ -105,37 +127,31 @@ const StudentDetails = () => {
           </Typography>
           <CustomSelect />
           <Box
-            sx={{ bgcolor: "trasparent", justifyContent: "center" }}
+            sx={{ bgcolor: "transparent", justifyContent: "center" }}
             display="flex"
             gap={1}
             alignItems="center"
           >
-            <StudentStatsCard
-              label1="Status"
-              value1="Passed"
-              label2={false}
-              value2="5"
-            />
-            <StudentStatsCard
-              label1="Score"
-              value1="82%"
-              label2={false}
-              value2="5"
-            />
+            {renderStatsCard("Status", "Passed")}
+            {renderStatsCard("Score", "82%")}
           </Box>
         </CardContent>
       </Card>
       <Card
         sx={{
-          bgcolor: "#FFEFD5",
-          marginTop: "20px",
+          bgcolor: theme.palette.warning[800],
+          marginTop: theme.spacing(4),
           height: "688px",
           boxShadow: "none",
         }}
       >
         <CardContent>
           <Typography
-            sx={{ fontSize: "16px", fontWeight: 600, color: "#4D4639" }}
+            sx={{
+              color: theme.palette.text.secondary,
+              fontSize: "16px",
+              fontWeight: 500,
+            }}
             variant="h6"
             gutterBottom
           >
@@ -144,33 +160,49 @@ const StudentDetails = () => {
         </CardContent>
         <Card
           sx={{
-            marginTop: "20px",
+            marginTop: theme.spacing(4),
             height: "688px",
             width: "340px",
             margin: "auto",
-            borderRadius: "16px",
+            borderRadius: theme.spacing(2),
             boxShadow: "none",
           }}
         >
-          {studentData.map((item, index) => (
-            <Box key={index} sx={{ padding: 2 }}>
+          {studentData.map((item) => (
+            <Box key={item.id} sx={{ padding: "16px" }}>
               <Typography
-                sx={{ fontSize: "14px", fontWeight: 600, color: "#969088" }}
+                sx={{
+                  color: theme.palette.text.secondary,
+                  fontSize: "14px",
+                  fontWeight: 600,
+                }}
               >
                 {item.dob_title}
               </Typography>
               <Typography
-                sx={{ fontSize: "16px", fontWeight: 500, color: "#4D4639" }}
+                sx={{
+                  color: theme.palette.text.primary,
+                  fontSize: "16px",
+                  fontWeight: 500,
+                }}
               >
                 {item.dob}
               </Typography>
               <Typography
-                sx={{ fontSize: "14px", fontWeight: 600, color: "#969088" }}
+                sx={{
+                  color: theme.palette.text.secondary,
+                  fontSize: "14px",
+                  fontWeight: 600,
+                }}
               >
                 {item.latest_education}
               </Typography>
               <Typography
-                sx={{ fontSize: "16px", fontWeight: 500, color: "#4D4639" }}
+                sx={{
+                  color: theme.palette.text.primary,
+                  fontSize: "16px",
+                  fontWeight: 500,
+                }}
               >
                 {item.grade}
               </Typography>

@@ -34,6 +34,7 @@ const customTheme = createTheme({
           '900': '#DADADA',
           'A100': '#D0C5B4',
           'A200': '#4D4639',
+          'A400': '#FFFFFF',
         },
     },
     typography: {
@@ -131,7 +132,7 @@ const customTheme = createTheme({
                     },
                 },
                 containedSecondary: {
-                    backgroundColor: '#dc004e',
+                    backgroundColor: '#fbbc13',
                     '&:hover': {
                         backgroundColor: '#b20041',
                     },
