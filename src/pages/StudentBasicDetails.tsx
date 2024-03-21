@@ -49,7 +49,7 @@ const StudentDetails = () => {
           >
             <Typography
               sx={{
-                color: theme.palette.warning.main,
+                color: theme.palette.warning["A200"],
                 fontSize: "16px",
                 fontWeight: 500,
               }}
@@ -85,7 +85,7 @@ const StudentDetails = () => {
             sx={{
               color: theme.palette.text.secondary,
               fontSize: "14px",
-              fontWeight: 600,
+              fontWeight: 500,
             }}
             variant="h6"
             gutterBottom
@@ -98,6 +98,7 @@ const StudentDetails = () => {
               bgcolor: "transparent",
               justifyContent: "center",
               display: "flex",
+              marginTop: 2,
             }}
           >
             {renderStatsCard("Attendance", "78%")}
@@ -116,7 +117,7 @@ const StudentDetails = () => {
         <CardContent>
           <Typography
             sx={{
-              color: theme.palette.text.secondary,
+              color: theme.palette.warning["A200"],
               fontSize: "16px",
               fontWeight: 500,
             }}
@@ -148,7 +149,7 @@ const StudentDetails = () => {
         <CardContent>
           <Typography
             sx={{
-              color: theme.palette.text.secondary,
+              color: theme.palette.warning["A200"],
               fontSize: "16px",
               fontWeight: 500,
             }}
