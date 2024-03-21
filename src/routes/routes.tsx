@@ -5,6 +5,7 @@ import { TextField } from "@mui/material";
 import Dashboard from "../pages/Dashboard";
 
 const LoginPage = lazy(() => import("../pages/LoginPage"));
+const Profile = lazy(() => import("../pages/Profile"));
 
 function AllRoutes(): JSX.Element {
   const { t } = useTranslation();
@@ -13,6 +14,8 @@ function AllRoutes(): JSX.Element {
     <Router>
       <Suspense fallback={<TextField>{t("COMMON.LOADING")}</TextField>}>
         <Routes>
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/" element={<LoginPage />} />
           <Route path="/" element={<LoginPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>

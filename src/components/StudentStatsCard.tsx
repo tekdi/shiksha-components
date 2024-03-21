@@ -20,17 +20,18 @@ const StudentStatsCard: React.FC<StudentStatsCard> = ({
   return (
     <Box
       width="9rem"
-      height="5rem"
-      gap="1rem"
+     // height="5rem"
+     // gap="1rem"
       border="1px solid #D0C5B4" //Add color from colorScheme
       borderRadius="1rem"
       display="flex"
-      justifyContent="flex-start"
+     // justifyContent="flex-start"
       alignItems="center"
       margin="0px"
       textAlign="left"
+      flexDirection={"column"}
+      bgcolor={"white"}
     >
-      <Stack padding="1rem">
         <Typography
           fontSize="0.6875rem"
           fontWeight="bold"
@@ -57,7 +58,6 @@ const StudentStatsCard: React.FC<StudentStatsCard> = ({
             Held on: {value2}
           </Typography>
         ) : null}
-      </Stack>
     </Box>
   );
 };
