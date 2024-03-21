@@ -32,8 +32,7 @@ interface DashboardProps {
 const Dashboard: React.FC<DashboardProps> = () => {
   const { t } = useTranslation();
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleModalToggle = () => setOpen(!open);
   const [classes, setClasses] = React.useState("");
   const theme = useTheme<any>();
 
@@ -41,12 +40,12 @@ const Dashboard: React.FC<DashboardProps> = () => {
     setClasses(event.target.value as string);
   };
   const style = {
-    position: "absolute" as "absolute",
+    position: "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: 300,
-    bgcolor: "background.paper",
+    bgcolor: theme.palette.warning["A400"],
     border: "2px solid #000",
     boxShadow: 24,
     p: 4,
@@ -74,9 +73,8 @@ const Dashboard: React.FC<DashboardProps> = () => {
           borderRadius={"2rem"}
           bgcolor={"black"}
           textAlign={"left"}
-          // m="1rem"
         >
-          <Typography  marginBottom={"0px"}>
+          <Typography  marginBottom={"0px"} sx={{color: theme.palette.warning["A400"]}}>
             {" "}
             {t("COMMON.MARK_MY_ATTENDANCE")}
           </Typography>
@@ -99,7 +97,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
         <Button
           variant="outlined"
           fullWidth
-          onClick={handleOpen}
+          onClick={handleModalToggle}
         >
           {t("COMMON.MARK_STUDENT_ATTENDANCE")}
         </Button>
@@ -107,7 +105,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
           open={open}
-          onClose={handleClose}
+          onClose={handleModalToggle}
           closeAfterTransition
           slots={{ backdrop: Backdrop }}
           slotProps={{
@@ -127,12 +125,12 @@ const Dashboard: React.FC<DashboardProps> = () => {
                     25 May 2024
                   </Typography>
                 </Box>
-                <Box onClick={() => handleClose()}>
+                <Box onClick={() => handleModalToggle()}>
                   <CloseIcon />
                 </Box>
               </Box>
               <Divider sx={{ borderBottomWidth: "0.2rem" }} />
-              <Typography sx={{ mt: 2 }}>
+              <Box sx={{ mt: 2 }}>
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
                     <InputLabel>Class</InputLabel>
@@ -147,7 +145,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
                     </Select>
                   </FormControl>
                 </Box>
-              </Typography>
+              </Box>
               <Typography>{t("MARK_MY_ATTENDANCE.TOTAL_STUDENTS")}</Typography>
               <AttendanceStatusListView studentName={"Mark All"}/>
               <AttendanceStatusListView studentName={"Ajay"}/>
