@@ -10,12 +10,12 @@ import { useTranslation } from "react-i18next";
 import { useTheme } from '@mui/material/styles';
 
 const Header: React.FC = () => {
-  const [age, setAge] = React.useState("");
+  const [language, setLanguage] = React.useState("");
   const { t } = useTranslation();
   const theme = useTheme<any>();
 
   const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
+    setLanguage(event.target.value as string);
   };
 
   return (
@@ -33,7 +33,7 @@ const Header: React.FC = () => {
           {t("COMMON.LANGUAGE")}
         </InputLabel>
         <Select
-          value={age}
+          value={language}
           label="Language"
           style={{
             borderRadius: "20px",
