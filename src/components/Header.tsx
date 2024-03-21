@@ -4,48 +4,42 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { Box, Stack } from "@mui/material";
+import  Divider from "@mui/material/Divider";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useTranslation } from "react-i18next";
+import { useTheme } from '@mui/material/styles';
 
-interface Header {
-  label1: string;
-  value1: string;
-  label2: boolean;
-  value2: string;
-}
-
-const Header: React.FC<Header> = () => {
+const Header: React.FC = () => {
   const [age, setAge] = React.useState("");
   const { t } = useTranslation();
+  const theme = useTheme<any>();
 
   const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value as string);
   };
 
   return (
+    <>
     <Stack
       sx={{ minWidth: 360 }}
       direction="row"
       justifyContent={"space-between"}
-      alignItems="center"
-      bgcolor="white"
+      // bgcolor="white"
       padding={"1rem"}
-      borderBottom={"2px solid #4D4639"}
+      height='auto'
     >
       <FormControl>
-        <InputLabel id="demo-simple-select-label">
-          {t("COMMON.LANG")}
+        <InputLabel >
+          {t("COMMON.LANGUAGE")}
         </InputLabel>
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
           value={age}
-          label="Age"
+          label="Language"
           style={{
             borderRadius: "20px",
-            color: "#4D4639",
-            width: "7rem",
-            height: "1.625 rem",
+            color: theme.palette.warning["200"],
+            width: "5rem",
+            height: "0.5 rem",
           }}
           onChange={handleChange}
         >
@@ -60,6 +54,9 @@ const Header: React.FC<Header> = () => {
         <AccountCircleIcon fontSize="large" color="action" />
       </Box>
     </Stack>
+     <Divider sx={{ borderBottomWidth: '0.25rem' }} />
+    </>
+    
   );
 };
 export default Header;
