@@ -39,7 +39,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
   const handleChange = (event: SelectChangeEvent) => {
     setClasses(event.target.value as string);
   };
-  const style = {
+  const modalContainer = {
     position: "absolute",
     top: "50%",
     left: "50%",
@@ -115,7 +115,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
           }}
         >
           <Fade in={open}>
-            <Box sx={style}>
+            <Box sx={modalContainer} borderRadius={'1rem'}>
               <Box display={"flex"} justifyContent={"space-between"}>
                 <Box marginBottom={"0px"}>
                   <Typography variant="h6" component="h2">

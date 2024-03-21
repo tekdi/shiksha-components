@@ -15,7 +15,7 @@
     "MY_CLASSES": "My Classes",
     "ADD_NEW_CLASS": "Add New Class"
   },
-  "MARK_MY_ATTENDANCE": {
+  "ATTENDANCE": {
     "TOTAL_STUDENTS": "Total No of Students: {{count}}"
   }
 }
