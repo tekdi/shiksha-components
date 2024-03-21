@@ -1,11 +1,21 @@
 {
-  "COMMON": {
-    "LANGUAGE": "भाषा",
-    "LOADING": "लोडिंग"
-  },
-  "LOGIN_PAGE": {
-    "USERNAME": "उपयोगकर्ता नाम",
-    "PASSWORD": "पासवर्ड",
-    "LOGIN": "लॉग इन करें"
-  }
+    "COMMON": {
+        "LANGUAGE": "भाषा",
+        "MARK_MY_ATTENDANCE": "मेरी उपस्थिति चिह्नित करें",
+        "MARK_STUDENT_ATTENDANCE": "छात्र उपस्थिति चिह्नित करें",
+        "LOADING": "लोडिंग"
+    },
+    "LOGIN_PAGE": {
+        "USERNAME": "उपयोगकर्ता नाम",
+        "PASSWORD": "पासवर्ड",
+        "LOGIN": "लॉग इन करें"
+    },
+    "DASHBOARD": {
+        "HISTORY": "इतिहास",
+        "MY_CLASSES": "मेरी कक्षाएँ",
+        "ADD_NEW_CLASS": "नई कक्षा जोड़ें"
+    },
+    "MARK_MY_ATTENDANCE": {
+        "TOTAL_STUDENTS": "कुल छात्रों की संख्या: {{count}}"
+    }
 }
