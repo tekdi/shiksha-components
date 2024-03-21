@@ -18,64 +18,77 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
 }) => {
   return (
     <Box
-      width="100vw"
-      height="4.5rem"
-      gap="1rem"
+      // width="100vw"
+      height="73px"
+      // gap="1rem"
       borderTop="1px solid #7F7667" //Add color from colorScheme
-      borderBottom="1px solid #7F7667" //Add color from colorScheme
+      // borderBottom="1px solid #7F7667" //Add color from colorScheme
       display="flex"
-      justifyContent="center"
+      justifyContent="space-between"
       alignItems="center"
       borderColor="#7F7667" //Add color from colorScheme
       margin="0px"
     >
-      <Link
-        href="#"
-        underline="always"
-        color="#000000" //Add color from colorScheme
-        fontSize="0.875rem"
-        fontWeight="400"
-        lineHeight="1.25rem"
-        padding="1rem"
-      >
-        {name}
-      </Link>
-      <Stack padding="1rem">
-        <Typography
-          fontSize="1rem"
-          fontWeight="bold"
-          lineHeight="1.5rem"
-          color="black" //Add color from colorScheme
+      <Box>
+        {" "}
+        <Link
+          href="#"
+          underline="always"
+          color="#000000" //Add color from colorScheme
+          fontSize="0.875rem"
+          fontWeight="400"
+          lineHeight="1.25rem"
+          padding="1rem"
         >
-          {value1}
-        </Typography>
-        <Typography
-          fontSize="0.6875rem"
-          fontWeight="500"
-          lineHeight="1rem"
-          color="#7F7667" //Add color from colorScheme
-        >
-          {label1}
-        </Typography>
-      </Stack>
-      <Stack padding="1rem">
-        <Typography
-          fontSize="1rem"
-          fontWeight="bold"
-          lineHeight="1.5rem"
-          color="black" //Add color from colorScheme
-        >
-          {value2}
-        </Typography>
-        <Typography
-          fontSize="0.6875rem"
-          fontWeight="500"
-          lineHeight="1rem"
-          color="#7F7667" //Add color from colorScheme
-        >
-          {label2}
-        </Typography>
-      </Stack>
+          {name}
+        </Link>
+      </Box>
+      <Box display={"flex"} gap={9} m={2}>
+        <Stack m={0}>
+          <Typography
+            marginBottom={0}
+            fontSize="16px"
+            fontWeight="500"
+            lineHeight="24px"
+            color="black" //Add color from colorScheme
+            fontFamily={"Poppins"}
+          >
+            {value1} %
+          </Typography>
+          <Typography
+            marginBottom={0}
+            fontSize="11px"
+            fontWeight="500"
+            lineHeight="1rem"
+            color="#7F7667" //Add color from colorScheme
+            fontFamily="Poppins"
+          >
+            {label1}
+          </Typography>
+        </Stack>
+        <Stack>
+          <Typography
+            marginBottom={0}
+            fontSize="16px"
+            fontWeight="500"
+            lineHeight="1.5rem"
+            color="black" //Add color from colorScheme
+            fontFamily="Poppins"
+          >
+            {value2}
+          </Typography>
+          <Typography
+            marginBottom={0}
+            fontSize="11px"
+            fontWeight="500"
+            lineHeight="1rem"
+            color="#7F7667" //Add color from colorScheme
+            fontFamily="Poppins"
+          >
+            {label2}
+          </Typography>
+        </Stack>
+      </Box>
     </Box>
   );
 };

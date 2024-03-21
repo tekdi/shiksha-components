@@ -1,10 +1,8 @@
 import React from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import "./App.css";
-import AllRoutes from "./routes/routes.tsx";
-
 import customTheme from "./customStyles.tsx";
-
+import AllRoutes from "./routes/routes.tsx";
 function App() {
   return (
     <ThemeProvider theme={customTheme}>
@@ -12,5 +10,4 @@ function App() {
     </ThemeProvider>
   );
 }
-
 export default App;

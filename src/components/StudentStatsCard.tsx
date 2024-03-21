@@ -17,7 +17,7 @@ const StudentStatsCard: React.FC<StudentStatsCard> = ({
   return (
     <Box
       width="9rem"
-      height="5rem"
+      height="auto"
       gap="1rem"
       border="1px solid #D0C5B4" //Add color from colorScheme
       borderRadius="1rem"
@@ -26,6 +26,7 @@ const StudentStatsCard: React.FC<StudentStatsCard> = ({
       alignItems="center"
       margin="0px"
       textAlign="left"
+      bgcolor={"white"}
     >
       <Stack padding="1rem">
         <Typography
