@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Box, Card, CardContent, Typography } from "@mui/material";
+import { Box, Card, CardContent, Stack, Typography } from "@mui/material";
 import StudentStatsCard from "../components/StudentStatsCard";
 import Header from "../components/Header";
 import CustomSelect from "../components/CustomSelect";
 import EastIcon from "@mui/icons-material/East";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useTheme } from "@mui/material/styles";
+import { Link } from "react-router-dom";
 
 const StudentDetails = () => {
   const theme = useTheme();
@@ -31,6 +33,19 @@ const StudentDetails = () => {
   return (
     <>
       <Header label1="hi" label2={false} value1="1" value2="2" />
+      <Box mt={3} display={"flex"} gap={2} alignItems={"flex-start"}>
+        <Link to={"/"}>
+          <ArrowBackIcon fontSize="medium" />
+        </Link>
+        <Stack>
+          <Typography variant="h5" fontFamily={"poppins"}>
+            Class A
+          </Typography>
+          <Typography fontSize={"11px"} fontFamily={"poppins"}>
+            Gurukrupa Building, Paud Road
+          </Typography>
+        </Stack>
+      </Box>
       <Card
         sx={{
           bgcolor: theme.palette.secondary.light,
@@ -58,28 +73,34 @@ const StudentDetails = () => {
             >
               Attendance Report
             </Typography>
-            <Box
-              sx={{ display: "flex", alignItems: "center", marginLeft: "10px" }}
-            >
-              <Typography
+            <Link to={"/history"}>
+              <Box
                 sx={{
-                  color: theme.palette.secondary.main,
-                  fontSize: "16px",
-                  marginRight: "4px",
+                  display: "flex",
+                  alignItems: "center",
+                  marginLeft: "10px",
                 }}
-                variant="h6"
-                gutterBottom
               >
-                History
-              </Typography>
-              <EastIcon
-                fontSize="inherit"
-                sx={{
-                  color: theme.palette.secondary.main,
-                  marginBottom: "5px",
-                }}
-              />
-            </Box>
+                <Typography
+                  sx={{
+                    color: theme.palette.secondary.main,
+                    fontSize: "16px",
+                    marginRight: "4px",
+                  }}
+                  variant="h6"
+                  gutterBottom
+                >
+                  History
+                </Typography>
+                <EastIcon
+                  fontSize="inherit"
+                  sx={{
+                    color: theme.palette.secondary.main,
+                    marginBottom: "5px",
+                  }}
+                />
+              </Box>
+            </Link>
           </Box>
           <Typography
             sx={{
