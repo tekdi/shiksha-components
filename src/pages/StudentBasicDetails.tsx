@@ -35,33 +35,109 @@ const StudentDetails = () => {
       <Header label1="hi" label2={false} value1="1" value2="2" />
       <Box mt={3} display={"flex"} gap={2} alignItems={"flex-start"}>
         <Link to={"/"}>
-          <ArrowBackIcon fontSize="medium" />
+          <ArrowBackIcon
+            sx={{ color: theme.palette.warning["A200"], fontSize: "large" }}
+          />
         </Link>
         <Stack>
-          <Typography variant="h5" fontFamily={"poppins"}>
+          <Typography fontSize={"22px"} variant="h3" fontFamily={"Poppins"}>
             Class A
-          </Typography>
-          <Typography fontSize={"11px"} fontFamily={"poppins"}>
-            Gurukrupa Building, Paud Road
           </Typography>
         </Stack>
       </Box>
-      <Card
-        sx={{
-          bgcolor: theme.palette.secondary.light,
-          borderRadius: theme.spacing(3),
-          marginTop: theme.spacing(4),
-          boxShadow: "none",
-        }}
-      >
-        <CardContent>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
+      <Box padding={"10px"}>
+        {" "}
+        <Card
+          sx={{
+            bgcolor: theme.palette.secondary.light,
+            borderRadius: theme.spacing(3),
+            boxShadow: "none",
+          }}
+        >
+          <CardContent>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <Typography
+                sx={{
+                  color: theme.palette.warning["A200"],
+                  fontSize: "16px",
+                  fontFamily: "Poppins",
+                  fontWeight: 500,
+                }}
+                variant="h6"
+                gutterBottom
+              >
+                Attendance Report
+              </Typography>
+              <Link to={"/history"}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    marginLeft: "10px",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      color: theme.palette.secondary.main,
+                      fontSize: "16px",
+                      marginRight: "4px",
+                    }}
+                    variant="h6"
+                    gutterBottom
+                  >
+                    History
+                  </Typography>
+                  <EastIcon
+                    fontSize="inherit"
+                    sx={{
+                      color: theme.palette.secondary.main,
+                      marginBottom: "5px",
+                    }}
+                  />
+                </Box>
+              </Link>
+            </Box>
+            <Typography
+              sx={{
+                color: theme.palette.text.secondary,
+                fontSize: "14px",
+                fontWeight: 500,
+              }}
+              variant="h6"
+              gutterBottom
+            >
+              As of 24 May
+            </Typography>
+            <Box
+              gap={1}
+              sx={{
+                bgcolor: "transparent",
+                justifyContent: "center",
+                display: "flex",
+                marginTop: 2,
+              }}
+            >
+              {renderStatsCard("Attendance", "78%")}
+              {renderStatsCard("Classes Missed", "2")}
+            </Box>
+          </CardContent>
+        </Card>
+      </Box>
+      <Box padding={"10px"}>
+        <Card
+          sx={{
+            bgcolor: theme.palette.secondary.light,
+            borderRadius: theme.spacing(3),
+            boxShadow: "none",
+          }}
+        >
+          <CardContent>
             <Typography
               sx={{
                 color: theme.palette.warning["A200"],
@@ -71,100 +147,27 @@ const StudentDetails = () => {
               variant="h6"
               gutterBottom
             >
-              Attendance Report
+              Test Report
             </Typography>
-            <Link to={"/history"}>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  marginLeft: "10px",
-                }}
-              >
-                <Typography
-                  sx={{
-                    color: theme.palette.secondary.main,
-                    fontSize: "16px",
-                    marginRight: "4px",
-                  }}
-                  variant="h6"
-                  gutterBottom
-                >
-                  History
-                </Typography>
-                <EastIcon
-                  fontSize="inherit"
-                  sx={{
-                    color: theme.palette.secondary.main,
-                    marginBottom: "5px",
-                  }}
-                />
-              </Box>
-            </Link>
-          </Box>
-          <Typography
-            sx={{
-              color: theme.palette.text.secondary,
-              fontSize: "14px",
-              fontWeight: 500,
-            }}
-            variant="h6"
-            gutterBottom
-          >
-            As of 24 May
-          </Typography>
-          <Box
-            gap={1}
-            sx={{
-              bgcolor: "transparent",
-              justifyContent: "center",
-              display: "flex",
-              marginTop: 2,
-            }}
-          >
-            {renderStatsCard("Attendance", "78%")}
-            {renderStatsCard("Classes Missed", "2")}
-          </Box>
-        </CardContent>
-      </Card>
-      <Card
-        sx={{
-          bgcolor: theme.palette.secondary.light,
-          borderRadius: theme.spacing(3),
-          marginTop: theme.spacing(4),
-          boxShadow: "none",
-        }}
-      >
-        <CardContent>
-          <Typography
-            sx={{
-              color: theme.palette.warning["A200"],
-              fontSize: "16px",
-              fontWeight: 500,
-            }}
-            variant="h6"
-            gutterBottom
-          >
-            Test Report
-          </Typography>
-          <CustomSelect />
-          <Box
-            sx={{ bgcolor: "transparent", justifyContent: "center" }}
-            display="flex"
-            gap={1}
-            alignItems="center"
-          >
-            {renderStatsCard("Status", "Passed")}
-            {renderStatsCard("Score", "82%")}
-          </Box>
-        </CardContent>
-      </Card>
+            <CustomSelect />
+            <Box
+              sx={{ bgcolor: "transparent", justifyContent: "center" }}
+              display="flex"
+              gap={1}
+              alignItems="center"
+            >
+              {renderStatsCard("Status", "Passed")}
+              {renderStatsCard("Score", "82%")}
+            </Box>
+          </CardContent>
+        </Card>
+      </Box>
       <Card
         sx={{
           bgcolor: theme.palette.warning[800],
-          marginTop: theme.spacing(4),
-          height: "688px",
+          height: "600px",
           boxShadow: "none",
+          marginTop: "10px",
         }}
       >
         <CardContent>
