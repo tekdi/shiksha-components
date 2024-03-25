@@ -10,10 +10,6 @@ const customTheme = createTheme({
       main: '#0D599E',
       light: '#E7F3F8'
     },
-    error: {
-      main: '#BA1A1A',
-      light: '#FFDAD6'
-    },
     success: {
       main: '#1A8825',
       light: '#C0FFC7'
@@ -35,6 +31,57 @@ const customTheme = createTheme({
       A100: '#D0C5B4',
       A200: '#4D4639',
       A400: '#FFFFFF'
+    },
+    error: {
+      main: '#BA1A1A',
+      light: '#FFDAD6'
+    }
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: '100px',
+          border: '1px solid #1E1B16',
+          color: '#1E1B16'
+        },
+        containedPrimary: {
+          backgroundColor: '#FDBE16',
+          border: 'none',
+          '&:hover': {
+            backgroundColor: '#FDBE161F'
+          }
+        },
+        outlinedPrimary: {
+          backgroundColor: 'none',
+          border: '1px solid #1E1B16',
+          '&:hover': {
+            backgroundColor: '#0D599E'
+          }
+        },
+        textPrimary: {
+          backgroundColor: 'none',
+          border: 'none',
+          color: '#0D599E',
+          '&:hover': {
+            backgroundColor: '6750A41F',
+            border: 'none'
+          }
+        },
+        containedSecondary: {
+          backgroundColor: '#fbbc13',
+          '&:hover': {
+            backgroundColor: '#b20041'
+          }
+        }
+      }
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          width: '100%'
+        }
+      }
     }
   },
   typography: {
@@ -98,52 +145,6 @@ const customTheme = createTheme({
       fontWeight: 500
     }
   },
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          borderRadius: '100px',
-          border: '1px solid #1E1B16',
-          color: '#1E1B16'
-        },
-        containedPrimary: {
-          backgroundColor: '#FDBE16',
-          border: 'none',
-          '&:hover': {
-            backgroundColor: '#FDBE161F'
-          }
-        },
-        outlinedPrimary: {
-          backgroundColor: 'none',
-          border: '1px solid #1E1B16',
-          '&:hover': {
-            backgroundColor: '#0D599E'
-          }
-        },
-        textPrimary: {
-          backgroundColor: 'none',
-          border: 'none',
-          color: '#0D599E',
-          '&:hover': {
-            backgroundColor: '6750A41F'
-          }
-        },
-        containedSecondary: {
-          backgroundColor: '#fbbc13',
-          '&:hover': {
-            backgroundColor: '#b20041'
-          }
-        }
-      }
-    },
-    MuiTextField: {
-      styleOverrides: {
-        root: {
-          width: '100%'
-        }
-      }
-    }
-  }
 });
 
 export default customTheme;
