@@ -5,6 +5,9 @@ import AllRoutes from "./routes/routes.tsx";
 
 import customTheme from "./customStyles.tsx";
 
+import '@fontsource/poppins/400.css';
+import '@fontsource/poppins/500.css';
+
 function App() {
   return (
     <ThemeProvider theme={customTheme}>
