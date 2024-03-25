@@ -3,14 +3,14 @@ import { Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Checkbox from '@mui/material/Checkbox';
 
-const PREFIX = "StudentList";
+const PREFIX = 'StudentList';
 
 const classes = {
   root: `${PREFIX}-root`,
-  content: `${PREFIX}-content`,
+  content: `${PREFIX}-content`
 };
 
-const Root = styled('div')(({ }) => ({
+const Root = styled('div')(({}) => ({
   [`&.${classes.root}`]: {
     display: 'flex',
     height: 56,
@@ -23,9 +23,9 @@ const Root = styled('div')(({ }) => ({
     flexGrow: 1,
     fontSize: 16,
     fontWeight: 400,
-    color: "#1F1B13",
-  },
-}))
+    color: '#1F1B13'
+  }
+}));
 
 interface StudentListProps {
   isSelected: boolean;
@@ -40,9 +40,7 @@ const StudentList: React.FC<StudentListProps> = ({ isSelected, studentName }) =>
   };
   return (
     <Root className={classes.root}>
-      <Typography className={classes.content}>
-        {studentName}
-      </Typography>
+      <Typography className={classes.content}>{studentName}</Typography>
       <Checkbox
         checked={checked}
         onChange={handleChange}

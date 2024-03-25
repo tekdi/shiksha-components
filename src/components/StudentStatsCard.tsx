@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 import { useTheme } from '@mui/material/styles';
 
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from '@mui/material';
 interface StudentStatsCard {
   label1: string;
   value1: string;
@@ -9,12 +9,7 @@ interface StudentStatsCard {
   value2: string;
 }
 
-const StudentStatsCard: React.FC<StudentStatsCard> = ({
-  label1,
-  value1,
-  label2,
-  value2,
-}) => {
+const StudentStatsCard: React.FC<StudentStatsCard> = ({ label1, value1, label2, value2 }) => {
   const theme = useTheme<any>();
 
   return (
@@ -31,7 +26,7 @@ const StudentStatsCard: React.FC<StudentStatsCard> = ({
       margin="0px"
       textAlign="left"
     >
-      <Stack sx={{ padding: "1rem" }}>
+      <Stack sx={{ padding: '1rem' }}>
         <Typography
           fontSize="11px"
           fontWeight={600}
@@ -52,7 +47,7 @@ const StudentStatsCard: React.FC<StudentStatsCard> = ({
             fontSize="0.675rem"
             fontWeight="bold"
             lineHeight="1rem"
-            sx={{color: theme.palette.warning["400"]}}
+            sx={{ color: theme.palette.warning['400'] }}
           >
             Held on: {value2}
           </Typography>

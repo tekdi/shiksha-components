@@ -6,7 +6,7 @@ import translationHI from './translations/hi.json';
 
 const resources = {
   en: { translation: translationEN },
-  hi: { translation: translationHI },
+  hi: { translation: translationHI }
 };
 
 i18n.use(initReactI18next).init({
@@ -14,8 +14,8 @@ i18n.use(initReactI18next).init({
   lng: 'en',
   fallbackLng: 'en',
   interpolation: {
-    escapeValue: false,
-  },
+    escapeValue: false
+  }
 });
 
 export default i18n;

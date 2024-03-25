@@ -6,7 +6,7 @@ type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-const CalendarCard = () =>  {
+const CalendarCard = () => {
   const [value, onChange] = useState<Value>(new Date());
 
   return (
@@ -14,6 +14,6 @@ const CalendarCard = () =>  {
       <Calendar onChange={onChange} value={value} />
     </div>
   );
-}
+};
 
 export default CalendarCard;

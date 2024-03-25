@@ -1,21 +1,21 @@
-import * as React from "react";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { Box } from "@mui/material";
+import * as React from 'react';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { Box } from '@mui/material';
 
 export default function CustomSelect() {
-  const [age, setAge] = React.useState("");
+  const [age, setAge] = React.useState('');
 
   const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value);
   };
 
   return (
-    <Box sx={{ display: "flex", justifyContent: "center" }}>
+    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
       <FormControl sx={{ m: 1, minWidth: 300 }}>
-        {" "}
+        {' '}
         {/* Adjusted minWidth here */}
         <InputLabel id="demo-simple-select-helper-label">Test</InputLabel>
         <Select

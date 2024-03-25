@@ -27,12 +27,12 @@
 
 .CssTextField {
   & label.Mui-focused {
-      color:black;
+    color: black;
   }
 
   & .MuiOutlinedInput-root {
-      &.Mui-focused fieldset {
-          border-color: #FBBC13;
-      }
+    &.Mui-focused fieldset {
+      border-color: #fbbc13;
+    }
   }
 }
