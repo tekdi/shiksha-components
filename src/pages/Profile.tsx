@@ -20,6 +20,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import { getUser } from '../services/profileService.ts';
 import { useTheme } from '@mui/material/styles';
+import default_user from '../../public/default_user.png'
+import { decodeToken } from '../utils/Helper';
+
 
 const Profile = () => {
   interface UserData {
@@ -77,17 +80,16 @@ const Profile = () => {
       const token = localStorage.getItem('token');
       try {
         if (token) {
-          const tokenParts = token.split('.');
-          if (tokenParts.length === 3) {
-            const payload = JSON.parse(atob(tokenParts[1]));
+       
+            const payload= decodeToken(token)
             const xHasuraUserId = payload['https://hasura.io/jwt/claims']['x-hasura-user-id'];
-            console.log(xHasuraUserId);
+           // console.log(xHasuraUserId);
             const response = await getUser(xHasuraUserId);
             const userDataFromJson = response?.result?.userData;
             setUserData(userDataFromJson);
             setCustomFieldsData(response?.result?.customFields);
             console.log(response);
-          }
+          
         }
       } catch (error) {
         console.error('Error fetching  user details:', error);
@@ -114,7 +116,7 @@ const Profile = () => {
           display="flex"
           flexDirection="row">
           <img
-            src={'/default_user.png'}
+            src={default_user}
             alt="Sample Image"
             style={{ width: '117px', height: '120px', margin: '2px' }}
           />
@@ -362,7 +364,7 @@ const Profile = () => {
                 display="flex"
                 flexDirection="row">
                 <img
-                  src={'/default_user.png'}
+                  src={default_user}
                   alt="Sample Image"
                   // style={{ width: '117px', height: '120px' }}
                 />
