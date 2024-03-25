@@ -6,7 +6,6 @@ import {
   FormControl,
   InputLabel,
   MenuItem,
-  Link,
   Select,
   SelectChangeEvent,
   Stack,
@@ -61,28 +60,43 @@ const Dashboard: React.FC<DashboardProps> = () => {
         <Box
           border={'1px solid black'}
           height={'auto'}
-          width={'18.5rem'}
-          padding={'2rem'}
-          borderRadius={'2rem'}
+          width={'auto'}
+          padding={'1rem'}
+          borderRadius={'1rem'}
           bgcolor={'black'}
           textAlign={'left'}
         >
-          <Typography marginBottom={'0px'} sx={{ color: theme.palette.warning['A400'] }}>
-            {' '}
+          <Typography
+            marginBottom={'0px'}
+            sx={{ color: theme.palette.warning['A400'] }}
+            style={{ fontWeight: '800', fontSize: '1.2rem' }}
+          >
             {t('COMMON.MARK_MY_ATTENDANCE')}
           </Typography>
           <Typography sx={{ color: theme.palette.warning['A400'] }}>25 May 2024</Typography>
           <Stack direction="row" spacing={1} marginTop={1} justifyContent={'space-between'}>
-            <Link href="#" sx={{ color: theme.palette.primary.main }}>
+            <Button
+              variant="text"
+              sx={{ color: theme.palette.primary.main, padding: theme.spacing(1) }}
+            >
               {t('DASHBOARD.HISTORY')}
-            </Link>
-            <Button variant="contained" color="primary">
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              style={{ width: '12.5rem', padding: theme.spacing(1) }}
+            >
               {t('COMMON.MARK_MY_ATTENDANCE')}
             </Button>
           </Stack>
         </Box>
 
-        <Button variant="outlined" fullWidth onClick={handleModalToggle}>
+        <Button
+          variant="outlined"
+          fullWidth
+          onClick={handleModalToggle}
+          style={{ padding: theme.spacing(1) }}
+        >
           {t('COMMON.MARK_STUDENT_ATTENDANCE')}
         </Button>
         <Modal
@@ -99,13 +113,16 @@ const Dashboard: React.FC<DashboardProps> = () => {
           }}
         >
           <Fade in={open}>
-            <Box sx={modalContainer} borderRadius={'1rem'}>
+            <Box
+              sx={{ ...modalContainer, borderColor: theme.palette.warning['A400'] }}
+              borderRadius={'1rem'}
+            >
               <Box display={'flex'} justifyContent={'space-between'}>
                 <Box marginBottom={'0px'}>
-                  <Typography variant="h6" component="h2">
+                  <Typography variant="h2" component="h2" marginBottom={'0px'} fontWeight={'bold'}>
                     {t('COMMON.MARK_STUDENT_ATTENDANCE')}
                   </Typography>
-                  <Typography variant="h6" component="h2">
+                  <Typography variant="h2" component="h2">
                     25 May 2024
                   </Typography>
                 </Box>
@@ -113,7 +130,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
                   <CloseIcon />
                 </Box>
               </Box>
-              <Divider sx={{ borderBottomWidth: '0.2rem' }} />
+              <Divider sx={{ borderBottomWidth: '0.15rem' }} />
               <Box sx={{ mt: 2 }}>
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
@@ -126,12 +143,26 @@ const Dashboard: React.FC<DashboardProps> = () => {
                   </FormControl>
                 </Box>
               </Box>
-              <Typography>{t('MARK_MY_ATTENDANCE.TOTAL_STUDENTS')}</Typography>
+              <Typography>{t('ATTENDANCE.TOTAL_STUDENTS')}</Typography>
               <AttendanceStatusListView studentName={'Mark All'} />
               <AttendanceStatusListView studentName={'Ajay'} />
               <AttendanceStatusListView studentName={'Vijay'} />
               <AttendanceStatusListView studentName={'Deepak'} />
               <AttendanceStatusListView studentName={'Vinod'} />
+              <Box
+                display={'flex'}
+                flexDirection={'row'}
+                justifyContent={'space-evenly'}
+                m={'1rem'}
+              >
+                <Button variant="outlined" style={{ width: '8rem' }}>
+                  {' '}
+                  {t('COMMON.CLEAR_ALL')}
+                </Button>
+                <Button variant="contained" color="primary" style={{ width: '8rem' }}>
+                  {t('COMMON.SAVE')}
+                </Button>
+              </Box>
             </Box>
           </Fade>
         </Modal>
@@ -145,7 +176,9 @@ const Dashboard: React.FC<DashboardProps> = () => {
           padding={'2px'}
         >
           <Box>
-            <Link sx={{ color: theme.palette.warning['300'] }}>{t('DASHBOARD.MY_CLASSES')}</Link>
+            <Button variant="text" sx={{ color: theme.palette.warning['300'] }}>
+              {t('DASHBOARD.MY_CLASSES')}
+            </Button>
           </Box>
           <Box
             display={'flex'}
@@ -153,17 +186,18 @@ const Dashboard: React.FC<DashboardProps> = () => {
             alignItems={'center'}
             sx={{ color: theme.palette.secondary.main }}
           >
-            <Link sx={{ color: theme.palette.secondary.main }}>{t('DASHBOARD.ADD_NEW_CLASS')}</Link>
+            <Button variant="text" sx={{ color: theme.palette.secondary.main }}>
+              {t('DASHBOARD.ADD_NEW_CLASS')}
+            </Button>
             <AddIcon />
           </Box>
         </Stack>
         <Box
           display={'flex'}
           flexDirection={'column'}
-          //   gap={"1rem"}
           textAlign={'left'}
           height={'auto'}
-          width={'20.5rem'}
+          width={'auto'}
           sx={{ bgcolor: theme.palette.secondary.light }}
           p={'1rem'}
           borderRadius={'1rem'}
