@@ -7,7 +7,6 @@ import {
   InputAdornment,
   InputLabel,
   OutlinedInput,
-  TextField
 } from '@mui/material';
 import appLogo from '../assets/appLogo.svg';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
@@ -24,7 +23,7 @@ const LoginPage = () => {
   const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
-  const handleUsernameChange = (event) => {
+  const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     const trimmedValue = value.trim();
     setUsername(trimmedValue);
@@ -35,7 +34,7 @@ const LoginPage = () => {
     }
   };
 
-  const handlePasswordChange = (event) => {
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     setPassword(value);
   };
@@ -52,7 +51,7 @@ const LoginPage = () => {
     ? { color: 'gray', backgroundColor: 'lightgray' }
     : { color: 'black', backgroundColor: '#FBBC13' };
 
-  const loginButtonClick = async (event: any) => {
+  const loginButtonClick = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
       const response = await login({ username: username, password: password });
@@ -98,7 +97,6 @@ const LoginPage = () => {
                 {t('LOGIN_PAGE.USERNAME')}
               </InputLabel>
               <OutlinedInput
-                id="outlined-adornment-username"
                 type={'text'}
                 label="Username"
                 placeholder="Enter User Name"
@@ -114,7 +112,6 @@ const LoginPage = () => {
                 {t('LOGIN_PAGE.PASSWORD')}
               </InputLabel>
               <OutlinedInput
-                id="outlined-adornment-password"
                 type={showPassword ? 'text' : 'password'}
                 endAdornment={
                   <InputAdornment position="end">

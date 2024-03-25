@@ -9,7 +9,7 @@ import { useTheme } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 
 const StudentDetails = () => {
-  const theme = useTheme();
+  const theme = useTheme<any>();
 
   const [studentData, setStudentData] = useState([
     {
@@ -21,13 +21,13 @@ const StudentDetails = () => {
     }
   ]);
 
-  const renderStatsCard = (label1, value1) => (
+  const renderStatsCard = (label1: string, value1: string) => (
     <StudentStatsCard label1={label1} value1={value1} label2={false} value2="5" />
   );
 
   return (
     <>
-      <Header label1="hi" label2={false} value1="1" value2="2" />
+      <Header />
       <Box mt={3} display={'flex'} gap={2} alignItems={'flex-start'}>
         <Link to={'/'}>
           <ArrowBackIcon sx={{ color: theme.palette.warning['A200'], fontSize: 'large' }} />
