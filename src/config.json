@@ -3,16 +3,16 @@
   "languages": [
     {
       "label": "English",
-      "code": "en"
+      "code": "EN"
     },
 
     {
       "label": "हिंदी",
-      "code": "hi"
+      "code": "HI"
     },
     {
       "label": "मराठी",
-      "code": "mr"
+      "code": "MR"
     }
   ]
 }
