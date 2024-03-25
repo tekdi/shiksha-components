@@ -3,7 +3,9 @@
     "LANGUAGE": "भाषा",
     "MARK_MY_ATTENDANCE": "माझ्या उपस्थितीचा चिन्ह करा",
     "MARK_STUDENT_ATTENDANCE": "विद्यार्थी उपस्थितीचा चिन्ह करा",
-    "LOADING": "लोड होत आहे"
+    "LOADING": "लोड होत आहे",
+    "SAVE": "साठवा",
+    "CLEAR_ALL": "सर्व काढा"
   },
   "LOGIN_PAGE": {
     "USERNAME": "वापरकर्तानाव",

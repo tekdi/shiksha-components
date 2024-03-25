@@ -6,7 +6,7 @@ import {
   IconButton,
   InputAdornment,
   InputLabel,
-  OutlinedInput,
+  OutlinedInput
 } from '@mui/material';
 import appLogo from '../assets/appLogo.svg';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
@@ -66,7 +66,7 @@ const LoginPage = () => {
   };
 
   return (
-    <Box display="flex" flexDirection="column" height="100vh" width="100vw" bgcolor={'black'}>  
+    <Box display="flex" flexDirection="column" height="100vh" width="100vw" bgcolor={'black'}>
       <Box
         display={'flex'}
         flexGrow={1}
@@ -134,7 +134,13 @@ const LoginPage = () => {
             </FormControl>
           </Box>
 
-          <Box alignContent={'center'} textAlign={'center'} position={'absolute'} bottom={"1rem"} width={'100%'}>
+          <Box
+            alignContent={'center'}
+            textAlign={'center'}
+            position={'absolute'}
+            bottom={'1rem'}
+            width={'100%'}
+          >
             <Button
               variant="contained"
               fullWidth={true}
