@@ -83,8 +83,7 @@ const customTheme = createTheme({
           '&:hover': {
             backgroundColor: '#b20041'
           }
-        },
-
+        }
       }
     },
     MuiTextField: {

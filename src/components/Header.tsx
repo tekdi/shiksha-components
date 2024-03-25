@@ -35,23 +35,24 @@ const Header: React.FC = () => {
         justifyContent={'space-between'}
         alignItems={'center'}
         // padding={"1rem"}
-        height="auto">
+        height="auto"
+      >
         <Box mt={'0.5rem'}>
           <FormControl sx={{ m: 1 }}>
             <Select
+              className="SelectLanguages"
               value={language}
               onChange={handleChange}
               displayEmpty
-              inputProps={{ 'aria-label': 'Without label' }}
               style={{
                 borderRadius: '0.5rem',
                 color: theme.palette.warning['200'],
                 width: '5rem',
-                height: 'auto',
                 marginBottom: '0rem'
-              }}>
+              }}
+            >
               {config?.languages.map((lang, index) => (
-                <MenuItem value={lang.code} key={index} id={`lang-${lang.code}`}>
+                <MenuItem value={lang.code} key={lang.code}>
                   {lang.code}
                 </MenuItem>
               ))}
@@ -61,7 +62,7 @@ const Header: React.FC = () => {
         <Box sx={{ margin: '0 auto' }}>
           <img src="/appLogo.svg" alt="logo" />
         </Box>
-        <Box>
+        <Box onClick={handleProfileClick}>
           <AccountCircleIcon fontSize="large" color="action" />
         </Box>
       </Stack>
