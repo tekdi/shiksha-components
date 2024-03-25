@@ -14,6 +14,7 @@ import { useState } from 'react';
 import '../App.css';
 import { login } from '../services/LoginService';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
   const { t } = useTranslation();
@@ -22,6 +23,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const navigate = useNavigate();
 
   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
@@ -60,6 +62,7 @@ const LoginPage = () => {
         const token = response?.access_token;
         localStorage.setItem('token', JSON.stringify(token));
       }
+      navigate('/dashboard')
     } catch (error) {
       console.error('error', error);
     }

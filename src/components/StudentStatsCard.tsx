@@ -34,6 +34,7 @@ const StudentStatsCard: React.FC<StudentStatsCard> = ({ label1, value1, label2, 
           fontSize="11px"
           fontWeight={600}
           color="#7C766F" //Add color from colorScheme
+          marginBottom={'0px'}
         >
           {label1}
         </Typography>
@@ -42,6 +43,7 @@ const StudentStatsCard: React.FC<StudentStatsCard> = ({ label1, value1, label2, 
           fontWeight={500}
           lineHeight="16px"
           color="#1F1B13" //Add color from colorScheme
+          marginBottom={'5px'}
         >
           {value1}
         </Typography>
@@ -51,6 +53,8 @@ const StudentStatsCard: React.FC<StudentStatsCard> = ({ label1, value1, label2, 
             fontWeight="bold"
             lineHeight="1rem"
             sx={{ color: theme.palette.warning['400'] }}
+            marginBottom={'0px'}
+
           >
             {t('PROFILE.HELD_ON')}
 
