@@ -6,11 +6,13 @@ import customTheme from './customStyles.tsx';
 
 import '@fontsource/poppins/400.css';
 import '@fontsource/poppins/500.css';
+import AttendanceStatusListView from './components/AttendanceStatusListView.tsx';
 
 function App() {
   return (
     <ThemeProvider theme={customTheme}>
-      <AllRoutes />
+      {/* <AllRoutes /> */}
+      <AttendanceStatusListView studentName='Nawaz' isEdit={true} currentStatus='present' />
     </ThemeProvider>
   );
 }

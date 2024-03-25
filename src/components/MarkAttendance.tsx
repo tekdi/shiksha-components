@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
+import { useTranslation } from 'react-i18next';
 //components
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -40,7 +41,7 @@ const ATTENDANCE_ENUM = {
 
 interface MarkAttendanceProps {
     isOpen: boolean,
-    selfAttendance?: boolean,
+    isSelfAttendance?: boolean,
     date: string,
     name?: string,
     currentStatus: string,
@@ -50,13 +51,14 @@ interface MarkAttendanceProps {
 
 const MarkAttendance: React.FC<MarkAttendanceProps> = ({
     isOpen,
-    selfAttendance = true,
+    isSelfAttendance = true,
     date,
     name,
     currentStatus,
     handleClose,
     handleSubmit
 }) => {
+    const { t } = useTranslation();
     const [status, setStatus] = React.useState(currentStatus)
     const theme = useTheme<any>();
     console.log({ name });
@@ -85,7 +87,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
                 sx={{ borderRadius: '16px' }}
             >
                 <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-                    <Typography variant="h2" sx={{ marginBottom: 0 }}>{currentStatus === ATTENDANCE_ENUM.NOT_MARKED ? "Mark Attendance" : "Update Attendance"}</Typography>
+                    <Typography variant="h2" sx={{ marginBottom: 0 }}>{currentStatus === ATTENDANCE_ENUM.NOT_MARKED ? t('COMMON.MARK_ATTENDANCE') : t('COMMON.UPDATE_ATTENDANCE')}</Typography>
                     <Typography variant="h4" sx={{ marginBottom: 0, color: theme.palette.warning["A200"] }}>{date}</Typography>
                 </DialogTitle>
                 {/* <Typography variant="h2">Mark Attendance</Typography> */}
@@ -103,10 +105,10 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
                 </IconButton>
                 <DialogContent dividers>
                     <Box display="flex" flexDirection="row" justifyContent="space-around" alignItems="center">
-                        {!selfAttendance && <Typography variant="body1">{name}</Typography>}
-                        {getButtonComponent(ATTENDANCE_ENUM.PRESENT, <CheckCircleIcon />, <CheckCircleOutlineIcon />, "Present")}
-                        {getButtonComponent(ATTENDANCE_ENUM.ABSENT, <CancelIcon />, <HighlightOffIcon />, selfAttendance ? "On Leave" : "Absent")}
-                        {selfAttendance && getButtonComponent(ATTENDANCE_ENUM.HALF_DAY, <RemoveCircleIcon />, <RemoveCircleOutlineIcon />, "Half Day")}
+                        {!isSelfAttendance && <Typography variant="body1">{name}</Typography>}
+                        {getButtonComponent(ATTENDANCE_ENUM.PRESENT, <CheckCircleIcon />, <CheckCircleOutlineIcon />, t('ATTENDANCE.PRESENT'))}
+                        {getButtonComponent(ATTENDANCE_ENUM.ABSENT, <CancelIcon />, <HighlightOffIcon />, isSelfAttendance ? t('ATTENDANCE.ON_LEAVE') : t('ATTENDANCE.ABSENT'))}
+                        {isSelfAttendance && getButtonComponent(ATTENDANCE_ENUM.HALF_DAY, <RemoveCircleIcon />, <RemoveCircleOutlineIcon />, t('ATTENDANCE.HALF_DAY'))}
                     </Box>
                 </DialogContent>
                 <DialogActions>
@@ -129,7 +131,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
                             width: '100%',
                         }}
                     >
-                        Save
+                        {currentStatus === ATTENDANCE_ENUM.NOT_MARKED ? t('COMMON.SAVE'):t('COMMON.UPDATE')}
                     </Button>
                 </DialogActions>
             </BootstrapDialog>

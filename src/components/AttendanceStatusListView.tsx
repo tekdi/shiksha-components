@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTheme } from '@mui/material/styles';
+import { useTranslation } from 'react-i18next';
 
 import { Box, Typography } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'; //present
@@ -25,6 +26,7 @@ const AttendanceStatusListView: React.FC<AttendanceStatusListViewProps> = ({
   studentName,
   isEdit=false,
 }) => {
+  const { t } = useTranslation();
   const [status, setStatus] = React.useState(currentStatus);
   const theme = useTheme<any>();
 
@@ -42,11 +44,11 @@ const AttendanceStatusListView: React.FC<AttendanceStatusListViewProps> = ({
       <Typography variant="body1" marginRight="auto">{studentName}</Typography>
       <Box display="flex" flexDirection="column" alignItems="center" p={2} onClick={()=>isEdit ? setStatus(ATTENDANCE_ENUM.PRESENT): null}>
         {status === ATTENDANCE_ENUM.PRESENT ? <CheckCircleIcon /> : <CheckCircleOutlineIcon />}
-        <Typography variant='h6' marginTop={1} sx={{color:()=>theme.palette.warning[400]}}>Present</Typography>
+        <Typography variant='h6' marginTop={1} sx={{color:()=>theme.palette.warning[400]}}>{t('ATTENDANCE.PRESENT')}</Typography>
       </Box>
       <Box display="flex" flexDirection="column" alignItems="center" p={2} onClick={()=>isEdit ? setStatus(ATTENDANCE_ENUM.ABSENT): null}>
         {status === ATTENDANCE_ENUM.ABSENT ? <CancelIcon /> : <HighlightOffIcon />}
-        <Typography variant='h6' marginTop={1} sx={{color:()=>theme.palette.warning[400]}}>Absent</Typography>
+        <Typography variant='h6' marginTop={1} sx={{color:()=>theme.palette.warning[400]}}>{t('ATTENDANCE.ABSENT')}</Typography>
       </Box>
     </Box>
   );
