@@ -1,4 +1,3 @@
-
 {
   "COMMON": {
     "LANGUAGE": "Language",
@@ -19,17 +18,16 @@
   "ATTENDANCE": {
     "TOTAL_STUDENTS": "Total No of Students: {{count}}"
   },
-  "PROFILE":
-  {
-    "EDIT_PROFILE":"Edit Profile",
-    "CONTACT_INFORMATION":"Contact information",
-    "PHONE":"Phone",
-    "EMAIL_ID":"Emali ID",
-    "BIO":"Bio",
-    "INTERVIEW_TEST_SCORES":"Interview & Test Scores",
-    "UPDATE_PICTURE":"Update Picture",
-    "FULL_NAME":"Full Name",
-    "LOCATION":"Location",
-    "UPDATE":"Update"
+  "PROFILE": {
+    "EDIT_PROFILE": "Edit Profile",
+    "CONTACT_INFORMATION": "Contact information",
+    "PHONE": "Phone",
+    "EMAIL_ID": "Emali ID",
+    "BIO": "Bio",
+    "INTERVIEW_TEST_SCORES": "Interview & Test Scores",
+    "UPDATE_PICTURE": "Update Picture",
+    "FULL_NAME": "Full Name",
+    "LOCATION": "Location",
+    "UPDATE": "Update"
   }
 }

@@ -4,9 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { TextField } from '@mui/material';
 import Dashboard from '../pages/Dashboard';
 
-const LoginPage = lazy(() => import("../pages/LoginPage"));
-const Profile = lazy(() => import("../pages/Profile"));
-const StudentDetails = lazy(() => import("../pages/StudentBasicDetails"));
+const LoginPage = lazy(() => import('../pages/LoginPage'));
+const Profile = lazy(() => import('../pages/Profile'));
+const StudentDetails = lazy(() => import('../pages/StudentBasicDetails'));
 
 function AllRoutes(): JSX.Element {
   const { t } = useTranslation();

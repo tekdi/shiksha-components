@@ -144,7 +144,7 @@ const customTheme = createTheme({
       fontSize: '14px',
       fontWeight: 500
     }
-  },
+  }
 });
 
 export default customTheme;

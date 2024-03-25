@@ -1,9 +1,9 @@
-import React from "react";
-import { useState } from "react";
-import { useTranslation } from "react-i18next";
+import React from 'react';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
-import StudentStatsCard from "../components/StudentStatsCard.tsx";
+import StudentStatsCard from '../components/StudentStatsCard.tsx';
 import {
   TextField,
   Button,
@@ -11,18 +11,19 @@ import {
   Box,
   Autocomplete,
   IconButton,
-  FormHelperText,
-} from "@mui/material";
-import Header from "../components/Header.tsx";
-import Modal from "@mui/material/Modal";
-import CloseIcon from "@mui/icons-material/Close";
-import MailOutlineIcon from '@mui/icons-material/MailOutline';const Profile = () => {
+  FormHelperText
+} from '@mui/material';
+import Header from '../components/Header.tsx';
+import Modal from '@mui/material/Modal';
+import CloseIcon from '@mui/icons-material/Close';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+const Profile = () => {
   const { t } = useTranslation();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [bio, setBio] = useState<string>(
-    "Teaching for a decade, my mission is to make math enjoyable and accessible, turning each lesson into a mathematical adventure."
+    'Teaching for a decade, my mission is to make math enjoyable and accessible, turning each lesson into a mathematical adventure.'
   );
 
   const handleBioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,55 +35,55 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';const Profile = ()
   const charCount = bio.length;
 
   const style = {
-    position: "absolute" as "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
     width: 300,
-    bgcolor: "background.paper",
-    border: "2px solid #000",
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
     p: 4,
-    textAlign: "center",
+    textAlign: 'center'
   };
-  const options = ["Option 1", "Option 2"];
+  const options = ['Option 1', 'Option 2'];
   const [value, setValue] = React.useState<string | null>(options[0]);
-  const [inputValue, setInputValue] = React.useState("");
+  const [inputValue, setInputValue] = React.useState('');
 
   return (
     <Box display="flex" flexDirection="column">
       <Header />
-      <Box display="flex" flexDirection="column" padding={2} gap={"10px"}>
+      <Box display="flex" flexDirection="column" padding={2} gap={'10px'}>
         <Box
           sx={{
-            flex: "1",
-            textAlign: "center",
-            border: "2px solid #D0C5B4",
-            marginLeft: "19px",
+            flex: '1',
+            textAlign: 'center',
+            border: '2px solid #D0C5B4',
+            marginLeft: '19px'
           }}
-          width={"328px"}
-          height={"120px"}
-          borderRadius={"12px"}
-          border={"1px"}
+          width={'328px'}
+          height={'120px'}
+          borderRadius={'12px'}
+          border={'1px'}
           bgcolor="white"
           display="flex"
           flexDirection="row"
         >
           <img
-            src={"/sample_user.svg"}
+            src={'/sample_user.svg'}
             alt="Sample Image"
-            style={{ width: "117px", height: "120px" }}
+            style={{ width: '117px', height: '120px' }}
           />
           <Box
             sx={{
-              width: "123px",
-              height: "40px",
+              width: '123px',
+              height: '40px'
               // textAlign:"center"
             }}
           >
             <Typography
               variant="h2"
               sx={{
-                marginTop: "35px",
+                marginTop: '35px'
               }}
             >
               Sushmita Pali
@@ -93,119 +94,99 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';const Profile = ()
         <Button
           // variant="contained"
           sx={{
-            width: "328px",
-            height: "40px",
-            padding: "10px 24px 10px 16px",
-            gap: "8px",
-            borderRadius: "12px",
-            marginLeft: "19px",
-            marginTop: "10px",
-            flex: "1",
-            textAlign: "center",
-            color: "black",
-            border: "1px solid black",
-            borderColor: "black",
-            backgroundColor: "white",
-            "&:hover": {
-              backgroundColor: "white",
-            },
+            width: '328px',
+            height: '40px',
+            padding: '10px 24px 10px 16px',
+            gap: '8px',
+            borderRadius: '12px',
+            marginLeft: '19px',
+            marginTop: '10px',
+            flex: '1',
+            textAlign: 'center',
+            color: 'black',
+            border: '1px solid black',
+            borderColor: 'black',
+            backgroundColor: 'white',
+            '&:hover': {
+              backgroundColor: 'white'
+            }
           }}
           startIcon={<CreateOutlinedIcon />}
           onClick={handleOpen}
         >
-          {t("PROFILE.EDIT_PROFILE")}
+          {t('PROFILE.EDIT_PROFILE')}
         </Button>
 
-        <Box width="177px" height="120px" sx={{ flex: "1" }}>
+        <Box width="177px" height="120px" sx={{ flex: '1' }}>
           <Typography
             variant="h3"
             style={{
-              textAlign: "left",
+              textAlign: 'left'
             }}
           >
-            {t("PROFILE.CONTACT_INFORMATION")}
-          </Typography>{" "}
-          <Box
-            width="177px"
-            height="120px"
-            display="flex"
-            flexDirection="column"
-            gap="10px"
-          >
-            <Box
-              width="140px"
-              height="38px"
-              display="flex"
-              flexDirection="row"
-              gap="10px"
-            >
+            {t('PROFILE.CONTACT_INFORMATION')}
+          </Typography>{' '}
+          <Box width="177px" height="120px" display="flex" flexDirection="column" gap="10px">
+            <Box width="140px" height="38px" display="flex" flexDirection="row" gap="10px">
               <LocalPhoneOutlinedIcon
                 style={{
-                  marginTop: "9px",
+                  marginTop: '9px'
                 }}
               />
               <Typography
                 variant="h4"
                 style={{
-                  letterSpacing: "0.25px",
-                  textAlign: "left",
+                  letterSpacing: '0.25px',
+                  textAlign: 'left'
                 }}
               >
                 8793607919
                 <br />
-                <span style={{ color: "#7C766F" }}> {t("PROFILE.PHONE")}</span>
+                <span style={{ color: '#7C766F' }}> {t('PROFILE.PHONE')}</span>
               </Typography>
             </Box>
-            <Box
-              width="140px"
-              height="38px"
-              display="flex"
-              flexDirection="row"
-              gap="10px"
-            >
+            <Box width="140px" height="38px" display="flex" flexDirection="row" gap="10px">
               <MailOutlineIcon
                 style={{
-                  marginTop: "9px",
+                  marginTop: '9px'
                 }}
               />
               <Typography
                 variant="h4"
                 style={{
-                  letterSpacing: "0.25px",
-                  textAlign: "left",
+                  letterSpacing: '0.25px',
+                  textAlign: 'left'
                 }}
               >
                 user_id@email.com <br />
-                <span style={{ color: "#7C766F" }}>
-                  {t("PROFILE.EMAIL_ID")}
-                </span>
+                <span style={{ color: '#7C766F' }}>{t('PROFILE.EMAIL_ID')}</span>
               </Typography>
             </Box>
           </Box>
         </Box>
-        <Box width="328px" height="108px" sx={{ flex: "1" }}>
+        <Box width="328px" height="108px" sx={{ flex: '1' }}>
           <Typography
             variant="h3"
             style={{
-              letterSpacing: "0.1px",
-              textAlign: "left",
+              letterSpacing: '0.1px',
+              textAlign: 'left'
             }}
           >
-            {t("PROFILE.BIO")}
+            {t('PROFILE.BIO')}
             <br />
-            Teaching for a decade, my mission is to make math enjoyable and
-            accessible, turning each lesson into a mathematical adventure.
+            Teaching for a decade, my mission is to make math enjoyable and accessible, turning each
+            lesson into a mathematical adventure.
           </Typography>
         </Box>
         <Box
           sx={{
-            flex: "1",
-            textAlign: "center",
-            marginTop: "15px",
+            flex: '1',
+            textAlign: 'center',
+            marginTop: '15px'
           }}
           // width={326}
           height={120}
-          borderRadius={"24px"}
+          borderRadius={'24px'}
           bgcolor="#E7F3F8"
           boxShadow={6}
           p={3}
@@ -215,18 +196,12 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';const Profile = ()
           <Typography
             variant="h2"
             style={{
-              textAlign: "left",
+              textAlign: 'left'
             }}
           >
-            {t("PROFILE.INTERVIEW_TEST_SCORES")}
+            {t('PROFILE.INTERVIEW_TEST_SCORES')}
           </Typography>
-          <Box
-            display="flex"
-            flexDirection="row"
-            gap="10px"
-            marginTop="10px"
-            marginLeft="15px"
-          >
+          <Box display="flex" flexDirection="row" gap="10px" marginTop="10px" marginLeft="15px">
             <StudentStatsCard
               label1="Interview Score"
               value1="82%"
@@ -255,16 +230,16 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';const Profile = ()
               display="flex"
               flexDirection="row"
               justifyContent="space-between"
-              alignItems={"center"}
+              alignItems={'center'}
             >
               <Typography
                 variant="h2"
                 style={{
-                  textAlign: "left",
-                  color: "#4D4639",
+                  textAlign: 'left',
+                  color: '#4D4639'
                 }}
               >
-                {t("PROFILE.EDIT_PROFILE")}
+                {t('PROFILE.EDIT_PROFILE')}
               </Typography>
 
               <IconButton
@@ -273,7 +248,7 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';const Profile = ()
                 onClick={handleClose}
                 aria-label="close"
                 style={{
-                  justifyContent: "flex-end",
+                  justifyContent: 'flex-end'
                 }}
               >
                 <CloseIcon />
@@ -281,40 +256,40 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';const Profile = ()
             </Box>
             <Box
               sx={{
-                flex: "1",
-                textAlign: "center",
-                marginLeft: "19px",
+                flex: '1',
+                textAlign: 'center',
+                marginLeft: '19px'
               }}
-              height={"120px"}
-              borderRadius={"12px"}
-              border={"1px"}
+              height={'120px'}
+              borderRadius={'12px'}
+              border={'1px'}
               bgcolor="white"
               display="flex"
               flexDirection="row"
             >
               <img
-                src={"/sample_user.svg"}
+                src={'/sample_user.svg'}
                 alt="Sample Image"
-                style={{ width: "117px", height: "120px" }}
+                style={{ width: '117px', height: '120px' }}
               />
               <Box
                 sx={{
-                  width: "123px",
-                  height: "40px",
+                  width: '123px',
+                  height: '40px'
                 }}
               >
                 <Button
                   sx={{
-                    marginTop: "35px",
-                    textAlign: "center",
+                    marginTop: '35px',
+                    textAlign: 'center'
                   }}
                 >
-                  {t("PROFILE.UPDATE_PICTURE")}
+                  {t('PROFILE.UPDATE_PICTURE')}
                 </Button>
               </Box>
             </Box>
             <TextField
-              label={t("PROFILE.FULL_NAME")}
+              label={t('PROFILE.FULL_NAME')}
               variant="outlined"
               defaultValue="Sushmita Patil"
             />
@@ -328,27 +303,21 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';const Profile = ()
                 setInputValue(newInputValue);
               }}
               options={options}
-              renderInput={(params) => (
-                <TextField {...params} label={t("PROFILE.LOCATION")} />
-              )}
+              renderInput={(params) => <TextField {...params} label={t('PROFILE.LOCATION')} />}
             />
+            <TextField label={t('PROFILE.PHONE')} variant="outlined" defaultValue="+91 000000000" />
             <TextField
-              label={t("PROFILE.PHONE")}
-              variant="outlined"
-              defaultValue="+91 000000000"
-            />
-            <TextField
-              label={t("PROFILE.EMAIL_ID")}
+              label={t('PROFILE.EMAIL_ID')}
               variant="outlined"
               defaultValue="user_id@email.com"
             />
             <Box>
               <TextField
-                label={t("PROFILE.BIO")}
+                label={t('PROFILE.BIO')}
                 multiline
                 rows={4}
                 InputProps={{
-                  inputProps: { maxLength: 150 },
+                  inputProps: { maxLength: 150 }
                 }}
                 value={bio}
                 onChange={handleBioChange}
@@ -356,24 +325,22 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';const Profile = ()
 
                 variant="outlined"
               />
-              <FormHelperText
-                style={{ textAlign: "right" }}
-              >{`${charCount}/150`}</FormHelperText>
+              <FormHelperText style={{ textAlign: 'right' }}>{`${charCount}/150`}</FormHelperText>
             </Box>
-            <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
               <Button
                 sx={{
-                  width: "328px",
-                  height: "40px",
-                  color: "black",
-                  backgroundColor: "#FBBC13",
-                  "&:hover": {
-                    backgroundColor: "#FBBC13",
-                  },
+                  width: '328px',
+                  height: '40px',
+                  color: 'black',
+                  backgroundColor: '#FBBC13',
+                  '&:hover': {
+                    backgroundColor: '#FBBC13'
+                  }
                 }}
                 variant="contained"
               >
-                {t("PROFILE.UPDATE")}
+                {t('PROFILE.UPDATE')}
               </Button>
             </Box>
           </Box>
