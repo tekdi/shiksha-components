@@ -1,11 +1,34 @@
 {
   "COMMON": {
     "LANGUAGE": "Language",
-    "LOADING": "Loading"
+    "LOADING": "Loading",
+    "MARK_MY_ATTENDANCE": "Mark My Attendance",
+    "MARK_STUDENT_ATTENDANCE": "Mark Student Attendance"
   },
   "LOGIN_PAGE": {
     "USERNAME": "Username",
     "PASSWORD": "Password",
-    "LOGIN":"Login"
+    "LOGIN": "Login"
+  },
+  "DASHBOARD": {
+    "HISTORY": "History",
+    "MY_CLASSES": "My Classes",
+    "ADD_NEW_CLASS": "Add New Class"
+  },
+  "ATTENDANCE": {
+    "TOTAL_STUDENTS": "Total No of Students: {{count}}"
+  },
+  "PROFILE": {
+    "EDIT_PROFILE": "Edit Profile",
+    "CONTACT_INFORMATION": "Contact information",
+    "PHONE": "Phone",
+    "EMAIL_ID": "Emali ID",
+    "BIO": "Bio",
+    "INTERVIEW_TEST_SCORES": "Interview & Test Scores",
+    "UPDATE_PICTURE": "Update Picture",
+    "FULL_NAME": "Full Name",
+    "LOCATION": "Location",
+    "UPDATE": "Update",
+    "HELD_ON": "Held on:"
   }
 }

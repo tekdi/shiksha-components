@@ -5,22 +5,23 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import SmartDisplayIcon from '@mui/icons-material/SmartDisplay';
 
-const PREFIX = "CohortCard";
+const PREFIX = 'CohortCard';
 
 const classes = {
   root: `${PREFIX}-root`,
   media: `${PREFIX}-media`,
   content: `${PREFIX}-content`,
-  arrow: `${PREFIX}-arrow`,
+  arrow: `${PREFIX}-arrow`
 };
 
-const Root = styled('div')(({ }) => ({
+const Root = styled('div')(({}) => ({
   [`&.${classes.root}`]: {
     display: 'flex',
     height: 56,
     border: '1px solid #EDE1CF',
     borderRadius: 8,
-    cursor: 'pointer'
+    cursor: 'pointer',
+    backgroundColor: '#FFFFFF'
   },
   [`& .${classes.media}`]: {
     display: 'flex',
@@ -29,25 +30,24 @@ const Root = styled('div')(({ }) => ({
     justifyContent: 'center',
     width: 54,
     height: 56,
-    borderRadius: '8px 0px 0px 8px',
+    borderRadius: '8px 0px 0px 8px'
   },
   [`& .${classes.content}`]: {
     display: 'flex',
     alignItems: 'center',
     fontSize: 16,
     fontWeight: 400,
-    color: "#1F1B13",
-    flexGrow: 1,
+    color: '#1F1B13',
+    flexGrow: 1
   },
   [`& .${classes.arrow}`]: {
     alignSelf: 'center',
     marginLeft: 'auto',
-    height: 12,
-    width: 8,
-    marginRight: 10,
-  },
-}))
-
+    height: '1rem',
+    width: '1rem',
+    marginRight: 10
+  }
+}));
 
 interface CohortCardProps {
   showBackground: boolean;
@@ -56,21 +56,28 @@ interface CohortCardProps {
 }
 
 const CohortCard: React.FC<CohortCardProps> = ({ showBackground, isRemote, cohortName }) => {
-
   return (
     <Root className={classes.root}>
       <CardMedia
         className={classes.media}
-        sx={{backgroundColor: !showBackground ? "#FFFFFF" : "#FFDEA1"}}
-        title="Class Image">
+        sx={{ backgroundColor: !showBackground ? '#FFFFFF' : '#FFDEA1' }}
+        title="Class Image"
+      >
         {isRemote ? <SmartDisplayIcon /> : <ApartmentIcon />}
       </CardMedia>
       <CardContent className={classes.content}>
         <Typography>
-        {!showBackground ? isRemote ? "New Remote Class" : "New Physical Class" : `${cohortName}`}
+          {!showBackground
+            ? isRemote
+              ? 'New Remote Class'
+              : 'New Physical Class'
+            : `${cohortName}`}
         </Typography>
       </CardContent>
-      <ArrowForwardIosIcon className={classes.arrow} sx={{display: showBackground ? 'none' : 'block'}} />
+      <ArrowForwardIosIcon
+        className={classes.arrow}
+        sx={{ display: !showBackground ? 'none' : 'block' }}
+      />
     </Root>
   );
 };
