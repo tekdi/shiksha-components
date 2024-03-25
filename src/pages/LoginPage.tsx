@@ -15,16 +15,25 @@ import '../App.css';
 import { login } from '../services/LoginService';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { useTheme } from '@mui/material/styles';
+import MenuItem from '@mui/material/MenuItem';
+import config from '../config.json';
+
 
 const LoginPage = () => {
-  const { t } = useTranslation();
+  const { t , i18n} = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState(
+    localStorage.getItem('preferredLanguage') || 'EN'
+  );
+  const [language, setLanguage] = useState(selectedLanguage);
   const navigate = useNavigate();
-
+  const theme = useTheme<any>();
   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     const trimmedValue = value.trim();
@@ -67,7 +76,10 @@ const LoginPage = () => {
       console.error('error', error);
     }
   };
-
+  const handleChange = (event: SelectChangeEvent) => {
+    setLanguage(event.target.value);
+    i18n.changeLanguage(event.target.value);
+  };
   return (
     <Box display="flex" flexDirection="column" height="100vh" width="100vw" bgcolor={'black'}>
       <Box
@@ -93,7 +105,35 @@ const LoginPage = () => {
         boxShadow={'0px -5px 15px -6px rgba(0,0,0,0.1)'}
         justifyContent={'center'}
       >
-        <Box position={'relative'}>
+        
+        <Box position={'relative'}
+        >
+        <Box mt={'0.5rem'}>
+          <FormControl sx={{ m: 1 }}>
+            <Select
+              className="SelectLanguages"
+              value={language}
+              onChange={handleChange}
+              displayEmpty
+              style={{
+                borderRadius: '0.5rem',
+                color: theme.palette.warning['200'],
+                width: '5rem',
+                marginBottom: '0rem',
+
+              }}
+            
+            >
+              {config?.languages.map((lang, index) => (
+                <MenuItem 
+               
+                value={lang.code} key={lang.code}>
+                  {lang.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
           <Box marginY={'1rem'}>
             <FormControl variant="outlined" fullWidth={true} className="CssTextField">
               <InputLabel htmlFor="outlined-adornment-username">
