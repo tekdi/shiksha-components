@@ -1,9 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { MdOutlineModeEditOutline } from "react-icons/md";
-import { MdOutlinePhone } from "react-icons/md";
-import { MdOutlineMail } from "react-icons/md";
+import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
+import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 import StudentStatsCard from "../components/StudentStatsCard.tsx";
 import {
   TextField,
@@ -17,8 +16,7 @@ import {
 import Header from "../components/Header.tsx";
 import Modal from "@mui/material/Modal";
 import CloseIcon from "@mui/icons-material/Close";
-
-const Profile = () => {
+import MailOutlineIcon from '@mui/icons-material/MailOutline';const Profile = () => {
   const { t } = useTranslation();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -112,7 +110,7 @@ const Profile = () => {
               backgroundColor: "white",
             },
           }}
-          startIcon={<MdOutlineModeEditOutline />}
+          startIcon={<CreateOutlinedIcon />}
           onClick={handleOpen}
         >
           {t("PROFILE.EDIT_PROFILE")}
@@ -141,7 +139,7 @@ const Profile = () => {
               flexDirection="row"
               gap="10px"
             >
-              <MdOutlinePhone
+              <LocalPhoneOutlinedIcon
                 style={{
                   marginTop: "9px",
                 }}
@@ -165,7 +163,7 @@ const Profile = () => {
               flexDirection="row"
               gap="10px"
             >
-              <MdOutlineMail
+              <MailOutlineIcon
                 style={{
                   marginTop: "9px",
                 }}
@@ -254,7 +252,6 @@ const Profile = () => {
           <Box sx={style} gap="10px" display="flex" flexDirection="column">
             <Box
               component="h2"
-              id="modal-modal-title"
               display="flex"
               flexDirection="row"
               justifyContent="space-between"
@@ -317,7 +314,6 @@ const Profile = () => {
               </Box>
             </Box>
             <TextField
-              id="outlined-basic"
               label={t("PROFILE.FULL_NAME")}
               variant="outlined"
               defaultValue="Sushmita Patil"
@@ -331,27 +327,23 @@ const Profile = () => {
               onInputChange={(event, newInputValue) => {
                 setInputValue(newInputValue);
               }}
-              id="controllable-states-demo"
               options={options}
               renderInput={(params) => (
                 <TextField {...params} label={t("PROFILE.LOCATION")} />
               )}
             />
             <TextField
-              id="outlined-basic"
               label={t("PROFILE.PHONE")}
               variant="outlined"
               defaultValue="+91 000000000"
             />
             <TextField
-              id="outlined-basic"
               label={t("PROFILE.EMAIL_ID")}
               variant="outlined"
               defaultValue="user_id@email.com"
             />
             <Box>
               <TextField
-                id="outlined-multiline-static"
                 label={t("PROFILE.BIO")}
                 multiline
                 rows={4}

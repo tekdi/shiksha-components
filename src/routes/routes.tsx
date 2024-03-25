@@ -16,7 +16,6 @@ function AllRoutes(): JSX.Element {
         <Routes>
           <Route path="/profile" element={<Profile />} />
           <Route path="/" element={<LoginPage />} />
-          <Route path="/" element={<LoginPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </Suspense>
