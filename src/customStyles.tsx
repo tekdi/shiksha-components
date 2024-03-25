@@ -1,4 +1,14 @@
-import { createTheme } from '@mui/material/styles';
+import { PaletteColor, PaletteColorOptions, createTheme } from '@mui/material/styles';
+// declare module "@mui/material/styles" {
+//   interface Palette {
+//     neutrals: PaletteColor;
+//     outLines: PaletteColor;
+//   }
+//   interface PaletteOptions {
+//     neutrals: PaletteColorOptions;
+//     outLines: PaletteColorOptions;
+//   }
+// }
 
 const customTheme = createTheme({
   palette: {
@@ -94,7 +104,7 @@ const customTheme = createTheme({
     }
   },
   typography: {
-    fontFamily: ['Roboto', '"Helvetica Neue"', 'Arial', 'sans-serif', 'Poppins'].join(','),
+    fontFamily: ['Poppins', 'sans-serif'].join(','),
     h1: {
       fontSize: '22px',
       fontWeight: 400,
@@ -151,7 +161,7 @@ const customTheme = createTheme({
     button: {
       textTransform: 'none',
       fontSize: '14px',
-      fontWeight: 500
+      fontWeight: 600
     }
   }
 });
