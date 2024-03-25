@@ -42,7 +42,7 @@ const Header: React.FC = () => {
           <InputLabel>{t('COMMON.LANGUAGE')}</InputLabel>
           <Select
             value={language}
-            label={t("COMMON.LANGUAGE")}
+            label={t('COMMON.LANGUAGE')}
             style={{
               borderRadius: '20px',
               color: theme.palette.warning['200'],

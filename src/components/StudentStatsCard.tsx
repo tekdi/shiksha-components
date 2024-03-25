@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTheme } from '@mui/material/styles';
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 
 import { Box, Stack, Typography } from '@mui/material';
 interface StudentStatsCard {
@@ -25,12 +25,12 @@ const StudentStatsCard: React.FC<StudentStatsCard> = ({ label1, value1, label2, 
       justifyContent="flex-start"
       alignItems="center"
       bgcolor="white"
-     margin="0px"
+      margin="0px"
       textAlign="left"
     >
       <Stack sx={{ padding: '1rem' }}>
         <Typography
-        marginTop={'10px'}
+          marginTop={'10px'}
           fontSize="11px"
           fontWeight={600}
           color="#7C766F" //Add color from colorScheme
@@ -52,7 +52,7 @@ const StudentStatsCard: React.FC<StudentStatsCard> = ({ label1, value1, label2, 
             lineHeight="1rem"
             sx={{ color: theme.palette.warning['400'] }}
           >
-            {t("PROFILE.HELD_ON")}
+            {t('PROFILE.HELD_ON')}
 
             {value2}
           </Typography>

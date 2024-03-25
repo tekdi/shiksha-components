@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
@@ -17,6 +17,8 @@ import Header from '../components/Header.tsx';
 import Modal from '@mui/material/Modal';
 import CloseIcon from '@mui/icons-material/Close';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import { getUser } from '../services/profileService.ts';
+
 const Profile = () => {
   const { t } = useTranslation();
   const [open, setOpen] = React.useState(false);
@@ -35,20 +37,31 @@ const Profile = () => {
   const charCount = bio.length;
 
   const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
     width: 300,
-    bgcolor: "warning.A400",
-    border: "2px solid #000",
+    bgcolor: 'warning.A400',
+    border: '2px solid #000',
     p: 4,
     textAlign: 'center'
   };
   const options = ['Option 1', 'Option 2'];
   const [value, setValue] = React.useState<string | null>(options[0]);
   const [inputValue, setInputValue] = React.useState('');
-
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const response = await getUser();
+        console.log(response);
+      } catch (error) {
+        console.error('Error fetching  user details:', error);
+      } finally {
+      }
+    };
+    fetchUserDetails();
+  }, []);
   return (
     <Box display="flex" flexDirection="column">
       <Header />
@@ -60,10 +73,10 @@ const Profile = () => {
             border: '2px solid #D0C5B4',
             marginLeft: '19px'
           }}
-          width={"328px"}
-          height={"120px"}
-          borderRadius={"12px"}
-          border={"1px"}
+          width={'328px'}
+          height={'120px'}
+          borderRadius={'12px'}
+          border={'1px'}
           bgcolor="warning.A400"
           display="flex"
           flexDirection="row"
@@ -94,22 +107,22 @@ const Profile = () => {
         <Button
           // variant="contained"
           sx={{
-            width: "328px",
-            height: "40px",
-            padding: "10px 24px 10px 16px",
-            gap: "8px",
-            borderRadius: "12px",
-            marginLeft: "19px",
-            marginTop: "10px",
-            flex: "1",
-            textAlign: "center",
-            color: "black",
-            border: "1px solid black",
-            borderColor: "black",
-            backgroundColor: "warning.A400",
-            "&:hover": {
-              backgroundColor: "warning.A400",
-            },
+            width: '328px',
+            height: '40px',
+            padding: '10px 24px 10px 16px',
+            gap: '8px',
+            borderRadius: '12px',
+            marginLeft: '19px',
+            marginTop: '10px',
+            flex: '1',
+            textAlign: 'center',
+            color: 'black',
+            border: '1px solid black',
+            borderColor: 'black',
+            backgroundColor: 'warning.A400',
+            '&:hover': {
+              backgroundColor: 'warning.A400'
+            }
           }}
           startIcon={<CreateOutlinedIcon />}
           onClick={handleOpen}
@@ -260,9 +273,9 @@ const Profile = () => {
                 textAlign: 'center',
                 marginLeft: '19px'
               }}
-              height={"120px"}
-              borderRadius={"12px"}
-              border={"1px"}
+              height={'120px'}
+              borderRadius={'12px'}
+              border={'1px'}
               bgcolor="warning.A400"
               display="flex"
               flexDirection="row"
@@ -330,13 +343,13 @@ const Profile = () => {
             <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
               <Button
                 sx={{
-                  width: "328px",
-                  height: "40px",
-                  color: "black",
-                  backgroundColor: "containedSecondary",
-                  "&:hover": {
-                    backgroundColor: "containedSecondary",
-                  },
+                  width: '328px',
+                  height: '40px',
+                  color: 'black',
+                  backgroundColor: 'containedSecondary',
+                  '&:hover': {
+                    backgroundColor: 'containedSecondary'
+                  }
                 }}
                 variant="contained"
               >
