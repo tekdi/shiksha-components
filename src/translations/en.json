@@ -4,7 +4,10 @@
     "LOADING": "Loading",
     "MARK_MY_ATTENDANCE": "Mark My Attendance",
     "MARK_STUDENT_ATTENDANCE": "Mark Student Attendance",
+    "MARK_ATTENDANCE": "Mark Attendance",
+    "UPDATE_ATTENDANCE": "Update Attendance",
     "SAVE": "Save",
+    "UPDATE": "Update",
     "CLEAR_ALL": "Clear All"
   },
   "LOGIN_PAGE": {
@@ -18,7 +21,11 @@
     "ADD_NEW_CLASS": "Add New Class"
   },
   "ATTENDANCE": {
-    "TOTAL_STUDENTS": "Total No of Students: {{count}}"
+    "TOTAL_STUDENTS": "Total No of Students: {{count}}",
+    "PRESENT": "Present",
+    "ABSENT": "Absent",
+    "HALF_DAY": "Half Day",
+    "ON_LEAVE": "On Leave"
   },
   "PROFILE": {
     "EDIT_PROFILE": "Edit Profile",
@@ -30,7 +37,6 @@
     "UPDATE_PICTURE": "Update Picture",
     "FULL_NAME": "Full Name",
     "LOCATION": "Location",
-    "UPDATE": "Update",
     "HELD_ON": "Held on:"
   }
 }

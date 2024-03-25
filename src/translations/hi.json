@@ -3,8 +3,11 @@
     "LANGUAGE": "भाषा",
     "MARK_MY_ATTENDANCE": "मेरी उपस्थिति चिह्नित करें",
     "MARK_STUDENT_ATTENDANCE": "छात्र उपस्थिति चिह्नित करें",
+    "MARK_ATTENDANCE": "उपस्थिति चिह्नित करें",
+    "UPDATE_ATTENDANCE": "उपस्थिति अपडेट करें",
     "LOADING": "लोडिंग",
     "SAVE": "सहेजें",
+    "UPDATE": "अपडेट",
     "CLEAR_ALL": "सभी हटाएं"
   },
   "LOGIN_PAGE": {
@@ -18,7 +21,11 @@
     "ADD_NEW_CLASS": "नई कक्षा जोड़ें"
   },
   "ATTENDANCE": {
-    "TOTAL_STUDENTS": "कुल छात्रों की संख्या: {{count}}"
+    "TOTAL_STUDENTS": "कुल छात्रों की संख्या: {{count}}",
+    "PRESENT": "उपस्थित",
+    "ABSENT": "अनुपस्थित",
+    "HALF_DAY": "आधा दिन",
+    "ON_LEAVE": "छुट्टी पर"
   },
   "PROFILE": {
     "EDIT_PROFILE": "प्रोफ़ाइल संपादित करें",
