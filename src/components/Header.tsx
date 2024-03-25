@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
@@ -34,38 +33,39 @@ const Header: React.FC = () => {
         sx={{ minWidth: 360 }}
         direction="row"
         justifyContent={'space-between'}
-        // bgcolor="white"
-        padding={'1rem'}
-        height="auto"
-      >
-        <FormControl>
-          <InputLabel>{t('COMMON.LANGUAGE')}</InputLabel>
-          <Select
-            value={language}
-            label={t('COMMON.LANGUAGE')}
-            style={{
-              borderRadius: '20px',
-              color: theme.palette.warning['200'],
-              width: '5rem',
-              height: '0.5 rem'
-            }}
-            onChange={handleChange}
-          >
-            {config?.languages.map((lang, index) => (
-              <MenuItem value={lang.code} key={index} id={`lang-${lang.code}`}>
-                {lang.code}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        alignItems={'center'}
+        // padding={"1rem"}
+        height="auto">
+        <Box mt={'0.5rem'}>
+          <FormControl sx={{ m: 1 }}>
+            <Select
+              value={language}
+              onChange={handleChange}
+              displayEmpty
+              inputProps={{ 'aria-label': 'Without label' }}
+              style={{
+                borderRadius: '0.5rem',
+                color: theme.palette.warning['200'],
+                width: '5rem',
+                height: 'auto',
+                marginBottom: '0rem'
+              }}>
+              {config?.languages.map((lang, index) => (
+                <MenuItem value={lang.code} key={index} id={`lang-${lang.code}`}>
+                  {lang.code}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
         <Box sx={{ margin: '0 auto' }}>
           <img src="/appLogo.svg" alt="logo" />
         </Box>
-        <Box onClick={handleProfileClick}>
+        <Box>
           <AccountCircleIcon fontSize="large" color="action" />
         </Box>
       </Stack>
-      <Divider sx={{ borderBottomWidth: '0.25rem' }} />
+      <Divider sx={{ borderBottomWidth: '0.15rem' }} />
     </>
   );
 };
