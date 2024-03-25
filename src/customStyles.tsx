@@ -104,7 +104,7 @@ const customTheme = createTheme({
     }
   },
   typography: {
-    fontFamily: ['Poppins', 'sans-serif'].join(','),
+    fontFamily: 'Poppins, sans-serif',
     h1: {
       fontSize: '22px',
       fontWeight: 400,

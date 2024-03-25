@@ -20,7 +20,7 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
   const theme = useTheme<any>();
   return (
     <Box
-      width="100vw"
+      // width="100vw"
       height="4.5rem"
       gap="1rem"
       borderTop="1px solid #7F7667" //Add color from colorScheme

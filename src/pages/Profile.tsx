@@ -20,18 +20,17 @@ import CloseIcon from '@mui/icons-material/Close';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import { getUser } from '../services/profileService.ts';
 import { useTheme } from '@mui/material/styles';
-import default_user from '../../public/default_user.png'
+import default_user from '../../public/default_user.png';
 import { decodeToken } from '../utils/Helper';
-
 
 const Profile = () => {
   interface UserData {
     id: number;
     name: string;
     role: string;
-    district:string;
-    state:string;
-    email:string
+    district: string;
+    state: string;
+    email: string;
   }
   interface CustomField {
     fieldId: string;
@@ -80,16 +79,14 @@ const Profile = () => {
       const token = localStorage.getItem('token');
       try {
         if (token) {
-       
-            const payload= decodeToken(token)
-            const xHasuraUserId = payload['https://hasura.io/jwt/claims']['x-hasura-user-id'];
-           // console.log(xHasuraUserId);
-            const response = await getUser(xHasuraUserId);
-            const userDataFromJson = response?.result?.userData;
-            setUserData(userDataFromJson);
-            setCustomFieldsData(response?.result?.customFields);
-            console.log(response);
-          
+          const payload = decodeToken(token);
+          const xHasuraUserId = payload['https://hasura.io/jwt/claims']['x-hasura-user-id'];
+          // console.log(xHasuraUserId);
+          const response = await getUser(xHasuraUserId);
+          const userDataFromJson = response?.result?.userData;
+          setUserData(userDataFromJson);
+          setCustomFieldsData(response?.result?.customFields);
+          console.log(response);
         }
       } catch (error) {
         console.error('Error fetching  user details:', error);
@@ -114,7 +111,8 @@ const Profile = () => {
           border={'1px'}
           bgcolor="warning.A400"
           display="flex"
-          flexDirection="row">
+          flexDirection="row"
+        >
           <img
             src={default_user}
             alt="user"
@@ -124,12 +122,14 @@ const Profile = () => {
             sx={{
               width: '123px',
               height: '40px'
-            }}>
+            }}
+          >
             <Typography
               variant="h2"
               sx={{
                 marginTop: '35px'
-              }}>
+              }}
+            >
               {userData?.name}
               <br />
               {userData?.role}
@@ -160,7 +160,8 @@ const Profile = () => {
             }
           }}
           startIcon={<CreateOutlinedIcon />}
-          onClick={handleOpen}>
+          onClick={handleOpen}
+        >
           {t('PROFILE.EDIT_PROFILE')}
         </Button>
 
@@ -170,7 +171,8 @@ const Profile = () => {
             style={{
               textAlign: 'left',
               color: theme.palette.warning['400']
-            }}>
+            }}
+          >
             {t('PROFILE.CONTACT_INFORMATION')}
           </Typography>{' '}
           <Box width="177px" height="120px" display="flex" flexDirection="column" gap="10px">
@@ -186,7 +188,8 @@ const Profile = () => {
                   style={{
                     letterSpacing: '0.25px',
                     textAlign: 'left'
-                  }}>
+                  }}
+                >
                   8793607919
                 </Typography>
                 <Typography
@@ -194,7 +197,8 @@ const Profile = () => {
                   style={{
                     textAlign: 'left',
                     color: theme.palette.warning['400']
-                  }}>
+                  }}
+                >
                   {t('PROFILE.PHONE')}
                 </Typography>
               </Box>
@@ -212,7 +216,8 @@ const Profile = () => {
                   style={{
                     letterSpacing: '0.25px',
                     textAlign: 'left'
-                  }}>
+                  }}
+                >
                   {userData?.email}
                 </Typography>
                 <Typography
@@ -220,7 +225,8 @@ const Profile = () => {
                   style={{
                     textAlign: 'left',
                     color: theme.palette.warning['400']
-                  }}>
+                  }}
+                >
                   {t('PROFILE.EMAIL_ID')}
                 </Typography>
               </Box>
@@ -238,7 +244,8 @@ const Profile = () => {
                     style={{
                       textAlign: 'left',
                       color: theme.palette.warning['400']
-                    }}>
+                    }}
+                  >
                     {field.label}:
                   </Typography>{' '}
                   <Typography
@@ -246,7 +253,8 @@ const Profile = () => {
                     style={{
                       letterSpacing: '0.25px',
                       textAlign: 'left'
-                    }}>
+                    }}
+                  >
                     {field.value}
                   </Typography>
                 </Box>
@@ -262,7 +270,8 @@ const Profile = () => {
               letterSpacing: '0.1px',
               textAlign: 'left',
               color: theme.palette.warning['400']
-            }}>
+            }}
+          >
             {t('PROFILE.BIO')}
           </Typography>
 
@@ -271,7 +280,8 @@ const Profile = () => {
             style={{
               letterSpacing: '0.1px',
               textAlign: 'left'
-            }}>
+            }}
+          >
             Teaching for a decade, my mission is to make math enjoyable and accessible, turning each
             lesson into a mathematical adventure.
           </Typography>
@@ -289,12 +299,14 @@ const Profile = () => {
           boxShadow={6}
           p={3}
           display="flex"
-          flexDirection="column">
+          flexDirection="column"
+        >
           <Typography
             variant="h2"
             style={{
               textAlign: 'left'
-            }}>
+            }}
+          >
             {t('PROFILE.INTERVIEW_TEST_SCORES')}
           </Typography>
           <Box display="flex" flexDirection="row" gap="10px" marginTop="10px" marginLeft="15px">
@@ -318,7 +330,8 @@ const Profile = () => {
           open={open}
           onClose={handleClose}
           aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description">
+          aria-describedby="modal-modal-description"
+        >
           <Box sx={style} gap="10px" display="flex" flexDirection="column">
             <Box
               sx={{
@@ -326,13 +339,15 @@ const Profile = () => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 mb: 2
-              }}>
+              }}
+            >
               <Typography
                 variant="h2"
                 style={{
                   textAlign: 'left',
                   color: '#4D4639'
-                }}>
+                }}
+              >
                 {t('PROFILE.EDIT_PROFILE')}
               </Typography>
 
@@ -343,14 +358,16 @@ const Profile = () => {
                 aria-label="close"
                 style={{
                   justifyContent: 'flex-end'
-                }}>
+                }}
+              >
                 <CloseIcon />
               </IconButton>
             </Box>
             <Box
               style={{
                 overflowY: 'auto'
-              }}>
+              }}
+            >
               <Box
                 sx={{
                   flex: '1',
@@ -362,21 +379,21 @@ const Profile = () => {
                 border={'1px'}
                 bgcolor="warning.A400"
                 display="flex"
-                flexDirection="row">
-                <img
-                  src={default_user}
-                  alt="user"
-                />
+                flexDirection="row"
+              >
+                <img src={default_user} alt="user" />
                 <Box
                   sx={{
                     width: '123px',
                     height: '40px'
-                  }}>
+                  }}
+                >
                   <Button
                     sx={{
                       marginTop: '35px',
                       textAlign: 'center'
-                    }}>
+                    }}
+                  >
                     {t('PROFILE.UPDATE_PICTURE')}
                   </Button>
                 </Box>
@@ -453,7 +470,8 @@ const Profile = () => {
                     backgroundColor: 'containedSecondary'
                   }
                 }}
-                variant="contained">
+                variant="contained"
+              >
                 {t('PROFILE.UPDATE')}
               </Button>
             </Box>

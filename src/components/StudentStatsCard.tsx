@@ -54,7 +54,6 @@ const StudentStatsCard: React.FC<StudentStatsCard> = ({ label1, value1, label2, 
             lineHeight="1rem"
             sx={{ color: theme.palette.warning['400'] }}
             marginBottom={'0px'}
-
           >
             {t('PROFILE.HELD_ON')}
 

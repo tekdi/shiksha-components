@@ -20,9 +20,8 @@ import { useTheme } from '@mui/material/styles';
 import MenuItem from '@mui/material/MenuItem';
 import config from '../config.json';
 
-
 const LoginPage = () => {
-  const { t , i18n} = useTranslation();
+  const { t, i18n } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -71,7 +70,7 @@ const LoginPage = () => {
         const token = response?.access_token;
         localStorage.setItem('token', JSON.stringify(token));
       }
-      navigate('/dashboard')
+      navigate('/dashboard');
     } catch (error) {
       console.error('error', error);
     }
@@ -81,16 +80,16 @@ const LoginPage = () => {
     i18n.changeLanguage(event.target.value);
   };
   return (
-    <Box display="flex" flexDirection="column" height="100vh" width="100vw" bgcolor={'black'}>
+    <Box display="flex" flexDirection="column" bgcolor={'black'}>
       <Box
         display={'flex'}
         flexGrow={1}
         bgcolor="black"
         overflow="auto"
-        height="30vh"
         alignItems={'center'}
         justifyContent={'center'}
         zIndex={99}
+        sx={{ margin: '32px 0' }}
       >
         <img src={appLogo} />
       </Box>
@@ -99,41 +98,36 @@ const LoginPage = () => {
         display={'flex'}
         bgcolor="white"
         overflow="auto"
-        height="70vh"
+        height="auto"
         borderRadius={'2rem 2rem 0 0'}
         zIndex={99}
-        boxShadow={'0px -5px 15px -6px rgba(0,0,0,0.1)'}
+        // boxShadow={'0px -5px 15px -6px rgba(0,0,0,0.1)'}
         justifyContent={'center'}
+        p={'2rem'}
       >
-        
-        <Box position={'relative'}
-        >
-        <Box mt={'0.5rem'}>
-          <FormControl sx={{ m: 1 }}>
-            <Select
-              className="SelectLanguages"
-              value={language}
-              onChange={handleChange}
-              displayEmpty
-              style={{
-                borderRadius: '0.5rem',
-                color: theme.palette.warning['200'],
-                width: '5rem',
-                marginBottom: '0rem',
-
-              }}
-            
-            >
-              {config?.languages.map((lang, index) => (
-                <MenuItem 
-               
-                value={lang.code} key={lang.code}>
-                  {lang.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Box>
+        <Box position={'relative'}>
+          <Box mt={'0.5rem'}>
+            <FormControl sx={{ m: '2rem 0 1rem' }}>
+              <Select
+                className="SelectLanguages"
+                value={language}
+                onChange={handleChange}
+                displayEmpty
+                style={{
+                  borderRadius: '0.5rem',
+                  color: theme.palette.warning['200'],
+                  width: 'auto',
+                  marginBottom: '0rem'
+                }}
+              >
+                {config?.languages.map((lang) => (
+                  <MenuItem value={lang.code} key={lang.code}>
+                    {lang.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
           <Box marginY={'1rem'}>
             <FormControl variant="outlined" fullWidth={true} className="CssTextField">
               <InputLabel htmlFor="outlined-adornment-username">
@@ -180,7 +174,7 @@ const LoginPage = () => {
           <Box
             alignContent={'center'}
             textAlign={'center'}
-            position={'absolute'}
+            marginTop={'1rem'}
             bottom={'1rem'}
             width={'100%'}
           >
@@ -189,17 +183,6 @@ const LoginPage = () => {
               fullWidth={true}
               onClick={(event) => loginButtonClick(event)}
               disabled={isButtonDisabled}
-              // style={{
-              //   ...buttonStyle,
-              //   width: '100%',
-              //   height: 'auto',
-              //   left: 'calc(50% - 50%)',
-              //   position: 'absolute',
-              //   borderRadius: 100,
-              //   bottom: '50px',
-              //   alignContent: 'center',
-              //   padding: '8px'
-              // }}
             >
               {t('LOGIN_PAGE.LOGIN')}
             </Button>

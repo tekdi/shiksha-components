@@ -144,11 +144,11 @@ const Dashboard: React.FC<DashboardProps> = () => {
                 </Box>
               </Box>
               <Typography>{t('ATTENDANCE.TOTAL_STUDENTS')}</Typography>
-              <AttendanceStatusListView studentName={'Mark All'} />
-              <AttendanceStatusListView studentName={'Ajay'} />
-              <AttendanceStatusListView studentName={'Vijay'} />
-              <AttendanceStatusListView studentName={'Deepak'} />
-              <AttendanceStatusListView studentName={'Vinod'} />
+              <AttendanceStatusListView studentName={'Mark All'} currentStatus="notmarked" />
+              <AttendanceStatusListView studentName={'Ajay'} currentStatus="notmarked" />
+              <AttendanceStatusListView studentName={'Vijay'} currentStatus="notmarked" />
+              <AttendanceStatusListView studentName={'Deepak'} currentStatus="notmarked" />
+              <AttendanceStatusListView studentName={'Vinod'} currentStatus="notmarked" />
               <Box
                 display={'flex'}
                 flexDirection={'row'}

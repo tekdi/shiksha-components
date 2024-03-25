@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
@@ -14,20 +14,22 @@ import appLogo from '../../public/appLogo.svg';
 
 const Header: React.FC = () => {
   const [selectedLanguage, setSelectedLanguage] = useState(
-    localStorage?.getItem('preferredLanguage') || 'EN'
+    localStorage.getItem('preferredLanguage') || 'EN'
   );
   const [language, setLanguage] = useState(selectedLanguage);
   const navigate = useNavigate();
 
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const theme = useTheme<any>();
   const handleChange = (event: SelectChangeEvent) => {
     setLanguage(event.target.value);
     i18n.changeLanguage(event.target.value);
+    localStorage.setItem('preferredLanguage', event.target.value);
   };
   const handleProfileClick = () => {
     navigate('/profile');
   };
+
   return (
     <>
       <Stack
@@ -35,7 +37,6 @@ const Header: React.FC = () => {
         direction="row"
         justifyContent={'space-between'}
         alignItems={'center'}
-        // padding={"1rem"}
         height="auto"
       >
         <Box mt={'0.5rem'}>
