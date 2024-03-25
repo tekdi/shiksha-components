@@ -6,7 +6,7 @@ export const getUser = async (userId: string): Promise<any> => {
     const response = await get(apiUrl);
     return response?.data;
   } catch (error) {
-    console.error('error in login', error);
+    console.error('error in fetching user details', error);
     throw error;
   }
 };
