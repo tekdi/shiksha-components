@@ -129,6 +129,7 @@ const customTheme = createTheme({
                     color: '#0D599E',
                     '&:hover': {
                         backgroundColor: '6750A41F',
+                        border: 'none',
                     },
                 },
                 containedSecondary: {
