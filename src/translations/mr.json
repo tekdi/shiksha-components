@@ -1,0 +1,34 @@
+{
+    "COMMON": {
+        "LANGUAGE": "भाषा",
+        "MARK_MY_ATTENDANCE": "माझ्या उपस्थितीचा चिन्ह करा",
+        "MARK_STUDENT_ATTENDANCE": "विद्यार्थी उपस्थितीचा चिन्ह करा",
+        "LOADING": "लोड होत आहे"
+    },
+    "LOGIN_PAGE": {
+        "USERNAME": "वापरकर्तानाव",
+        "PASSWORD": "संकेतशब्द",
+        "LOGIN": "लॉग इन करा"
+    },
+    "DASHBOARD": {
+        "HISTORY": "इतिहास",
+        "MY_CLASSES": "माझ्या क्लासेस",
+        "ADD_NEW_CLASS": "नवीन क्लास जोडा"
+    },
+    "ATTENDANCE": {
+        "TOTAL_STUDENTS": "एकूण विद्यार्थी: {{count}}"
+    },
+    "PROFILE": {
+        "EDIT_PROFILE": "प्रोफाइल संपादित करा",
+        "CONTACT_INFORMATION": "संपर्क माहिती",
+        "PHONE": "फोन",
+        "EMAIL_ID": "ईमेल आयडी",
+        "BIO": "बायो",
+        "INTERVIEW_TEST_SCORES": "मुलाखत आणि परीक्षा स्कोर",
+        "UPDATE_PICTURE": "प्रतिमा अपडेट करा",
+        "FULL_NAME": "पूर्ण नाव",
+        "LOCATION": "स्थान",
+        "UPDATE": "अपडेट करा",
+        "HELD_ON": "धारित:"
+    }
+}

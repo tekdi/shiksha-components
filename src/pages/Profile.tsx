@@ -35,13 +35,13 @@ const Profile = () => {
   const charCount = bio.length;
 
   const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
     width: 300,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
+    bgcolor: "warning.A400",
+    border: "2px solid #000",
     p: 4,
     textAlign: 'center'
   };
@@ -60,11 +60,11 @@ const Profile = () => {
             border: '2px solid #D0C5B4',
             marginLeft: '19px'
           }}
-          width={'328px'}
-          height={'120px'}
-          borderRadius={'12px'}
-          border={'1px'}
-          bgcolor="white"
+          width={"328px"}
+          height={"120px"}
+          borderRadius={"12px"}
+          border={"1px"}
+          bgcolor="warning.A400"
           display="flex"
           flexDirection="row"
         >
@@ -94,22 +94,22 @@ const Profile = () => {
         <Button
           // variant="contained"
           sx={{
-            width: '328px',
-            height: '40px',
-            padding: '10px 24px 10px 16px',
-            gap: '8px',
-            borderRadius: '12px',
-            marginLeft: '19px',
-            marginTop: '10px',
-            flex: '1',
-            textAlign: 'center',
-            color: 'black',
-            border: '1px solid black',
-            borderColor: 'black',
-            backgroundColor: 'white',
-            '&:hover': {
-              backgroundColor: 'white'
-            }
+            width: "328px",
+            height: "40px",
+            padding: "10px 24px 10px 16px",
+            gap: "8px",
+            borderRadius: "12px",
+            marginLeft: "19px",
+            marginTop: "10px",
+            flex: "1",
+            textAlign: "center",
+            color: "black",
+            border: "1px solid black",
+            borderColor: "black",
+            backgroundColor: "warning.A400",
+            "&:hover": {
+              backgroundColor: "warning.A400",
+            },
           }}
           startIcon={<CreateOutlinedIcon />}
           onClick={handleOpen}
@@ -260,10 +260,10 @@ const Profile = () => {
                 textAlign: 'center',
                 marginLeft: '19px'
               }}
-              height={'120px'}
-              borderRadius={'12px'}
-              border={'1px'}
-              bgcolor="white"
+              height={"120px"}
+              borderRadius={"12px"}
+              border={"1px"}
+              bgcolor="warning.A400"
               display="flex"
               flexDirection="row"
             >
@@ -330,13 +330,13 @@ const Profile = () => {
             <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
               <Button
                 sx={{
-                  width: '328px',
-                  height: '40px',
-                  color: 'black',
-                  backgroundColor: '#FBBC13',
-                  '&:hover': {
-                    backgroundColor: '#FBBC13'
-                  }
+                  width: "328px",
+                  height: "40px",
+                  color: "black",
+                  backgroundColor: "containedSecondary",
+                  "&:hover": {
+                    backgroundColor: "containedSecondary",
+                  },
                 }}
                 variant="contained"
               >
