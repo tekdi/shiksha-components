@@ -1,73 +1,52 @@
 import React from 'react';
+import { useTheme } from '@mui/material/styles';
+
 import { Box, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'; //present
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CancelIcon from '@mui/icons-material/Cancel'; //absent
-import CloseIcon from '@mui/icons-material/Close';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
-const PREFIX = 'AttendanceStatusListView';
-
-const classes = {
-  root: `${PREFIX}-root`,
-  content: `${PREFIX}-content`,
-  label: `${PREFIX}-label`
-};
-
-const Root = styled('div')(({}) => ({
-  [`&.${classes.root}`]: {
-    display: 'flex',
-    height: 56,
-    borderBottom: '1px solid #EDE1CF',
-    padding: 8,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  [`& .${classes.content}`]: {
-    display: 'flex',
-    alignItems: 'center',
-    flexGrow: 1,
-    fontSize: 16,
-    fontWeight: 400,
-    color: '#1F1B13'
-  },
-  [`& .${classes.label}`]: {
-    display: 'flex',
-    alignItems: 'center',
-    flexGrow: 1,
-    fontSize: 11,
-    fontWeight: 400,
-    color: '#1F1B13'
-  }
-}));
+const ATTENDANCE_ENUM = {
+  PRESENT: "present",
+  ABSENT: "absent",
+  HALF_DAY: "halfday",
+  NOT_MARKED: "notmarked"
+}
 
 interface AttendanceStatusListViewProps {
-  isPresent: boolean;
+  currentStatus: string;
   studentName: string;
 }
 
 const AttendanceStatusListView: React.FC<AttendanceStatusListViewProps> = ({
-  isPresent,
+  currentStatus,
   studentName
 }) => {
-  const [checked, setChecked] = React.useState(isPresent);
+  const [status, setStatus] = React.useState(currentStatus);
+  const theme = useTheme<any>();
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.checked);
-  };
+  const boxStyling = {
+    display: 'flex',
+    height: "56px",
+    width: "100%",
+    borderBottom: `0.5px solid ${theme.palette.warning[400]}`,
+    padding: "8px",
+    alignItems: 'center',
+  }
 
   return (
-    <Root className={classes.root}>
-      <Typography className={classes.content}>{studentName}</Typography>
-      <Box display="flex" flexDirection="column" alignItems="center" p={2}>
-        {isPresent ? <CheckCircleIcon /> : <CheckCircleOutlineIcon />}
-        <Typography className={classes.label}>Present</Typography>
+    <Box sx={boxStyling}>
+      <Typography variant="body1" marginRight="auto">{studentName}</Typography>
+      <Box display="flex" flexDirection="column" alignItems="center" p={2} onClick={()=>setStatus(ATTENDANCE_ENUM.PRESENT)}>
+        {status === ATTENDANCE_ENUM.PRESENT ? <CheckCircleIcon /> : <CheckCircleOutlineIcon />}
+        <Typography variant='h6' marginTop={1} sx={{color:()=>theme.palette.warning[400]}}>Present</Typography>
       </Box>
-      <Box display="flex" flexDirection="column" alignItems="center" p={2}>
-        {isPresent ? <CloseIcon /> : <CancelIcon />}
-        <Typography className={classes.label}>Absent</Typography>
+      <Box display="flex" flexDirection="column" alignItems="center" p={2} onClick={()=>setStatus(ATTENDANCE_ENUM.ABSENT)}>
+        {status === ATTENDANCE_ENUM.ABSENT ? <CancelIcon /> : <HighlightOffIcon />}
+        <Typography variant='h6' marginTop={1} sx={{color:()=>theme.palette.warning[400]}}>Absent</Typography>
       </Box>
-    </Root>
+    </Box>
   );
 };
 

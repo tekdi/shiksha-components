@@ -48,31 +48,31 @@ const customTheme = createTheme({
         containedPrimary: {
           backgroundColor: '#FDBE16',
           border: 'none',
-          '&:hover': {
-            backgroundColor: '#FDBE161F'
-          }
+        //   '&:hover': {
+        //     backgroundColor: '#FDBE161F'
+        //   }
         },
         outlinedPrimary: {
           backgroundColor: 'none',
           border: '1px solid #1E1B16',
-          '&:hover': {
-            backgroundColor: '#0D599E'
-          }
+        //   '&:hover': {
+        //     backgroundColor: '#0D599E'
+        //   }
         },
         textPrimary: {
           backgroundColor: 'none',
           border: 'none',
           color: '#0D599E',
-          '&:hover': {
-            backgroundColor: '6750A41F',
-            border: 'none'
-          }
+        //   '&:hover': {
+        //     backgroundColor: '6750A41F',
+        //     border: 'none'
+        //   }
         },
         containedSecondary: {
           backgroundColor: '#fbbc13',
-          '&:hover': {
-            backgroundColor: '#b20041'
-          }
+        //   '&:hover': {
+        //     backgroundColor: '#b20041'
+        //   }
         }
       }
     },
@@ -82,6 +82,15 @@ const customTheme = createTheme({
           width: '100%'
         }
       }
+    },
+    MuiDialog: {
+        styleOverrides: {
+            paper: {
+                borderRadius: '16px', // Override the border radius
+                width: "90vw",
+                maxWidth: "340px"
+            },
+        },
     }
   },
   typography: {
