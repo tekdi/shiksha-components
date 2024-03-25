@@ -3,7 +3,9 @@
     "LANGUAGE": "Language",
     "LOADING": "Loading",
     "MARK_MY_ATTENDANCE": "Mark My Attendance",
-    "MARK_STUDENT_ATTENDANCE": "Mark Student Attendance"
+    "MARK_STUDENT_ATTENDANCE": "Mark Student Attendance",
+    "SAVE": "Save",
+    "CLEAR_ALL": "Clear All"
   },
   "LOGIN_PAGE": {
     "USERNAME": "Username",
