@@ -6,15 +6,15 @@ import translationHI from './translations/hi.json';
 import translationMR from './translations/mr.json';
 
 const resources = {
-  en: { translation: translationEN },
-  hi: { translation: translationHI },
-  mr: { translation: translationMR }
+  EN: { translation: translationEN },
+  HI: { translation: translationHI },
+  MR: { translation: translationMR }
 };
 
 i18n.use(initReactI18next).init({
   resources,
-  lng: 'en',
-  fallbackLng: 'en',
+  lng: 'EN',
+  fallbackLng: 'EN',
   interpolation: {
     escapeValue: false
   }

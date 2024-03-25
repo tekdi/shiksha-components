@@ -10,10 +10,11 @@ import { useTranslation } from 'react-i18next';
 import { useTheme } from '@mui/material/styles';
 import config from '../config.json';
 import { useNavigate } from 'react-router-dom';
+import appLogo from '../../public/appLogo.svg';
 
 const Header: React.FC = () => {
   const [selectedLanguage, setSelectedLanguage] = useState(
-    localStorage.getItem('preferredLanguage') || 'en'
+    localStorage?.getItem('preferredLanguage') || 'EN'
   );
   const [language, setLanguage] = useState(selectedLanguage);
   const navigate = useNavigate();
@@ -51,7 +52,7 @@ const Header: React.FC = () => {
                 marginBottom: '0rem'
               }}
             >
-              {config?.languages.map((lang, index) => (
+              {config?.languages.map((lang) => (
                 <MenuItem value={lang.code} key={lang.code}>
                   {lang.code}
                 </MenuItem>
@@ -60,7 +61,7 @@ const Header: React.FC = () => {
           </FormControl>
         </Box>
         <Box sx={{ margin: '0 auto' }}>
-          <img src="/appLogo.svg" alt="logo" />
+          <img src={appLogo} alt="logo" />
         </Box>
         <Box onClick={handleProfileClick}>
           <AccountCircleIcon fontSize="large" color="action" />
