@@ -10,8 +10,8 @@ import { useTranslation } from 'react-i18next';
 const LoginPage = () => {
     const { t } = useTranslation();
     const [showPassword, setShowPassword] = useState(false);
-    const [username, setUsername] = useState(null);
-    const [password, setPassword] = useState(null);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const [usernameError, setUsernameError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
 
