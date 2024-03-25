@@ -5,6 +5,7 @@ import { TextField } from "@mui/material";
 import Dashboard from "../pages/Dashboard";
 
 const LoginPage = lazy(() => import("../pages/LoginPage"));
+const StudentDetails = lazy(() => import("../pages/StudentBasicDetails"));
 
 function AllRoutes(): JSX.Element {
   const { t } = useTranslation();
@@ -15,6 +16,7 @@ function AllRoutes(): JSX.Element {
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/student-details" element={<StudentDetails />} />
         </Routes>
       </Suspense>
     </Router>
