@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
@@ -17,6 +17,8 @@ import Header from '../components/Header.tsx';
 import Modal from '@mui/material/Modal';
 import CloseIcon from '@mui/icons-material/Close';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import { getUser } from '../services/profileService.ts';
+
 const Profile = () => {
   const { t } = useTranslation();
   const [open, setOpen] = React.useState(false);
@@ -35,12 +37,12 @@ const Profile = () => {
   const charCount = bio.length;
 
   const style = {
-    position: 'absolute' as 'absolute',
+    position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 300,
-    bgcolor: 'background.paper',
+    bgcolor: 'warning.A400',
     border: '2px solid #000',
     p: 4,
     textAlign: 'center'
@@ -48,7 +50,18 @@ const Profile = () => {
   const options = ['Option 1', 'Option 2'];
   const [value, setValue] = React.useState<string | null>(options[0]);
   const [inputValue, setInputValue] = React.useState('');
-
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const response = await getUser();
+        console.log(response);
+      } catch (error) {
+        console.error('Error fetching  user details:', error);
+      } finally {
+      }
+    };
+    fetchUserDetails();
+  }, []);
   return (
     <Box display="flex" flexDirection="column">
       <Header />
@@ -64,7 +77,7 @@ const Profile = () => {
           height={'120px'}
           borderRadius={'12px'}
           border={'1px'}
-          bgcolor="white"
+          bgcolor="warning.A400"
           display="flex"
           flexDirection="row"
         >
@@ -106,9 +119,9 @@ const Profile = () => {
             color: 'black',
             border: '1px solid black',
             borderColor: 'black',
-            backgroundColor: 'white',
+            backgroundColor: 'warning.A400',
             '&:hover': {
-              backgroundColor: 'white'
+              backgroundColor: 'warning.A400'
             }
           }}
           startIcon={<CreateOutlinedIcon />}
@@ -263,7 +276,7 @@ const Profile = () => {
               height={'120px'}
               borderRadius={'12px'}
               border={'1px'}
-              bgcolor="white"
+              bgcolor="warning.A400"
               display="flex"
               flexDirection="row"
             >
@@ -333,9 +346,9 @@ const Profile = () => {
                   width: '328px',
                   height: '40px',
                   color: 'black',
-                  backgroundColor: '#FBBC13',
+                  backgroundColor: 'containedSecondary',
                   '&:hover': {
-                    backgroundColor: '#FBBC13'
+                    backgroundColor: 'containedSecondary'
                   }
                 }}
                 variant="contained"

@@ -28,6 +28,7 @@
     "UPDATE_PICTURE": "चित्र अपडेट करें",
     "FULL_NAME": "पूरा नाम",
     "LOCATION": "स्थान",
-    "UPDATE": "अपडेट"
+    "UPDATE": "अपडेट",
+    "HELD_ON": "धारित:"
   }
 }

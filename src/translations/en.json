@@ -28,6 +28,7 @@
     "UPDATE_PICTURE": "Update Picture",
     "FULL_NAME": "Full Name",
     "LOCATION": "Location",
-    "UPDATE": "Update"
+    "UPDATE": "Update",
+    "HELD_ON": "Held on:"
   }
 }
