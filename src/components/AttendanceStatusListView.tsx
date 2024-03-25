@@ -17,11 +17,13 @@ const ATTENDANCE_ENUM = {
 interface AttendanceStatusListViewProps {
   currentStatus: string;
   studentName: string;
+  isEdit?: boolean;
 }
 
 const AttendanceStatusListView: React.FC<AttendanceStatusListViewProps> = ({
   currentStatus,
-  studentName
+  studentName,
+  isEdit=false,
 }) => {
   const [status, setStatus] = React.useState(currentStatus);
   const theme = useTheme<any>();
@@ -38,11 +40,11 @@ const AttendanceStatusListView: React.FC<AttendanceStatusListViewProps> = ({
   return (
     <Box sx={boxStyling}>
       <Typography variant="body1" marginRight="auto">{studentName}</Typography>
-      <Box display="flex" flexDirection="column" alignItems="center" p={2} onClick={()=>setStatus(ATTENDANCE_ENUM.PRESENT)}>
+      <Box display="flex" flexDirection="column" alignItems="center" p={2} onClick={()=>isEdit ? setStatus(ATTENDANCE_ENUM.PRESENT): null}>
         {status === ATTENDANCE_ENUM.PRESENT ? <CheckCircleIcon /> : <CheckCircleOutlineIcon />}
         <Typography variant='h6' marginTop={1} sx={{color:()=>theme.palette.warning[400]}}>Present</Typography>
       </Box>
-      <Box display="flex" flexDirection="column" alignItems="center" p={2} onClick={()=>setStatus(ATTENDANCE_ENUM.ABSENT)}>
+      <Box display="flex" flexDirection="column" alignItems="center" p={2} onClick={()=>isEdit ? setStatus(ATTENDANCE_ENUM.ABSENT): null}>
         {status === ATTENDANCE_ENUM.ABSENT ? <CancelIcon /> : <HighlightOffIcon />}
         <Typography variant='h6' marginTop={1} sx={{color:()=>theme.palette.warning[400]}}>Absent</Typography>
       </Box>

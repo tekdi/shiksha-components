@@ -94,13 +94,13 @@ const customTheme = createTheme({
       }
     },
     MuiDialog: {
-        styleOverrides: {
-            paper: {
-                borderRadius: '16px', // Override the border radius
-                width: "90vw",
-                maxWidth: "340px"
-            },
-        },
+      styleOverrides: {
+          paper: {
+              borderRadius: '16px', // Override the border radius
+              width: "90vw",
+              maxWidth: "340px"
+          },
+      },
     }
   },
   typography: {
