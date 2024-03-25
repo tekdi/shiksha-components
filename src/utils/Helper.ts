@@ -7,6 +7,7 @@ export const decodeToken = (token: string) => {
             return payload;
 
           }
+          return null;
         }
         catch(error){
           console.error(error)

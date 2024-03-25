@@ -117,7 +117,7 @@ const Profile = () => {
           flexDirection="row">
           <img
             src={default_user}
-            alt="Sample Image"
+            alt="user"
             style={{ width: '117px', height: '120px', margin: '2px' }}
           />
           <Box
@@ -365,8 +365,7 @@ const Profile = () => {
                 flexDirection="row">
                 <img
                   src={default_user}
-                  alt="Sample Image"
-                  // style={{ width: '117px', height: '120px' }}
+                  alt="user"
                 />
                 <Box
                   sx={{
