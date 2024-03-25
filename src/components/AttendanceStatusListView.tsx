@@ -9,11 +9,11 @@ import CancelIcon from '@mui/icons-material/Cancel'; //absent
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 const ATTENDANCE_ENUM = {
-  PRESENT: "present",
-  ABSENT: "absent",
-  HALF_DAY: "halfday",
-  NOT_MARKED: "notmarked"
-}
+  PRESENT: 'present',
+  ABSENT: 'absent',
+  HALF_DAY: 'halfday',
+  NOT_MARKED: 'notmarked'
+};
 
 interface AttendanceStatusListViewProps {
   currentStatus: string;
@@ -24,7 +24,7 @@ interface AttendanceStatusListViewProps {
 const AttendanceStatusListView: React.FC<AttendanceStatusListViewProps> = ({
   currentStatus,
   studentName,
-  isEdit=false,
+  isEdit = false
 }) => {
   const { t } = useTranslation();
   const [status, setStatus] = React.useState(currentStatus);
@@ -32,23 +32,41 @@ const AttendanceStatusListView: React.FC<AttendanceStatusListViewProps> = ({
 
   const boxStyling = {
     display: 'flex',
-    height: "56px",
-    width: "100%",
+    height: '56px',
+    width: '100%',
     borderBottom: `0.5px solid ${theme.palette.warning[400]}`,
-    padding: "8px",
-    alignItems: 'center',
-  }
+    padding: '8px',
+    alignItems: 'center'
+  };
 
   return (
     <Box sx={boxStyling}>
-      <Typography variant="body1" marginRight="auto">{studentName}</Typography>
-      <Box display="flex" flexDirection="column" alignItems="center" p={2} onClick={()=>isEdit ? setStatus(ATTENDANCE_ENUM.PRESENT): null}>
+      <Typography variant="body1" marginRight="auto">
+        {studentName}
+      </Typography>
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        p={2}
+        onClick={() => (isEdit ? setStatus(ATTENDANCE_ENUM.PRESENT) : null)}
+      >
         {status === ATTENDANCE_ENUM.PRESENT ? <CheckCircleIcon /> : <CheckCircleOutlineIcon />}
-        <Typography variant='h6' marginTop={1} sx={{color:()=>theme.palette.warning[400]}}>{t('ATTENDANCE.PRESENT')}</Typography>
+        <Typography variant="h6" marginTop={1} sx={{ color: () => theme.palette.warning[400] }}>
+          {t('ATTENDANCE.PRESENT')}
+        </Typography>
       </Box>
-      <Box display="flex" flexDirection="column" alignItems="center" p={2} onClick={()=>isEdit ? setStatus(ATTENDANCE_ENUM.ABSENT): null}>
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        p={2}
+        onClick={() => (isEdit ? setStatus(ATTENDANCE_ENUM.ABSENT) : null)}
+      >
         {status === ATTENDANCE_ENUM.ABSENT ? <CancelIcon /> : <HighlightOffIcon />}
-        <Typography variant='h6' marginTop={1} sx={{color:()=>theme.palette.warning[400]}}>{t('ATTENDANCE.ABSENT')}</Typography>
+        <Typography variant="h6" marginTop={1} sx={{ color: () => theme.palette.warning[400] }}>
+          {t('ATTENDANCE.ABSENT')}
+        </Typography>
       </Box>
     </Box>
   );

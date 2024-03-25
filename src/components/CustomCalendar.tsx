@@ -5,7 +5,7 @@ import {
   MbscCalendarLabel,
   MbscCalendarMarked,
   Page,
-  setOptions,
+  setOptions
 } from '@mobiscroll/react';
 import { FC, useMemo } from 'react';
 
@@ -33,9 +33,9 @@ const CustomCalendar: FC = () => {
       { date: '2024-03-13T00:00', color: '#8dec7d' },
       { date: '2024-03-21T00:00', color: '#ffc400' },
       { date: '2024-03-21T00:00', color: '#8dec7d' },
-      { start: '2024-04-15T00:00', end: '2024-04-18T00:00', color: '#f4511e' },
+      { start: '2024-04-15T00:00', end: '2024-04-18T00:00', color: '#f4511e' }
     ],
-    [],
+    []
   );
 
   const myColors = useMemo<MbscCalendarColor[]>(
@@ -58,9 +58,14 @@ const CustomCalendar: FC = () => {
       { date: '2024-03-19T00:00', background: '#8dec7d' },
       { date: '2024-03-21T00:00', background: '#7e56bd' },
       { date: '2024-03-28T00:00', background: '#ea4986' },
-      { start: '2024-04-15T00:00', end: '2024-04-18T00:00', text: 'Conference', background: '#f4511e' },
+      {
+        start: '2024-04-15T00:00',
+        end: '2024-04-18T00:00',
+        text: 'Conference',
+        background: '#f4511e'
+      }
     ],
-    [],
+    []
   );
 
   const myLabels = useMemo<MbscCalendarLabel[]>(
@@ -81,35 +86,35 @@ const CustomCalendar: FC = () => {
       { date: '2024-03-11T00:00', color: '#f13f77', text: 'Trip' },
       { date: '2024-03-19T00:00', color: '#8dec7d', text: 'Math exam' },
       { date: '2024-03-28T00:00', color: '#ea4986', text: 'Party' },
-      { start: '2024-04-15T00:00', end: '2024-04-18T00:00', text: 'Conference', color: '#f4511e' },
+      { start: '2024-04-15T00:00', end: '2024-04-18T00:00', text: 'Conference', color: '#f4511e' }
     ],
-    [],
+    []
   );
 
   return (
     // <Page>
-      <div className="mbsc-grid">
-        <div className="mbsc-row">
-          <div className="mbsc-col-sm-12 mbsc-col-md-12">
-            <div className="mbsc-form-group">
-              <div className="mbsc-form-group-title">Marked days</div>
-              <Datepicker display="inline" marked={myMarked} />
-            </div>
+    <div className="mbsc-grid">
+      <div className="mbsc-row">
+        <div className="mbsc-col-sm-12 mbsc-col-md-12">
+          <div className="mbsc-form-group">
+            <div className="mbsc-form-group-title">Marked days</div>
+            <Datepicker display="inline" marked={myMarked} />
           </div>
-          <div className="mbsc-col-sm-12 mbsc-col-md-12">
-            <div className="mbsc-form-group">
-              <div className="mbsc-form-group-title">Colored days</div>
-              <Datepicker display="inline" colors={myColors} />
-            </div>
+        </div>
+        <div className="mbsc-col-sm-12 mbsc-col-md-12">
+          <div className="mbsc-form-group">
+            <div className="mbsc-form-group-title">Colored days</div>
+            <Datepicker display="inline" colors={myColors} />
           </div>
-          <div className="mbsc-col-sm-12 mbsc-col-md-12">
-            <div className="mbsc-form-group">
-              <div className="mbsc-form-group-title">Labels</div>
-              <Datepicker display="inline" labels={myLabels} />
-            </div>
+        </div>
+        <div className="mbsc-col-sm-12 mbsc-col-md-12">
+          <div className="mbsc-form-group">
+            <div className="mbsc-form-group-title">Labels</div>
+            <Datepicker display="inline" labels={myLabels} />
           </div>
         </div>
       </div>
+    </div>
     //</Page>
   );
 };
