@@ -66,7 +66,7 @@ const LoginPage = () => {
   };
 
   return (
-    <Box display="flex" flexDirection="column" height="100vh" width="100vw">
+    <Box display="flex" flexDirection="column" height="100vh" width="100vw" bgcolor={'black'}>  
       <Box
         display={'flex'}
         flexGrow={1}
@@ -134,22 +134,23 @@ const LoginPage = () => {
             </FormControl>
           </Box>
 
-          <Box alignContent={'center'} textAlign={'center'}>
+          <Box alignContent={'center'} textAlign={'center'} position={'absolute'} bottom={"1rem"} width={'100%'}>
             <Button
-              variant="text"
+              variant="contained"
+              fullWidth={true}
               onClick={(event) => loginButtonClick(event)}
               disabled={isButtonDisabled}
-              style={{
-                ...buttonStyle,
-                width: '100%',
-                height: 'auto',
-                left: 'calc(50% - 50%)',
-                position: 'absolute',
-                borderRadius: 100,
-                bottom: '50px',
-                alignContent: 'center',
-                padding: '8px'
-              }}
+              // style={{
+              //   ...buttonStyle,
+              //   width: '100%',
+              //   height: 'auto',
+              //   left: 'calc(50% - 50%)',
+              //   position: 'absolute',
+              //   borderRadius: 100,
+              //   bottom: '50px',
+              //   alignContent: 'center',
+              //   padding: '8px'
+              // }}
             >
               {t('LOGIN_PAGE.LOGIN')}
             </Button>
