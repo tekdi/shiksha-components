@@ -25,7 +25,8 @@ jobs:
       - name: List Contents
         run: |
            echo "Contents of the dist directory (in reverse order):"
-            cd /home/runner/work/customer-app-frontend/customer-app-frontend/dist/
+            pwd
+            
             ls -lr
 
       - name: Deploy to Server 1
