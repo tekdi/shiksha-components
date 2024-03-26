@@ -19,41 +19,35 @@ const ModalComponent: React.FC<ModalProps> = ({
   heading,
   SubHeading,
   children,
-  btnText,
+  btnText
 }) => {
   const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
     width: 400,
-    bgcolor: "background.paper",
+    bgcolor: 'background.paper',
     boxShadow: 24,
     p: 4,
-    borderRadius: "1rem",
+    borderRadius: '1rem'
   };
 
-  const handleApplyClickButton = () => {
-    alert("Handle Sort Data");
-  };
   return (
     <Modal open={open} onClose={onClose}>
       <Box sx={style}>
-        {/* <Typography>{heading}</Typography> */}
+        <Typography variant="h4">{heading}</Typography>
         <Box>
-          <Box display={"flex"} justifyContent={"space-between"}>
-            <Typography
-              style={{ position: "absolute", top: 5, left: 7, zIndex: 1 }}
-            >
-              {SubHeading}
-            </Typography>
-          </Box>
+          <Typography variant="h6">{SubHeading}</Typography>
+          <IconButton
+            onClick={onClose}
+            style={{ position: 'absolute', top: 5, right: 5, zIndex: 1 }}
+          >
+            <CloseIcon />
+          </IconButton>
           <Box>{children}</Box>
         </Box>
-        <ButtonFunctional
-          handleClickButton={handleApplyClickButton}
-          buttonName="Apply"
-        />
+        <CustomButton buttonText={'apply'} />
       </Box>
     </Modal>
   );

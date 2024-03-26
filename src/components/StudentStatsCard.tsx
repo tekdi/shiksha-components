@@ -1,7 +1,8 @@
-import React from "react";
+import React from 'react';
 import { useTheme } from '@mui/material/styles';
+import { useTranslation } from 'react-i18next';
 
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from '@mui/material';
 interface StudentStatsCard {
   label1: string;
   value1: string;
@@ -9,13 +10,9 @@ interface StudentStatsCard {
   value2: string;
 }
 
-const StudentStatsCard: React.FC<StudentStatsCard> = ({
-  label1,
-  value1,
-  label2,
-  value2,
-}) => {
+const StudentStatsCard: React.FC<StudentStatsCard> = ({ label1, value1, label2, value2 }) => {
   const theme = useTheme<any>();
+  const { t } = useTranslation();
 
   return (
     <Box
@@ -27,24 +24,27 @@ const StudentStatsCard: React.FC<StudentStatsCard> = ({
       display="flex"
       justifyContent="flex-start"
       alignItems="center"
+      bgcolor="white"
       margin="0px"
       textAlign="left"
       bgcolor={"white"}
     >
-      <Stack padding="1rem">
+      <Stack sx={{ padding: '1rem' }}>
         <Typography
-          fontSize="0.6875rem"
-          fontWeight="bold"
-          lineHeight="1rem"
-          sx={{color: theme.palette.warning["300"]}}
+          marginTop={'10px'}
+          fontSize="11px"
+          fontWeight={600}
+          color="#7C766F" //Add color from colorScheme
+          marginBottom={'0px'}
         >
           {label1}
         </Typography>
         <Typography
           fontSize="1.375rem"
-          fontWeight="bold"
-          lineHeight="1.75rem"
-          sx={{color: theme.palette.warning["300"]}}
+          fontWeight={500}
+          lineHeight="16px"
+          color="#1F1B13" //Add color from colorScheme
+          marginBottom={'5px'}
         >
           {value1}
         </Typography>
@@ -53,9 +53,12 @@ const StudentStatsCard: React.FC<StudentStatsCard> = ({
             fontSize="0.675rem"
             fontWeight="bold"
             lineHeight="1rem"
-            sx={{color: theme.palette.warning["400"]}}
+            sx={{ color: theme.palette.warning['400'] }}
+            marginBottom={'0px'}
           >
-            Held on: {value2}
+            {t('PROFILE.HELD_ON')}
+
+            {value2}
           </Typography>
         ) : null}
       </Stack>

@@ -1,137 +1,159 @@
-import * as React from "react";
-import { styled } from "@mui/material/styles";
+import * as React from 'react';
+import { styled, useTheme } from '@mui/material/styles';
+import { useTranslation } from 'react-i18next';
 //components
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
 //icons
-import CheckCircleIcon from "@mui/icons-material/CheckCircle"; //present
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import CancelIcon from "@mui/icons-material/Cancel"; //absent
-import CloseIcon from "@mui/icons-material/Close";
-import RemoveCircleIcon from "@mui/icons-material/RemoveCircle"; //Half-Day
-import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
-//colors
-import { grey, amber } from "@mui/material/colors";
-import { Box } from "@mui/material";
+import { Icon } from '@mui/material';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'; //present
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import CancelIcon from '@mui/icons-material/Cancel'; //absent
+import CloseIcon from '@mui/icons-material/Close';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'; //Half-Day
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+
+// Define a type for the icon prop
+type IconType = React.ReactElement<typeof Icon>;
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  "& .MuiDialogContent-root": {
-    padding: theme.spacing(2),
+  '& .MuiDialogContent-root': {
+    padding: theme.spacing(2)
   },
-  "& .MuiDialogActions-root": {
-    padding: theme.spacing(2),
-  },
+  '& .MuiDialogActions-root': {
+    padding: theme.spacing(2)
+  }
 }));
 
 const ATTENDANCE_ENUM = {
-  PRESENT: "PRESENT",
-  ABSENT: "ABSENT",
-  HALFDAY: "HALF_DAY",
+  PRESENT: 'present',
+  ABSENT: 'absent',
+  HALF_DAY: 'halfday',
+  NOT_MARKED: 'notmarked'
 };
 
-interface MarkAttendanceProps {}
+interface MarkAttendanceProps {
+  isOpen: boolean;
+  isSelfAttendance?: boolean;
+  date: string;
+  name?: string;
+  currentStatus: string;
+  handleClose: () => void;
+  handleSubmit: () => void;
+}
 
-const MarkAttendance: React.FC<MarkAttendanceProps> = ({}) => {
-  const [open, setOpen] = React.useState(false);
-  const [status, setStatus] = React.useState("");
+const MarkAttendance: React.FC<MarkAttendanceProps> = ({
+  isOpen,
+  isSelfAttendance = true,
+  date,
+  name,
+  currentStatus,
+  handleClose,
+  handleSubmit
+}) => {
+  const { t } = useTranslation();
+  const [status, setStatus] = React.useState(currentStatus);
+  const theme = useTheme<any>();
+  console.log({ name });
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const getButtonComponent = (value: string, icon1: IconType, icon2: IconType, text: string) => {
+    console.log(value, text);
+    return (
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        p={2}
+        onClick={() => setStatus(value)}
+      >
+        {status === value ? icon1 : icon2}
+        <Typography marginTop={1}>{text}</Typography>
+      </Box>
+    );
   };
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   return (
     <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Mark Self Attendance
-      </Button>
       <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
-        open={open}
+        open={isOpen}
+        sx={{ borderRadius: '16px' }}
       >
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          Mark My Attendance
+          <Typography variant="h2" sx={{ marginBottom: 0 }}>
+            {currentStatus === ATTENDANCE_ENUM.NOT_MARKED
+              ? t('COMMON.MARK_ATTENDANCE')
+              : t('COMMON.UPDATE_ATTENDANCE')}
+          </Typography>
+          <Typography variant="h4" sx={{ marginBottom: 0, color: theme.palette.warning['A200'] }}>
+            {date}
+          </Typography>
         </DialogTitle>
+        {/* <Typography variant="h2">Mark Attendance</Typography> */}
         <IconButton
           aria-label="close"
           onClick={handleClose}
           sx={{
-            position: "absolute",
+            position: 'absolute',
             right: 8,
             top: 8,
-            color: grey[500],
+            color: theme.palette.warning['A200']
           }}
         >
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          <Box display="flex" flexDirection="row" justifyContent="space-around">
-            <Box
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              p={2}
-              onClick={() => setStatus(ATTENDANCE_ENUM.PRESENT)}
-            >
-              {status === ATTENDANCE_ENUM.PRESENT ? (
-                <CheckCircleIcon />
-              ) : (
-                <CheckCircleOutlineIcon />
+          <Box display="flex" flexDirection="row" justifyContent="space-around" alignItems="center">
+            {!isSelfAttendance && <Typography variant="body1">{name}</Typography>}
+            {getButtonComponent(
+              ATTENDANCE_ENUM.PRESENT,
+              <CheckCircleIcon />,
+              <CheckCircleOutlineIcon />,
+              t('ATTENDANCE.PRESENT')
+            )}
+            {getButtonComponent(
+              ATTENDANCE_ENUM.ABSENT,
+              <CancelIcon />,
+              <HighlightOffIcon />,
+              isSelfAttendance ? t('ATTENDANCE.ON_LEAVE') : t('ATTENDANCE.ABSENT')
+            )}
+            {isSelfAttendance &&
+              getButtonComponent(
+                ATTENDANCE_ENUM.HALF_DAY,
+                <RemoveCircleIcon />,
+                <RemoveCircleOutlineIcon />,
+                t('ATTENDANCE.HALF_DAY')
               )}
-              <Typography marginTop={1}>Present</Typography>
-            </Box>
-            <Box
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              p={2}
-              onClick={() => setStatus(ATTENDANCE_ENUM.ABSENT)}
-            >
-              {status === ATTENDANCE_ENUM.ABSENT ? (
-                <CancelIcon />
-              ) : (
-                <CloseIcon />
-              )}
-              <Typography marginTop={1}>Absent</Typography>
-            </Box>
-            <Box
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              p={2}
-              onClick={() => setStatus(ATTENDANCE_ENUM.HALFDAY)}
-            >
-              {status === ATTENDANCE_ENUM.HALFDAY ? (
-                <RemoveCircleIcon />
-              ) : (
-                <RemoveCircleOutlineIcon />
-              )}
-              <Typography marginTop={1}>Half Day</Typography>
-            </Box>
           </Box>
         </DialogContent>
         <DialogActions>
+          {/* <Button
+                        variant="outlined"
+                        autoFocus
+                        onClick={handleClose}
+                        sx={{
+                            width: '100%',
+                            display: currentStatus === ATTENDANCE_ENUM.NOT_MARKED ? 'none' : 'block'
+                        }}
+                    >
+                        Clear
+                    </Button> */}
           <Button
             variant="contained"
-            autoFocus
-            onClick={handleClose}
-            disabled={status === ""}
+            onClick={handleSubmit}
+            disabled={status === ATTENDANCE_ENUM.NOT_MARKED || status === currentStatus}
             sx={{
-              width: "100%",
-              borderRadius: 8,
-              color: grey[900],
-              backgroundColor: amber[500],
+              width: '100%'
             }}
           >
-            Save
+            {currentStatus === ATTENDANCE_ENUM.NOT_MARKED ? t('COMMON.SAVE') : t('COMMON.UPDATE')}
           </Button>
         </DialogActions>
       </BootstrapDialog>

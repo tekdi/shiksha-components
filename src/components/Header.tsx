@@ -1,62 +1,75 @@
-import React from "react";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { Box, Stack } from "@mui/material";
-import  Divider from "@mui/material/Divider";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { useTranslation } from "react-i18next";
+import React from 'react';
+import { useState } from 'react';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { Box, Stack } from '@mui/material';
+import Divider from '@mui/material/Divider';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useTranslation } from 'react-i18next';
 import { useTheme } from '@mui/material/styles';
+import config from '../config.json';
+import { useNavigate } from 'react-router-dom';
+import appLogo from '/appLogo.svg';
 
 const Header: React.FC = () => {
-  const [language, setLanguage] = React.useState("");
-  const { t } = useTranslation();
-  const theme = useTheme<any>();
+  const [selectedLanguage, setSelectedLanguage] = useState(
+    localStorage.getItem('preferredLanguage') || 'EN'
+  );
+  const [language, setLanguage] = useState(selectedLanguage);
+  const navigate = useNavigate();
 
+  const { i18n } = useTranslation();
+  const theme = useTheme<any>();
   const handleChange = (event: SelectChangeEvent) => {
-    setLanguage(event.target.value as string);
+    setLanguage(event.target.value);
+    i18n.changeLanguage(event.target.value);
+    localStorage.setItem('preferredLanguage', event.target.value);
+  };
+  const handleProfileClick = () => {
+    navigate('/profile');
   };
 
   return (
     <>
-    <Stack
-      sx={{ minWidth: 360 }}
-      direction="row"
-      justifyContent={"space-between"}
-      // bgcolor="white"
-      padding={"1rem"}
-      height='auto'
-    >
-      <FormControl>
-        <InputLabel >
-          {t("COMMON.LANGUAGE")}
-        </InputLabel>
-        <Select
-          value={language}
-          label="Language"
-          style={{
-            borderRadius: "20px",
-            color: theme.palette.warning["200"],
-            width: "5rem",
-            height: "0.5 rem",
-          }}
-          onChange={handleChange}
-        >
-          <MenuItem value="English">EN</MenuItem>
-          <MenuItem value="Hindi">HI</MenuItem>
-        </Select>
-      </FormControl>
-      <Box sx={{ margin: "0 auto" }}>
-        <img src="/appLogo.svg" alt="logo" />
-      </Box>
-      <Box>
-        <AccountCircleIcon fontSize="large" color="action" />
-      </Box>
-    </Stack>
-     <Divider sx={{ borderBottomWidth: '0.25rem' }} />
+      <Stack
+        sx={{ minWidth: 360 }}
+        direction="row"
+        justifyContent={'space-between'}
+        alignItems={'center'}
+        height="auto"
+      >
+        <Box mt={'0.5rem'}>
+          <FormControl sx={{ m: 1 }}>
+            <Select
+              className="SelectLanguages"
+              value={language}
+              onChange={handleChange}
+              displayEmpty
+              style={{
+                borderRadius: '0.5rem',
+                color: theme.palette.warning['200'],
+                width: '5rem',
+                marginBottom: '0rem'
+              }}
+            >
+              {config?.languages.map((lang) => (
+                <MenuItem value={lang.code} key={lang.code}>
+                  {lang.code}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
+        <Box sx={{ margin: '0 auto' }}>
+          <img src={appLogo} alt="logo" />
+        </Box>
+        <Box onClick={handleProfileClick}>
+          <AccountCircleIcon fontSize="large" color="action" />
+        </Box>
+      </Stack>
+      <Divider sx={{ borderBottomWidth: '0.15rem' }} />
     </>
-    
   );
 };
 export default Header;

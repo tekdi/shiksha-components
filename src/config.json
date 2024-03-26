@@ -1,0 +1,18 @@
+{
+  "appName": "Pratham",
+  "languages": [
+    {
+      "label": "English",
+      "code": "EN"
+    },
+
+    {
+      "label": "हिंदी",
+      "code": "HI"
+    },
+    {
+      "label": "मराठी",
+      "code": "MR"
+    }
+  ]
+}
