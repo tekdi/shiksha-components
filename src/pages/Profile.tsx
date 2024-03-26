@@ -107,7 +107,9 @@ const Profile = () => {
           sx={{
             flex: '1',
             textAlign: 'center',
-            border: '2px solid #D0C5B4'
+            border: '2px solid',
+            borderColor: theme.palette.warning['A100']
+
           }}
           minWidth={'100%'}
           borderRadius={'12px'}
