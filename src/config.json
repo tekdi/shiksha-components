@@ -1,18 +1,18 @@
 {
-  "appName": "Pratham",
+  "appName": "Pratham SCP",
   "languages": [
     {
       "label": "English",
-      "code": "EN"
+      "code": "en"
     },
 
     {
       "label": "हिंदी",
-      "code": "HI"
+      "code": "hi"
     },
     {
       "label": "मराठी",
-      "code": "MR"
+      "code": "mr"
     }
   ]
 }

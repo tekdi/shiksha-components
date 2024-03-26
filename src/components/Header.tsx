@@ -14,7 +14,7 @@ import appLogo from '/appLogo.svg';
 
 const Header: React.FC = () => {
   const [selectedLanguage, setSelectedLanguage] = useState(
-    localStorage.getItem('preferredLanguage') || 'EN'
+    localStorage.getItem('preferredLanguage') || 'en'
   );
   const [language, setLanguage] = useState(selectedLanguage);
   const [isHovered, setIsHovered] = useState(false);
@@ -56,7 +56,7 @@ const Header: React.FC = () => {
             >
               {config?.languages.map((lang) => (
                 <MenuItem value={lang.code} key={lang.code}>
-                  {lang.code}
+                  {lang.code.toUpperCase()}
                 </MenuItem>
               ))}
             </Select>
