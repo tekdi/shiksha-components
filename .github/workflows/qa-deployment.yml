@@ -20,8 +20,8 @@ jobs:
       - name: Generate React Build
         run: |
         
-         yarn install
-         yarn build
+         npm install
+         npm build
       - name: Create Lerna Bundles for Submodules
         run: |
           sh ./scripts/pack-prod-build.sh
@@ -53,15 +53,11 @@ jobs:
          # Add the SSH key to the known_hosts file (replace hostname with your actual hostname)
          ssh-keyscan -H ${{ secrets.HOST_NAME_PRATHAM_QA }} >> ~/.ssh/known_hosts
     
-      - name: Copy Build Artifact using Rsync
-        run: rsync -avz -e "ssh -p ${{ secrets.PORT }}" shiksha-ui.tar ${{ secrets.USERNAME_PRATHAM_QA }}@${{ secrets.HOST_NAME_PRATHAM_QA }}:${{ secrets.TARGET_DIR_PRATHAM_QA }}
-      
       - name: Unzip Artifact to Correct Locations to Deploy
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST_PRATHAM_QA }}
           username: ${{ secrets.USERNAME_PRATHAM_QA }}
           key: ${{ secrets.EC2_SSH_KEY_PRATHAM_QA }}
-          script: |
-            cd ${{ secrets.TARGET_DIR_PRATHAM_QA }}
-            tar -xvf shiksha-ui.tar -C /var/www/qa.prathamteacherapp.tekdinext.com/public
+          local: "dist/" 
+          remote: "/var/www/qa.prathamteacherapp.tekdinext.com/public"
