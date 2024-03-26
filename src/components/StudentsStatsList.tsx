@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Box, Link, Stack, Typography } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 interface StudentsStatsListProps {
   name: string;
   label1: string;
@@ -16,6 +17,7 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
   label2,
   value2,
 }) => {
+  const theme = useTheme<any>();
   return (
     <Box
       // width="100vw"
@@ -26,7 +28,7 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
       display="flex"
       justifyContent="space-between"
       alignItems="center"
-      borderColor="#7F7667" //Add color from colorScheme
+      sx={{ borderColor: theme.palette.warning["200"] }}
       margin="0px"
     >
       <Box>
