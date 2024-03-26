@@ -25,4 +25,23 @@ export interface AttendanceStatusListViewProps {
   currentStatus: string;
   studentName: string;
   isEdit?: boolean;
+  isBulkAction?: boolean;
+  handleBulkAction?: (status: string)=>void
+}
+
+export interface UserAttendanceObj {
+  userId: string;
+  attendance: string; 
+}
+
+export interface BulkAttendanceParams {
+  attendanceDate: string,
+  contextId: string,
+  userAttendance: UserAttendanceObj[];
+}
+
+export interface cohortListParam {
+  "limit": "string",
+  "page": number,
+  "filters": object
 }

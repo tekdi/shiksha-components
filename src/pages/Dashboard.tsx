@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from '../components/Header';
 import {
   Box,
@@ -24,9 +24,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import AttendanceStatusListView from '../components/AttendanceStatusListView';
 import { useTheme } from '@mui/material/styles';
 import MarkAttendance from '../components/MarkAttendance';
-import { decodeToken } from '../utils/Helper';
-import { markAttendance } from '../services/AttendanceService';
+import { markAttendance, bulkAttendance } from '../services/AttendanceService';
 import { AttendanceParams } from '../utils/Interfaces';
+import { cohortList } from '../services/CohortServices';
 
 interface DashboardProps {
   //   buttonText: string;
@@ -39,10 +39,46 @@ const Dashboard: React.FC<DashboardProps> = () => {
   const { t } = useTranslation();
   const [open, setOpen] = React.useState(false);
   const [selfAttendanceDetails, setSelfAttendanceDetails] = React.useState(null);
+  const [cohorts, setCohorts] = React.useState(null);
   const [openMarkAttendance, setOpenMarkAttendance] = React.useState(false);
   const handleModalToggle = () => setOpen(!open);
   const handleMarkAttendanceModal = () => setOpenMarkAttendance(!openMarkAttendance);
   const [classes, setClasses] = React.useState('');
+  const limit = '';
+  const page = 0;
+  const filters = {};
+  const userAttendance = [{ userId: 'string', attendance: 'present' }];
+  const attendanceDate = 'string';
+  const contextId = 'string';
+
+  useEffect(() => {
+    const fetchCohortList = async () => {
+      try {
+        const resp = await cohortList({ limit, page, filters });
+        const extractedNames = resp?.data?.map((item) => item.name).filter((name) => name);
+        console.log(`response cohort list`, extractedNames);
+        setCohorts(extractedNames);
+      } catch (error) {
+        console.error('Error fetching  cohort list:', error);
+      }
+    };
+    fetchCohortList();
+  }, []);
+
+  useEffect(() => {
+    const markBulkAttendance = async () => {
+      try {
+        const response = await bulkAttendance({ attendanceDate, contextId, userAttendance });
+        console.log(`response bulkAttendance`, response);
+        const resp = response?.data;
+        console.log(`resp`, resp);
+      } catch (error) {
+        console.error('Error fetching  cohort list:', error);
+      }
+    };
+    markBulkAttendance();
+  }, []);
+
   const theme = useTheme<any>();
 
   React.useEffect(() => {}, []);
@@ -79,6 +115,11 @@ const Dashboard: React.FC<DashboardProps> = () => {
       console.error('error', error);
     }
   };
+
+  const submitBulkAttendanceAction = (status: string) => {
+    console.log(status);
+  };
+
   return (
     <Box minHeight="100vh" textAlign={'center'}>
       <Header />
@@ -94,29 +135,25 @@ const Dashboard: React.FC<DashboardProps> = () => {
           padding={'1rem'}
           borderRadius={'1rem'}
           bgcolor={'black'}
-          textAlign={'left'}
-        >
+          textAlign={'left'}>
           <Typography
             marginBottom={'0px'}
             sx={{ color: theme.palette.warning['A400'] }}
-            style={{ fontWeight: '800', fontSize: '1.2rem' }}
-          >
+            style={{ fontWeight: '800', fontSize: '1.2rem' }}>
             {t('COMMON.MARK_MY_ATTENDANCE')}
           </Typography>
           <Typography sx={{ color: theme.palette.warning['A400'] }}>25 May 2024</Typography>
           <Stack direction="row" spacing={1} marginTop={1} justifyContent={'space-between'}>
             <Button
               variant="text"
-              sx={{ color: theme.palette.primary.main, padding: theme.spacing(1) }}
-            >
+              sx={{ color: theme.palette.primary.main, padding: theme.spacing(1) }}>
               {t('DASHBOARD.HISTORY')}
             </Button>
             <Button
               variant="contained"
               color="primary"
               style={{ width: '12.5rem', padding: theme.spacing(1) }}
-              onClick={handleMarkAttendanceModal}
-            >
+              onClick={handleMarkAttendanceModal}>
               {t('COMMON.MARK_MY_ATTENDANCE')}
             </Button>
           </Stack>
@@ -126,8 +163,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
           variant="outlined"
           fullWidth
           onClick={handleModalToggle}
-          style={{ padding: theme.spacing(1) }}
-        >
+          style={{ padding: theme.spacing(1) }}>
           {t('COMMON.MARK_STUDENT_ATTENDANCE')}
         </Button>
         <Modal
@@ -141,13 +177,12 @@ const Dashboard: React.FC<DashboardProps> = () => {
             backdrop: {
               timeout: 500
             }
-          }}
-        >
+          }}>
           <Fade in={open}>
             <Box
               sx={{ ...modalContainer, borderColor: theme.palette.warning['A400'] }}
               borderRadius={'1rem'}
-            >
+              height="80%">
               <Box display={'flex'} justifyContent={'space-between'}>
                 <Box marginBottom={'0px'}>
                   <Typography variant="h2" component="h2" marginBottom={'0px'} fontWeight={'bold'}>
@@ -167,25 +202,50 @@ const Dashboard: React.FC<DashboardProps> = () => {
                   <FormControl fullWidth>
                     <InputLabel>Class</InputLabel>
                     <Select value={classes} label="Class" onChange={handleChange}>
-                      <MenuItem value={10}>Class A</MenuItem>
-                      <MenuItem value={20}>Class B</MenuItem>
-                      <MenuItem value={30}>Class C</MenuItem>
+                      {cohorts?.map((item, index) => (
+                        <MenuItem key={index} value={item}>
+                          {item}
+                        </MenuItem>
+                      ))}
                     </Select>
                   </FormControl>
                 </Box>
               </Box>
               <Typography>{t('ATTENDANCE.TOTAL_STUDENTS')}</Typography>
-              <AttendanceStatusListView studentName={'Mark All'} currentStatus="notmarked" />
-              <AttendanceStatusListView studentName={'Ajay'} currentStatus="notmarked" />
-              <AttendanceStatusListView studentName={'Vijay'} currentStatus="notmarked" />
-              <AttendanceStatusListView studentName={'Deepak'} currentStatus="notmarked" />
-              <AttendanceStatusListView studentName={'Vinod'} currentStatus="notmarked" />
+              <Box height={'58%'} overflow={'scroll'}>
+                <AttendanceStatusListView
+                  studentName={t('ATTENDANCE.MARK_ALL')}
+                  currentStatus="notmarked"
+                  isEdit={true}
+                  isBulkAction={true}
+                  handleBulkAction={submitBulkAttendanceAction}
+                />
+                <AttendanceStatusListView
+                  studentName={'Ajay'}
+                  currentStatus="notmarked"
+                  isEdit={true}
+                />
+                <AttendanceStatusListView
+                  studentName={'Vijay'}
+                  currentStatus="notmarked"
+                  isEdit={true}
+                />
+                <AttendanceStatusListView
+                  studentName={'Deepak'}
+                  currentStatus="notmarked"
+                  isEdit={true}
+                />
+                <AttendanceStatusListView
+                  studentName={'Vinod'}
+                  currentStatus="notmarked"
+                  isEdit={true}
+                />
+              </Box>
               <Box
                 display={'flex'}
                 flexDirection={'row'}
                 justifyContent={'space-evenly'}
-                m={'1rem'}
-              >
+                marginBottom={0}>
                 <Button variant="outlined" style={{ width: '8rem' }}>
                   {' '}
                   {t('COMMON.CLEAR_ALL')}
@@ -204,8 +264,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
           direction={'row'}
           justifyContent={'space-between'}
           alignItems={'center'}
-          padding={'2px'}
-        >
+          padding={'2px'}>
           <Box>
             <Button variant="text" sx={{ color: theme.palette.warning['300'] }}>
               {t('DASHBOARD.MY_CLASSES')}
@@ -215,12 +274,10 @@ const Dashboard: React.FC<DashboardProps> = () => {
             display={'flex'}
             justifyContent={'center'}
             alignItems={'center'}
-            sx={{ color: theme.palette.secondary.main }}
-          >
-            <Button variant="text" sx={{ color: theme.palette.secondary.main }}>
-              {t('DASHBOARD.ADD_NEW_CLASS')}
+            sx={{ color: theme.palette.secondary.main }}>
+            <Button variant="text" sx={{ color: theme.palette.secondary.main }} disabled>
+              {t('DASHBOARD.ADD_NEW_CLASS')} <AddIcon />
             </Button>
-            <AddIcon />
           </Box>
         </Stack>
         <Box
@@ -231,8 +288,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
           width={'auto'}
           sx={{ bgcolor: theme.palette.secondary.light }}
           p={'1rem'}
-          borderRadius={'1rem'}
-        >
+          borderRadius={'1rem'}>
           <Typography>Gurukrupa Building, Paud Road</Typography>
           <CohortCard showBackground={true} isRemote={false} cohortName={'Class A'} />
           <Typography pt={'0.5rem'}>Remote</Typography>

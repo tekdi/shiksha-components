@@ -29,7 +29,7 @@ const ModalUsage = () => {
         direction="column"
         justifyContent="center"
         alignItems="center"
-        style={{ minHeight: '100vh', minWidth: '100vw' }}
+        style={{ minHeight: '100vh', minWidth: '100%' }}
       >
         <Grid item>
           <Button onClick={handleOpenModal}>Open Modal</Button>
