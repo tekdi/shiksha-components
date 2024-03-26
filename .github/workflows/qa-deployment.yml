@@ -1,0 +1,68 @@
+name: Deploy to Pratham-QA Server
+on: 
+  push: 
+    branches:
+      - prod-oblf
+jobs:
+  build:
+    name: Generate Build and Deploy to QA
+   
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Setup Node Env
+        uses: actions/setup-node@v3
+        with:
+          node-version: 21.1.0
+          
+      - name: Generate React Build
+        run: |
+        
+         yarn install
+         yarn build
+      - name: Create Lerna Bundles for Submodules
+        run: |
+          sh ./scripts/pack-prod-build.sh
+
+      - name: Show PWD
+        run: |
+           echo "Current Working Directory:"
+           pwd
+           
+
+      - name: List Contents
+        run: |
+           echo "Contents of the current directory (in reverse order):"
+            ls -lr
+
+
+      - name: Deploy to Server 1
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY_PRATHAM_QA }}
+          REMOTE_HOST: ${{ secrets.HOST_NAME_PRATHAM_QA }}
+          REMOTE_USER: ${{ secrets.USERNAME_PRATHAM_QA }}
+          TARGET: ${{ secrets.TARGET_DIR_PRATHAM_QA }}
+
+      - name: Set up SSH key
+        run: | 
+         mkdir -p ~/.ssh
+         echo "${{ secrets.EC2_SSH_KEY_PRATHAM_QA }}" > ~/.ssh/id_rsa
+         chmod 600 ~/.ssh/id_rsa
+         # Add the SSH key to the known_hosts file (replace hostname with your actual hostname)
+         ssh-keyscan -H ${{ secrets.HOST_NAME_PRATHAM_QA }} >> ~/.ssh/known_hosts
+    
+      - name: Copy Build Artifact using Rsync
+        run: rsync -avz -e "ssh -p ${{ secrets.PORT }}" shiksha-ui.tar ${{ secrets.USERNAME_PRATHAM_QA }}@${{ secrets.HOST_NAME_PRATHAM_QA }}:${{ secrets.TARGET_DIR_PRATHAM_QA }}
+      
+      - name: Unzip Artifact to Correct Locations to Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST_PRATHAM_QA }}
+          username: ${{ secrets.USERNAME_PRATHAM_QA }}
+          key: ${{ secrets.EC2_SSH_KEY_PRATHAM_QA }}
+          script: |
+            cd ${{ secrets.TARGET_DIR_PRATHAM_QA }}
+            tar -xvf shiksha-ui.tar -C /var/www/qa.prathamteacherapp.tekdinext.com/public
