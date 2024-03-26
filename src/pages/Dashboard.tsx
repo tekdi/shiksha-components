@@ -41,7 +41,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
   const [selfAttendanceDetails, setSelfAttendanceDetails] = React.useState(null);
   const [openMarkAttendance, setOpenmarkAttendance] = React.useState(false);
   const handleModalToggle = () => setOpen(!open);
-  const handleMarkAtendanceModal = () => setOpenmarkAttendance(!openMarkAttendance);
+  const handleMarkAttendanceModal = () => setOpenmarkAttendance(!openMarkAttendance);
   const [classes, setClasses] = React.useState('');
   const theme = useTheme<any>();
 
@@ -115,7 +115,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
               variant="contained"
               color="primary"
               style={{ width: '12.5rem', padding: theme.spacing(1) }}
-              onClick={handleMarkAtendanceModal}
+              onClick={handleMarkAttendanceModal}
             >
               {t('COMMON.MARK_MY_ATTENDANCE')}
             </Button>
@@ -244,7 +244,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
         isSelfAttendance={true}
         date="2024-03-02"
         currentStatus="notmarked"
-        handleClose={handleMarkAtendanceModal}
+        handleClose={handleMarkAttendanceModal}
         handleSubmit={submitAttendance}
       />
     </Box>
