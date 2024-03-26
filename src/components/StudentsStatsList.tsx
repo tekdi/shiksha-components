@@ -29,7 +29,8 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
       justifyContent="space-around"
       alignItems="center"
       sx={{ borderColor: theme.palette.warning['200'] }}
-      margin="0px">
+      margin="0px"
+    >
       <Link
         href="#"
         underline="always"
@@ -37,7 +38,8 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
         fontSize="0.875rem"
         fontWeight="400"
         lineHeight="1.25rem"
-        padding="1rem">
+        padding="1rem"
+      >
         {name}
       </Link>
 
@@ -54,7 +56,8 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
           fontSize="0.6875rem"
           fontWeight="500"
           lineHeight="1rem"
-          sx={{ color: theme.palette.warning['200'] }}>
+          sx={{ color: theme.palette.warning['200'] }}
+        >
           {label1}
         </Typography>
       </Stack>
@@ -71,7 +74,8 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
           fontSize="0.6875rem"
           fontWeight="500"
           lineHeight="1rem"
-          sx={{ color: theme.palette.warning['200'] }}>
+          sx={{ color: theme.palette.warning['200'] }}
+        >
           {label2}
         </Typography>
       </Stack>

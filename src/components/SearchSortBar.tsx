@@ -95,7 +95,8 @@ export default function SearchSortBar() {
           }}
           endIcon={<ArrowDropDownSharpIcon />}
           size="small"
-          variant="outlined">
+          variant="outlined"
+        >
           {t('COMMON.SORT_BY')}
         </Button>
       </Box>
@@ -106,7 +107,8 @@ export default function SearchSortBar() {
         onClose={handleCloseModal}
         heading={'Sort By'}
         // SubHeading={"Sort"}
-        btnText="apply">
+        btnText="apply"
+      >
         <Box>
           <Divider
             style={{
@@ -120,7 +122,8 @@ export default function SearchSortBar() {
             <FormControl>
               <FormLabel
                 id="demo-controlled-radio-buttons-group"
-                style={{ color: theme.palette.warning['400'] }}>
+                style={{ color: theme.palette.warning['400'] }}
+              >
                 {t('COMMON.NAMES')}
               </FormLabel>
 
@@ -128,7 +131,8 @@ export default function SearchSortBar() {
                 aria-labelledby="demo-controlled-radio-buttons-group"
                 name="controlled-radio-buttons-group"
                 value={valueName}
-                onChange={handleChangeNames}>
+                onChange={handleChangeNames}
+              >
                 <FormControlLabel
                   value="aToz"
                   control={<Radio sx={{ ml: '300px' }} />}
@@ -151,7 +155,8 @@ export default function SearchSortBar() {
             <FormControl>
               <FormLabel
                 id="demo-controlled-radio-buttons-group"
-                style={{ color: theme.palette.warning['400'] }}>
+                style={{ color: theme.palette.warning['400'] }}
+              >
                 {t('COMMON.ATTENDANCE')}
               </FormLabel>
 
@@ -159,7 +164,8 @@ export default function SearchSortBar() {
                 aria-labelledby="demo-controlled-radio-buttons-group"
                 name="controlled-radio-buttons-group"
                 value={valueAttendance}
-                onChange={handleChangeAttendance}>
+                onChange={handleChangeAttendance}
+              >
                 <FormControlLabel
                   value="lowToHigh"
                   control={<Radio sx={{ ml: '270px' }} />}
@@ -182,7 +188,8 @@ export default function SearchSortBar() {
             <FormControl>
               <FormLabel
                 id="demo-controlled-radio-buttons-group"
-                style={{ color: theme.palette.warning['400'] }}>
+                style={{ color: theme.palette.warning['400'] }}
+              >
                 {t('COMMON.CLASS_MISSED')}
               </FormLabel>
 

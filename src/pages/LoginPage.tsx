@@ -19,6 +19,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useTheme } from '@mui/material/styles';
 import MenuItem from '@mui/material/MenuItem';
 import config from '../config.json';
+import { getUserId } from '../services/profileService.ts';
 
 const LoginPage = () => {
   const { t, i18n } = useTranslation();
@@ -68,6 +69,9 @@ const LoginPage = () => {
       console.log(response);
       if (response) {
         const token = response?.access_token;
+        const userResponse = await getUserId();
+        localStorage.setItem('userId', userResponse?.userId);
+
         localStorage.setItem('token', JSON.stringify(token));
       }
       navigate('/dashboard');
