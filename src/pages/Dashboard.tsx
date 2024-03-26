@@ -25,7 +25,7 @@ import AttendanceStatusListView from '../components/AttendanceStatusListView';
 import { useTheme } from '@mui/material/styles';
 import MarkAttendance from '../components/MarkAttendance';
 import { decodeToken } from '../utils/Helper';
-import { attendance } from '../services/AttendanceService';
+import { markAttendance } from '../services/AttendanceService';
 import { AttendanceParams } from '../utils/Interfaces';
 
 interface DashboardProps {
@@ -70,7 +70,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
       contextId
     };
     try {
-      const response = await attendance(attendanceData);
+      const response = await markAttendance(attendanceData);
       if (response) {
         console.log(response);
         handleMarkAttendanceModal();

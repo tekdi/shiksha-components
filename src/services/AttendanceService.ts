@@ -1,7 +1,7 @@
 import { post } from './RestClient';
 import { AttendanceParams } from '../utils/Interfaces';
 
-export const attendance = async ({
+export const markAttendance = async ({
   userId,
   attendanceDate,
   attendance,
