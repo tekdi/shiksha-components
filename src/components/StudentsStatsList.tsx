@@ -21,14 +21,16 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
   return (
     <Box
       // width="100vw"
+
       height="4.5rem"
       gap="1rem"
       borderTop="1px solid #7F7667" //Add color from colorScheme
       display="flex"
-      justifyContent="space-between"
+      justifyContent="space-around"
       alignItems="center"
       sx={{ borderColor: theme.palette.warning['200'] }}
-      margin="0px">
+      margin="0px"
+    >
       <Link
         href="#"
         underline="always"
@@ -36,7 +38,8 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
         fontSize="0.875rem"
         fontWeight="400"
         lineHeight="1.25rem"
-        padding="1rem">
+        padding="1rem"
+      >
         {name}
       </Link>
 
@@ -53,7 +56,8 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
           fontSize="0.6875rem"
           fontWeight="500"
           lineHeight="1rem"
-          sx={{ color: theme.palette.warning['200'] }}>
+          sx={{ color: theme.palette.warning['200'] }}
+        >
           {label1}
         </Typography>
       </Stack>
@@ -70,7 +74,8 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
           fontSize="0.6875rem"
           fontWeight="500"
           lineHeight="1rem"
-          sx={{ color: theme.palette.warning['200'] }}>
+          sx={{ color: theme.palette.warning['200'] }}
+        >
           {label2}
         </Typography>
       </Stack>
