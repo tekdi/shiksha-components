@@ -20,6 +20,7 @@ import { useTheme } from '@mui/material/styles';
 import MenuItem from '@mui/material/MenuItem';
 import config from '../config.json';
 import { getUserId } from '../services/profileService.ts';
+import Loader from '../components/Loader.tsx';
 
 const LoginPage = () => {
   const { t, i18n } = useTranslation();
@@ -28,6 +29,8 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const [selectedLanguage, setSelectedLanguage] = useState(
     localStorage.getItem('preferredLanguage') || 'en'
   );
@@ -63,6 +66,7 @@ const LoginPage = () => {
     : { color: 'black', backgroundColor: '#FBBC13' };
 
   const loginButtonClick = async (event: React.FormEvent) => {
+    setLoading(true);
     event.preventDefault();
     try {
       const response = await login({ username: username, password: password });
@@ -74,8 +78,10 @@ const LoginPage = () => {
 
         localStorage.setItem('token', JSON.stringify(token));
       }
+      setLoading(false);
       navigate('/dashboard');
     } catch (error) {
+      setLoading(false);
       console.error('error', error);
     }
   };
@@ -85,6 +91,7 @@ const LoginPage = () => {
   };
   return (
     <Box display="flex" flexDirection="column" bgcolor={'black'}>
+      {loading && <Loader showBackdrop={true} loadingText={t('LOADING')} />}
       <Box
         display={'flex'}
         flexGrow={1}
@@ -105,7 +112,6 @@ const LoginPage = () => {
         height="auto"
         borderRadius={'2rem 2rem 0 0'}
         zIndex={99}
-        // boxShadow={'0px -5px 15px -6px rgba(0,0,0,0.1)'}
         justifyContent={'center'}
         p={'2rem'}
       >
@@ -139,8 +145,8 @@ const LoginPage = () => {
               </InputLabel>
               <OutlinedInput
                 type={'text'}
-                label="Username"
-                placeholder="Enter User Name"
+                label={t('LOGIN_PAGE.USERNAME')}
+                placeholder={t('LOGIN_PAGE.USERNAME_PLACEHOLDER')}
                 value={username}
                 onChange={handleUsernameChange}
                 error={usernameError}
@@ -166,8 +172,8 @@ const LoginPage = () => {
                     </IconButton>
                   </InputAdornment>
                 }
-                label="Password"
-                placeholder="Enter Password"
+                label={t('LOGIN_PAGE.PASSWORD')}
+                placeholder={t('LOGIN_PAGE.PASSWORD_PLACEHOLDER')}
                 value={password}
                 onChange={handlePasswordChange}
                 error={passwordError}

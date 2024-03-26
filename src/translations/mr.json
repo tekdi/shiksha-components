@@ -21,7 +21,9 @@
   "LOGIN_PAGE": {
     "USERNAME": "वापरकर्तानाव",
     "PASSWORD": "संकेतशब्द",
-    "LOGIN": "लॉग इन करा"
+    "LOGIN": "लॉग इन करा",
+    "USERNAME_PLACEHOLDER": "वापरकर्तानाव प्रविष्ट करा",
+    "PASSWORD_PLACEHOLDER": "पासवर्ड टाका"
   },
   "DASHBOARD": {
     "HISTORY": "इतिहास",

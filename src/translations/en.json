@@ -24,7 +24,9 @@
   "LOGIN_PAGE": {
     "USERNAME": "Username",
     "PASSWORD": "Password",
-    "LOGIN": "Login"
+    "LOGIN": "Login",
+    "USERNAME_PLACEHOLDER": "Enter username",
+    "PASSWORD_PLACEHOLDER": "Enter password"
   },
   "DASHBOARD": {
     "HISTORY": "History",
