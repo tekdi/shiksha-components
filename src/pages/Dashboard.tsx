@@ -57,8 +57,6 @@ const Dashboard: React.FC<DashboardProps> = () => {
         const resp = await cohortList({ limit, page, filters });
         const extractedNames = resp?.data?.map((item) => item.name).filter((name) => name);
         console.log(`response cohort list`, extractedNames);
-        // const resp = response?.data.map(item => item.name)
-        // console.log(`resp`, resp)
         setCohorts(extractedNames);
       } catch (error) {
         console.error('Error fetching  cohort list:', error);
