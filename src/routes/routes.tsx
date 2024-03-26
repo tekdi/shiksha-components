@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { TextField } from '@mui/material';
 import Dashboard from '../pages/Dashboard';
-
+import PrivateRoute from '../utils/PrivateRoute'
 const LoginPage = lazy(() => import('../pages/LoginPage'));
 const Profile = lazy(() => import('../pages/Profile'));
 const StudentDetails = lazy(() => import('../pages/StudentBasicDetails'));
@@ -14,11 +14,15 @@ function AllRoutes(): JSX.Element {
   return (
     <Router>
       <Suspense fallback={<TextField>{t('COMMON.LOADING')}</TextField>}>
-        <Routes>
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/" element={<LoginPage />} />
+      <Routes>
+            <Route element={<PrivateRoute />}>
+            <Route path="/profile" element={<Profile />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/student-details" element={<StudentDetails />} />
+            </Route>
+             </Routes>
+          <Routes>
+          <Route path="/" element={<LoginPage />} />
         </Routes>
       </Suspense>
     </Router>
