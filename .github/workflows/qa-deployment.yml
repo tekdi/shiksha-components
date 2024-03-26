@@ -1,32 +1,31 @@
 name: Deploy to Pratham-QA Server
-on: 
-  push: 
+on:
+  push:
     branches:
       - main
 jobs:
-  build:
-    name: Generate Build and Deploy to QA
-   
+  build_and_test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-        
-      - name: Generate React Build
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: npm install, build
         run: |
-        
-         npm install
-         npm build
-      
+          npm install
+          npm run build --if-present
+   
       - name: Show PWD
         run: |
            echo "Current Working Directory:"
            pwd
-           
-
       - name: List Contents
         run: |
            echo "Contents of the current directory (in reverse order):"
+            ls -lr
+      - name: List Contents
+        run: |
+           echo "Contents of the dist directory (in reverse order):"
+            cd /home/runner/work/customer-app-frontend/customer-app-frontend/dist/
             ls -lr
 
       - name: Deploy to Server 1
