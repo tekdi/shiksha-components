@@ -20,7 +20,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import { getUser } from '../services/profileService.ts';
 import { useTheme } from '@mui/material/styles';
-import default_user from '../../public/default_user.png';
+import default_user from '/default_user.png';
 import { decodeToken } from '../utils/Helper';
 
 const Profile = () => {
