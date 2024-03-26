@@ -8,7 +8,9 @@
     "LOADING": "लोडिंग",
     "SAVE": "सहेजें",
     "UPDATE": "अपडेट",
-    "CLEAR_ALL": "सभी हटाएं"
+    "CLEAR_ALL": "सभी हटाएं",
+    "SEARCH_STUDENT":"छात्र खोजें",
+    "SORT_BY":"इसके अनुसार क्रमबद्ध करें"
   },
   "LOGIN_PAGE": {
     "USERNAME": "उपयोगकर्ता नाम",

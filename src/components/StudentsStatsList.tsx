@@ -24,9 +24,8 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
       height="4.5rem"
       gap="1rem"
       borderTop="1px solid #7F7667" //Add color from colorScheme
-      borderBottom="1px solid #7F7667" //Add color from colorScheme
       display="flex"
-      justifyContent="center"
+      justifyContent="space-between"
       alignItems="center"
       sx={{ borderColor: theme.palette.warning['200'] }}
       margin="0px">
@@ -40,7 +39,8 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
         padding="1rem">
         {name}
       </Link>
-      <Stack padding="1rem">
+
+      <Stack>
         <Typography
           fontSize="1rem"
           fontWeight="bold"
@@ -57,7 +57,7 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
           {label1}
         </Typography>
       </Stack>
-      <Stack padding="1rem">
+      <Stack>
         <Typography
           fontSize="1rem"
           fontWeight="bold"
