@@ -33,7 +33,7 @@ const Header: React.FC = () => {
   return (
     <>
       <Stack
-        sx={{ minWidth: 360 }}
+        sx={{ minWidth:"100%" }}
         direction="row"
         justifyContent={'space-between'}
         alignItems={'center'}

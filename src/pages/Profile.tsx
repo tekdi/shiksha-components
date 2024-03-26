@@ -110,7 +110,6 @@ const Profile = () => {
             border: '2px solid #D0C5B4'
           }}
           minWidth={'100%'}
-          height={'120px'}
           borderRadius={'12px'}
           border={'1px'}
           bgcolor="warning.A400"
@@ -119,13 +118,12 @@ const Profile = () => {
           <img
             src={default_user}
             alt="user"
-            style={{ width: '117px', height: '120px', margin: '2px' }}
+            style={{   margin: '2px' }}
           />
           <Box
-            sx={{
-              width: '123px',
-              height: '40px'
-            }}>
+           
+            
+            >
             <Typography
               variant="h2"
               sx={{
@@ -144,7 +142,6 @@ const Profile = () => {
           sx={{
             minWidth: '100%',
 
-            height: '40px',
             padding: '10px 24px 10px 16px',
             gap: '8px',
             borderRadius: '12px',
@@ -164,7 +161,7 @@ const Profile = () => {
           {t('PROFILE.EDIT_PROFILE')}
         </Button>
 
-        <Box width="328px" height="108px" sx={{ flex: '1', minWidth: '100%' }}>
+        <Box   sx={{ flex: '1', minWidth: '100%' }}>
           <Typography
             variant="h3"
             style={{
@@ -175,8 +172,8 @@ const Profile = () => {
             {t('PROFILE.CONTACT_INFORMATION')}
           </Typography>
 
-          <Box width="177px" height="120px" display="flex" flexDirection="column" gap="10px">
-            <Box width="140px" height="38px" display="flex" flexDirection="row" gap="10px">
+          <Box   display="flex" flexDirection="column" gap="10px">
+            <Box   display="flex" flexDirection="row" gap="10px">
               <LocalPhoneOutlinedIcon
                 style={{
                   marginTop: '9px'
@@ -201,7 +198,7 @@ const Profile = () => {
                 </Typography>
               </Box>
             </Box>
-            <Box width="140px" height="38px" display="flex" flexDirection="row" gap="10px">
+            <Box   display="flex" flexDirection="row" gap="10px">
               <MailOutlineIcon
                 style={{
                   marginTop: '9px'
@@ -230,7 +227,7 @@ const Profile = () => {
           </Box>
         </Box>
 
-        <Box width="328px" height="108px" sx={{ flex: '1', minWidth: '100%' }}>
+        <Box   sx={{ flex: '1', minWidth: '100%' }}>
           {customFieldsData.map((field) => (
             <Grid item xs={12} key={field.fieldId}>
               {field.type === 'text' && (
@@ -257,7 +254,7 @@ const Profile = () => {
           ))}
         </Box>
 
-        <Box width="328px" height="108px" sx={{ flex: '1', minWidth: '100%' }}>
+        <Box   sx={{ flex: '1', minWidth: '100%' }}>
           <Typography
             variant="h3"
             style={{
@@ -286,8 +283,6 @@ const Profile = () => {
             minWidth: '100%',
             padding: '10px'
           }}
-          //width={326}
-          height={120}
           borderRadius={'24px'}
           bgcolor="#E7F3F8"
           p={5}
@@ -326,8 +321,8 @@ const Profile = () => {
         <Modal
           open={open}
           onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description">
+          aria-labelledby="edit-profile-modal"
+          aria-describedby="edit-profile-description">
           <Box sx={style} gap="10px" display="flex" flexDirection="column" borderRadius={'1rem'}>
             <Box
               sx={{
@@ -353,31 +348,31 @@ const Profile = () => {
                 style={{
                   justifyContent: 'flex-end'
                 }}>
-                <CloseIcon />
+                <CloseIcon 
+                cursor="pointer"
+                />
               </IconButton>
             </Box>
             <Box
               style={{
                 overflowY: 'auto'
-              }}>
+              }}
+              id="modal-modal-description"
+              >
               <Box
                 sx={{
                   flex: '1',
                   textAlign: 'center',
                   marginLeft: '19px'
                 }}
-                height={'120px'}
                 borderRadius={'12px'}
                 border={'1px'}
                 bgcolor="warning.A400"
                 display="flex"
                 flexDirection="row">
                 <img src={default_user} alt="user" />
-                <Box
-                  sx={{
-                    width: '123px',
-                    height: '40px'
-                  }}>
+                <Box>
+                 
                   <Button
                     sx={{
                       marginTop: '35px',
@@ -451,8 +446,6 @@ const Profile = () => {
             <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
               <Button
                 sx={{
-                  width: '328px',
-                  height: '40px',
                   color: 'black',
                   backgroundColor: 'containedSecondary',
                   '&:hover': {
@@ -460,7 +453,7 @@ const Profile = () => {
                   }
                 }}
                 variant="contained">
-                {t('PROFILE.UPDATE')}
+                {t('COMMON.UPDATE')}
               </Button>
             </Box>
           </Box>
