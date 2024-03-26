@@ -40,7 +40,8 @@ const customTheme = createTheme({
       '900': '#DADADA',
       A100: '#D0C5B4',
       A200: '#4D4639',
-      A400: '#FFFFFF'
+      A400: '#FFFFFF',
+      A700: '#EDEDED'
     },
     error: {
       main: '#BA1A1A',

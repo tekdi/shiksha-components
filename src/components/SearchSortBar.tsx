@@ -24,6 +24,7 @@ import {
 import ModalComponent from './Modal';
 import { Stack } from '@mui/system';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from '@mui/material/styles';
 
 export default function SearchSortBar() {
   const [modalOpen, setModalOpen] = React.useState(false);
@@ -31,14 +32,19 @@ export default function SearchSortBar() {
   const [open, setOpen] = React.useState(false);
   const [valueName, setValueName] = React.useState('female');
   const [valueAttendance, setValueAttendance] = React.useState('lowToHigh');
+  const [valueClassMissed, setValueClassMissed] = React.useState('lowToHigh');
   const { t } = useTranslation();
+  const theme = useTheme<any>();
 
   const handleChangeNames = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValueName((event.target as HTMLInputElement).value);
+    setValueName(event.target.value);
   };
 
   const handleChangeAttendance = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValueAttendance((event.target as HTMLInputElement).value);
+    setValueAttendance(event.target.value);
+  };
+  const handleChangeClassMissed = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValueClassMissed(event.target.value);
   };
   const handleOpenModal = () => {
     setModalOpen(true);
@@ -59,7 +65,7 @@ export default function SearchSortBar() {
             alignItems: 'center',
             width: 'auto',
             borderRadius: '100px',
-            background: '#EDEDED'
+            background: theme.palette.warning.A700
           }}>
           <InputBase
             sx={{ ml: 1, flex: 1, mb: '0' }}
@@ -74,8 +80,7 @@ export default function SearchSortBar() {
           // variant="outlined"
           onClick={handleOpenModal}
           sx={{
-            // border: "darkgray",
-            color: 'black',
+            color: theme.palette.warning.A200,
             height: 'auto',
             width: 'auto',
             padding: '6px, 8px, 6px, 16px'
@@ -97,7 +102,7 @@ export default function SearchSortBar() {
         <Box>
           <Divider
             style={{
-              backgroundColor: 'darkgray',
+              backgroundColor: theme.palette.warning['400'],
               marginBottom: '10px',
               marginTop: '15px'
             }}
@@ -105,8 +110,10 @@ export default function SearchSortBar() {
 
           <Box mt={2}>
             <FormControl>
-              <FormLabel id="demo-controlled-radio-buttons-group" style={{ color: 'black' }}>
-                Names
+              <FormLabel
+                id="demo-controlled-radio-buttons-group"
+                style={{ color: theme.palette.warning['400'] }}>
+                {t('COMMON.NAMES')}
               </FormLabel>
 
               <RadioGroup
@@ -134,7 +141,11 @@ export default function SearchSortBar() {
           <Box mt={2}>
             {' '}
             <FormControl>
-              <FormLabel id="demo-controlled-radio-buttons-group">Attendance</FormLabel>
+              <FormLabel
+                id="demo-controlled-radio-buttons-group"
+                style={{ color: theme.palette.warning['400'] }}>
+                {t('COMMON.ATTENDANCE')}
+              </FormLabel>
 
               <RadioGroup
                 aria-labelledby="demo-controlled-radio-buttons-group"
@@ -144,7 +155,7 @@ export default function SearchSortBar() {
                 <FormControlLabel
                   value="lowToHigh"
                   control={<Radio sx={{ ml: '270px' }} />}
-                  label="Low to High"
+                  label={t('COMMON.LOW_TO_HIGH')}
                   labelPlacement="start"
                   sx={{ fontWeight: '500', fontSize: '14px', m: '0px' }}
                 />
@@ -153,7 +164,7 @@ export default function SearchSortBar() {
                   labelPlacement="start"
                   sx={{ fontWeight: '500', fontSize: '14px', m: '0px' }}
                   control={<Radio sx={{ ml: '270px' }} />}
-                  label="High To Low"
+                  label={t('COMMON.HIGH_TO_LOW')}
                 />
               </RadioGroup>
             </FormControl>
@@ -161,19 +172,23 @@ export default function SearchSortBar() {
           <Box mt={2}>
             {' '}
             <FormControl>
-              <FormLabel id="demo-controlled-radio-buttons-group">Class Missed</FormLabel>
+              <FormLabel
+                id="demo-controlled-radio-buttons-group"
+                style={{ color: theme.palette.warning['400'] }}>
+                {t('COMMON.CLASS_MISSED')}
+              </FormLabel>
 
               <RadioGroup
                 aria-labelledby="demo-controlled-radio-buttons-group"
                 name="controlled-radio-buttons-group"
-                value={valueAttendance}
-                onChange={handleChangeAttendance}
+                value={valueClassMissed}
+                onChange={handleChangeClassMissed}
                 // style={{ flexDirection: "row" }}
               >
                 <FormControlLabel
                   value="lowToHigh"
                   control={<Radio sx={{ ml: '270px' }} />}
-                  label="Low to High"
+                  label={t('COMMON.LOW_TO_HIGH')}
                   labelPlacement="start"
                   sx={{ fontWeight: '500', fontSize: '14px', m: '0px' }}
                 />
@@ -182,14 +197,14 @@ export default function SearchSortBar() {
                   labelPlacement="start"
                   sx={{ fontWeight: '500', fontSize: '14px', m: '0px' }}
                   control={<Radio sx={{ ml: '270px' }} />}
-                  label="High to Low"
+                  label={t('COMMON.HIGH_TO_LOW')}
                 />
               </RadioGroup>
             </FormControl>
           </Box>
           <Divider
             style={{
-              backgroundColor: 'darkgray',
+              backgroundColor: theme.palette.warning['400'],
               marginBottom: '10px',
               marginTop: '15px'
             }}

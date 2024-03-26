@@ -10,7 +10,13 @@
     "UPDATE": "अपडेट",
     "CLEAR_ALL": "सभी हटाएं",
     "SEARCH_STUDENT":"छात्र खोजें",
-    "SORT_BY":"इसके अनुसार क्रमबद्ध करें"
+    "SORT_BY":"इसके अनुसार क्रमबद्ध करें",
+    "APPLY":"आवेदन करना",
+    "HIGH_TO_LOW":"उच्चे से नीचा",
+    "LOW_TO_HIGH":"नीचा से उच्चे",
+    "NAMES":"नाम",
+    "CLASS_MISSED":"क्लास छूट गई",
+    "ATTENDANCE":"उपस्थिति"
   },
   "LOGIN_PAGE": {
     "USERNAME": "उपयोगकर्ता नाम",

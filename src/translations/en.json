@@ -10,7 +10,13 @@
     "UPDATE": "Update",
     "CLEAR_ALL": "Clear All",
     "SEARCH_STUDENT":"Search Student",
-    "SORT_BY":"sort by"
+    "SORT_BY":"sort by",
+    "APPLY":"Apply",
+    "HIGH_TO_LOW":"High to Low",
+    "LOW_TO_HIGH":"Low to High",
+    "NAMES":"Names",
+    "CLASS_MISSED":"Class Missed",
+    "ATTENDANCE":"Attendance"
   },
   "LOGIN_PAGE": {
     "USERNAME": "Username",

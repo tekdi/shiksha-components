@@ -19,78 +19,26 @@ import { useTheme } from '@mui/material/styles';
 import Header from '../components/Header';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Stack } from '@mui/system';
-import ButtonFunctional from '../components/ButtonFunctional';
+import ButtonFunctional from '../components/buttonComponent';
 import StudentsStatsList from '../components/StudentsStatsList';
 import SearchSortBar from '../components/SearchSortBar';
 import StudentStatsCard from '../components/StudentStatsCard';
 import EastIcon from '@mui/icons-material/East';
 import { Link } from 'react-router-dom';
 import ModalComponent from '../components/Modal';
+import { getClassDetails } from '../services/MyClassDetailsService';
 export default function MyClassDetails() {
+  const [classData, setClassData] = React.useState<(typeof classData)[]>([]);
   const handleSecondClickButton = () => {
     alert(' Mark Today’s Attendance');
   };
   const theme = useTheme<any>();
 
-  //------------------Dummy Data -------------------------
-  const data = [
-    {
-      name: 'ananya',
-      value1: '34',
-      label1: 'Attendacne',
-      value2: '7',
-      label2: 'Class Missed'
-    },
-    {
-      name: 'Upendra',
-      value1: '74',
-      label1: 'Attendacne',
-      value2: '7',
-      label2: 'Class Missed'
-    },
-    {
-      name: 'Upendra1',
-      value1: '79',
-      label1: 'Attendacne',
-      value2: '0',
-      label2: 'Class Missed'
-    },
-    {
-      name: 'Upendra2',
-      value1: '74',
-      label1: 'Attendacne',
-      value2: '7',
-      label2: 'Class Missed'
-    },
-    {
-      name: 'Upendra3',
-      value1: '74',
-      label1: 'Attendacne',
-      value2: '7',
-      label2: 'Class Missed'
-    },
-    {
-      name: 'Upendra4',
-      value1: '74',
-      label1: 'Attendacne',
-      value2: '7',
-      label2: 'Class Missed'
-    },
-    {
-      name: 'Upendra4',
-      value1: '74',
-      label1: 'Attendacne',
-      value2: '7',
-      label2: 'Class Missed'
-    },
-    {
-      name: 'Upendra5',
-      value1: '74',
-      label1: 'Attendacne',
-      value2: '7',
-      label2: 'Class Missed'
-    }
-  ];
+  React.useEffect(() => {
+    getClassDetails().then((response: (typeof classData)[]) => {
+      setClassData(response);
+    });
+  }, []);
 
   return (
     <>
@@ -173,14 +121,14 @@ export default function MyClassDetails() {
 
       <SearchSortBar />
 
-      {data?.map((student, i) => {
+      {classData?.map((student, i) => {
         return (
           <div key={i}>
             <StudentsStatsList
               name={student.name}
               value1={student.value1}
               label1={student.label1}
-              value2={student.value2}
+              value2={i}
               label2={student.label2}
             />
           </div>
