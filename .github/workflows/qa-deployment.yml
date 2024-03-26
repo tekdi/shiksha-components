@@ -30,7 +30,7 @@ jobs:
             ls -lr
 
       - name: Deploy to Server 1
-        uses: easingthemes/ssh-deploy@main
+        uses: easingthemes/ssh-deploy@2.0.0
         env:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY_PRATHAM_QA }}
           REMOTE_HOST: ${{ secrets.HOST_NAME_PRATHAM_QA }}
@@ -51,5 +51,5 @@ jobs:
           host: ${{ secrets.HOST_PRATHAM_QA }}
           username: ${{ secrets.USERNAME_PRATHAM_QA }}
           key: ${{ secrets.EC2_SSH_KEY_PRATHAM_QA }}
-          local: "dist/" 
+          local: "/home/runner/work/shiksha-components/shiksha-components/dist/" 
           remote: "/var/www/qa.prathamteacherapp.tekdinext.com/public"
