@@ -38,7 +38,8 @@
     "PRESENT": "Present",
     "ABSENT": "Absent",
     "HALF_DAY": "Half Day",
-    "ON_LEAVE": "On Leave"
+    "ON_LEAVE": "On Leave",
+    "MARK_ALL": "Mark All"
   },
   "PROFILE": {
     "EDIT_PROFILE": "Edit Profile",
