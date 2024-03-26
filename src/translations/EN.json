@@ -26,7 +26,9 @@
   "DASHBOARD": {
     "HISTORY": "History",
     "MY_CLASSES": "My Classes",
-    "ADD_NEW_CLASS": "Add New Class"
+    "ADD_NEW_CLASS": "Add New Class",
+    "NEW_REMOTE_CLASS": "New Remote Class",
+    "NEW_PHYSICAL_CLASS": "New Phycical Class"
   },
   "ATTENDANCE": {
     "TOTAL_STUDENTS": "Total No of Students: {{count}}",

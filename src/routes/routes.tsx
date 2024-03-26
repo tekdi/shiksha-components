@@ -5,6 +5,7 @@ import { TextField } from '@mui/material';
 import Dashboard from '../pages/Dashboard';
 
 const MyClassDetails = lazy(() => import('../pages/MyClassDetails'));
+import PrivateRoute from '../utils/PrivateRoute';
 const LoginPage = lazy(() => import('../pages/LoginPage'));
 const Profile = lazy(() => import('../pages/Profile'));
 const StudentDetails = lazy(() => import('../pages/StudentBasicDetails'));
@@ -15,12 +16,15 @@ function AllRoutes(): JSX.Element {
     <Router>
       <Suspense fallback={<TextField>{t('COMMON.LOADING')}</TextField>}>
         <Routes>
-          <Route path="/profile" element={<Profile />} />
+          <Route element={<PrivateRoute />}>
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/student-details" element={<StudentDetails />} />
+            <Route path="/class-details" element={<MyClassDetails />} />
+          </Route>
+        </Routes>
+        <Routes>
           <Route path="/" element={<LoginPage />} />
-
-          <Route path="/class-details" element={<MyClassDetails />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/student-details" element={<StudentDetails />} />
         </Routes>
       </Suspense>
     </Router>
