@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import { useTranslation } from 'react-i18next';
+import { ATTENDANCE_ENUM, formatDate } from '../utils/Helper';
 //components
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -19,6 +20,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'; //Half-Day
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import { MarkAttendanceProps } from '../utils/Interfaces';
 
 // Define a type for the icon prop
 type IconType = React.ReactElement<typeof Icon>;
@@ -32,23 +34,6 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   }
 }));
 
-const ATTENDANCE_ENUM = {
-  PRESENT: 'present',
-  ABSENT: 'absent',
-  HALF_DAY: 'halfday',
-  NOT_MARKED: 'notmarked'
-};
-
-interface MarkAttendanceProps {
-  isOpen: boolean;
-  isSelfAttendance?: boolean;
-  date: string;
-  name?: string;
-  currentStatus: string;
-  handleClose: () => void;
-  handleSubmit: () => void;
-}
-
 const MarkAttendance: React.FC<MarkAttendanceProps> = ({
   isOpen,
   isSelfAttendance = true,
@@ -61,10 +46,12 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
   const { t } = useTranslation();
   const [status, setStatus] = React.useState(currentStatus);
   const theme = useTheme<any>();
-  console.log({ name });
+
+  const submitAttendance = () => {
+    handleSubmit(date, status);
+  }
 
   const getButtonComponent = (value: string, icon1: IconType, icon2: IconType, text: string) => {
-    console.log(value, text);
     return (
       <Box
         display="flex"
@@ -93,7 +80,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
               : t('COMMON.UPDATE_ATTENDANCE')}
           </Typography>
           <Typography variant="h4" sx={{ marginBottom: 0, color: theme.palette.warning['A200'] }}>
-            {date}
+            {formatDate(date)}
           </Typography>
         </DialogTitle>
         {/* <Typography variant="h2">Mark Attendance</Typography> */}
@@ -119,7 +106,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
               t('ATTENDANCE.PRESENT')
             )}
             {getButtonComponent(
-              ATTENDANCE_ENUM.ABSENT,
+              isSelfAttendance? ATTENDANCE_ENUM.ON_LEAVE:ATTENDANCE_ENUM.ABSENT,
               <CancelIcon />,
               <HighlightOffIcon />,
               isSelfAttendance ? t('ATTENDANCE.ON_LEAVE') : t('ATTENDANCE.ABSENT')
@@ -147,7 +134,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
                     </Button> */}
           <Button
             variant="contained"
-            onClick={handleSubmit}
+            onClick={submitAttendance}
             disabled={status === ATTENDANCE_ENUM.NOT_MARKED || status === currentStatus}
             sx={{
               width: '100%'
