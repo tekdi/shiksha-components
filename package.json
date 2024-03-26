@@ -18,6 +18,8 @@
     "@mui/icons-material": "^5.15.13",
     "@mui/material": "^5.15.13",
     "axios": "^1.6.8",
+    "i18next": "^23.10.1",
+    "i18next-resources-to-backend": "^1.2.0",
     "react": "^18.2.0",
     "react-calendar": "^4.8.0",
     "react-dom": "^18.2.0",

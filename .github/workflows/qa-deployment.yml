@@ -1,0 +1,58 @@
+name: Deploy to Pratham-QA Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      - name: Install dependencies and build
+        run: |
+          npm install
+          npm run build
+
+      - name: Show PWD
+        run: |
+          echo "Current Working Directory:"
+          pwd
+
+      - name: List Contents
+        run: |
+          echo "Contents of the current directory (in reverse order):"
+          ls -lr
+
+      - name: List Contents of dist directory
+        run: |
+          echo "Contents of the dist directory (in reverse order):"
+          ls -lr dist
+
+      - name: Deploy to Server
+        uses: easingthemes/ssh-deploy@v2
+        with:
+          ssh-private-key: ${{ secrets.EC2_SSH_KEY_PRATHAM_QA }}
+          remote-host: ${{ secrets.HOST_NAME_PRATHAM_QA }}
+          remote-user: ${{ secrets.USERNAME_PRATHAM_QA }}
+          target: ${{ secrets.TARGET_DIR_PRATHAM_QA }}
+
+      - name: Sync Dist folder with remote Public folder
+        run: |
+          rsync -avz --delete ./dist/ ${{ secrets.USERNAME_PRATHAM_QA }}@${{ secrets.HOST_NAME_PRATHAM_QA }}:/var/www/qa.prathamteacherapp.tekdinext.com/public/
+
+      - name: Set up SSH key
+        run: | 
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.HOST_NAME_PRATHAM_QA }} >> ~/.ssh/known_hosts

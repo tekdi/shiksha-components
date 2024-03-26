@@ -1,25 +1,14 @@
 import React from 'react';
 import { useTheme } from '@mui/material/styles';
 import { useTranslation } from 'react-i18next';
+import { ATTENDANCE_ENUM } from '../utils/Helper';
 
 import { Box, Typography } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'; //present
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CancelIcon from '@mui/icons-material/Cancel'; //absent
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-
-const ATTENDANCE_ENUM = {
-  PRESENT: 'present',
-  ABSENT: 'absent',
-  HALF_DAY: 'halfday',
-  NOT_MARKED: 'notmarked'
-};
-
-interface AttendanceStatusListViewProps {
-  currentStatus: string;
-  studentName: string;
-  isEdit?: boolean;
-}
+import { AttendanceStatusListViewProps } from '../utils/Interfaces';
 
 const AttendanceStatusListView: React.FC<AttendanceStatusListViewProps> = ({
   currentStatus,

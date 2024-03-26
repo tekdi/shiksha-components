@@ -2,6 +2,9 @@
 import { Modal, Typography, Box, IconButton, Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import CustomButton from './CustomButton';
+import ButtonFunctional from './buttonComponent';
+import CloseSharpIcon from '@mui/icons-material/CloseSharp';
+import { useTranslation } from 'react-i18next';
 
 interface ModalProps {
   open: boolean;
@@ -31,22 +34,24 @@ const ModalComponent: React.FC<ModalProps> = ({
     p: 4,
     borderRadius: '1rem'
   };
+  const { t } = useTranslation();
 
   return (
     <Modal open={open} onClose={onClose}>
       <Box sx={style}>
-        <Typography variant="h4">{heading}</Typography>
+        <Box display={'flex'} justifyContent={'space-between'}>
+          <Typography variant="h4" m={0} fontSize={'16px'} fontWeight={'500'}>
+            {heading}
+          </Typography>
+          <CloseSharpIcon onClick={onClose} aria-label="Close" />
+        </Box>
+
         <Box>
           <Typography variant="h6">{SubHeading}</Typography>
-          <IconButton
-            onClick={onClose}
-            style={{ position: 'absolute', top: 5, right: 5, zIndex: 1 }}
-          >
-            <CloseIcon />
-          </IconButton>
+
           <Box>{children}</Box>
         </Box>
-        <CustomButton buttonText={'apply'} />
+        <ButtonFunctional buttonName={t('COMMON.APPLY')} />
       </Box>
     </Modal>
   );

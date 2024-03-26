@@ -23,17 +23,29 @@ import Fade from '@mui/material/Fade';
 import CloseIcon from '@mui/icons-material/Close';
 import AttendanceStatusListView from '../components/AttendanceStatusListView';
 import { useTheme } from '@mui/material/styles';
+import MarkAttendance from '../components/MarkAttendance';
+import { decodeToken } from '../utils/Helper';
+import { markAttendance } from '../services/AttendanceService';
+import { AttendanceParams } from '../utils/Interfaces';
 
 interface DashboardProps {
   //   buttonText: string;
 }
 
+let userId: string = '';
+let contextId: string = '';
+
 const Dashboard: React.FC<DashboardProps> = () => {
   const { t } = useTranslation();
   const [open, setOpen] = React.useState(false);
+  const [selfAttendanceDetails, setSelfAttendanceDetails] = React.useState(null);
+  const [openMarkAttendance, setOpenMarkAttendance] = React.useState(false);
   const handleModalToggle = () => setOpen(!open);
+  const handleMarkAttendanceModal = () => setOpenMarkAttendance(!openMarkAttendance);
   const [classes, setClasses] = React.useState('');
   const theme = useTheme<any>();
+
+  React.useEffect(() => {}, []);
 
   const handleChange = (event: SelectChangeEvent) => {
     setClasses(event.target.value as string);
@@ -48,6 +60,24 @@ const Dashboard: React.FC<DashboardProps> = () => {
     border: '2px solid #000',
     boxShadow: 24,
     p: 4
+  };
+  const submitAttendance = async (date: string, status: string) => {
+    console.log(date, status);
+    const attendanceData: AttendanceParams = {
+      attendanceDate: date,
+      attendance: status,
+      userId,
+      contextId
+    };
+    try {
+      const response = await markAttendance(attendanceData);
+      if (response) {
+        console.log(response);
+        handleMarkAttendanceModal();
+      }
+    } catch (error) {
+      console.error('error', error);
+    }
   };
   return (
     <Box minHeight="100vh" textAlign={'center'}>
@@ -85,6 +115,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
               variant="contained"
               color="primary"
               style={{ width: '12.5rem', padding: theme.spacing(1) }}
+              onClick={handleMarkAttendanceModal}
             >
               {t('COMMON.MARK_MY_ATTENDANCE')}
             </Button>
@@ -208,6 +239,14 @@ const Dashboard: React.FC<DashboardProps> = () => {
           <CohortCard showBackground={true} isRemote={true} cohortName={'Class B'} />
         </Box>
       </Box>
+      <MarkAttendance
+        isOpen={openMarkAttendance}
+        isSelfAttendance={true}
+        date="2024-03-02"
+        currentStatus="notmarked"
+        handleClose={handleMarkAttendanceModal}
+        handleSubmit={submitAttendance}
+      />
     </Box>
   );
 };

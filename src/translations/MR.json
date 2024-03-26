@@ -5,7 +5,15 @@
     "MARK_STUDENT_ATTENDANCE": "विद्यार्थी उपस्थितीचा चिन्ह करा",
     "LOADING": "लोड होत आहे",
     "SAVE": "साठवा",
-    "CLEAR_ALL": "सर्व काढा"
+    "CLEAR_ALL": "सर्व काढा",
+    "SEARCH_STUDENT":"विद्यार्थी शोधा",
+    "SORT_BY":"क्रमवारी लावा",
+    "APPLY":"लागू करा",
+    "HIGH_TO_LOW":"उच्च ते निम्न",
+    "LOW_TO_HIGH":"निम्न ते उच्च",
+    "NAMES":"नावे",
+    "CLASS_MISSED":"वर्ग चुकला",
+    "ATTENDANCE":"उपस्थिति"
   },
   "LOGIN_PAGE": {
     "USERNAME": "वापरकर्तानाव",
@@ -15,7 +23,9 @@
   "DASHBOARD": {
     "HISTORY": "इतिहास",
     "MY_CLASSES": "माझ्या क्लासेस",
-    "ADD_NEW_CLASS": "नवीन क्लास जोडा"
+    "ADD_NEW_CLASS": "नवीन क्लास जोडा",
+    "NEW_REMOTE_CLASS": "नवीन रिमोट क्लास",
+    "NEW_PHYSICAL_CLASS": "नवीन शारीरिक वर्ग"
   },
   "ATTENDANCE": {
     "TOTAL_STUDENTS": "एकूण विद्यार्थी: {{count}}"

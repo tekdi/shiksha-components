@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { useTheme } from '@mui/material/styles';
 import config from '../config.json';
 import { useNavigate } from 'react-router-dom';
-import appLogo from '../../public/appLogo.svg';
+import appLogo from '/appLogo.svg';
 
 const Header: React.FC = () => {
   const [selectedLanguage, setSelectedLanguage] = useState(
@@ -33,7 +33,7 @@ const Header: React.FC = () => {
   return (
     <>
       <Stack
-        sx={{ minWidth: 360 }}
+        sx={{ minWidth:"100%" }}
         direction="row"
         justifyContent={'space-between'}
         alignItems={'center'}
