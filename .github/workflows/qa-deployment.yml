@@ -39,15 +39,10 @@ jobs:
           REMOTE_USER: ${{ secrets.USERNAME_PRATHAM_QA }}
           TARGET: ${{ secrets.TARGET_DIR_PRATHAM_QA }}
 
-      - name: Unzip Artifact to Correct Locations to Deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST_NAME_PRATHAM_QA }}
-          username: ${{ secrets.USERNAME_PRATHAM_QA }}
-          key: ${{ secrets.EC2_SSH_KEY_PRATHAM_QA }}
-          local: "./dist/" 
-          remote: "/var/www/qa.prathamteacherapp.tekdinext.com/public"
-
+      - name: Sync Dist folder with remote Public folder
+        run: |
+          rsync -avz --delete ./dist/ ${{ secrets.USERNAME_PRATHAM_QA }}@${{ secrets.HOST_NAME_PRATHAM_QA }}:/var/www/qa.prathamteacherapp.tekdinext.com/public/
+          
       - name: Set up SSH key
         run: | 
          mkdir -p ~/.ssh
