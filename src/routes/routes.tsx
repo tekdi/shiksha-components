@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { TextField } from '@mui/material';
 import Dashboard from '../pages/Dashboard';
-
+import TeacherAttendanceHistory from '../pages/TeacherAttendanceHistory';
 const MyClassDetails = lazy(() => import('../pages/MyClassDetails'));
 import PrivateRoute from '../utils/PrivateRoute';
 const LoginPage = lazy(() => import('../pages/LoginPage'));
@@ -21,6 +21,7 @@ function AllRoutes(): JSX.Element {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/student-details" element={<StudentDetails />} />
             <Route path="/class-details" element={<MyClassDetails />} />
+            <Route path="/teacher-attendance-history" element={<TeacherAttendanceHistory />} />
           </Route>
         </Routes>
         <Routes>
