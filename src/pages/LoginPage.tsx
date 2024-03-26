@@ -29,7 +29,7 @@ const LoginPage = () => {
   const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState(
-    localStorage.getItem('preferredLanguage') || 'EN'
+    localStorage.getItem('preferredLanguage') || 'en'
   );
   const [language, setLanguage] = useState(selectedLanguage);
   const navigate = useNavigate();

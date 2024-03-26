@@ -31,7 +31,7 @@
     "MY_CLASSES": "My Classes",
     "ADD_NEW_CLASS": "Add New Class",
     "NEW_REMOTE_CLASS": "New Remote Class",
-    "NEW_PHYSICAL_CLASS": "New Phycical Class"
+    "NEW_PHYSICAL_CLASS": "New Physical Class"
   },
   "ATTENDANCE": {
     "TOTAL_STUDENTS": "Total No of Students: {{count}}",
@@ -44,7 +44,7 @@
     "EDIT_PROFILE": "Edit Profile",
     "CONTACT_INFORMATION": "Contact information",
     "PHONE": "Phone",
-    "EMAIL_ID": "Emali ID",
+    "EMAIL_ID": "Email ID",
     "BIO": "Bio",
     "INTERVIEW_TEST_SCORES": "Interview & Test Scores",
     "UPDATE_PICTURE": "Update Picture",
