@@ -64,9 +64,7 @@ const Header: React.FC = () => {
         <Box sx={{ margin: '0 auto' }}>
           <img src={appLogo} alt="logo" />
         </Box>
-        <Box onClick={handleProfileClick} 
-        style={{ cursor: 'pointer' }}
-        >
+        <Box onClick={handleProfileClick} style={{ cursor: 'pointer' }}>
           <AccountCircleIcon fontSize="large" color="action" />
         </Box>
       </Stack>

@@ -24,7 +24,7 @@ export const bulkAttendance = async ({
 }: BulkAttendanceParams): Promise<any> => {
   const apiUrl: string = `${import.meta.env.VITE_BASE_URL}/attendance/bulkAttendance`;
   try {
-    const response = await post(apiUrl, {  attendanceDate, contextId, userAttendance });
+    const response = await post(apiUrl, { attendanceDate, contextId, userAttendance });
     return response?.data;
   } catch (error) {
     console.error('error in marking bulk attendance', error);

@@ -54,7 +54,8 @@ const AttendanceStatusListView: React.FC<AttendanceStatusListViewProps> = ({
         flexDirection="column"
         alignItems="center"
         p={2}
-        onClick={() => handleClickAction(ATTENDANCE_ENUM.PRESENT)}>
+        onClick={() => handleClickAction(ATTENDANCE_ENUM.PRESENT)}
+      >
         {[status, markAllStatus].includes(ATTENDANCE_ENUM.PRESENT) ? (
           <CheckCircleIcon />
         ) : (
@@ -69,7 +70,8 @@ const AttendanceStatusListView: React.FC<AttendanceStatusListViewProps> = ({
         flexDirection="column"
         alignItems="center"
         p={2}
-        onClick={() => handleClickAction(ATTENDANCE_ENUM.ABSENT)}>
+        onClick={() => handleClickAction(ATTENDANCE_ENUM.ABSENT)}
+      >
         {[status, markAllStatus].includes(ATTENDANCE_ENUM.ABSENT) ? (
           <CancelIcon />
         ) : (

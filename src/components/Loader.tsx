@@ -18,8 +18,9 @@ const Loader: React.FC<{ showBackdrop: boolean; loadingText: string }> = ({
   return (
     <>
       <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 , flexDirection: 'column'}}
-        open={showBackdrop}>
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1, flexDirection: 'column' }}
+        open={showBackdrop}
+      >
         <Spinner />
       </Backdrop>
       {!open && <Spinner />}

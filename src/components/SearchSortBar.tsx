@@ -63,7 +63,8 @@ export default function SearchSortBar() {
         mb={3}
         justifyContent={'space-between'}
         alignItems={'center'}
-        boxShadow={'none'}>
+        boxShadow={'none'}
+      >
         <Paper
           component="form"
           sx={{
@@ -74,7 +75,8 @@ export default function SearchSortBar() {
             borderRadius: '100px',
             background: theme.palette.warning.A700,
             boxShadow: 'none'
-          }}>
+          }}
+        >
           <InputBase
             sx={{ ml: 1, flex: 1, mb: '0' }}
             placeholder={t('COMMON.SEARCH_STUDENT') + '..'}

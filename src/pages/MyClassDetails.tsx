@@ -57,7 +57,8 @@ export default function MyClassDetails() {
                 m={0}
                 fontSize={'11px'}
                 lineHeight={'16px'}
-                color={theme.palette.warning.A200}>
+                color={theme.palette.warning.A200}
+              >
                 Gurukrupa Building, Paud Road
               </Typography>
             </Stack>
@@ -74,25 +75,29 @@ export default function MyClassDetails() {
             borderRadius: '24px',
             marginTop: '20px',
             boxShadow: 'none'
-          }}>
+          }}
+        >
           <CardContent>
             <Box
               sx={{
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center'
-              }}>
+              }}
+            >
               <Box>
                 <Typography
                   sx={{ fontSize: '16px', fontWeight: 600, color: theme.palette.warning.A200 }}
                   variant="h6"
-                  gutterBottom>
+                  gutterBottom
+                >
                   Attendance Report
                 </Typography>
                 <Typography
                   sx={{ fontSize: '14px', fontWeight: 600, color: theme.palette.warning['500'] }}
                   variant="h6"
-                  gutterBottom>
+                  gutterBottom
+                >
                   As of 24 May
                 </Typography>
               </Box>
@@ -102,7 +107,8 @@ export default function MyClassDetails() {
                     sx={{ color: theme.palette.secondary.main, fontSize: '16px' }}
                     mr={1}
                     variant="h6"
-                    gutterBottom>
+                    gutterBottom
+                  >
                     History
                   </Typography>
                   <EastIcon fontSize="small" sx={{ color: theme.palette.secondary.main }} />
@@ -117,7 +123,8 @@ export default function MyClassDetails() {
               }}
               display="flex"
               alignItems="center"
-              gap={1}>
+              gap={1}
+            >
               <StudentStatsCard
                 label1="Attendance"
                 value1="78%" // Sample attendance data, replace with actual data
