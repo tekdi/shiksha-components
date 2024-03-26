@@ -10,22 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
         
-      - name: Setup Node Env
-        uses: actions/setup-node@v3
-        with:
-          node-version: 21.1.0
-          
       - name: Generate React Build
         run: |
         
          npm install
          npm build
-      - name: Create Lerna Bundles for Submodules
-        run: |
-          sh ./scripts/pack-prod-build.sh
-
+      
       - name: Show PWD
         run: |
            echo "Current Working Directory:"
