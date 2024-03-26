@@ -8,7 +8,15 @@
     "UPDATE_ATTENDANCE": "Update Attendance",
     "SAVE": "Save",
     "UPDATE": "Update",
-    "CLEAR_ALL": "Clear All"
+    "CLEAR_ALL": "Clear All",
+    "SEARCH_STUDENT":"Search Student",
+    "SORT_BY":"sort by",
+    "APPLY":"Apply",
+    "HIGH_TO_LOW":"High to Low",
+    "LOW_TO_HIGH":"Low to High",
+    "NAMES":"Names",
+    "CLASS_MISSED":"Class Missed",
+    "ATTENDANCE":"Attendance"
   },
   "LOGIN_PAGE": {
     "USERNAME": "Username",
@@ -41,4 +49,5 @@
     "LOCATION": "Location",
     "HELD_ON": "Held on:"
   }
+
 }
