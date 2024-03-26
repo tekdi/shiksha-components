@@ -66,7 +66,7 @@ const CohortCard: React.FC<CohortCardProps> = ({ showBackground, isRemote, cohor
         {isRemote ? <SmartDisplayIcon /> : <ApartmentIcon />}
       </CardMedia>
       <CardContent className={classes.content}>
-        <Typography>
+        <Typography borderBottom={'0px'}>
           {!showBackground
             ? isRemote
               ? 'New Remote Class'

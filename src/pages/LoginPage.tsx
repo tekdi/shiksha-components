@@ -8,7 +8,7 @@ import {
   InputLabel,
   OutlinedInput
 } from '@mui/material';
-import appLogo from '../assets/appLogo.svg';
+import appLogo2 from '/appLogo2.svg';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useState } from 'react';
 import '../App.css';
@@ -91,7 +91,7 @@ const LoginPage = () => {
         zIndex={99}
         sx={{ margin: '32px 0' }}
       >
-        <img src={appLogo} />
+        <img src={appLogo2} />
       </Box>
       <Box
         flexGrow={1}
