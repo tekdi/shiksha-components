@@ -15,7 +15,9 @@
   "DASHBOARD": {
     "HISTORY": "इतिहास",
     "MY_CLASSES": "माझ्या क्लासेस",
-    "ADD_NEW_CLASS": "नवीन क्लास जोडा"
+    "ADD_NEW_CLASS": "नवीन क्लास जोडा",
+    "NEW_REMOTE_CLASS": "नवीन रिमोट क्लास",
+    "NEW_PHYSICAL_CLASS": "नवीन शारीरिक वर्ग"
   },
   "ATTENDANCE": {
     "TOTAL_STUDENTS": "एकूण विद्यार्थी: {{count}}"

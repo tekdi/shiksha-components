@@ -32,8 +32,8 @@ interface DashboardProps {
   //   buttonText: string;
 }
 
-let userId:string="";
-let contextId:string="";
+let userId: string = '';
+let contextId: string = '';
 
 const Dashboard: React.FC<DashboardProps> = () => {
   const { t } = useTranslation();
@@ -45,20 +45,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
   const [classes, setClasses] = React.useState('');
   const theme = useTheme<any>();
 
-  React.useEffect(() => {
-    const fetchUserDetails = async () => {
-      const token = localStorage.getItem('token');
-      try {
-        if (token) {
-          const payload = decodeToken(token);
-          userId = payload['https://hasura.io/jwt/claims']['x-hasura-user-id'];
-        }
-      } catch (error) {
-        console.error('Error fetching  user details:', error);
-      }
-    };
-    fetchUserDetails();
-  }, []);
+  React.useEffect(() => {}, []);
 
   const handleChange = (event: SelectChangeEvent) => {
     setClasses(event.target.value as string);
@@ -79,18 +66,19 @@ const Dashboard: React.FC<DashboardProps> = () => {
     const attendanceData: AttendanceParams = {
       attendanceDate: date,
       attendance: status,
-      userId, contextId
-    }
+      userId,
+      contextId
+    };
     try {
       const response = await attendance(attendanceData);
       if (response) {
         console.log(response);
-        handleMarkAtendanceModal()
+        handleMarkAtendanceModal();
       }
     } catch (error) {
       console.error('error', error);
     }
-  }
+  };
   return (
     <Box minHeight="100vh" textAlign={'center'}>
       <Header />
@@ -251,7 +239,14 @@ const Dashboard: React.FC<DashboardProps> = () => {
           <CohortCard showBackground={true} isRemote={true} cohortName={'Class B'} />
         </Box>
       </Box>
-      <MarkAttendance isOpen={openMarkAttendance} isSelfAttendance={true} date='2024-03-02' currentStatus='notmarked' handleClose={handleMarkAtendanceModal} handleSubmit={submitAttendance} />
+      <MarkAttendance
+        isOpen={openMarkAttendance}
+        isSelfAttendance={true}
+        date="2024-03-02"
+        currentStatus="notmarked"
+        handleClose={handleMarkAtendanceModal}
+        handleSubmit={submitAttendance}
+      />
     </Box>
   );
 };

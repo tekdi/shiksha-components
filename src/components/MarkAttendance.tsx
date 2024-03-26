@@ -49,7 +49,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
 
   const submitAttendance = () => {
     handleSubmit(date, status);
-  }
+  };
 
   const getButtonComponent = (value: string, icon1: IconType, icon2: IconType, text: string) => {
     return (
@@ -106,7 +106,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
               t('ATTENDANCE.PRESENT')
             )}
             {getButtonComponent(
-              isSelfAttendance? ATTENDANCE_ENUM.ON_LEAVE:ATTENDANCE_ENUM.ABSENT,
+              isSelfAttendance ? ATTENDANCE_ENUM.ON_LEAVE : ATTENDANCE_ENUM.ABSENT,
               <CancelIcon />,
               <HighlightOffIcon />,
               isSelfAttendance ? t('ATTENDANCE.ON_LEAVE') : t('ATTENDANCE.ABSENT')
