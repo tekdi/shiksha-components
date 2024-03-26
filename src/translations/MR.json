@@ -13,7 +13,10 @@
     "LOW_TO_HIGH": "निम्न ते उच्च",
     "NAMES": "नावे",
     "CLASS_MISSED": "वर्ग चुकला",
-    "ATTENDANCE": "उपस्थिति"
+    "ATTENDANCE": "उपस्थिति",
+    "ATTENDANCE_REPORT": "उपस्थिती अहवाल",
+    "TEST_REPORT": "चाचणी अहवाल",
+    "BASIC_DETAILS":"मूलभूत तपशील"
   },
   "LOGIN_PAGE": {
     "USERNAME": "वापरकर्तानाव",

@@ -1,110 +1,113 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Box, Card, CardContent, Stack, Typography } from '@mui/material';
+import { ArrowBack as ArrowBackIcon, East as EastIcon } from '@mui/icons-material';
+import { useTheme } from '@mui/material/styles';
 import StudentStatsCard from '../components/StudentStatsCard';
 import Header from '../components/Header';
 import CustomSelect from '../components/CustomSelect';
-import EastIcon from '@mui/icons-material/East';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useTheme } from '@mui/material/styles';
-import { Link } from 'react-router-dom';
+import { getUser } from '../services/profileService';
+import { decodeToken } from '../utils/Helper';
+import { useTranslation } from 'react-i18next';
 
 const StudentDetails = () => {
-  const theme = useTheme<any>();
-
+  const { t } = useTranslation();
+  const theme = useTheme();
+  const [userData, setUserData] = useState([]);
   const [studentData, setStudentData] = useState([
     {
-      id: 1,
       dob_title: 'Date of Birth',
-      dob: '22/12/1998',
       latest_education: 'Latest Education',
-      grade: '9th Grade'
+      Location: 'Location',
+      Enrollment_Date: 'Enrollment Date',
+      School: 'School',
+      Dropout_year: 'Dropout year',
+      MaritalStatus: 'Marital Status',
+      EmploymentStatus: 'Employment Status'
     }
   ]);
 
-  const renderStatsCard = (label1: string, value1: string) => (
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      const token = localStorage.getItem('token');
+      try {
+        const payload = decodeToken(token);
+        const xHasuraUserId = payload['https://hasura.io/jwt/claims']['x-hasura-user-id'];
+        const response = await getUser(xHasuraUserId);
+        const userDataFromJson = response?.result?.userData;
+        setUserData(userDataFromJson);
+      } catch (error) {
+        console.error('Error fetching user details:', error);
+      }
+    };
+    fetchUserDetails();
+  }, []);
+
+  const renderStatsCard = (label1, value1) => (
     <StudentStatsCard label1={label1} value1={value1} label2={false} value2="5" />
   );
 
   return (
     <>
       <Header />
-      <Box mt={3} display={'flex'} gap={2} alignItems={'flex-start'}>
-        <Link to={'/'}>
+      <Box mt={3} display="flex" gap={2} alignItems="flex-start">
+        <Link to="/">
           <ArrowBackIcon sx={{ color: theme.palette.warning['A200'], fontSize: 'large' }} />
         </Link>
         <Stack>
-          <Typography fontSize={'22px'} variant="h3" fontFamily={'Poppins'}>
+          <Typography
+            variant="h3"
+            sx={{
+              fontFamily: theme.typography.fontFamily,
+              fontSize: '22px'
+            }}>
             Class A
           </Typography>
         </Stack>
       </Box>
-      <Box padding={'10px'}>
-        {' '}
+      <Box padding={2}>
         <Card
           sx={{
             bgcolor: theme.palette.secondary.light,
             borderRadius: theme.spacing(3),
             boxShadow: 'none'
-          }}
-        >
+          }}>
           <CardContent>
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between'
-              }}
-            >
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <Typography
                 sx={{
                   color: theme.palette.warning['A200'],
-                  fontSize: '16px',
-                  fontFamily: 'Poppins',
-                  fontWeight: 500
+                  fontFamily: theme.typography.fontFamily, 
+                  fontWeight: 500,
+                  fontSize: '15px'
                 }}
                 variant="h6"
-                gutterBottom
-              >
-                Attendance Report
+                gutterBottom>
+                {t('COMMON.ATTENDANCE_REPORT')}
               </Typography>
-              <Link to={'/history'}>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    marginLeft: '10px'
-                  }}
-                >
+              <Link to="/history">
+                <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: '10px' }}>
                   <Typography
                     sx={{
                       color: theme.palette.secondary.main,
-                      fontSize: '16px',
-                      marginRight: '4px'
+                      marginRight: '4px',
+                      fontSize: '14px'
                     }}
                     variant="h6"
-                    gutterBottom
-                  >
+                    gutterBottom>
                     History
                   </Typography>
                   <EastIcon
                     fontSize="inherit"
-                    sx={{
-                      color: theme.palette.secondary.main,
-                      marginBottom: '5px'
-                    }}
+                    sx={{ color: theme.palette.secondary.main, marginBottom: '5px' }}
                   />
                 </Box>
               </Link>
             </Box>
             <Typography
-              sx={{
-                color: theme.palette.text.secondary,
-                fontSize: '14px',
-                fontWeight: 500
-              }}
+              sx={{ color: theme.palette.text.secondary, fontSize: '14px', fontWeight: 500 }}
               variant="h6"
-              gutterBottom
-            >
+              gutterBottom>
               As of 24 May
             </Typography>
             <Box
@@ -114,41 +117,33 @@ const StudentDetails = () => {
                 justifyContent: 'center',
                 display: 'flex',
                 marginTop: 2
-              }}
-            >
+              }}>
               {renderStatsCard('Attendance', '78%')}
               {renderStatsCard('Classes Missed', '2')}
             </Box>
           </CardContent>
         </Card>
       </Box>
-      <Box padding={'10px'}>
+      <Box padding={2}>
         <Card
           sx={{
             bgcolor: theme.palette.secondary.light,
             borderRadius: theme.spacing(3),
             boxShadow: 'none'
-          }}
-        >
+          }}>
           <CardContent>
             <Typography
-              sx={{
-                color: theme.palette.warning['A200'],
-                fontSize: '16px',
-                fontWeight: 500
-              }}
+              sx={{ color: theme.palette.warning['A200'], fontWeight: 500, fontSize: '15px' }}
               variant="h6"
-              gutterBottom
-            >
-              Test Report
+              gutterBottom>
+              {t('COMMON.TEST_REPORT')}
             </Typography>
             <CustomSelect />
             <Box
               sx={{ bgcolor: 'transparent', justifyContent: 'center' }}
               display="flex"
               gap={1}
-              alignItems="center"
-            >
+              alignItems="center">
               {renderStatsCard('Status', 'Passed')}
               {renderStatsCard('Score', '82%')}
             </Box>
@@ -158,22 +153,17 @@ const StudentDetails = () => {
       <Card
         sx={{
           bgcolor: theme.palette.warning[800],
-          height: '600px',
+          maxHeight: '600px',
           boxShadow: 'none',
-          marginTop: '10px'
-        }}
-      >
+          marginTop: '10px',
+          overflow: 'auto' 
+        }}>
         <CardContent>
           <Typography
-            sx={{
-              color: theme.palette.warning['A200'],
-              fontSize: '16px',
-              fontWeight: 500
-            }}
+            sx={{ color: theme.palette.warning['A200'], fontSize: '15px', fontWeight: 500 }}
             variant="h6"
-            gutterBottom
-          >
-            Basic Details
+            gutterBottom>
+            {t('COMMON.BASIC_DETAILS')}
           </Typography>
         </CardContent>
         <Card
@@ -184,8 +174,7 @@ const StudentDetails = () => {
             margin: 'auto',
             borderRadius: theme.spacing(2),
             boxShadow: 'none'
-          }}
-        >
+          }}>
           {studentData.map((item) => (
             <Box key={item.id} sx={{ padding: '16px' }}>
               <Typography
@@ -193,37 +182,10 @@ const StudentDetails = () => {
                   color: theme.palette.text.secondary,
                   fontSize: '14px',
                   fontWeight: 600
-                }}
-              >
+                }}>
                 {item.dob_title}
               </Typography>
-              <Typography
-                sx={{
-                  color: theme.palette.text.primary,
-                  fontSize: '16px',
-                  fontWeight: 500
-                }}
-              >
-                {item.dob}
-              </Typography>
-              <Typography
-                sx={{
-                  color: theme.palette.text.secondary,
-                  fontSize: '14px',
-                  fontWeight: 600
-                }}
-              >
-                {item.latest_education}
-              </Typography>
-              <Typography
-                sx={{
-                  color: theme.palette.text.primary,
-                  fontSize: '16px',
-                  fontWeight: 500
-                }}
-              >
-                {item.grade}
-              </Typography>
+              <Typography sx={{ fontWeight: 500 }}>{userData?.dob}</Typography>
             </Box>
           ))}
         </Card>

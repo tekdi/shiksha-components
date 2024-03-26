@@ -16,7 +16,10 @@
     "LOW_TO_HIGH": "Low to High",
     "NAMES": "Names",
     "CLASS_MISSED": "Class Missed",
-    "ATTENDANCE": "Attendance"
+    "ATTENDANCE": "Attendance",
+    "ATTENDANCE_REPORT": "Attendance Report",
+    "TEST_REPORT":"Test Report",
+    "BASIC_DETAILS":"Basic Details"
   },
   "LOGIN_PAGE": {
     "USERNAME": "Username",
