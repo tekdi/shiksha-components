@@ -8,8 +8,10 @@ import Header from '../components/Header';
 import CustomSelect from '../components/CustomSelect';
 import { getUser } from '../services/profileService';
 import { decodeToken } from '../utils/Helper';
+import { useTranslation } from 'react-i18next';
 
 const StudentDetails = () => {
+  const { t } = useTranslation();
   const theme = useTheme();
   const [userData, setUserData] = useState([]);
   const [studentData, setStudentData] = useState([
@@ -29,13 +31,11 @@ const StudentDetails = () => {
     const fetchUserDetails = async () => {
       const token = localStorage.getItem('token');
       try {
-        if (token) {
-          const payload = decodeToken(token);
-          const xHasuraUserId = payload['https://hasura.io/jwt/claims']['x-hasura-user-id'];
-          const response = await getUser(xHasuraUserId);
-          const userDataFromJson = response?.result?.userData;
-          setUserData(userDataFromJson);
-        }
+        const payload = decodeToken(token);
+        const xHasuraUserId = payload['https://hasura.io/jwt/claims']['x-hasura-user-id'];
+        const response = await getUser(xHasuraUserId);
+        const userDataFromJson = response?.result?.userData;
+        setUserData(userDataFromJson);
       } catch (error) {
         console.error('Error fetching user details:', error);
       }
@@ -55,7 +55,12 @@ const StudentDetails = () => {
           <ArrowBackIcon sx={{ color: theme.palette.warning['A200'], fontSize: 'large' }} />
         </Link>
         <Stack>
-          <Typography fontSize="22px" variant="h3" fontFamily="Poppins">
+          <Typography
+            variant="h3"
+            sx={{
+              fontFamily: theme.typography.fontFamily,
+              fontSize: '22px'
+            }}>
             Class A
           </Typography>
         </Stack>
@@ -72,21 +77,21 @@ const StudentDetails = () => {
               <Typography
                 sx={{
                   color: theme.palette.warning['A200'],
-                  fontSize: '16px',
-                  fontFamily: 'Poppins',
-                  fontWeight: 500
+                  fontFamily: theme.typography.fontFamily, 
+                  fontWeight: 500,
+                  fontSize: '15px'
                 }}
                 variant="h6"
                 gutterBottom>
-                Attendance Report
+                {t('COMMON.ATTENDANCE_REPORT')}
               </Typography>
               <Link to="/history">
                 <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: '10px' }}>
                   <Typography
                     sx={{
                       color: theme.palette.secondary.main,
-                      fontSize: '16px',
-                      marginRight: '4px'
+                      marginRight: '4px',
+                      fontSize: '14px'
                     }}
                     variant="h6"
                     gutterBottom>
@@ -128,10 +133,10 @@ const StudentDetails = () => {
           }}>
           <CardContent>
             <Typography
-              sx={{ color: theme.palette.warning['A200'], fontSize: '16px', fontWeight: 500 }}
+              sx={{ color: theme.palette.warning['A200'], fontWeight: 500, fontSize: '15px' }}
               variant="h6"
               gutterBottom>
-              Test Report
+              {t('COMMON.TEST_REPORT')}
             </Typography>
             <CustomSelect />
             <Box
@@ -151,14 +156,14 @@ const StudentDetails = () => {
           maxHeight: '600px',
           boxShadow: 'none',
           marginTop: '10px',
-          overflow: 'auto' // Added overflow property to enable scrolling
+          overflow: 'auto' 
         }}>
         <CardContent>
           <Typography
-            sx={{ color: theme.palette.warning['A200'], fontSize: '16px', fontWeight: 500 }}
+            sx={{ color: theme.palette.warning['A200'], fontSize: '15px', fontWeight: 500 }}
             variant="h6"
             gutterBottom>
-            Basic Details
+            {t('COMMON.BASIC_DETAILS')}
           </Typography>
         </CardContent>
         <Card
@@ -180,7 +185,7 @@ const StudentDetails = () => {
                 }}>
                 {item.dob_title}
               </Typography>
-              <Typography sx={{ fontSize: '16px', fontWeight: 500 }}>{userData?.dob}</Typography>
+              <Typography sx={{ fontWeight: 500 }}>{userData?.dob}</Typography>
             </Box>
           ))}
         </Card>

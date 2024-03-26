@@ -9,14 +9,17 @@
     "SAVE": "Save",
     "UPDATE": "Update",
     "CLEAR_ALL": "Clear All",
-    "SEARCH_STUDENT":"Search Student",
-    "SORT_BY":"sort by",
-    "APPLY":"Apply",
-    "HIGH_TO_LOW":"High to Low",
-    "LOW_TO_HIGH":"Low to High",
-    "NAMES":"Names",
-    "CLASS_MISSED":"Class Missed",
-    "ATTENDANCE":"Attendance"
+    "SEARCH_STUDENT": "Search Student",
+    "SORT_BY": "sort by",
+    "APPLY": "Apply",
+    "HIGH_TO_LOW": "High to Low",
+    "LOW_TO_HIGH": "Low to High",
+    "NAMES": "Names",
+    "CLASS_MISSED": "Class Missed",
+    "ATTENDANCE": "Attendance",
+    "ATTENDANCE_REPORT": "Attendance Report",
+    "TEST_REPORT":"Test Report",
+    "BASIC_DETAILS":"Basic Details"
   },
   "LOGIN_PAGE": {
     "USERNAME": "Username",
@@ -49,5 +52,4 @@
     "LOCATION": "Location",
     "HELD_ON": "Held on:"
   }
-
 }
