@@ -17,7 +17,6 @@ const Header: React.FC = () => {
     localStorage.getItem('preferredLanguage') || 'en'
   );
   const [language, setLanguage] = useState(selectedLanguage);
-  const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
 
   const { i18n } = useTranslation();
@@ -66,9 +65,7 @@ const Header: React.FC = () => {
           <img src={appLogo} alt="logo" />
         </Box>
         <Box onClick={handleProfileClick} 
-        style={{ cursor: isHovered ? 'pointer' : 'default' }}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+        style={{ cursor: 'pointer' }}
         >
           <AccountCircleIcon fontSize="large" color="action" />
         </Box>
