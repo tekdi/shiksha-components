@@ -42,85 +42,100 @@ export default function MyClassDetails() {
 
   return (
     <>
-      <Box>
-        <Header />
-        <Box mt={3} display={'flex'} gap={2} alignItems={'flex-start'}>
-          <Link to={'/'}>
-            <ArrowBackIcon fontSize="medium" />
-          </Link>
-          <Stack>
-            <Typography variant="h1" m={0} fontWeight={'bold'} fontFamily={'poppins'}>
-              Class A
-            </Typography>
-            <Typography m={0} fontSize={'11px'} fontFamily={'poppins'}>
-              Gurukrupa Building, Paud Road
-            </Typography>
-          </Stack>
+      <Stack mr={4} ml={4}>
+        <Box>
+          <Header />
+          <Box mt={3} display={'flex'} gap={2} alignItems={'flex-start'}>
+            <Link to={'/'} color={theme.palette.warning.A200}>
+              <ArrowBackIcon color={theme.palette.warning.A200} fontSize="medium" />
+            </Link>
+            <Stack>
+              <Typography variant="h1" m={0} fontWeight={'bold'} color={theme.palette.warning.A200}>
+                Class A
+              </Typography>
+              <Typography
+                m={0}
+                fontSize={'11px'}
+                lineHeight={'16px'}
+                color={theme.palette.warning.A200}>
+                Gurukrupa Building, Paud Road
+              </Typography>
+            </Stack>
+          </Box>
         </Box>
-      </Box>
 
-      <ButtonFunctional
-        handleClickButton={handleSecondClickButton}
-        buttonName="Mark Today’s Attendance"
-      />
-      <Card sx={{ bgcolor: '#E7F3F8', borderRadius: '24px', marginTop: '20px', boxShadow: 'none' }}>
-        <CardContent>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center'
-            }}>
-            <Typography
-              sx={{ fontSize: '16px', fontWeight: 600, color: theme.palette.warning.A200 }}
-              variant="h6"
-              gutterBottom>
-              Attendance Report
-            </Typography>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <Link to={''}>
+        <ButtonFunctional
+          handleClickButton={handleSecondClickButton}
+          buttonName="Mark Today’s Attendance"
+        />
+        <Card
+          sx={{
+            bgcolor: theme.palette.secondary.light,
+            borderRadius: '24px',
+            marginTop: '20px',
+            boxShadow: 'none'
+          }}>
+          <CardContent>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+              }}>
+              <Box>
                 <Typography
-                  sx={{ color: theme.palette.secondary.main, fontSize: '16px' }}
+                  sx={{ fontSize: '16px', fontWeight: 600, color: theme.palette.warning.A200 }}
                   variant="h6"
                   gutterBottom>
-                  History
+                  Attendance Report
                 </Typography>
-              </Link>
-              <EastIcon fontSize="inherit" sx={{ color: theme.palette.secondary.main }} />
+                <Typography
+                  sx={{ fontSize: '14px', fontWeight: 600, color: theme.palette.warning['500'] }}
+                  variant="h6"
+                  gutterBottom>
+                  As of 24 May
+                </Typography>
+              </Box>
+              <Box sx={{ display: 'flex' }}>
+                <Link to={''} style={{ display: 'flex' }}>
+                  <Typography
+                    sx={{ color: theme.palette.secondary.main, fontSize: '16px' }}
+                    mr={1}
+                    variant="h6"
+                    gutterBottom>
+                    History
+                  </Typography>
+                  <EastIcon fontSize="small" sx={{ color: theme.palette.secondary.main }} />
+                </Link>
+              </Box>
             </Box>
-          </Box>
-          <Typography
-            sx={{ fontSize: '14px', fontWeight: 600, color: theme.palette.warning.A200 }}
-            variant="h6"
-            gutterBottom>
-            As of 24 May
-          </Typography>
-          <Box
-            sx={{
-              bgcolor: 'trasparent',
-              justifyContent: 'center'
-            }}
-            display="flex"
-            alignItems="center"
-            gap={1}>
-            <StudentStatsCard
-              label1="Attendance"
-              value1="78%" // Sample attendance data, replace with actual data
-              label2={false}
-              value2="5" // Sample late arrivals data, replace with actual data
-            />
-            <StudentStatsCard
-              label1="Classes Missed"
-              value1="2" // Sample attendance data, replace with actual data
-              label2={false}
-              value2="5" // Sample late arrivals data, replace with actual data
-            />
-          </Box>
-        </CardContent>
-      </Card>
 
-      <SearchSortBar />
+            <Box
+              sx={{
+                bgcolor: 'trasparent',
+                justifyContent: 'center'
+              }}
+              display="flex"
+              alignItems="center"
+              gap={1}>
+              <StudentStatsCard
+                label1="Attendance"
+                value1="78%" // Sample attendance data, replace with actual data
+                label2={false}
+                value2="5" // Sample late arrivals data, replace with actual data
+              />
+              <StudentStatsCard
+                label1="Classes Missed"
+                value1="2" // Sample attendance data, replace with actual data
+                label2={false}
+                value2="5" // Sample late arrivals data, replace with actual data
+              />
+            </Box>
+          </CardContent>
+        </Card>
 
+        <SearchSortBar />
+      </Stack>
       {classData?.map((student, i) => {
         return (
           <div key={i}>

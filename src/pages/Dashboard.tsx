@@ -236,7 +236,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
           <Typography>Gurukrupa Building, Paud Road</Typography>
           <CohortCard showBackground={true} isRemote={false} cohortName={'Class A'} />
           <Typography pt={'0.5rem'}>Remote</Typography>
-          <CohortCard showBackground={true} isRemote={true} cohortName={'Class B'} />
+          <CohortCard  showBackground={true} isRemote={true} cohortName={'Class B'} />
         </Box>
       </Box>
       <MarkAttendance

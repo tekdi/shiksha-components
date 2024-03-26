@@ -6,11 +6,12 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import SmartDisplayIcon from '@mui/icons-material/SmartDisplay';
 import { CohortCardProps } from '../utils/Interfaces';
+import { useNavigate } from 'react-router-dom';
 
 const CohortCard: React.FC<CohortCardProps> = ({ showBackground, isRemote, cohortName }) => {
   const { t } = useTranslation();
   const theme = useTheme<any>();
-
+  const navigate = useNavigate();
   const boxStyling = {
     display: 'flex',
     height: 56,
@@ -41,7 +42,11 @@ const CohortCard: React.FC<CohortCardProps> = ({ showBackground, isRemote, cohor
   };
 
   return (
-    <Box sx={boxStyling}>
+    <Box
+      onClick={() => {
+        navigate('/class-details');
+      }}
+      sx={boxStyling}>
       <CardMedia sx={cardMedia} title="Class Image">
         {isRemote ? <SmartDisplayIcon /> : <ApartmentIcon />}
       </CardMedia>
