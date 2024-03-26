@@ -1,84 +1,61 @@
 import React from 'react';
-import { CardContent, CardMedia, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { useTranslation } from 'react-i18next';
+import { CardContent, CardMedia, Typography, Box } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import SmartDisplayIcon from '@mui/icons-material/SmartDisplay';
+import { CohortCardProps } from '../utils/Interfaces';
 
-const PREFIX = 'CohortCard';
+const CohortCard: React.FC<CohortCardProps> = ({ showBackground, isRemote, cohortName }) => {
+  const { t } = useTranslation();
+  const theme = useTheme<any>();
 
-const classes = {
-  root: `${PREFIX}-root`,
-  media: `${PREFIX}-media`,
-  content: `${PREFIX}-content`,
-  arrow: `${PREFIX}-arrow`
-};
-
-const Root = styled('div')(({}) => ({
-  [`&.${classes.root}`]: {
+  const boxStyling = {
     display: 'flex',
     height: 56,
-    border: '1px solid #EDE1CF',
-    borderRadius: 8,
+    border: `1px solid ${theme.palette.warning.A100}`,
+    borderRadius: '8px',
     cursor: 'pointer',
-    backgroundColor: '#FFFFFF'
-  },
-  [`& .${classes.media}`]: {
+    backgroundColor: theme.palette.warning.A400
+  };
+
+  const cardMedia = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 54,
-    height: 56,
-    borderRadius: '8px 0px 0px 8px'
-  },
-  [`& .${classes.content}`]: {
-    display: 'flex',
-    alignItems: 'center',
-    fontSize: 16,
-    fontWeight: 400,
-    color: '#1F1B13',
-    flexGrow: 1
-  },
-  [`& .${classes.arrow}`]: {
+    width: '54px',
+    height: '56px',
+    borderRadius: '8px 0px 0px 8px',
+    backgroundColor: !showBackground ? theme.palette.warning.A400 : theme.palette.primary.light
+  };
+
+  const iconMedia = {
     alignSelf: 'center',
     marginLeft: 'auto',
     height: '1rem',
     width: '1rem',
-    marginRight: 10
-  }
-}));
+    marginRight: 2,
+    display: !showBackground ? 'none' : 'block'
+  };
 
-interface CohortCardProps {
-  showBackground: boolean;
-  isRemote: boolean;
-  cohortName: string;
-}
-
-const CohortCard: React.FC<CohortCardProps> = ({ showBackground, isRemote, cohortName }) => {
   return (
-    <Root className={classes.root}>
-      <CardMedia
-        className={classes.media}
-        sx={{ backgroundColor: !showBackground ? '#FFFFFF' : '#FFDEA1' }}
-        title="Class Image"
-      >
+    <Box sx={boxStyling}>
+      <CardMedia sx={cardMedia} title="Class Image">
         {isRemote ? <SmartDisplayIcon /> : <ApartmentIcon />}
       </CardMedia>
-      <CardContent className={classes.content}>
-        <Typography borderBottom={'0px'}>
+      <CardContent>
+        <Typography variant="h2" marginRight="auto" fontWeight={400}>
           {!showBackground
             ? isRemote
-              ? 'New Remote Class'
-              : 'New Physical Class'
+              ? t('DASHBOARD.NEW_REMOTE_CLASS')
+              : t('DASHBOARD.NEW_PHYSICAL_CLASS')
             : `${cohortName}`}
         </Typography>
       </CardContent>
-      <ArrowForwardIosIcon
-        className={classes.arrow}
-        sx={{ display: !showBackground ? 'none' : 'block' }}
-      />
-    </Root>
+      <ArrowForwardIosIcon sx={iconMedia} />
+    </Box>
   );
 };
 
