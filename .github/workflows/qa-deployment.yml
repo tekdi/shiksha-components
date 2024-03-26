@@ -37,7 +37,6 @@ jobs:
            echo "Contents of the current directory (in reverse order):"
             ls -lr
 
-
       - name: Deploy to Server 1
         uses: easingthemes/ssh-deploy@main
         env:
