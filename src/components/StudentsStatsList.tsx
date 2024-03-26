@@ -21,11 +21,12 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
   return (
     <Box
       // width="100vw"
+
       height="4.5rem"
       gap="1rem"
       borderTop="1px solid #7F7667" //Add color from colorScheme
       display="flex"
-      justifyContent="space-between"
+      justifyContent="space-around"
       alignItems="center"
       sx={{ borderColor: theme.palette.warning['200'] }}
       margin="0px"

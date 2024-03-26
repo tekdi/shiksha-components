@@ -25,6 +25,7 @@ import ModalComponent from './Modal';
 import { Stack } from '@mui/system';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '@mui/material/styles';
+import shadows from '@mui/material/styles/shadows';
 
 export default function SearchSortBar() {
   const [modalOpen, setModalOpen] = React.useState(false);
@@ -56,7 +57,13 @@ export default function SearchSortBar() {
 
   return (
     <>
-      <Box display={'flex'} mt={3} mb={3} justifyContent={'space-between'} alignItems={'center'}>
+      <Box
+        display={'flex'}
+        mt={3}
+        mb={3}
+        justifyContent={'space-between'}
+        alignItems={'center'}
+        boxShadow={'none'}>
         <Paper
           component="form"
           sx={{
@@ -65,12 +72,12 @@ export default function SearchSortBar() {
             alignItems: 'center',
             width: 'auto',
             borderRadius: '100px',
-            background: theme.palette.warning.A700
-          }}
-        >
+            background: theme.palette.warning.A700,
+            boxShadow: 'none'
+          }}>
           <InputBase
             sx={{ ml: 1, flex: 1, mb: '0' }}
-            placeholder={t('COMMON.SEARCH_STUDENT')}
+            placeholder={t('COMMON.SEARCH_STUDENT') + '..'}
             inputProps={{ 'aria-label': 'search google maps' }}
           />
           <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
