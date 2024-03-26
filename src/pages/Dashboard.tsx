@@ -39,9 +39,9 @@ const Dashboard: React.FC<DashboardProps> = () => {
   const { t } = useTranslation();
   const [open, setOpen] = React.useState(false);
   const [selfAttendanceDetails, setSelfAttendanceDetails] = React.useState(null);
-  const [openMarkAttendance, setOpenmarkAttendance] = React.useState(false);
+  const [openMarkAttendance, setOpenMarkAttendance] = React.useState(false);
   const handleModalToggle = () => setOpen(!open);
-  const handleMarkAttendanceModal = () => setOpenmarkAttendance(!openMarkAttendance);
+  const handleMarkAttendanceModal = () => setOpenMarkAttendance(!openMarkAttendance);
   const [classes, setClasses] = React.useState('');
   const theme = useTheme<any>();
 
@@ -73,7 +73,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
       const response = await attendance(attendanceData);
       if (response) {
         console.log(response);
-        handleMarkAtendanceModal();
+        handleMarkAttendanceModal();
       }
     } catch (error) {
       console.error('error', error);
