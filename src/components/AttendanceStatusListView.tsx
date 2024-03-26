@@ -13,24 +13,40 @@ import { AttendanceStatusListViewProps } from '../utils/Interfaces';
 const AttendanceStatusListView: React.FC<AttendanceStatusListViewProps> = ({
   currentStatus,
   studentName,
-  isEdit = false
+  isEdit = false,
+  isBulkAction = false,
+  handleBulkAction = () => {}
 }) => {
   const { t } = useTranslation();
   const [status, setStatus] = React.useState(currentStatus);
+  const [markAllStatus, setMarkAllStatus] = React.useState('');
   const theme = useTheme<any>();
 
   const boxStyling = {
     display: 'flex',
     height: '56px',
-    width: '100%',
+    // width: '100%',
     borderBottom: `0.5px solid ${theme.palette.warning[400]}`,
     padding: '8px',
-    alignItems: 'center'
+    alignItems: 'center',
+    borderRadius: isBulkAction ? '8px' : 0,
+    backgroundColor: isBulkAction ? theme.palette.warning[800] : 'none'
+  };
+
+  const handleClickAction = (selectedAction: string) => {
+    if (isEdit) {
+      if (isBulkAction) {
+        handleBulkAction(selectedAction);
+        setMarkAllStatus(selectedAction);
+      } else {
+        setStatus(selectedAction);
+      }
+    }
   };
 
   return (
     <Box sx={boxStyling}>
-      <Typography variant="body1" marginRight="auto">
+      <Typography variant="body1" marginRight="auto" marginY="auto">
         {studentName}
       </Typography>
       <Box
@@ -38,9 +54,12 @@ const AttendanceStatusListView: React.FC<AttendanceStatusListViewProps> = ({
         flexDirection="column"
         alignItems="center"
         p={2}
-        onClick={() => (isEdit ? setStatus(ATTENDANCE_ENUM.PRESENT) : null)}
-      >
-        {status === ATTENDANCE_ENUM.PRESENT ? <CheckCircleIcon /> : <CheckCircleOutlineIcon />}
+        onClick={() => handleClickAction(ATTENDANCE_ENUM.PRESENT)}>
+        {[status, markAllStatus].includes(ATTENDANCE_ENUM.PRESENT) ? (
+          <CheckCircleIcon />
+        ) : (
+          <CheckCircleOutlineIcon />
+        )}
         <Typography variant="h6" marginTop={1} sx={{ color: () => theme.palette.warning[400] }}>
           {t('ATTENDANCE.PRESENT')}
         </Typography>
@@ -50,9 +69,12 @@ const AttendanceStatusListView: React.FC<AttendanceStatusListViewProps> = ({
         flexDirection="column"
         alignItems="center"
         p={2}
-        onClick={() => (isEdit ? setStatus(ATTENDANCE_ENUM.ABSENT) : null)}
-      >
-        {status === ATTENDANCE_ENUM.ABSENT ? <CancelIcon /> : <HighlightOffIcon />}
+        onClick={() => handleClickAction(ATTENDANCE_ENUM.ABSENT)}>
+        {[status, markAllStatus].includes(ATTENDANCE_ENUM.ABSENT) ? (
+          <CancelIcon />
+        ) : (
+          <HighlightOffIcon />
+        )}
         <Typography variant="h6" marginTop={1} sx={{ color: () => theme.palette.warning[400] }}>
           {t('ATTENDANCE.ABSENT')}
         </Typography>
