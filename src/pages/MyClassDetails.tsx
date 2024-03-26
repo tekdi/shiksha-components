@@ -70,11 +70,13 @@ export default function MyClassDetails() {
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center'
-            }}>
+            }}
+          >
             <Typography
               sx={{ fontSize: '16px', fontWeight: 600, color: theme.palette.warning.A200 }}
               variant="h6"
-              gutterBottom>
+              gutterBottom
+            >
               Attendance Report
             </Typography>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -82,7 +84,8 @@ export default function MyClassDetails() {
                 <Typography
                   sx={{ color: theme.palette.secondary.main, fontSize: '16px' }}
                   variant="h6"
-                  gutterBottom>
+                  gutterBottom
+                >
                   History
                 </Typography>
               </Link>
@@ -92,7 +95,8 @@ export default function MyClassDetails() {
           <Typography
             sx={{ fontSize: '14px', fontWeight: 600, color: theme.palette.warning.A200 }}
             variant="h6"
-            gutterBottom>
+            gutterBottom
+          >
             As of 24 May
           </Typography>
           <Box
@@ -102,7 +106,8 @@ export default function MyClassDetails() {
             }}
             display="flex"
             alignItems="center"
-            gap={1}>
+            gap={1}
+          >
             <StudentStatsCard
               label1="Attendance"
               value1="78%" // Sample attendance data, replace with actual data
