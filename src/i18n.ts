@@ -1,23 +1,20 @@
 import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
+import resourcesToBackend from 'i18next-resources-to-backend';
 
-import translationEN from './translations/en.json';
-import translationHI from './translations/hi.json';
-import translationMR from './translations/mr.json';
-
-const resources = {
-  EN: { translation: translationEN },
-  HI: { translation: translationHI },
-  MR: { translation: translationMR }
-};
-
-i18n.use(initReactI18next).init({
-  resources,
-  lng: 'EN',
+const options = {
+  lng: localStorage.getItem('preferredLanguage') || 'EN',
   fallbackLng: 'EN',
   interpolation: {
     escapeValue: false
   }
+};
+
+i18n
+  .use(resourcesToBackend((language: string) => import(`./translations/${language}.json`)))
+  .init(options);
+
+i18n.on('languageChanged', () => {
+  document.body.dir = i18n.dir();
 });
 
 export default i18n;
