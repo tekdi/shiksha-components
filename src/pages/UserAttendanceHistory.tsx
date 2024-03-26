@@ -1,7 +1,7 @@
 import React from 'react'
 import CalendarWithAttendance from '../components/CalenderWithAttendance';
 
-const TeacherAttendanceHistory = () => {
+const UserAttendanceHistory = () => {
   return (
     <CalendarWithAttendance
     presentDates={["2024-03-01", "2024-03-05", "2024-03-24"]}
@@ -12,4 +12,4 @@ const TeacherAttendanceHistory = () => {
   )
 }
 
-export default TeacherAttendanceHistory
+export default UserAttendanceHistory
