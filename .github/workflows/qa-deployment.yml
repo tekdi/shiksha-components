@@ -48,7 +48,7 @@ jobs:
       - name: Unzip Artifact to Correct Locations to Deploy
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.HOST_PRATHAM_QA }}
+          host: ${{ secrets.HOST_NAME_PRATHAM_QA }}
           username: ${{ secrets.USERNAME_PRATHAM_QA }}
           key: ${{ secrets.EC2_SSH_KEY_PRATHAM_QA }}
           local: "/home/runner/work/shiksha-components/shiksha-components/dist/" 
