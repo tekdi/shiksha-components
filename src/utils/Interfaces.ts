@@ -45,3 +45,11 @@ export interface cohortListParam {
   page: number;
   filters: object;
 }
+
+export interface AttendanceByDateParams {
+  fromDate: string;
+  toDate: string;
+  filters: {
+    userId: string;
+  };
+}
