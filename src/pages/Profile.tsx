@@ -39,6 +39,10 @@ const Profile = () => {
     options: Record<string, any>;
     type: string;
   }
+
+  interface updateCustomField {
+    fieldId: string;
+    value: string;  }
   const { t } = useTranslation();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -50,7 +54,7 @@ const Profile = () => {
   const [updatedName, setUpdatedName] = useState<string | null>(null);
   const [updatedPhone, setUpdatedPhone] = useState<string | null>(null);
   const [updatedEmail, setUpdatedEmail] = useState<string | null>(null);
-  const [updatedCustomFields, setUpdatedCustomFields] = useState<CustomField[]>([]);
+  const [updatedCustomFields, setUpdatedCustomFields] = useState<updateCustomField[]>([]);
   const [updatedBio, setUpdatedBio] = useState<string | null>(null);
 
   const [customFieldsData, setCustomFieldsData] = useState<CustomField[]>([]);
@@ -85,7 +89,6 @@ const Profile = () => {
           name: updatedName ?? userData?.name,
           // phone: updatedPhone ?? userData?.phone,
           email: updatedEmail ?? userData?.email,
-          bio: updatedBio ?? bio
         },
         customFields: updatedCustomFields.length > 0 ? updatedCustomFields : customFieldsData
       };
@@ -100,12 +103,21 @@ const Profile = () => {
   };
   const handleFieldChange = (fieldId: string, value: string) => {
     console.log('value', value);
-    setUpdatedCustomFields((prevState) =>
-      prevState.map((prevField) =>
-        prevField.fieldId === fieldId ? { ...prevField, value } : prevField
-      )
-    );
+    console.log('field id', fieldId);
+    const newData: updateCustomField[] = [
+      {
+        fieldId: fieldId,
+        value: value
+      },
+     
+      // Add more objects as needed
+    ];
+    console.log("newdata" , newData)
+    setUpdatedCustomFields(newData);
+console.log("up", updatedCustomFields)
+   
   };
+  
   useEffect(() => {
     const fetchUserDetails = async () => {
       const userId = localStorage.getItem('userId');
@@ -115,8 +127,8 @@ const Profile = () => {
           const response = await getUser(userId);
           const userDataFromJson = response?.result?.userData;
           setUserData(userDataFromJson);
-          setCustomFieldsData(response?.result?.customFields);
-          console.log(response);
+          setCustomFieldsData(response?.result?.userData?.customFields);
+          console.log(response?.result?.userData?.customFields);
         }
       } catch (error) {
         console.error('Error fetching  user details:', error);
@@ -262,7 +274,7 @@ const Profile = () => {
         </Box>
 
         <Box sx={{ flex: '1', minWidth: '100%' }}>
-          {customFieldsData.map((field) => (
+        {customFieldsData && customFieldsData.map((field) => (
             <Grid item xs={12} key={field.fieldId}>
               {field.type === 'text' && (
                 <Box display="flex" flexDirection="row" gap="10px">
@@ -459,7 +471,7 @@ const Profile = () => {
                 defaultValue={userData?.email}
                 onChange={(e) => setUpdatedEmail(e.target.value)}
               />
-              {customFieldsData.map((field) => (
+  {customFieldsData && customFieldsData.map((field) => (
                 <Grid item xs={12} key={field.fieldId}>
                   {field.type === 'text' && (
                     <TextField
