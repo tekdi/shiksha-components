@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Card, CardContent, Stack, Typography } from '@mui/material';
 import { ArrowBack as ArrowBackIcon, East as EastIcon } from '@mui/icons-material';
-import { useTheme } from '@mui/material/styles';
+import { useTheme, Theme } from '@mui/material/styles';
 import StudentStatsCard from '../components/StudentStatsCard';
 import Header from '../components/Header';
 import CustomSelect from '../components/CustomSelect';
@@ -10,20 +10,31 @@ import { getUser } from '../services/profileService';
 import { decodeToken } from '../utils/Helper';
 import { useTranslation } from 'react-i18next';
 
-const StudentDetails = () => {
+interface UserData {
+  dob: string;
+}
+
+const StudentDetails: React.FC = () => {
   const { t } = useTranslation();
-  const theme = useTheme();
-  const [userData, setUserData] = useState([]);
+  const theme: Theme = useTheme();
+  const [userData, setUserData] = useState<UserData | null>(null);
 
   useEffect(() => {
     const fetchUserDetails = async () => {
-      const token = localStorage.getItem('token');
+      const token: string | null = localStorage.getItem('token');
       try {
-        const payload = decodeToken(token);
-        const xHasuraUserId = payload['https://hasura.io/jwt/claims']['x-hasura-user-id'];
-        const response = await getUser(xHasuraUserId);
-        const userDataFromJson = response?.result?.userData;
-        setUserData(userDataFromJson);
+        if (token) {
+          const payload: any = decodeToken(token);
+          const xHasuraUserId: string | undefined =
+            payload['https://hasura.io/jwt/claims']['x-hasura-user-id'];
+          if (xHasuraUserId) {
+            const response = await getUser(xHasuraUserId);
+            const userDataFromJson: UserData | undefined = response?.result?.userData;
+            if (userDataFromJson) {
+              setUserData(userDataFromJson);
+            }
+          }
+        }
       } catch (error) {
         console.error('Error fetching user details:', error);
       }
@@ -31,7 +42,7 @@ const StudentDetails = () => {
     fetchUserDetails();
   }, []);
 
-  const renderStatsCard = (label1, value1) => (
+  const renderStatsCard = (label1: string, value1: string) => (
     <StudentStatsCard label1={label1} value1={value1} label2={false} value2="5" />
   );
 
@@ -40,7 +51,9 @@ const StudentDetails = () => {
       <Header />
       <Box mt={3} display="flex" gap={2} alignItems="flex-start">
         <Link to="/">
-          <ArrowBackIcon sx={{ color: theme.palette.warning['A200'], fontSize: 'large' }} />
+          <ArrowBackIcon
+            sx={{ color: (theme.palette.warning as any)['A200'], fontSize: 'large' }}
+          />
         </Link>
         <Stack>
           <Typography
@@ -64,7 +77,7 @@ const StudentDetails = () => {
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <Typography
                 sx={{
-                  color: theme.palette.warning['A200'],
+                  color: (theme.palette.warning as any)['A200'],
                   fontFamily: theme.typography.fontFamily,
                   fontWeight: 500,
                   fontSize: '15px'
@@ -121,7 +134,11 @@ const StudentDetails = () => {
           }}>
           <CardContent>
             <Typography
-              sx={{ color: theme.palette.warning['A200'], fontWeight: 500, fontSize: '15px' }}
+              sx={{
+                color: (theme.palette.warning as any)['A200'],
+                fontWeight: 500,
+                fontSize: '15px'
+              }}
               variant="h6"
               gutterBottom>
               {t('COMMON.TEST_REPORT')}
@@ -140,7 +157,7 @@ const StudentDetails = () => {
       </Box>
       <Card
         sx={{
-          bgcolor: theme.palette.warning[800],
+          bgcolor: (theme.palette.warning as any)[800],
           maxHeight: '600px',
           boxShadow: 'none',
           marginTop: '10px',
@@ -148,7 +165,11 @@ const StudentDetails = () => {
         }}>
         <CardContent>
           <Typography
-            sx={{ color: theme.palette.warning['A200'], fontSize: '15px', fontWeight: 500 }}
+            sx={{
+              color: (theme.palette.warning as any)['A200'],
+              fontSize: '15px',
+              fontWeight: 500
+            }}
             variant="h6"
             gutterBottom>
             {t('COMMON.BASIC_DETAILS')}
