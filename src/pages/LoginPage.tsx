@@ -73,10 +73,11 @@ const LoginPage = () => {
       console.log(response);
       if (response) {
         const token = response?.access_token;
+        localStorage.setItem('token', JSON.stringify(token));
+
         const userResponse = await getUserId();
         localStorage.setItem('userId', userResponse?.userId);
 
-        localStorage.setItem('token', JSON.stringify(token));
       }
       setLoading(false);
       navigate('/dashboard');
