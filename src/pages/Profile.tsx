@@ -22,7 +22,7 @@ import { getUser, editEditUser } from '../services/profileService.ts';
 import { useTheme } from '@mui/material/styles';
 import default_user from '/default_user.png';
 import { decodeToken } from '../utils/Helper';
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 const Profile = () => {
   interface UserData {
     id: number;
@@ -81,6 +81,9 @@ const Profile = () => {
   const options = ['Option 1', 'Option 2'];
   const [value, setValue] = React.useState<string | null>(options[0]);
   const [inputValue, setInputValue] = React.useState('');
+  const backButtonEvent = () => {
+        window.history.back();
+   };
   const handleUpdateClick = async () => {
     try {
       const userDetails = {
@@ -109,7 +112,7 @@ const Profile = () => {
      
       // Add more objects as needed
     ];
-    setUpdatedCustomFields(prevState => [...prevState, ...newData])
+    setUpdatedCustomFields(newData)
    
   };
   
@@ -142,6 +145,27 @@ const Profile = () => {
         justifyContent={'center'}
         alignItems={'center'}
       >
+           <Box sx={{ flex: '1', minWidth: '100%' }}
+           display="flex"
+           flexDirection="row"
+           gap="5px"
+           >
+    <ArrowBackIcon onClick={backButtonEvent} />
+
+          <Typography
+            variant="h3"
+            style={{
+              letterSpacing: '0.1px',
+              textAlign: 'left',
+              marginBottom:"2px"
+             // marginBottom:"4px"
+             // color: theme.palette.warning['400']
+            }}
+          >
+            {t('PROFILE.MY_PROFILE')}
+          </Typography>
+          </Box>
+
         <Box
           sx={{
             flex: '1',
@@ -350,15 +374,10 @@ const Profile = () => {
             alignItems={'center'}
             justifyContent={'center'}
           >
-            <StudentStatsCard
-              label1="Interview Score"
-              value1="82%"
-              label2={true}
-              value2="02/1/25"
-            />
+
 
             <StudentStatsCard
-              label1="Interview Score"
+              label1="Test Score"
               value1="82%"
               label2={true}
               value2="02/1/25"
@@ -411,27 +430,45 @@ const Profile = () => {
             >
               <Box
                 sx={{
-                  flex: '1',
+                  //flex: '1',
                   textAlign: 'center',
-                  marginLeft: '19px'
+                  marginLeft:"5%"
+                  
                 }}
                 borderRadius={'12px'}
                 border={'1px'}
                 bgcolor="warning.A400"
                 display="flex"
-                flexDirection="row"
+                flexDirection="column"
               >
                 <img src={default_user} alt="user" />
                 <Box>
+                
+
+
                   <Button
-                    sx={{
-                      marginTop: '35px',
-                      textAlign: 'center'
-                    }}
-                  >
+          sx={{
+            minWidth: '100%',
+
+            padding: '10px 24px 10px 16px',
+            borderRadius: '12px',
+            marginTop: '10px',
+            flex: '1',
+            textAlign: 'center',
+            color: 'black',
+            border: '1px solid black',
+            borderColor: 'black',
+            backgroundColor: 'warning.A400',
+            '&:hover': {
+              backgroundColor: 'warning.A400'
+            }
+          }}
+        >
                     {t('PROFILE.UPDATE_PICTURE')}
-                  </Button>
+        </Button>
                 </Box>
+
+
               </Box>
               <TextField
                 sx={{
@@ -501,6 +538,8 @@ const Profile = () => {
             <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
               <Button
                 sx={{
+                  minWidth: '100%',
+
                   color: 'black',
                   backgroundColor: 'containedSecondary',
                   '&:hover': {
