@@ -1,5 +1,5 @@
 import { post } from './RestClient';
-import { AttendanceParams, BulkAttendanceParams } from '../utils/Interfaces';
+import { AttendanceParams, BulkAttendanceParams, AttendanceByDateParams } from '../utils/Interfaces';
 
 export const markAttendance = async ({
   userId,
@@ -28,6 +28,24 @@ export const bulkAttendance = async ({
     return response?.data;
   } catch (error) {
     console.error('error in marking bulk attendance', error);
+  }
+}
+
+export const getAttendanceByDate = async ({
+  filters: { userId },
+  fromDate,
+  toDate,
+}: AttendanceByDateParams): Promise<any> => {
+  const apiUrl: string = `${import.meta.env.VITE_BASE_URL}/attendance/bydate`;
+  try {
+    const response = await post(apiUrl, {
+      fromDate,
+      toDate,
+      filters: { userId },
+    });
+    return response?.data;
+  } catch (error) {
+    console.error('error in marking attendance', error);
     throw error;
   }
 };

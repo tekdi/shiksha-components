@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 import AddIcon from '@mui/icons-material/Add';
 import CohortCard from '../components/CohortCard';
 import TodayIcon from '@mui/icons-material/Today';
-
+import { useNavigate } from 'react-router-dom';
 import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
@@ -37,6 +37,7 @@ let contextId: string = '';
 
 const Dashboard: React.FC<DashboardProps> = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [selfAttendanceDetails, setSelfAttendanceDetails] = React.useState(null);
   const [cohorts, setCohorts] = React.useState(null);
@@ -81,7 +82,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
 
   const theme = useTheme<any>();
 
-  React.useEffect(() => {}, []);
+  React.useEffect(() => { }, []);
 
   const handleChange = (event: SelectChangeEvent) => {
     setClasses(event.target.value as string);
@@ -119,6 +120,9 @@ const Dashboard: React.FC<DashboardProps> = () => {
   const submitBulkAttendanceAction = (status: string) => {
     console.log(status);
   };
+  const viewAttendanceHistory = () => {
+    navigate('/user-attendance-history');
+  }
 
   return (
     <Box minHeight="100vh" textAlign={'center'}>
@@ -149,6 +153,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
             <Button
               variant="text"
               sx={{ color: theme.palette.primary.main, padding: theme.spacing(1) }}
+              onClick={viewAttendanceHistory}
             >
               {t('DASHBOARD.HISTORY')}
             </Button>

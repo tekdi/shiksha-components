@@ -1,25 +1,24 @@
-import React, { useState, useMemo } from 'react';
-import PropTypes from 'prop-types';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
-import {
-  CheckCircleOutlineOutlined,
-  CancelOutlined,
-  RemoveCircleOutline,
-  RemoveOutlined
-} from '@mui/icons-material';
+import React, { useState, useMemo, useEffect } from "react";
+import PropTypes from "prop-types";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import { CheckCircleOutlineOutlined, CancelOutlined, RemoveCircleOutline, RemoveOutlined } from '@mui/icons-material';
 import '../App.css';
 
-const CalendarWithAttendance = ({ presentDates, absentDates, halfDayDates, notMarkedDates }) => {
+const CalendarWithAttendance = ({ presentDates, absentDates, halfDayDates, notMarkedDates, futureDates, onChange }) => {
   const [date, setDate] = useState(new Date());
 
   const reducedPresentDates = useMemo(() => reduceDatesByOneDay(presentDates), [presentDates]);
   const reducedHalfDates = useMemo(() => reduceDatesByOneDay(halfDayDates), [halfDayDates]);
   const reducedAbsentDates = useMemo(() => reduceDatesByOneDay(absentDates), [absentDates]);
-  const reducedNotMarkedDates = useMemo(
-    () => reduceDatesByOneDay(notMarkedDates),
-    [notMarkedDates]
-  );
+  const reducedNotMarkedDates = useMemo(() => reduceDatesByOneDay(notMarkedDates), [notMarkedDates]);
+  const reducedFutureDates = useMemo(() => reduceDatesByOneDay(futureDates), [futureDates]);
+
+  useEffect(() => {
+    const currentDate = new Date();
+    localStorage.setItem("activeStartDate", currentDate.toDateString());
+    console.log("activeStartDate child", currentDate);
+  }, [])
 
   function reduceDatesByOneDay(dates) {
     return dates.map((dateString) => {
@@ -31,7 +30,7 @@ const CalendarWithAttendance = ({ presentDates, absentDates, halfDayDates, notMa
 
   function getAttendanceStatus(date) {
     const dateString = date.toISOString().slice(0, 10);
-    const currentDate = new Date().toISOString().slice(0, 10);
+    // const currentDate = new Date().toISOString().slice(0, 10);
 
     if (reducedPresentDates.includes(dateString) && !halfDayDates.includes(dateString)) {
       return 'present';
@@ -45,8 +44,8 @@ const CalendarWithAttendance = ({ presentDates, absentDates, halfDayDates, notMa
     if (reducedNotMarkedDates.includes(dateString)) {
       return 'attendanceNotMarked';
     }
-    if (dateString > currentDate) {
-      return 'futureDate';
+    if (reducedFutureDates.includes(dateString)) {
+      return "futureDate";
     }
     return null;
   }
@@ -101,6 +100,12 @@ const CalendarWithAttendance = ({ presentDates, absentDates, halfDayDates, notMa
     return weekdays[date.getDay()];
   };
 
+  const handleActiveStartDateChange = ({ activeStartDate, view }) => {
+    console.log("Active start date changed:", activeStartDate);
+    // localStorage.setItem("activeStartDate", activeStartDate);
+    onChange(activeStartDate);
+  };
+
   return (
     <div>
       <div className="day-tile-wrapper">
@@ -112,6 +117,7 @@ const CalendarWithAttendance = ({ presentDates, absentDates, halfDayDates, notMa
           calendarType="gregory"
           className="calender-body"
           formatShortWeekday={formatShortWeekday}
+          onActiveStartDateChange={handleActiveStartDateChange}
         />
       </div>
     </div>
