@@ -83,7 +83,6 @@ const Profile = () => {
   const [inputValue, setInputValue] = React.useState('');
   const handleUpdateClick = async () => {
     try {
-      console.log(updatedCustomFields.length);
       const userDetails = {
         userData: {
           name: updatedName ?? userData?.name,
@@ -92,7 +91,6 @@ const Profile = () => {
         },
         customFields: updatedCustomFields.length > 0 ? updatedCustomFields : customFieldsData
       };
-      console.log('userDetails', userDetails);
       const userId = localStorage.getItem('userId');
       if (userId) {
         const response = await editEditUser(userId, userDetails);
@@ -102,8 +100,7 @@ const Profile = () => {
     }
   };
   const handleFieldChange = (fieldId: string, value: string) => {
-    console.log('value', value);
-    console.log('field id', fieldId);
+   
     const newData: updateCustomField[] = [
       {
         fieldId: fieldId,
@@ -112,9 +109,7 @@ const Profile = () => {
      
       // Add more objects as needed
     ];
-    console.log("newdata" , newData)
-    setUpdatedCustomFields(newData);
-console.log("up", updatedCustomFields)
+    setUpdatedCustomFields(prevState => [...prevState, ...newData])
    
   };
   
