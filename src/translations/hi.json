@@ -49,11 +49,13 @@
     "PHONE": "फ़ोन",
     "EMAIL_ID": "ईमेल आईडी",
     "BIO": "बायो",
-    "INTERVIEW_TEST_SCORES": "साक्षात्कार और परीक्षण स्कोर",
+    "INTERVIEW_TEST_SCORES": "परीक्षण स्कोर",
     "UPDATE_PICTURE": "चित्र अपडेट करें",
     "FULL_NAME": "पूरा नाम",
     "LOCATION": "स्थान",
     "UPDATE": "अपडेट",
-    "HELD_ON": "धारित:"
+    "HELD_ON": "धारित:",
+    "MY_PROFILE":"मेरी प्रोफ़ाइल"
+
   }
 }
