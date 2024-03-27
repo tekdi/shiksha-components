@@ -14,18 +14,6 @@ const StudentDetails = () => {
   const { t } = useTranslation();
   const theme = useTheme();
   const [userData, setUserData] = useState([]);
-  const [studentData, setStudentData] = useState([
-    {
-      dob_title: 'Date of Birth',
-      latest_education: 'Latest Education',
-      Location: 'Location',
-      Enrollment_Date: 'Enrollment Date',
-      School: 'School',
-      Dropout_year: 'Dropout year',
-      MaritalStatus: 'Marital Status',
-      EmploymentStatus: 'Employment Status'
-    }
-  ]);
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -60,8 +48,7 @@ const StudentDetails = () => {
             sx={{
               fontFamily: theme.typography.fontFamily,
               fontSize: '22px'
-            }}
-          >
+            }}>
             Class A
           </Typography>
         </Stack>
@@ -72,8 +59,7 @@ const StudentDetails = () => {
             bgcolor: theme.palette.secondary.light,
             borderRadius: theme.spacing(3),
             boxShadow: 'none'
-          }}
-        >
+          }}>
           <CardContent>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <Typography
@@ -84,8 +70,7 @@ const StudentDetails = () => {
                   fontSize: '15px'
                 }}
                 variant="h6"
-                gutterBottom
-              >
+                gutterBottom>
                 {t('COMMON.ATTENDANCE_REPORT')}
               </Typography>
               <Link to="/history">
@@ -97,9 +82,8 @@ const StudentDetails = () => {
                       fontSize: '14px'
                     }}
                     variant="h6"
-                    gutterBottom
-                  >
-                    History
+                    gutterBottom>
+                    {t('DASHBOARD.HISTORY')}
                   </Typography>
                   <EastIcon
                     fontSize="inherit"
@@ -111,8 +95,7 @@ const StudentDetails = () => {
             <Typography
               sx={{ color: theme.palette.text.secondary, fontSize: '14px', fontWeight: 500 }}
               variant="h6"
-              gutterBottom
-            >
+              gutterBottom>
               As of 24 May
             </Typography>
             <Box
@@ -122,8 +105,7 @@ const StudentDetails = () => {
                 justifyContent: 'center',
                 display: 'flex',
                 marginTop: 2
-              }}
-            >
+              }}>
               {renderStatsCard('Attendance', '78%')}
               {renderStatsCard('Classes Missed', '2')}
             </Box>
@@ -136,14 +118,12 @@ const StudentDetails = () => {
             bgcolor: theme.palette.secondary.light,
             borderRadius: theme.spacing(3),
             boxShadow: 'none'
-          }}
-        >
+          }}>
           <CardContent>
             <Typography
               sx={{ color: theme.palette.warning['A200'], fontWeight: 500, fontSize: '15px' }}
               variant="h6"
-              gutterBottom
-            >
+              gutterBottom>
               {t('COMMON.TEST_REPORT')}
             </Typography>
             <CustomSelect />
@@ -151,8 +131,7 @@ const StudentDetails = () => {
               sx={{ bgcolor: 'transparent', justifyContent: 'center' }}
               display="flex"
               gap={1}
-              alignItems="center"
-            >
+              alignItems="center">
               {renderStatsCard('Status', 'Passed')}
               {renderStatsCard('Score', '82%')}
             </Box>
@@ -166,14 +145,12 @@ const StudentDetails = () => {
           boxShadow: 'none',
           marginTop: '10px',
           overflow: 'auto'
-        }}
-      >
+        }}>
         <CardContent>
           <Typography
             sx={{ color: theme.palette.warning['A200'], fontSize: '15px', fontWeight: 500 }}
             variant="h6"
-            gutterBottom
-          >
+            gutterBottom>
             {t('COMMON.BASIC_DETAILS')}
           </Typography>
         </CardContent>
@@ -185,22 +162,18 @@ const StudentDetails = () => {
             margin: 'auto',
             borderRadius: theme.spacing(2),
             boxShadow: 'none'
-          }}
-        >
-          {studentData.map((item) => (
-            <Box key={item.id} sx={{ padding: '16px' }}>
-              <Typography
-                sx={{
-                  color: theme.palette.text.secondary,
-                  fontSize: '14px',
-                  fontWeight: 600
-                }}
-              >
-                {item.dob_title}
-              </Typography>
-              <Typography sx={{ fontWeight: 500 }}>{userData?.dob}</Typography>
-            </Box>
-          ))}
+          }}>
+          <Box sx={{ padding: '16px' }}>
+            <Typography
+              sx={{
+                color: theme.palette.text.secondary,
+                fontSize: '14px',
+                fontWeight: 600
+              }}>
+              {t('COMMON.DOB')}
+            </Typography>
+            <Typography sx={{ fontWeight: 500 }}>{userData?.dob}</Typography>
+          </Box>
         </Card>
       </Card>
     </>
