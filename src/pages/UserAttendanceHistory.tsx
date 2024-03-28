@@ -1,12 +1,13 @@
-import  { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import CalendarWithAttendance from '../components/CalenderWithAttendance';
-import { Box,Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import Header from '../components/Header';
 import { useTheme } from '@mui/material/styles';
 import KeyboardBackspaceOutlinedIcon from '@mui/icons-material/KeyboardBackspaceOutlined';
 import { getAttendanceByDate } from '../services/AttendanceService';
 import { AttendanceByDateParams } from '../utils/Interfaces';
 import AttendanceStatus from '../components/AttendanceStatus';
+import MarkAttendance from '../components/MarkAttendance';
 
 const UserAttendanceHistory = () => {
   const theme = useTheme<any>();
@@ -22,6 +23,8 @@ const UserAttendanceHistory = () => {
     return storedDate ? new Date(storedDate) : new Date();
   });
   const [status, setStatus] = useState('');
+  const [openMarkAttendance, setOpenMarkAttendance] = useState(false);
+  const handleMarkAttendanceModal = () => setOpenMarkAttendance(!openMarkAttendance);
 
   let userId: string = '';
 
@@ -150,12 +153,12 @@ const UserAttendanceHistory = () => {
     setStatus(status);
   }
 
-  const formatToShowDateMonth = (date : Date) => {
+  const formatToShowDateMonth = (date: Date) => {
     const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: 'long' };
     return new Intl.DateTimeFormat('en-US', options).format(date);
   };
 
-  const handleUpdate = ()=>{
+  const handleUpdate = () => {
 
   }
 
@@ -186,70 +189,20 @@ const UserAttendanceHistory = () => {
           <Typography marginBottom={'0px'} fontSize={'16px'} > Attendance on {formatToShowDateMonth(selectedDate)}</Typography>
         </Box>
 
-        {status && <AttendanceStatus status={status} onUpdate={handleUpdate} />}
-
-        {/* {status === 'Present' && (
-          <Box display={'flex'} gap={'10px'} width={'100%'}>
-            <div className="present-marker">
-              <CheckCircleOutlineOutlined />
-            </div>
-            <Typography marginBottom={'0px'} fontSize={'16px'} >
-              {status}
-            </Typography>
-            <Box position={'absolute'} right={'0'} paddingRight={'1rem'}>
-              <Button variant="text" endIcon={<CreateOutlinedIcon />}>Update</Button>
-            </Box>
-          </Box>
-        )}
-        {status === 'Absent' && (
-          <Box display={'flex'} gap={'10px'} width={'100%'}>
-            <div className="absent-marker">
-              <CancelOutlined />
-            </div>
-            <Typography marginBottom={'0px'} fontSize={'16px'} >
-              {status}
-            </Typography>
-            <Box position={'absolute'} right={'0'} paddingRight={'1rem'}>
-              <Button variant="text" endIcon={<CreateOutlinedIcon />}>Update</Button>
-            </Box>
-          </Box>
-        )}
-
-        {status === 'Half-day' && (
-          <Box display={'flex'} gap={'10px'} width={'100%'}>
-            <RemoveCircleOutline />
-            <Typography marginBottom={'0px'} fontSize={'16px'} >
-              {status}
-            </Typography>
-            <Box position={'absolute'} right={'0'} paddingRight={'1rem'}>
-              <Button variant="text" endIcon={<CreateOutlinedIcon />}>Update</Button>
-            </Box>
-          </Box>
-        )}
-
-        {status === 'Not marked' && (
-          <Box display={'flex'} gap={'10px'} width={'100%'}>
-            <Typography marginBottom={'0px'} fontSize={'16px'} >
-              Attendance not marked
-            </Typography>
-            <Box position={'absolute'} right={'0'} paddingRight={'1rem'}>
-              <Button variant="text" endIcon={<CreateOutlinedIcon />}>Update</Button>
-            </Box>
-          </Box>
-        )}
-
-        {status === 'futureDate' && (
-          <Box display={'flex'} gap={'10px'} width={'100%'}>
-            <Typography marginBottom={'0px'} fontSize={'16px'} >
-              Future date cannot be marked
-            </Typography>
-            <Box position={'absolute'} right={'0'} paddingRight={'1rem'}>
-              <Button variant="text" endIcon={<CreateOutlinedIcon />} disabled>Update</Button>
-            </Box>
-          </Box>
-        )} */}
+        {status && <AttendanceStatus status={status} onUpdate={handleMarkAttendanceModal} />}
       </Box>
+
+      <MarkAttendance
+        isOpen={openMarkAttendance}
+        isSelfAttendance={true}
+        date= {formatToShowDateMonth(selectedDate)}
+        currentStatus="notmarked"
+        handleClose={handleMarkAttendanceModal}
+        handleSubmit={handleUpdate}
+      />
     </Box >
+
+
   )
 }
 
