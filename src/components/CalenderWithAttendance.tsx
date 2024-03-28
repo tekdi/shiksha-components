@@ -104,7 +104,7 @@ const CalendarWithAttendance: React.FC<CalendarWithAttendanceProps> = ({ present
     return classes.join(' ');
   }
 
-  const formatShortWeekday = (date: Date | undefined): string => {
+  const formatShortWeekday: (locale: string | undefined, date: Date) => string = (locale, date) =>{
     if (!date) {
         return '';
     }
@@ -112,13 +112,13 @@ const CalendarWithAttendance: React.FC<CalendarWithAttendanceProps> = ({ present
     return weekdays[date.getDay()];
 };
 
-  const handleActiveStartDateChange = ({ activeStartDate }) => {
+  const handleActiveStartDateChange: ({ action, activeStartDate, value, view }: any) => void = ({ activeStartDate }) => {
     console.log("Active start date changed:", activeStartDate);
     // localStorage.setItem("activeStartDate", activeStartDate);
     onChange(activeStartDate);
   };
 
-  const handleDateChange = (newDate) => {
+    const handleDateChange: (value: any, event: React.MouseEvent<HTMLButtonElement>) => void = ({ newDate }) => {
     // Handle the selected date here
     console.log('Selected date:', newDate);
     setDate(newDate); // Update state with the new selected date if needed

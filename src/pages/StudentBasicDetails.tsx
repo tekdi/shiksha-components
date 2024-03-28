@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Card, CardContent, Stack, Typography } from '@mui/material';
+import { Box, Card, CardContent, Color, Stack, Typography } from '@mui/material';
 import { ArrowBack as ArrowBackIcon, East as EastIcon } from '@mui/icons-material';
 import { useTheme } from '@mui/material/styles';
 import StudentStatsCard from '../components/StudentStatsCard';
@@ -9,11 +9,12 @@ import CustomSelect from '../components/CustomSelect';
 import { getUser } from '../services/profileService';
 import { decodeToken } from '../utils/Helper';
 import { useTranslation } from 'react-i18next';
+import { UserData } from '../utils/Interfaces';
 
 const StudentDetails = () => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState<UserData | null>(null);
   const [studentData, setStudentData] = useState([
     {
       dob_title: 'Date of Birth',
@@ -30,14 +31,16 @@ const StudentDetails = () => {
   useEffect(() => {
     const fetchUserDetails = async () => {
       const token = localStorage.getItem('token');
-      try {
-        const payload = decodeToken(token);
-        const xHasuraUserId = payload['https://hasura.io/jwt/claims']['x-hasura-user-id'];
-        const response = await getUser(xHasuraUserId);
-        const userDataFromJson = response?.result?.userData;
-        setUserData(userDataFromJson);
-      } catch (error) {
-        console.error('Error fetching user details:', error);
+      if (token) {
+        try {
+          const payload = decodeToken(token);
+          const xHasuraUserId = payload['https://hasura.io/jwt/claims']['x-hasura-user-id'];
+          const response = await getUser(xHasuraUserId);
+          const userDataFromJson = response?.result?.userData;
+          setUserData(userDataFromJson);
+        } catch (error) {
+          console.error('Error fetching user details:', error);
+        }
       }
     };
     fetchUserDetails();
@@ -52,7 +55,7 @@ const StudentDetails = () => {
       <Header />
       <Box mt={3} display="flex" gap={2} alignItems="flex-start">
         <Link to="/">
-          <ArrowBackIcon sx={{ color: theme.palette.warning['A200'], fontSize: 'large' }} />
+          <ArrowBackIcon sx={{ color: ((theme.palette.warning as unknown) as Color)['A200'], fontSize: 'large' }} />
         </Link>
         <Stack>
           <Typography
@@ -78,7 +81,7 @@ const StudentDetails = () => {
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <Typography
                 sx={{
-                  color: theme.palette.warning['A200'],
+                  color: ((theme.palette.warning as unknown) as Color)['A200'],
                   fontFamily: theme.typography.fontFamily,
                   fontWeight: 500,
                   fontSize: '15px'
@@ -140,7 +143,7 @@ const StudentDetails = () => {
         >
           <CardContent>
             <Typography
-              sx={{ color: theme.palette.warning['A200'], fontWeight: 500, fontSize: '15px' }}
+              sx={{ color: ((theme.palette.warning as unknown) as Color)['A200'], fontWeight: 500, fontSize: '15px' }}
               variant="h6"
               gutterBottom
             >
@@ -161,7 +164,7 @@ const StudentDetails = () => {
       </Box>
       <Card
         sx={{
-          bgcolor: theme.palette.warning[800],
+          bgcolor: ((theme.palette.warning as unknown) as Color)[800],
           maxHeight: '600px',
           boxShadow: 'none',
           marginTop: '10px',
@@ -170,7 +173,7 @@ const StudentDetails = () => {
       >
         <CardContent>
           <Typography
-            sx={{ color: theme.palette.warning['A200'], fontSize: '15px', fontWeight: 500 }}
+            sx={{ color: ((theme.palette.warning as unknown) as Color)['A200'], fontSize: '15px', fontWeight: 500 }}
             variant="h6"
             gutterBottom
           >
@@ -187,7 +190,7 @@ const StudentDetails = () => {
             boxShadow: 'none'
           }}
         >
-          {studentData.map((item) => (
+          {studentData.map((item: any) => (
             <Box key={item.id} sx={{ padding: '16px' }}>
               <Typography
                 sx={{
