@@ -104,10 +104,13 @@ const CalendarWithAttendance: React.FC<CalendarWithAttendanceProps> = ({ present
     return classes.join(' ');
   }
 
-  const formatShortWeekday = (date: Date) => {
+  const formatShortWeekday = (date: Date | undefined): string => {
+    if (!date) {
+        return '';
+    }
     const weekdays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
     return weekdays[date.getDay()];
-  };
+};
 
   const handleActiveStartDateChange = ({ activeStartDate }) => {
     console.log("Active start date changed:", activeStartDate);
