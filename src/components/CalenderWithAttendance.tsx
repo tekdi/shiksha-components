@@ -5,9 +5,18 @@ import "react-calendar/dist/Calendar.css";
 import { CheckCircleOutlineOutlined, CancelOutlined, RemoveCircleOutline, RemoveOutlined } from '@mui/icons-material';
 import '../App.css';
 
-const CalendarWithAttendance = ({ presentDates, absentDates, halfDayDates, notMarkedDates, futureDates, onChange }) => {
-  const [date, setDate] = useState(new Date());
+interface CalendarWithAttendanceProps {
+  presentDates: string[];
+  absentDates: string[];
+  halfDayDates: string[];
+  notMarkedDates: string[];
+  futureDates: string[];
+  onChange: (date: Date) => void;
+  onDateChange: (date: Date) => void;
+}
 
+const CalendarWithAttendance: React.FC<CalendarWithAttendanceProps> = ({ presentDates, absentDates, halfDayDates, notMarkedDates, futureDates, onChange, onDateChange }) => {
+  const [date, setDate] = useState(new Date());
   const reducedPresentDates = useMemo(() => reduceDatesByOneDay(presentDates), [presentDates]);
   const reducedHalfDates = useMemo(() => reduceDatesByOneDay(halfDayDates), [halfDayDates]);
   const reducedAbsentDates = useMemo(() => reduceDatesByOneDay(absentDates), [absentDates]);
@@ -20,7 +29,7 @@ const CalendarWithAttendance = ({ presentDates, absentDates, halfDayDates, notMa
     console.log("activeStartDate child", currentDate);
   }, [])
 
-  function reduceDatesByOneDay(dates) {
+  function reduceDatesByOneDay(dates: string[]) {
     return dates.map((dateString) => {
       const date = new Date(dateString);
       date.setDate(date.getDate() - 1);
@@ -28,7 +37,7 @@ const CalendarWithAttendance = ({ presentDates, absentDates, halfDayDates, notMa
     });
   }
 
-  function getAttendanceStatus(date) {
+  function getAttendanceStatus(date: Date) {
     const dateString = date.toISOString().slice(0, 10);
     // const currentDate = new Date().toISOString().slice(0, 10);
 
@@ -50,7 +59,7 @@ const CalendarWithAttendance = ({ presentDates, absentDates, halfDayDates, notMa
     return null;
   }
 
-  function tileContent({ date, view }) {
+  function tileContent({ date, view }: { date: Date, view: string }) {
     if (view !== 'month') return null;
     const status = getAttendanceStatus(date);
     switch (status) {
@@ -83,7 +92,7 @@ const CalendarWithAttendance = ({ presentDates, absentDates, halfDayDates, notMa
     }
   }
 
-  function tileClassName({ date, view }) {
+  function tileClassName({ date, view }: { date: Date, view: string }) {
     if (view !== 'month') return null;
     const classes = ['tile-day'];
     if (date.toDateString() === new Date().toDateString()) {
@@ -95,22 +104,29 @@ const CalendarWithAttendance = ({ presentDates, absentDates, halfDayDates, notMa
     return classes.join(' ');
   }
 
-  const formatShortWeekday = (locale, date) => {
+  const formatShortWeekday = (date: Date) => {
     const weekdays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
     return weekdays[date.getDay()];
   };
 
-  const handleActiveStartDateChange = ({ activeStartDate, view }) => {
+  const handleActiveStartDateChange = ({ activeStartDate }) => {
     console.log("Active start date changed:", activeStartDate);
     // localStorage.setItem("activeStartDate", activeStartDate);
     onChange(activeStartDate);
+  };
+
+  const handleDateChange = (newDate) => {
+    // Handle the selected date here
+    console.log('Selected date:', newDate);
+    setDate(newDate); // Update state with the new selected date if needed
+    onDateChange(newDate);
   };
 
   return (
     <div>
       <div className="day-tile-wrapper">
         <Calendar
-          onChange={setDate}
+          onChange={handleDateChange}
           value={date}
           tileContent={tileContent}
           tileClassName={tileClassName}
@@ -125,10 +141,12 @@ const CalendarWithAttendance = ({ presentDates, absentDates, halfDayDates, notMa
 };
 
 CalendarWithAttendance.propTypes = {
-  presentDates: PropTypes.arrayOf(PropTypes.string).isRequired,
-  absentDates: PropTypes.arrayOf(PropTypes.string).isRequired,
-  halfDayDates: PropTypes.arrayOf(PropTypes.string).isRequired,
-  notMarkedDates: PropTypes.arrayOf(PropTypes.string).isRequired
+  presentDates: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  absentDates: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  halfDayDates: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  notMarkedDates: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  onChange: PropTypes.func.isRequired,
+  onDateChange: PropTypes.func.isRequired,
 };
 
 export default CalendarWithAttendance;

@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import CalendarWithAttendance from '../components/CalenderWithAttendance';
-import { Box, Typography } from '@mui/material';
+import { Box,Typography } from '@mui/material';
 import Header from '../components/Header';
 import { useTheme } from '@mui/material/styles';
 import KeyboardBackspaceOutlinedIcon from '@mui/icons-material/KeyboardBackspaceOutlined';
 import { getAttendanceByDate } from '../services/AttendanceService';
 import { AttendanceByDateParams } from '../utils/Interfaces';
+import AttendanceStatus from '../components/AttendanceStatus';
 
 const UserAttendanceHistory = () => {
   const theme = useTheme<any>();
   const [attendanceData, setAttendanceData] = useState<any[]>([]);
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [presentDates, setPresentDates] = useState<string[]>([]);
   const [absentDates, setAbsentDates] = useState<string[]>([]);
   const [halfDayDates, setHalfDayDates] = useState<string[]>([]);
@@ -19,7 +21,8 @@ const UserAttendanceHistory = () => {
     const storedDate = localStorage.getItem('activeStartDate');
     return storedDate ? new Date(storedDate) : new Date();
   });
-  
+  const [status, setStatus] = useState('');
+
   let userId: string = '';
 
   useEffect(() => {
@@ -89,6 +92,10 @@ const UserAttendanceHistory = () => {
     localStorage.setItem('activeStartDate', activeStartDate.toISOString());
   }, [activeStartDate]);
 
+  useEffect(() => {
+    handleSelectedDateChange(selectedDate);
+  }, []);
+
   const handleActiveStartDateChange = (date: Date) => {
     setActiveStartDate(date);
     console.log("date change called", date);
@@ -123,6 +130,35 @@ const UserAttendanceHistory = () => {
     return new Date(date) > new Date(); // Check if the date is after the current date
   };
 
+
+  const handleSelectedDateChange = (date: Date) => {
+    setSelectedDate(date);
+    const formattedSelectedDate = formatDate(date);
+    let status = '';
+    if (presentDates.includes(formattedSelectedDate)) {
+      status = 'Present';
+    } else if (absentDates.includes(formattedSelectedDate)) {
+      status = 'Absent';
+    } else if (halfDayDates.includes(formattedSelectedDate)) {
+      status = 'Half-day';
+    } else if (notMarkedDates.includes(formattedSelectedDate)) {
+      status = 'Not marked';
+    } else if (futureDates.includes(formattedSelectedDate)) {
+      status = 'Future date';
+    }
+    console.log(`Status of ${formattedSelectedDate}: ${status}`);
+    setStatus(status);
+  }
+
+  const formatToShowDateMonth = (date : Date) => {
+    const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: 'long' };
+    return new Intl.DateTimeFormat('en-US', options).format(date);
+  };
+
+  const handleUpdate = ()=>{
+
+  }
+
   return (
     <Box minHeight="100vh" textAlign={'center'}>
       <Header />
@@ -142,15 +178,76 @@ const UserAttendanceHistory = () => {
         notMarkedDates={notMarkedDates}
         futureDates={futureDates}
         onChange={handleActiveStartDateChange}
+        onDateChange={handleSelectedDateChange}
       />
 
       <Box display={'flex'} flexDirection={'column'} gap={'1rem'} padding={'1rem'} alignItems={'center'}>
         <Box display={'flex'} gap={'10px'} width={'100%'} >
-          <Typography marginBottom={'0px'} fontSize={'16px'} >Attendance on {'date'}</Typography>
+          <Typography marginBottom={'0px'} fontSize={'16px'} > Attendance on {formatToShowDateMonth(selectedDate)}</Typography>
         </Box>
-        {/* <Box position={'absolute'} left={'0'} >
-            <KeyboardBackspaceOutlinedIcon sx={{ color: theme.palette.warning['A200'] }}/>
-          </Box> */}
+
+        {status && <AttendanceStatus status={status} onUpdate={handleUpdate} />}
+
+        {/* {status === 'Present' && (
+          <Box display={'flex'} gap={'10px'} width={'100%'}>
+            <div className="present-marker">
+              <CheckCircleOutlineOutlined />
+            </div>
+            <Typography marginBottom={'0px'} fontSize={'16px'} >
+              {status}
+            </Typography>
+            <Box position={'absolute'} right={'0'} paddingRight={'1rem'}>
+              <Button variant="text" endIcon={<CreateOutlinedIcon />}>Update</Button>
+            </Box>
+          </Box>
+        )}
+        {status === 'Absent' && (
+          <Box display={'flex'} gap={'10px'} width={'100%'}>
+            <div className="absent-marker">
+              <CancelOutlined />
+            </div>
+            <Typography marginBottom={'0px'} fontSize={'16px'} >
+              {status}
+            </Typography>
+            <Box position={'absolute'} right={'0'} paddingRight={'1rem'}>
+              <Button variant="text" endIcon={<CreateOutlinedIcon />}>Update</Button>
+            </Box>
+          </Box>
+        )}
+
+        {status === 'Half-day' && (
+          <Box display={'flex'} gap={'10px'} width={'100%'}>
+            <RemoveCircleOutline />
+            <Typography marginBottom={'0px'} fontSize={'16px'} >
+              {status}
+            </Typography>
+            <Box position={'absolute'} right={'0'} paddingRight={'1rem'}>
+              <Button variant="text" endIcon={<CreateOutlinedIcon />}>Update</Button>
+            </Box>
+          </Box>
+        )}
+
+        {status === 'Not marked' && (
+          <Box display={'flex'} gap={'10px'} width={'100%'}>
+            <Typography marginBottom={'0px'} fontSize={'16px'} >
+              Attendance not marked
+            </Typography>
+            <Box position={'absolute'} right={'0'} paddingRight={'1rem'}>
+              <Button variant="text" endIcon={<CreateOutlinedIcon />}>Update</Button>
+            </Box>
+          </Box>
+        )}
+
+        {status === 'futureDate' && (
+          <Box display={'flex'} gap={'10px'} width={'100%'}>
+            <Typography marginBottom={'0px'} fontSize={'16px'} >
+              Future date cannot be marked
+            </Typography>
+            <Box position={'absolute'} right={'0'} paddingRight={'1rem'}>
+              <Button variant="text" endIcon={<CreateOutlinedIcon />} disabled>Update</Button>
+            </Box>
+          </Box>
+        )} */}
       </Box>
     </Box >
   )
