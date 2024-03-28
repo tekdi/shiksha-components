@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Card, CardContent, Stack, Typography } from '@mui/material';
 import { ArrowBack as ArrowBackIcon, East as EastIcon } from '@mui/icons-material';
@@ -43,7 +43,7 @@ const StudentDetails = () => {
     fetchUserDetails();
   }, []);
 
-  const renderStatsCard = (label1, value1) => (
+  const renderStatsCard = (label1: string, value1 : string) => (
     <StudentStatsCard label1={label1} value1={value1} label2={false} value2="5" />
   );
 
