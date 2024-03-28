@@ -45,3 +45,11 @@ export interface cohortListParam {
   page: number;
   filters: object;
 }
+
+export interface cohortDetailsList {
+  contextId: string;
+  report: boolean;
+  limit: number;
+  offset: number;
+  filters: object;
+}

@@ -17,6 +17,7 @@ import {
   FormControlLabel,
   FormGroup,
   FormLabel,
+  Grid,
   Radio,
   RadioGroup,
   Typography
@@ -58,49 +59,51 @@ export default function SearchSortBar() {
   return (
     <>
       <Box
-        display={'flex'}
+        // display={'flex'}
         mt={3}
         mb={3}
-        justifyContent={'space-between'}
-        alignItems={'center'}
-        boxShadow={'none'}
-      >
-        <Paper
-          component="form"
-          sx={{
-            p: '2px 4px',
-            display: 'flex',
-            alignItems: 'center',
-            width: 'auto',
-            borderRadius: '100px',
-            background: theme.palette.warning.A700,
-            boxShadow: 'none'
-          }}
-        >
-          <InputBase
-            sx={{ ml: 1, flex: 1, mb: '0' }}
-            placeholder={t('COMMON.SEARCH_STUDENT') + '..'}
-            inputProps={{ 'aria-label': 'search google maps' }}
-          />
-          <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
-            <SearchIcon />
-          </IconButton>
-        </Paper>
-        <Button
-          // variant="outlined"
-          onClick={handleOpenModal}
-          sx={{
-            color: theme.palette.warning.A200,
-            height: 'auto',
-            width: 'auto',
-            padding: '6px, 8px, 6px, 16px'
-          }}
-          endIcon={<ArrowDropDownSharpIcon />}
-          size="small"
-          variant="outlined"
-        >
-          {t('COMMON.SORT_BY')}
-        </Button>
+        // justifyContent={'space-between'}
+        // alignItems={'center'}
+        boxShadow={'none'}>
+        <Grid container alignItems="center" display={'flex'} justifyContent="space-between">
+          <Grid item xs={6}>
+            <Paper
+              component="form"
+              sx={{
+                // p: '2px 4px',
+                display: 'flex',
+                alignItems: 'center',
+                width: 'auto',
+                borderRadius: '100px',
+                background: theme.palette.warning.A700,
+                boxShadow: 'none'
+              }}>
+              <InputBase
+                sx={{ ml: 1, flex: 1, mb: '0' }}
+                placeholder={t('COMMON.SEARCH_STUDENT') + '..'}
+                inputProps={{ 'aria-label': 'search google maps' }}
+              />
+              <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+                <SearchIcon />
+              </IconButton>
+            </Paper>
+          </Grid>
+          <Grid item xs={3}>
+            <Button
+              onClick={handleOpenModal}
+              sx={{
+                color: theme.palette.warning.A200,
+                height: 'auto',
+                width: 'auto',
+                padding: '6px, 8px, 6px, 16px'
+              }}
+              endIcon={<ArrowDropDownSharpIcon />}
+              size="small"
+              variant="outlined">
+              {t('COMMON.SORT_BY')}
+            </Button>
+          </Grid>
+        </Grid>
       </Box>
 
       {/* ------------------modal for sorting ------------------- */}
@@ -109,8 +112,7 @@ export default function SearchSortBar() {
         onClose={handleCloseModal}
         heading={'Sort By'}
         // SubHeading={"Sort"}
-        btnText="apply"
-      >
+        btnText="apply">
         <Box>
           <Divider
             style={{
@@ -124,8 +126,7 @@ export default function SearchSortBar() {
             <FormControl>
               <FormLabel
                 id="demo-controlled-radio-buttons-group"
-                style={{ color: theme.palette.warning['400'] }}
-              >
+                style={{ color: theme.palette.warning['400'] }}>
                 {t('COMMON.NAMES')}
               </FormLabel>
 
@@ -133,8 +134,7 @@ export default function SearchSortBar() {
                 aria-labelledby="demo-controlled-radio-buttons-group"
                 name="controlled-radio-buttons-group"
                 value={valueName}
-                onChange={handleChangeNames}
-              >
+                onChange={handleChangeNames}>
                 <FormControlLabel
                   value="aToz"
                   control={<Radio sx={{ ml: '300px' }} />}
@@ -157,8 +157,7 @@ export default function SearchSortBar() {
             <FormControl>
               <FormLabel
                 id="demo-controlled-radio-buttons-group"
-                style={{ color: theme.palette.warning['400'] }}
-              >
+                style={{ color: theme.palette.warning['400'] }}>
                 {t('COMMON.ATTENDANCE')}
               </FormLabel>
 
@@ -166,8 +165,7 @@ export default function SearchSortBar() {
                 aria-labelledby="demo-controlled-radio-buttons-group"
                 name="controlled-radio-buttons-group"
                 value={valueAttendance}
-                onChange={handleChangeAttendance}
-              >
+                onChange={handleChangeAttendance}>
                 <FormControlLabel
                   value="lowToHigh"
                   control={<Radio sx={{ ml: '270px' }} />}
@@ -190,8 +188,7 @@ export default function SearchSortBar() {
             <FormControl>
               <FormLabel
                 id="demo-controlled-radio-buttons-group"
-                style={{ color: theme.palette.warning['400'] }}
-              >
+                style={{ color: theme.palette.warning['400'] }}>
                 {t('COMMON.CLASS_MISSED')}
               </FormLabel>
 

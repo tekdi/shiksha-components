@@ -13,6 +13,7 @@ interface ModalProps {
   SubHeading?: string;
   children?: React.ReactNode;
   btnText: string;
+  handleApplySort: ()=> void;
 }
 
 const ModalComponent: React.FC<ModalProps> = ({
@@ -21,7 +22,8 @@ const ModalComponent: React.FC<ModalProps> = ({
   heading,
   SubHeading,
   children,
-  btnText
+  btnText,
+  handleApplySort
 }) => {
   const style = {
     position: 'absolute',
@@ -73,8 +75,7 @@ const ModalComponent: React.FC<ModalProps> = ({
             width: '95%', // Adjust width for smaller screens
             padding: '15px' // Adjust padding for smaller screens
           }
-        }}
-      >
+        }}>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Typography variant="h4" fontSize="16px" fontWeight="500" m={0}>
             {heading}
@@ -84,7 +85,8 @@ const ModalComponent: React.FC<ModalProps> = ({
         <Typography variant="h6">{SubHeading}</Typography>
         <Box mt={2}>{children}</Box>
         <Box mt={2} display="flex" justifyContent="flex-end">
-          <ButtonFunctional buttonName={t('COMMON.APPLY')} /> {/* You may use t('COMMON.APPLY') */}
+          <ButtonFunctional handleClickButton={handleApplySort} buttonName={t('COMMON.APPLY')} />{' '}
+          {/* You may use t('COMMON.APPLY') */}
         </Box>
       </Box>
     </Modal>
