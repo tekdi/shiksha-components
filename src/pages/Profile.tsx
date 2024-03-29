@@ -20,9 +20,11 @@ import CloseIcon from '@mui/icons-material/Close';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import { getUser, editEditUser } from '../services/profileService.ts';
 import { useTheme } from '@mui/material/styles';
-import default_user from '/default_user.png';
+import defaultUser from '/default_user.png';
 import { decodeToken } from '../utils/Helper';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { UserData } from '../utils/Interfaces.ts';
+import Loader from '../components/Loader.tsx';
 
 const Profile = () => {
 
@@ -75,8 +77,13 @@ const Profile = () => {
   const options = ['Option 1', 'Option 2'];
   const [value, setValue] = React.useState<string | null>(options[0]);
   const [inputValue, setInputValue] = React.useState('');
+  const [loading, setLoading] = useState(false);
+
+  const backButtonEvent = () => {
+        window.history.back();
+   };
   const handleUpdateClick = async () => {
-    try {
+ try {
       const userDetails = {
         userData: {
           name: updatedName ?? userData?.name,
@@ -88,9 +95,18 @@ const Profile = () => {
       const userId = localStorage.getItem('userId');
       if (userId) {
         const response = await editEditUser(userId, userDetails);
-      }
+         }
+         setOpen(false);
+        // setLoading(true);
+
+
     } catch (error) {
+     // setLoading(false);
+
       console.log(error);
+    }
+    finally{
+     // setLoading(false)
     }
   };
   const handleFieldChange = (fieldId: string, value: string) => {
@@ -103,7 +119,7 @@ const Profile = () => {
      
       // Add more objects as needed
     ];
-    setUpdatedCustomFields(prevState => [...prevState, ...newData])
+    setUpdatedCustomFields(newData)
    
   };
   
@@ -136,6 +152,27 @@ const Profile = () => {
         justifyContent={'center'}
         alignItems={'center'}
       >
+           <Box sx={{ flex: '1', minWidth: '100%' }}
+           display="flex"
+           flexDirection="row"
+           gap="5px"
+           >
+    <ArrowBackIcon onClick={backButtonEvent} />
+
+          <Typography
+            variant="h3"
+            style={{
+              letterSpacing: '0.1px',
+              textAlign: 'left',
+              marginBottom:"2px"
+             // marginBottom:"4px"
+             // color: theme.palette.warning['400']
+            }}
+          >
+            {t('PROFILE.MY_PROFILE')}
+          </Typography>
+          </Box>
+
         <Box
           sx={{
             flex: '1',
@@ -150,7 +187,7 @@ const Profile = () => {
           display="flex"
           flexDirection="row"
         >
-          <img src={default_user} alt="user" style={{ margin: '2px' }} />
+          <img src={defaultUser} alt="user" style={{ margin: '2px' }} />
           <Box>
             <Typography
               variant="h2"
@@ -344,15 +381,10 @@ const Profile = () => {
             alignItems={'center'}
             justifyContent={'center'}
           >
-            <StudentStatsCard
-              label1="Interview Score"
-              value1="82%"
-              label2={true}
-              value2="02/1/25"
-            />
+
 
             <StudentStatsCard
-              label1="Interview Score"
+              label1={t('PROFILE.INTERVIEW_TEST_SCORES')}
               value1="82%"
               label2={true}
               value2="02/1/25"
@@ -405,27 +437,45 @@ const Profile = () => {
             >
               <Box
                 sx={{
-                  flex: '1',
+                  //flex: '1',
                   textAlign: 'center',
-                  marginLeft: '19px'
+                  marginLeft:"5%"
+                  
                 }}
                 borderRadius={'12px'}
                 border={'1px'}
                 bgcolor="warning.A400"
                 display="flex"
-                flexDirection="row"
+                flexDirection="column"
               >
-                <img src={default_user} alt="user" />
+                <img src={defaultUser} alt="user" />
                 <Box>
+                
+
+
                   <Button
-                    sx={{
-                      marginTop: '35px',
-                      textAlign: 'center'
-                    }}
-                  >
+          sx={{
+            minWidth: '100%',
+
+            padding: '10px 24px 10px 16px',
+            borderRadius: '12px',
+            marginTop: '10px',
+            flex: '1',
+            textAlign: 'center',
+            color: 'black',
+            border: '1px solid black',
+            borderColor: 'black',
+            backgroundColor: 'warning.A400',
+            '&:hover': {
+              backgroundColor: 'warning.A400'
+            }
+          }}
+        >
                     {t('PROFILE.UPDATE_PICTURE')}
-                  </Button>
+        </Button>
                 </Box>
+
+
               </Box>
               <TextField
                 sx={{
@@ -495,6 +545,8 @@ const Profile = () => {
             <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
               <Button
                 sx={{
+                  minWidth: '100%',
+
                   color: 'black',
                   backgroundColor: 'containedSecondary',
                   '&:hover': {
@@ -509,6 +561,7 @@ const Profile = () => {
             </Box>
           </Box>
         </Modal>
+
       </Box>
     </Box>
   );
