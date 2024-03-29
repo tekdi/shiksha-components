@@ -21,9 +21,10 @@
     "TEST_REPORT": "जाँच रिपोर्ट",
     "BASIC_DETAILS": "बेसिक विवरण",
     "DOB": "जन्म की तारीख",
-    "LOGOUT": "लॉग आउट"
+    "LOGOUT": "लॉग आउट",
 
 
+    "OVERALL_ATTENDANCE": "समग्र उपस्थिति"
   },
   "LOGIN_PAGE": {
     "USERNAME": "उपयोगकर्ता नाम",
