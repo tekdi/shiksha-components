@@ -59,147 +59,146 @@ const LoginPage = () => {
     event.preventDefault();
   };
 
-  const isButtonDisabled = !username || !password || usernameError || passwordError;
-
-  const buttonStyle = isButtonDisabled
-    ? { color: 'gray', backgroundColor: 'lightgray' }
-    : { color: 'black', backgroundColor: '#FBBC13' };
-
-  const loginButtonClick = async (event: React.FormEvent) => {
-    setLoading(true);
+  const handleFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    try {
-      const response = await login({ username: username, password: password });
-      console.log(response);
-      if (response) {
-        const token = response?.access_token;
-      
-        localStorage.setItem('token', token);
-        const userResponse = await getUserId();
-        localStorage.setItem('userId', userResponse?.userId);
+    if (!usernameError && !passwordError) {
+      // loginButtonClick(event);
+      setLoading(true);
+      event.preventDefault();
+      try {
+        const response = await login({ username: username, password: password });
+        console.log(response);
+        if (response) {
+          const token = response?.access_token;
+
+          localStorage.setItem('token', token);
+          const userResponse = await getUserId();
+          localStorage.setItem('userId', userResponse?.userId);
+        }
+        setLoading(false);
+        navigate('/dashboard');
+      } catch (error) {
+        setLoading(false);
+        console.error('error', error);
       }
-      setLoading(false);
-      navigate('/dashboard');
-    } catch (error) {
-      setLoading(false);
-      console.error('error', error);
     }
   };
+
+  const isButtonDisabled = !username || !password || usernameError || passwordError;
+
+  // const loginButtonClick = async (event: React.FormEvent) => {};
   const handleChange = (event: SelectChangeEvent) => {
     setLanguage(event.target.value);
     i18n.changeLanguage(event.target.value);
   };
   return (
-    <Box display="flex" flexDirection="column" bgcolor={'black'} minHeight={'100vh'}>
-      {loading && <Loader showBackdrop={true} loadingText={t('LOADING')} />}
-      <Box
-        display={'flex'}
-        // flexGrow={1}
-        bgcolor="black"
-        overflow="auto"
-        alignItems={'center'}
-        justifyContent={'center'}
-        zIndex={99}
-        sx={{ margin: '32px 0' }}
-      >
-        <img src={appLogo2} />
-      </Box>
-      <Box
-        flexGrow={1}
-        display={'flex'}
-        bgcolor="white"
-        overflow="auto"
-        height="auto"
-        borderRadius={'2rem 2rem 0 0'}
-        zIndex={99}
-        justifyContent={'center'}
-        p={'2rem'}
-      >
-        <Box position={'relative'}>
-          <Box mt={'0.5rem'}>
-            <FormControl sx={{ m: '2rem 0 1rem' }}>
-              <Select
-                className="SelectLanguages"
-                value={language}
-                onChange={handleChange}
-                displayEmpty
-                style={{
-                  borderRadius: '0.5rem',
-                  color: theme.palette.warning['200'],
-                  width: 'auto',
-                  marginBottom: '0rem'
-                }}
-              >
-                {config?.languages.map((lang) => (
-                  <MenuItem value={lang.code} key={lang.code}>
-                    {lang.label}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Box>
-          <Box marginY={'1rem'}>
-            <FormControl variant="outlined" fullWidth={true} className="CssTextField">
-              <InputLabel htmlFor="outlined-adornment-username">
-                {t('LOGIN_PAGE.USERNAME')}
-              </InputLabel>
-              <OutlinedInput
-                type={'text'}
-                label={t('LOGIN_PAGE.USERNAME')}
-                placeholder={t('LOGIN_PAGE.USERNAME_PLACEHOLDER')}
-                value={username}
-                onChange={handleUsernameChange}
-                error={usernameError}
-              />
-            </FormControl>
-          </Box>
-          <Box marginY={'1rem'}>
-            <FormControl variant="outlined" className="CssTextField">
-              <InputLabel htmlFor="outlined-adornment-password">
-                {t('LOGIN_PAGE.PASSWORD')}
-              </InputLabel>
-              <OutlinedInput
-                type={showPassword ? 'text' : 'password'}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                label={t('LOGIN_PAGE.PASSWORD')}
-                placeholder={t('LOGIN_PAGE.PASSWORD_PLACEHOLDER')}
-                value={password}
-                onChange={handlePasswordChange}
-                error={passwordError}
-              />
-            </FormControl>
-          </Box>
+    <form onSubmit={handleFormSubmit}>
+      <Box display="flex" flexDirection="column" bgcolor={'black'} minHeight={'100vh'}>
+        {loading && <Loader showBackdrop={true} loadingText={t('LOADING')} />}
+        <Box
+          display={'flex'}
+          // flexGrow={1}
+          bgcolor="black"
+          overflow="auto"
+          alignItems={'center'}
+          justifyContent={'center'}
+          zIndex={99}
+          sx={{ margin: '32px 0' }}>
+          <img src={appLogo2} />
+        </Box>
+        <Box
+          flexGrow={1}
+          display={'flex'}
+          bgcolor="white"
+          overflow="auto"
+          height="auto"
+          borderRadius={'2rem 2rem 0 0'}
+          zIndex={99}
+          justifyContent={'center'}
+          p={'2rem'}>
+          <Box position={'relative'}>
+            <Box mt={'0.5rem'}>
+              <FormControl sx={{ m: '2rem 0 1rem' }}>
+                <Select
+                  className="SelectLanguages"
+                  value={language}
+                  onChange={handleChange}
+                  displayEmpty
+                  style={{
+                    borderRadius: '0.5rem',
+                    color: theme.palette.warning['200'],
+                    width: 'auto',
+                    marginBottom: '0rem'
+                  }}>
+                  {config?.languages.map((lang) => (
+                    <MenuItem value={lang.code} key={lang.code}>
+                      {lang.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
+            <Box marginY={'1rem'}>
+              <FormControl variant="outlined" fullWidth={true} className="CssTextField">
+                <InputLabel htmlFor="outlined-adornment-username">
+                  {t('LOGIN_PAGE.USERNAME')}
+                </InputLabel>
+                <OutlinedInput
+                  type={'text'}
+                  label={t('LOGIN_PAGE.USERNAME')}
+                  placeholder={t('LOGIN_PAGE.USERNAME_PLACEHOLDER')}
+                  value={username}
+                  onChange={handleUsernameChange}
+                  error={usernameError}
+                />
+              </FormControl>
+            </Box>
+            <Box marginY={'1rem'}>
+              <FormControl variant="outlined" className="CssTextField">
+                <InputLabel htmlFor="outlined-adornment-password">
+                  {t('LOGIN_PAGE.PASSWORD')}
+                </InputLabel>
+                <OutlinedInput
+                  type={showPassword ? 'text' : 'password'}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end">
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label={t('LOGIN_PAGE.PASSWORD')}
+                  placeholder={t('LOGIN_PAGE.PASSWORD_PLACEHOLDER')}
+                  value={password}
+                  onChange={handlePasswordChange}
+                  error={passwordError}
+                />
+              </FormControl>
+            </Box>
 
-          <Box
-            alignContent={'center'}
-            textAlign={'center'}
-            marginTop={'1rem'}
-            bottom={'1rem'}
-            width={'100%'}
-          >
-            <Button
-              variant="contained"
-              fullWidth={true}
-              onClick={(event) => loginButtonClick(event)}
-              disabled={isButtonDisabled}
-            >
-              {t('LOGIN_PAGE.LOGIN')}
-            </Button>
+            <Box
+              alignContent={'center'}
+              textAlign={'center'}
+              marginTop={'1rem'}
+              bottom={'1rem'}
+              width={'100%'}>
+              <Button
+                variant="contained"
+                type="submit"
+                fullWidth={true}
+                // onClick={(event) => loginButtonClick(event)}
+                disabled={isButtonDisabled}>
+                {t('LOGIN_PAGE.LOGIN')}
+              </Button>
+            </Box>
           </Box>
         </Box>
       </Box>
-    </Box>
+    </form>
   );
 };
 
