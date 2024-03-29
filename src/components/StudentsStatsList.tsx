@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Box, Grid, Link, Pagination, Stack, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import { useTranslation } from 'react-i18next';
 interface StudentsStatsListProps {
   name: string;
   label1: string;
@@ -18,7 +19,7 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
   value2
 }) => {
   const theme = useTheme<any>();
-
+  const { t } = useTranslation();
   return (
     <Stack>
       <Box
@@ -60,7 +61,7 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
               color={theme.palette.warning.main}
               textAlign="end"
             >
-              Attendance
+             {t("COMMON.ATTENDANCE")}
             </Typography>
           </Grid>
           {/* -------------------- code commented as per requirement -------------------
