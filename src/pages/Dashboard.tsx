@@ -60,7 +60,9 @@ const Dashboard: React.FC<DashboardProps> = () => {
     const fetchCohortList = async () => {
       try {
         const resp = await cohortList({ limit, page, filters });
-        const extractedNames = resp?.data?.map((item: DataItem) => item.name).filter((name:string) => name);
+        const extractedNames = resp?.data
+          ?.map((item: DataItem) => item.name)
+          .filter((name: string) => name);
         console.log(`response cohort list`, extractedNames);
         setCohorts(extractedNames);
       } catch (error) {
@@ -86,7 +88,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
 
   const theme = useTheme<any>();
 
-  React.useEffect(() => { }, []);
+  React.useEffect(() => {}, []);
 
   const handleChange = (event: SelectChangeEvent) => {
     setClasses(event.target.value as string);
@@ -126,7 +128,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
   };
   const viewAttendanceHistory = () => {
     navigate('/user-attendance-history');
-  }
+  };
 
   return (
     <Box minHeight="100vh" textAlign={'center'}>
@@ -218,7 +220,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
                   <FormControl fullWidth>
                     <InputLabel>Class</InputLabel>
                     <Select value={classes} label="Class" onChange={handleChange}>
-                      {cohorts?.map((item : string, index : number) => (
+                      {cohorts?.map((item: string, index: number) => (
                         <MenuItem key={index} value={item}>
                           {item}
                         </MenuItem>

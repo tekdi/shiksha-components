@@ -7,9 +7,9 @@ function Logout() {
     localStorage.clear();
 
     navigate('/');
-    
+
     window.location.reload();
-  },[]);
+  }, []);
 
   return '';
 }

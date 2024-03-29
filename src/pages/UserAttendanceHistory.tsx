@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import CalendarWithAttendance from '../components/CalenderWithAttendance';
 import { Box, Typography } from '@mui/material';
 import Header from '../components/Header';
@@ -70,19 +70,22 @@ const UserAttendanceHistory = () => {
         });
 
         const allDatesInRange: string[] = getAllDatesInRange(formattedFirstDay, formattedLastDay);
-        const markedDates: Set<string> = new Set([...presentDatesArray, ...absentDatesArray, ...halfDayDatesArray]);
-        const notMarkedDates: string[] = allDatesInRange.filter(date => {
+        const markedDates: Set<string> = new Set([
+          ...presentDatesArray,
+          ...absentDatesArray,
+          ...halfDayDatesArray
+        ]);
+        const notMarkedDates: string[] = allDatesInRange.filter((date) => {
           return !markedDates.has(date) && !isWeekend(date) && !isFutureDate(date);
         });
 
-        const futureDates: string[] = allDatesInRange.filter(date => isFutureDate(date));
+        const futureDates: string[] = allDatesInRange.filter((date) => isFutureDate(date));
 
         setPresentDates(presentDatesArray);
         setAbsentDates(absentDatesArray);
         setHalfDayDates(halfDayDatesArray);
         setNotMarkedDates(notMarkedDates);
         setFutureDates(futureDates);
-
       } catch (error) {
         console.error('Error:', error);
       }
@@ -101,7 +104,7 @@ const UserAttendanceHistory = () => {
 
   const handleActiveStartDateChange = (date: Date) => {
     setActiveStartDate(date);
-    console.log("date change called", date);
+    console.log('date change called', date);
   };
 
   const formatDate = (date: Date) => {
@@ -109,7 +112,7 @@ const UserAttendanceHistory = () => {
     const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
     const day = date.getDate().toString().padStart(2, '0');
     return `${year}-${month}-${day}`;
-  }
+  };
 
   const getAllDatesInRange = (startDate: string, endDate: string): string[] => {
     const datesArray: string[] = [];
@@ -133,7 +136,6 @@ const UserAttendanceHistory = () => {
     return new Date(date) > new Date(); // Check if the date is after the current date
   };
 
-
   const handleSelectedDateChange = (date: Date) => {
     setSelectedDate(date);
     const formattedSelectedDate = formatDate(date);
@@ -151,26 +153,39 @@ const UserAttendanceHistory = () => {
     }
     console.log(`Status of ${formattedSelectedDate}: ${status}`);
     setStatus(status);
-  }
+  };
 
   const formatToShowDateMonth = (date: Date) => {
     const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: 'long' };
     return new Intl.DateTimeFormat('en-US', options).format(date);
   };
 
-  const handleUpdate = () => {
-
-  }
+  const handleUpdate = () => {};
 
   return (
     <Box minHeight="100vh" textAlign={'center'}>
       <Header />
-      <Box display={'flex'} flexDirection={'column'} gap={'1rem'} padding={'1rem'} alignItems={'center'}>
-        <Box display={'flex'} sx={{ color: theme.palette.warning['A200'] }} gap={'10px'} width={'100%'} justifyContent={'center'} position={'relative'}>
-          <Box position={'absolute'} left={'0'} >
+      <Box
+        display={'flex'}
+        flexDirection={'column'}
+        gap={'1rem'}
+        padding={'1rem'}
+        alignItems={'center'}
+      >
+        <Box
+          display={'flex'}
+          sx={{ color: theme.palette.warning['A200'] }}
+          gap={'10px'}
+          width={'100%'}
+          justifyContent={'center'}
+          position={'relative'}
+        >
+          <Box position={'absolute'} left={'0'}>
             <KeyboardBackspaceOutlinedIcon sx={{ color: theme.palette.warning['A200'] }} />
           </Box>
-          <Typography marginBottom={'0px'} fontSize={'25px'} >My Attendance History</Typography>
+          <Typography marginBottom={'0px'} fontSize={'25px'}>
+            My Attendance History
+          </Typography>
         </Box>
       </Box>
 
@@ -184,9 +199,18 @@ const UserAttendanceHistory = () => {
         onDateChange={handleSelectedDateChange}
       />
 
-      <Box display={'flex'} flexDirection={'column'} gap={'1rem'} padding={'1rem'} alignItems={'center'}>
-        <Box display={'flex'} gap={'10px'} width={'100%'} >
-          <Typography marginBottom={'0px'} fontSize={'16px'} > Attendance on {formatToShowDateMonth(selectedDate)}</Typography>
+      <Box
+        display={'flex'}
+        flexDirection={'column'}
+        gap={'1rem'}
+        padding={'1rem'}
+        alignItems={'center'}
+      >
+        <Box display={'flex'} gap={'10px'} width={'100%'}>
+          <Typography marginBottom={'0px'} fontSize={'16px'}>
+            {' '}
+            Attendance on {formatToShowDateMonth(selectedDate)}
+          </Typography>
         </Box>
 
         {status && <AttendanceStatus status={status} onUpdate={handleMarkAttendanceModal} />}
@@ -195,15 +219,13 @@ const UserAttendanceHistory = () => {
       <MarkAttendance
         isOpen={openMarkAttendance}
         isSelfAttendance={true}
-        date= {formatToShowDateMonth(selectedDate)}
+        date={formatToShowDateMonth(selectedDate)}
         currentStatus="notmarked"
         handleClose={handleMarkAttendanceModal}
         handleSubmit={handleUpdate}
       />
-    </Box >
-
-
-  )
-}
+    </Box>
+  );
+};
 
 export default UserAttendanceHistory;

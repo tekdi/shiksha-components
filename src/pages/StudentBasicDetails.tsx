@@ -46,7 +46,7 @@ const StudentDetails = () => {
     fetchUserDetails();
   }, []);
 
-  const renderStatsCard = (label1: string, value1 : string) => (
+  const renderStatsCard = (label1: string, value1: string) => (
     <StudentStatsCard label1={label1} value1={value1} label2={false} value2="5" />
   );
 
@@ -55,7 +55,9 @@ const StudentDetails = () => {
       <Header />
       <Box mt={3} display="flex" gap={2} alignItems="flex-start">
         <Link to="/">
-          <ArrowBackIcon sx={{ color: ((theme.palette.warning as unknown) as Color)['A200'], fontSize: 'large' }} />
+          <ArrowBackIcon
+            sx={{ color: (theme.palette.warning as unknown as Color)['A200'], fontSize: 'large' }}
+          />
         </Link>
         <Stack>
           <Typography
@@ -81,7 +83,7 @@ const StudentDetails = () => {
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <Typography
                 sx={{
-                  color: ((theme.palette.warning as unknown) as Color)['A200'],
+                  color: (theme.palette.warning as unknown as Color)['A200'],
                   fontFamily: theme.typography.fontFamily,
                   fontWeight: 500,
                   fontSize: '15px'
@@ -143,7 +145,11 @@ const StudentDetails = () => {
         >
           <CardContent>
             <Typography
-              sx={{ color: ((theme.palette.warning as unknown) as Color)['A200'], fontWeight: 500, fontSize: '15px' }}
+              sx={{
+                color: (theme.palette.warning as unknown as Color)['A200'],
+                fontWeight: 500,
+                fontSize: '15px'
+              }}
               variant="h6"
               gutterBottom
             >
@@ -164,7 +170,7 @@ const StudentDetails = () => {
       </Box>
       <Card
         sx={{
-          bgcolor: ((theme.palette.warning as unknown) as Color)[800],
+          bgcolor: (theme.palette.warning as unknown as Color)[800],
           maxHeight: '600px',
           boxShadow: 'none',
           marginTop: '10px',
@@ -173,7 +179,11 @@ const StudentDetails = () => {
       >
         <CardContent>
           <Typography
-            sx={{ color: ((theme.palette.warning as unknown) as Color)['A200'], fontSize: '15px', fontWeight: 500 }}
+            sx={{
+              color: (theme.palette.warning as unknown as Color)['A200'],
+              fontSize: '15px',
+              fontWeight: 500
+            }}
             variant="h6"
             gutterBottom
           >
