@@ -62,11 +62,10 @@ const Header: React.FC = () => {
   }));
 
   const theme = useTheme<any>();
-
-  const handleChange = (event: SelectChangeEvent) => {
-    setLanguage(event.target.value);
-    i18n.changeLanguage(event.target.value);
-    localStorage.setItem('preferredLanguage', event.target.value);
+  const handleChange = (value: string) => {
+    setLanguage(value);
+    i18n.changeLanguage(value);
+    localStorage.setItem('preferredLanguage', value);
   };
   const handleProfileClick = () => {
     navigate('/profile');
@@ -96,7 +95,7 @@ const Header: React.FC = () => {
             <Select
               className="SelectLanguages"
               value={language}
-              onChange={handleChange}
+              onChange={(event) => handleChange(event.target.value)}
               displayEmpty
               style={{
                 borderRadius: '0.5rem',
@@ -126,9 +125,9 @@ const Header: React.FC = () => {
         </Box>
         <div>
           <StyledMenu
-            id="demo-customized-menu"
+            id="profile-menu"
             MenuListProps={{
-              'aria-labelledby': 'demo-customized-button'
+              'aria-labelledby': 'profile-button'
             }}
             anchorEl={anchorEl}
             open={open}
