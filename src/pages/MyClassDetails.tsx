@@ -25,15 +25,16 @@ import SearchIcon from '@mui/icons-material/Search';
 
 // import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ArrowDropDownSharpIcon from '@mui/icons-material/ArrowDropDownSharp';
-import { debounce } from 'lodash';
 import SortingModal from '../components/SortingModal';
+import { Student } from '../utils/Interfaces';
+import { debounce } from '../utils/Helper';
 export default function MyClassDetails() {
   // dependancies
   const { t } = useTranslation();
   const theme = useTheme<any>();
 
   // state declaration
-  const [classData, setClassData] = React.useState<(typeof classData)[]>([]);
+  const [classData, setClassData] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [limit, setLimit] = React.useState(10);
   const [searchWord, setSearchWord] = React.useState('');
@@ -281,7 +282,7 @@ export default function MyClassDetails() {
       </Stack>
       {/*------------------student list */}
       <Stack>
-        {classData?.map((student, i) => {
+        {classData?.map((student: Student, i: number) => {
           const word = student.name;
           const firstLetter = word.charAt(0);
           const firstLetterCap = firstLetter.toUpperCase();
@@ -299,6 +300,7 @@ export default function MyClassDetails() {
             </div>
           );
         })}
+        ;
       </Stack>
     </>
   );

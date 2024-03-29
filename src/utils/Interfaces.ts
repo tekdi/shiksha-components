@@ -70,3 +70,10 @@ export interface UserData {
   email: string;
   dob?: string;
 }
+
+export interface Student {
+  name: string;
+  attendance_percentage: number;
+  label1: string;
+  label2: string;
+}

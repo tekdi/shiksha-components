@@ -40,3 +40,21 @@ export const formatDate = (dateString: string) => {
   const month = MONTHS[parseInt(monthIndex, 10) - 1];
   return `${day} ${month}, ${year}`;
 };
+
+// debounce function
+export const debounce = <T extends (...args: any[]) => any>(
+  func: T,
+  wait: number,
+  immediate?: boolean
+) => {
+  let timeout: ReturnType<typeof setTimeout> | undefined;
+  return function (this: ThisParameterType<T>, ...args: Parameters<T>) {
+    const context = this;
+    clearTimeout(timeout!);
+    if (immediate && !timeout) func.apply(context, args);
+    timeout = setTimeout(() => {
+      timeout = undefined;
+      if (!immediate) func.apply(context, args);
+    }, wait);
+  };
+};

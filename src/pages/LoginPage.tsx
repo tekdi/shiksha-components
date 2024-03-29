@@ -73,7 +73,7 @@ const LoginPage = () => {
       console.log(response);
       if (response) {
         const token = response?.access_token;
-      
+
         localStorage.setItem('token', token);
         const userResponse = await getUserId();
         localStorage.setItem('userId', userResponse?.userId);

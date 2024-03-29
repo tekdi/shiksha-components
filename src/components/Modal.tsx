@@ -76,7 +76,8 @@ const ModalComponent: React.FC<ModalProps> = ({
             width: '95%', // Adjust width for smaller screens
             padding: '15px' // Adjust padding for smaller screens
           }
-        }}>
+        }}
+      >
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Typography variant="h4" fontSize="16px" fontWeight="500" m={0}>
             {heading}

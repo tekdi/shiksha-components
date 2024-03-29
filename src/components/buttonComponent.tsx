@@ -19,7 +19,8 @@ export default function ButtonFunctional({ handleClickButton, buttonName }: Butt
         height: '40px',
         marginTop: '20px'
       }}
-      onClick={handleClickButton}>
+      onClick={handleClickButton}
+    >
       {buttonName}
     </Button>
   );

@@ -5,7 +5,7 @@ import { useTheme } from '@mui/material/styles';
 interface StudentsStatsListProps {
   name: string;
   label1: string;
-  value1: string;
+  value1: number;
   label2: string;
   value2: number;
 }
@@ -36,7 +36,8 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
               color={theme.palette.text.primary}
               fontSize="0.875rem"
               fontWeight="400"
-              lineHeight="1.25rem">
+              lineHeight="1.25rem"
+            >
               <Typography m={0}>{name}</Typography>
             </Link>
           </Grid>
@@ -47,7 +48,8 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
               fontWeight="bold"
               lineHeight="1.5rem"
               color={theme.palette.text.primary}
-              textAlign="end">
+              textAlign="end"
+            >
               {value1}
             </Typography>
             <Typography
@@ -56,7 +58,8 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
               fontWeight="500"
               lineHeight="1rem"
               color={theme.palette.warning.main}
-              textAlign="end">
+              textAlign="end"
+            >
               Attendance
             </Typography>
           </Grid>

@@ -68,7 +68,8 @@ const SortingModal: React.FC<sortCardProps> = ({
         heading={'Sort By'}
         handleApplySort={handleApplySort}
         // SubHeading={"Sort"}
-        btnText="apply">
+        btnText="apply"
+      >
         <Box>
           <Divider
             style={{
@@ -82,7 +83,8 @@ const SortingModal: React.FC<sortCardProps> = ({
             <FormControl>
               <FormLabel
                 id="demo-controlled-radio-buttons-group"
-                style={{ color: theme.palette.warning['400'] }}>
+                style={{ color: theme.palette.warning['400'] }}
+              >
                 {t('COMMON.NAMES')}
               </FormLabel>
 
@@ -90,7 +92,8 @@ const SortingModal: React.FC<sortCardProps> = ({
                 aria-labelledby="demo-controlled-radio-buttons-group"
                 name="controlled-radio-buttons-group"
                 value={sortByName}
-                onChange={handleChangeNames}>
+                onChange={handleChangeNames}
+              >
                 <FormControlLabel
                   value="asc"
                   control={<Radio sx={{ ml: '300px' }} />}
@@ -113,7 +116,8 @@ const SortingModal: React.FC<sortCardProps> = ({
             <FormControl>
               <FormLabel
                 id="demo-controlled-radio-buttons-group"
-                style={{ color: theme.palette.warning['400'] }}>
+                style={{ color: theme.palette.warning['400'] }}
+              >
                 {t('COMMON.ATTENDANCE')}
               </FormLabel>
 
@@ -121,7 +125,8 @@ const SortingModal: React.FC<sortCardProps> = ({
                 aria-labelledby="demo-controlled-radio-buttons-group"
                 name="controlled-radio-buttons-group"
                 value={sortByAttendance}
-                onChange={handleChangeAttendance}>
+                onChange={handleChangeAttendance}
+              >
                 <FormControlLabel
                   value="asc"
                   control={<Radio sx={{ ml: '270px' }} />}
