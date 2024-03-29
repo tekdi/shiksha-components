@@ -21,6 +21,7 @@
     "TEST_REPORT": "Test Report",
     "BASIC_DETAILS": "Basic Details",
     "DOB":"Date of Birth",
+    "LOGOUT":"Log out",
     "OVERALL_ATTENDANCE":"Overall Attendance"
   },
   "LOGIN_PAGE": {
