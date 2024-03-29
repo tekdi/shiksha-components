@@ -20,7 +20,8 @@
     "ATTENDANCE_REPORT": "उपस्थिति विवरण",
     "TEST_REPORT": "जाँच रिपोर्ट",
     "BASIC_DETAILS": "बेसिक विवरण",
-    "DOB": "जन्म की तारीख"
+    "DOB": "जन्म की तारीख",
+    "OVERALL_ATTENDANCE": "समग्र उपस्थिति"
   },
   "LOGIN_PAGE": {
     "USERNAME": "उपयोगकर्ता नाम",
