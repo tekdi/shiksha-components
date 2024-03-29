@@ -20,10 +20,11 @@ import CloseIcon from '@mui/icons-material/Close';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import { getUser, editEditUser } from '../services/profileService.ts';
 import { useTheme } from '@mui/material/styles';
-import default_user from '/default_user.png';
+import defaultUser from '/default_user.png';
 import { decodeToken } from '../utils/Helper';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { UserData } from '../utils/Interfaces.ts';
+import Loader from '../components/Loader.tsx';
 
 const Profile = () => {
 
@@ -76,11 +77,13 @@ const Profile = () => {
   const options = ['Option 1', 'Option 2'];
   const [value, setValue] = React.useState<string | null>(options[0]);
   const [inputValue, setInputValue] = React.useState('');
+  const [loading, setLoading] = useState(false);
+
   const backButtonEvent = () => {
         window.history.back();
    };
   const handleUpdateClick = async () => {
-    try {
+ try {
       const userDetails = {
         userData: {
           name: updatedName ?? userData?.name,
@@ -92,9 +95,18 @@ const Profile = () => {
       const userId = localStorage.getItem('userId');
       if (userId) {
         const response = await editEditUser(userId, userDetails);
-      }
+         }
+         setOpen(false);
+        // setLoading(true);
+
+
     } catch (error) {
+     // setLoading(false);
+
       console.log(error);
+    }
+    finally{
+     // setLoading(false)
     }
   };
   const handleFieldChange = (fieldId: string, value: string) => {
@@ -175,7 +187,7 @@ const Profile = () => {
           display="flex"
           flexDirection="row"
         >
-          <img src={default_user} alt="user" style={{ margin: '2px' }} />
+          <img src={defaultUser} alt="user" style={{ margin: '2px' }} />
           <Box>
             <Typography
               variant="h2"
@@ -436,7 +448,7 @@ const Profile = () => {
                 display="flex"
                 flexDirection="column"
               >
-                <img src={default_user} alt="user" />
+                <img src={defaultUser} alt="user" />
                 <Box>
                 
 
@@ -549,6 +561,7 @@ const Profile = () => {
             </Box>
           </Box>
         </Modal>
+
       </Box>
     </Box>
   );
