@@ -1,15 +1,24 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Card, CardContent, Color, Stack, Typography } from '@mui/material';
+import {
+  Box,
+  Card,
+  CardContent,
+  FormControl,
+  MenuItem,
+  Select,
+  Stack,
+  Typography
+} from '@mui/material';
 import { ArrowBack as ArrowBackIcon, East as EastIcon } from '@mui/icons-material';
 import { useTheme, Theme } from '@mui/material/styles';
 import StudentStatsCard from '../components/StudentStatsCard';
 import Header from '../components/Header';
 import CustomSelect from '../components/CustomSelect';
 import { getUser } from '../services/profileService';
-import { decodeToken } from '../utils/Helper';
 import { useTranslation } from 'react-i18next';
 import { UserData } from '../utils/Interfaces';
+import Divider from '@mui/material/Divider';
 
 const StudentDetails: React.FC = () => {
   const { t } = useTranslation();
@@ -33,6 +42,26 @@ const StudentDetails: React.FC = () => {
     };
     fetchUserDetails();
   }, []);
+
+  const componentData = [
+    { title: t('Overall'), linkText: '79%' },
+    {
+      title: t('Mathematics'),
+      linkText: '79%'
+    },
+    {
+      title: t('English'),
+      linkText: '81%'
+    },
+    {
+      title: t('Home Science'),
+      linkText: '74%'
+    },
+    {
+      title: t('Hindi'),
+      linkText: '66%'
+    }
+  ];
 
   const renderStatsCard = (label1: string, value1: string) => (
     <StudentStatsCard label1={label1} value1={value1} label2={false} value2="5" />
@@ -59,6 +88,50 @@ const StudentDetails: React.FC = () => {
         </Stack>
       </Box>
       <Box padding={2}>
+        <Box display={'flex'} sx={{ justifyContent: 'space-between' }}>
+          {' '}
+          <Typography
+            sx={{
+              color: (theme.palette.warning as any)['A200'],
+              fontFamily: theme.typography.fontFamily,
+              fontWeight: 500,
+              fontSize: '15px'
+            }}
+            variant="h6"
+            gutterBottom>
+            {t('COMMON.ATTENDANCE_REPORT')}
+          </Typography>
+          <Link to="/history">
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Typography
+                sx={{
+                  color: theme.palette.secondary.main,
+                  marginRight: '4px',
+                  fontSize: '14px'
+                }}
+                variant="h6"
+                gutterBottom>
+                {t('DASHBOARD.HISTORY')}
+              </Typography>
+              <EastIcon
+                fontSize="inherit"
+                sx={{ color: theme.palette.secondary.main, marginBottom: '5px' }}
+              />
+            </Box>
+          </Link>
+        </Box>
+        <Box>
+          <FormControl sx={{ m: 1, minWidth: 320, minHeight: 20 }}>
+            <Select sx={{ height: '32px' }} >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value={10}>Ten</MenuItem>
+              <MenuItem value={20}>Twenty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
         <Card
           sx={{
             bgcolor: theme.palette.secondary.light,
@@ -66,37 +139,7 @@ const StudentDetails: React.FC = () => {
             boxShadow: 'none'
           }}>
           <CardContent>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <Typography
-                sx={{
-                  color: (theme.palette.warning as any)['A200'],
-                  fontFamily: theme.typography.fontFamily,
-                  fontWeight: 500,
-                  fontSize: '15px'
-                }}
-                variant="h6"
-                gutterBottom>
-                {t('COMMON.ATTENDANCE_REPORT')}
-              </Typography>
-              <Link to="/history">
-                <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: '10px' }}>
-                  <Typography
-                    sx={{
-                      color: theme.palette.secondary.main,
-                      marginRight: '4px',
-                      fontSize: '14px'
-                    }}
-                    variant="h6"
-                    gutterBottom>
-                    {t('DASHBOARD.HISTORY')}
-                  </Typography>
-                  <EastIcon
-                    fontSize="inherit"
-                    sx={{ color: theme.palette.secondary.main, marginBottom: '5px' }}
-                  />
-                </Box>
-              </Link>
-            </Box>
+            <Typography> {t('COMMON.OVERALL_ATTENDANCE')}</Typography>
             <Typography
               sx={{ color: theme.palette.text.secondary, fontSize: '14px', fontWeight: 500 }}
               variant="h6"
@@ -136,13 +179,35 @@ const StudentDetails: React.FC = () => {
               {t('COMMON.TEST_REPORT')}
             </Typography>
             <CustomSelect />
-            <Box
-              sx={{ bgcolor: 'transparent', justifyContent: 'center' }}
-              display="flex"
-              gap={1}
-              alignItems="center">
-              {renderStatsCard('Status', 'Passed')}
-              {renderStatsCard('Score', '82%')}
+            <Box>
+              {componentData.map((data, index) => (
+                <React.Fragment key={index}>
+                  <Box display="flex" justifyContent="space-between" sx={{ marginBottom: '15px' }}>
+                    <Typography
+                      sx={{
+                        fontFamily: theme.typography.fontFamily,
+                        fontWeight: 500,
+                        fontSize: '15px'
+                      }}
+                      variant="h6"
+                      gutterBottom>
+                      {data.title}
+                    </Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                      <Typography
+                        sx={{
+                          marginRight: '4px',
+                          fontSize: '14px'
+                        }}
+                        variant="h6"
+                        gutterBottom>
+                        {data.linkText}
+                      </Typography>
+                    </Box>
+                  </Box>
+                  {index === 0 && <Divider sx={{ marginBottom: '20px' }} />}
+                </React.Fragment>
+              ))}{' '}
             </Box>
           </CardContent>
         </Card>
