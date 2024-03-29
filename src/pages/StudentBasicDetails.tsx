@@ -26,7 +26,6 @@ const StudentDetails: React.FC = () => {
       try {
         if (userId) {
           const response = await getUser(userId);
-          console.log('response', response);
           const userDataFromJson: UserData | undefined = response?.result?.userData;
           if (userDataFromJson) {
             setUserData(userDataFromJson);
