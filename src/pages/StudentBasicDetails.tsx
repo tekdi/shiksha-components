@@ -11,10 +11,6 @@ import { decodeToken } from '../utils/Helper';
 import { useTranslation } from 'react-i18next';
 import { UserData } from '../utils/Interfaces';
 
-interface UserData {
-  dob: string;
-}
-
 const StudentDetails: React.FC = () => {
   const { t } = useTranslation();
   const theme: Theme = useTheme();

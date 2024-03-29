@@ -4,18 +4,10 @@ import {
   Button,
   Card,
   CardContent,
-  Divider,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
   Grid,
   IconButton,
   InputBase,
-  Pagination,
   Paper,
-  Radio,
-  RadioGroup,
-  ThemeProvider,
   Typography
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
@@ -27,7 +19,6 @@ import StudentsStatsList from '../components/StudentsStatsList';
 import StudentStatsCard from '../components/StudentStatsCard';
 import EastIcon from '@mui/icons-material/East';
 import { Link } from 'react-router-dom';
-import ModalComponent from '../components/Modal';
 import { getMyClassDetails } from '../services/MyClassDetailsService';
 import { useTranslation } from 'react-i18next';
 import SearchIcon from '@mui/icons-material/Search';
@@ -47,11 +38,6 @@ export default function MyClassDetails() {
   const [limit, setLimit] = React.useState(10);
   const [searchWord, setSearchWord] = React.useState('');
   const [modalOpen, setModalOpen] = React.useState(false);
-  const [nestedModalOpen, setNestedModalOpen] = React.useState(false);
-  const [open, setOpen] = React.useState(false);
-  const [sortByName, setsortByName] = React.useState('');
-  const [sortByAttendance, setsortByAttendance] = React.useState('');
-  const [valueClassMissed, setValueClassMissed] = React.useState('lowToHigh');
 
   // functions
 
