@@ -26,10 +26,8 @@ function AllRoutes(): JSX.Element {
             <Route path="/user-attendance-history" element={<UserAttendanceHistory />} />
             <Route path="/logout" element={<Logout />} />
           </Route>
-        </Routes>
-        <Routes>
           <Route path="/" element={<LoginPage />} />
-          <Route path="page_not_found" element={<PageNotFound/>}/>
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Suspense>
     </Router>
