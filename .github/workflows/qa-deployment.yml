@@ -1,43 +1,22 @@
-name: Deploy to Pratham-QA Server
-
+name: Deploy to QA
 on:
   push:
     branches:
       - main
-
 jobs:
-  build_and_deploy:
+   deploy:
     runs-on: ubuntu-latest
-
+    timeout-minutes: 15
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Install dependencies and build
-        run: |
-          npm install
-          npm run build
-
-      - name: Show PWD
-        run: |
-          echo "Current Working Directory:"
-          pwd
-
-      - name: List Contents
-        run: |
-          echo "Contents of the current directory (in reverse order):"
-          ls -lr
-
-      - name: List Contents of dist directory
-        run: |
-          echo "Contents of the dist directory (in reverse order):"
-          ls -lr dist
-
-      - name: Copy backend code to remote server
-        uses: appleboy/scp-action@master
-        with:
+    - 
+      name: Deploy Stack
+      uses: appleboy/ssh-action@master
+      with:
           host: ${{ secrets.HOST_NAME_PRATHAM_QA }}
           username: ${{ secrets.USERNAME_PRATHAM_QA }}
           key: ${{ secrets.EC2_SSH_KEY_PRATHAM_QA }}
-          source: "./dist/"  # Modify this to the path of your backend code
-          target: "/var/www/qa.prathamteacherapp.tekdinext.com/public/"
+          port: ${{ secrets.PORT_PRATHAM_QA }}
+          script: |    
+               cd ${{ secrets.TARGET_DIR_PRATHAM_QA }}
+               ./deploy.sh
+

@@ -23,15 +23,10 @@ import { useTheme } from '@mui/material/styles';
 import default_user from '/default_user.png';
 import { decodeToken } from '../utils/Helper';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { UserData } from '../utils/Interfaces.ts';
+
 const Profile = () => {
-  interface UserData {
-    id: number;
-    name: string;
-    role: string;
-    district: string;
-    state: string;
-    email: string;
-  }
+
   interface CustomField {
     fieldId: string;
     label: string;

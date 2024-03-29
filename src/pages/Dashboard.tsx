@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 import AddIcon from '@mui/icons-material/Add';
 import CohortCard from '../components/CohortCard';
 import TodayIcon from '@mui/icons-material/Today';
-
+import { useNavigate } from 'react-router-dom';
 import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
@@ -32,19 +32,24 @@ interface DashboardProps {
   //   buttonText: string;
 }
 
+interface DataItem {
+  name: string;
+  // Add other properties as needed
+}
+
 let userId: string = '';
 let contextId: string = '';
 
 const Dashboard: React.FC<DashboardProps> = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
-  const [selfAttendanceDetails, setSelfAttendanceDetails] = React.useState(null);
-  const [cohorts, setCohorts] = React.useState(null);
+  const [cohorts, setCohorts] = React.useState<string[] | null>(null);
   const [openMarkAttendance, setOpenMarkAttendance] = React.useState(false);
   const handleModalToggle = () => setOpen(!open);
   const handleMarkAttendanceModal = () => setOpenMarkAttendance(!openMarkAttendance);
   const [classes, setClasses] = React.useState('');
-  const limit = '';
+  const limit = 'string';
   const page = 0;
   const filters = {};
   const userAttendance = [{ userId: 'string', attendance: 'present' }];
@@ -55,7 +60,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
     const fetchCohortList = async () => {
       try {
         const resp = await cohortList({ limit, page, filters });
-        const extractedNames = resp?.data?.map((item) => item.name).filter((name) => name);
+        const extractedNames = resp?.data?.map((item: DataItem) => item.name).filter((name:string) => name);
         console.log(`response cohort list`, extractedNames);
         setCohorts(extractedNames);
       } catch (error) {
@@ -81,7 +86,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
 
   const theme = useTheme<any>();
 
-  React.useEffect(() => {}, []);
+  React.useEffect(() => { }, []);
 
   const handleChange = (event: SelectChangeEvent) => {
     setClasses(event.target.value as string);
@@ -119,6 +124,9 @@ const Dashboard: React.FC<DashboardProps> = () => {
   const submitBulkAttendanceAction = (status: string) => {
     console.log(status);
   };
+  const viewAttendanceHistory = () => {
+    navigate('/user-attendance-history');
+  }
 
   return (
     <Box minHeight="100vh" textAlign={'center'}>
@@ -149,6 +157,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
             <Button
               variant="text"
               sx={{ color: theme.palette.primary.main, padding: theme.spacing(1) }}
+              onClick={viewAttendanceHistory}
             >
               {t('DASHBOARD.HISTORY')}
             </Button>
@@ -209,7 +218,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
                   <FormControl fullWidth>
                     <InputLabel>Class</InputLabel>
                     <Select value={classes} label="Class" onChange={handleChange}>
-                      {cohorts?.map((item, index) => (
+                      {cohorts?.map((item : string, index : number) => (
                         <MenuItem key={index} value={item}>
                           {item}
                         </MenuItem>
