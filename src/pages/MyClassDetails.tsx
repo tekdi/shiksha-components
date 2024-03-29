@@ -1,19 +1,9 @@
 import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import InputBase from '@mui/material/InputBase';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import DirectionsIcon from '@mui/icons-material/Directions';
 import {
   Box,
-  Button,
   Card,
   CardContent,
-  ThemeProvider,
   Typography,
-  createMuiTheme
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import Header from '../components/Header';
@@ -25,10 +15,10 @@ import SearchSortBar from '../components/SearchSortBar';
 import StudentStatsCard from '../components/StudentStatsCard';
 import EastIcon from '@mui/icons-material/East';
 import { Link } from 'react-router-dom';
-import ModalComponent from '../components/Modal';
 import { getClassDetails } from '../services/MyClassDetailsService';
+
 export default function MyClassDetails() {
-  const [classData, setClassData] = React.useState<(typeof classData)[]>([]);
+  const [classData, setClassData] = React.useState<any[]>([]);
   const handleSecondClickButton = () => {
     alert(' Mark Today’s Attendance');
   };

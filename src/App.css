@@ -40,8 +40,8 @@
 }
 
 .react-calendar {
-  max-width: 500px;
-}
+  width: 100% !important;
+ }
 
 .react-calendar_month-viewdays_day {
   margin: 12px !important;
@@ -73,15 +73,14 @@
 
 .tile-day {
   border: 1px solid #b2a9b5 !important;
-  height: 70px !important;
+  height: 90px !important;
   border-radius: 5px;
   margin-bottom: 5px !important;
   /* margin-left: 2px !important; */
 }
 
 .calender-body {
-  background-color: #e7f3f8 !important;
-  width: 400px !important;
+  background-color: #E7F3F8 !important;
 }
 
 .react-calendar__tile--active {

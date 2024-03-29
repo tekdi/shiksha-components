@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Card, CardContent, Stack, Typography } from '@mui/material';
+import { Box, Card, CardContent, Color, Stack, Typography } from '@mui/material';
 import { ArrowBack as ArrowBackIcon, East as EastIcon } from '@mui/icons-material';
 import { useTheme, Theme } from '@mui/material/styles';
 import StudentStatsCard from '../components/StudentStatsCard';
@@ -9,6 +9,7 @@ import CustomSelect from '../components/CustomSelect';
 import { getUser } from '../services/profileService';
 import { decodeToken } from '../utils/Helper';
 import { useTranslation } from 'react-i18next';
+import { UserData } from '../utils/Interfaces';
 
 interface UserData {
   dob: string;
