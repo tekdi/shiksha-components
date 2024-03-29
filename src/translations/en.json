@@ -19,7 +19,8 @@
     "ATTENDANCE": "Attendance",
     "ATTENDANCE_REPORT": "Attendance Report",
     "TEST_REPORT": "Test Report",
-    "BASIC_DETAILS": "Basic Details"
+    "BASIC_DETAILS": "Basic Details",
+    "DOB":"Date of Birth"
   },
   "LOGIN_PAGE": {
     "USERNAME": "Username",
