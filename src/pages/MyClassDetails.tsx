@@ -24,7 +24,6 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Stack } from '@mui/system';
 import ButtonFunctional from '../components/buttonComponent';
 import StudentsStatsList from '../components/StudentsStatsList';
-import SearchSortBar from '../components/SearchSortBar';
 import StudentStatsCard from '../components/StudentStatsCard';
 import EastIcon from '@mui/icons-material/East';
 import { Link } from 'react-router-dom';
@@ -36,6 +35,7 @@ import SearchIcon from '@mui/icons-material/Search';
 // import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ArrowDropDownSharpIcon from '@mui/icons-material/ArrowDropDownSharp';
 import { debounce } from 'lodash';
+import SortingModal from '../components/SortingModal';
 export default function MyClassDetails() {
   // dependancies
   const { t } = useTranslation();
@@ -49,8 +49,8 @@ export default function MyClassDetails() {
   const [modalOpen, setModalOpen] = React.useState(false);
   const [nestedModalOpen, setNestedModalOpen] = React.useState(false);
   const [open, setOpen] = React.useState(false);
-  const [valueName, setValueName] = React.useState('asc');
-  const [valueAttendance, setValueAttendance] = React.useState('asc');
+  const [sortByName, setsortByName] = React.useState('');
+  const [sortByAttendance, setsortByAttendance] = React.useState('');
   const [valueClassMissed, setValueClassMissed] = React.useState('lowToHigh');
 
   // functions
@@ -59,23 +59,15 @@ export default function MyClassDetails() {
     let filter = {
       search: searchWord ? searchWord : ''
     };
-    getAllCohortDetails(limit, page, filter);
+    getCohortDetails(limit, page, filter);
   }, []);
-
-  const handleChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value);
-    let filter = {
-      search: searchWord ? searchWord : ''
-    };
-    getAllCohortDetails(limit, value, filter);
-  };
 
   const handleSecondClickButton = () => {
     console.log(' Mark Today’s Attendance');
   };
 
   // get all student list of cohort  or class details
-  const getAllCohortDetails = async (limitvalue: number, value: number, filter: object) => {
+  const getCohortDetails = async (limitvalue: number, value: number, filter: object) => {
     try {
       const contextId = 'e371526c-28f9-4646-b19a-a54d5f191ad2';
       const report = true;
@@ -95,19 +87,6 @@ export default function MyClassDetails() {
     } catch (error) {
       console.error('Error fetching  cohort list:', error);
     }
-  };
-
-  // handle changes names from sorting
-  const handleChangeNames = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValueName(event.target.value);
-  };
-
-  // handle chnage attandance in sorting
-  const handleChangeAttendance = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValueAttendance(event.target.value);
-  };
-  const handleChangeClassMissed = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValueClassMissed(event.target.value);
   };
 
   // open modal of sort
@@ -131,25 +110,25 @@ export default function MyClassDetails() {
     let filter = {
       search: value ? value : searchWord
     };
-    getAllCohortDetails(limit, page, filter);
+    getCohortDetails(limit, page, filter);
   }, 200);
 
   const handleSearchSubmit = () => {
     let filter = {
       search: searchWord ? searchWord : ''
     };
-    getAllCohortDetails(limit, page, filter);
+    getCohortDetails(limit, page, filter);
   };
 
   // handle sorting data
-  const handleSorting = () => {
+  const handleSorting = (sortByName: string, sortByAttendance: string) => {
     handleCloseModal();
     let filter = {
-      nameOrder: valueName,
-      percentageOrder: valueAttendance
+      nameOrder: sortByName,
+      percentageOrder: sortByAttendance
     };
 
-    getAllCohortDetails(limit, page, filter);
+    getCohortDetails(limit, page, filter);
   };
 
   return (
@@ -222,27 +201,33 @@ export default function MyClassDetails() {
               </Box>
             </Box>
 
-            <Box
+            {/* <Box
               sx={{
                 bgcolor: 'trasparent',
-                justifyContent: 'center'
+                justifyContent: 'space-evenly'
               }}
               display="flex"
               alignItems="center"
-              gap={1}>
-              <StudentStatsCard
-                label1="Attendance"
-                value1="78%" // Sample attendance data, replace with actual data
-                label2={false}
-                value2="5" // Sample late arrivals data, replace with actual data
-              />
-              <StudentStatsCard
-                label1="Classes Missed"
-                value1="2" // Sample attendance data, replace with actual data
-                label2={false}
-                value2="5" // Sample late arrivals data, replace with actual data
-              />
-            </Box>
+              gap={1}> */}
+            <Grid container display={'flex'} justifyContent={'space-between'}>
+              <Grid item xs={5}>
+                <StudentStatsCard
+                  label1="Attendance"
+                  value1="78%" // Sample attendance data, replace with actual data
+                  label2={false}
+                  value2="5" // Sample late arrivals data, replace with actual data
+                />
+              </Grid>
+              <Grid item xs={5}>
+                <StudentStatsCard
+                  label1="Classes Missed"
+                  value1="2" // Sample attendance data, replace with actual data
+                  label2={false}
+                  value2="5" // Sample late arrivals data, replace with actual data
+                />
+              </Grid>
+            </Grid>
+            {/* </Box> */}
           </CardContent>
         </Card>
         {/*----------------------------search and Sort---------------------------------------*/}
@@ -254,7 +239,7 @@ export default function MyClassDetails() {
           // alignItems={'center'}
           boxShadow={'none'}>
           <Grid container alignItems="center" display={'flex'} justifyContent="space-between">
-            <Grid item xs={6}>
+            <Grid item xs={8}>
               <Paper
                 component="form"
                 sx={{
@@ -267,9 +252,9 @@ export default function MyClassDetails() {
                   boxShadow: 'none'
                 }}>
                 <InputBase
-                  sx={{ ml: 1, flex: 1, mb: '0' }}
+                  sx={{ ml: 3, flex: 1, mb: '0', fontSize: '14px' }}
                   placeholder={t('COMMON.SEARCH_STUDENT') + '..'}
-                  inputProps={{ 'aria-label': 'search google maps' }}
+                  inputProps={{ 'aria-label': 'search student' }}
                   onChange={handleSearch}
                 />
                 <IconButton
@@ -281,144 +266,32 @@ export default function MyClassDetails() {
                 </IconButton>
               </Paper>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={4} display={'flex'} justifyContent={'flex-end'}>
               <Button
                 onClick={handleOpenModal}
                 sx={{
                   color: theme.palette.warning.A200,
                   height: 'auto',
                   width: 'auto',
-                  padding: '6px, 8px, 6px, 16px'
+                  borderRadius: '10px',
+                  fontSize: '14px'
                 }}
                 endIcon={<ArrowDropDownSharpIcon />}
                 size="small"
                 variant="outlined">
-                {t('COMMON.SORT_BY')}
+                {/* {t('COMMON.SORT_BY')} */}
+                {t('COMMON.SORT_BY').length > 7
+                  ? `${t('COMMON.SORT_BY').substring(0, 6)}...`
+                  : t('COMMON.SORT_BY')}
               </Button>
             </Grid>
           </Grid>
         </Box>
-
-        {/* ------------------modal for sorting ------------------- */}
-        <ModalComponent
-          open={modalOpen}
-          onClose={handleCloseModal}
-          heading={'Sort By'}
-          handleApplySort={handleSorting}
-          // SubHeading={"Sort"}
-          btnText="apply">
-          <Box>
-            <Divider
-              style={{
-                backgroundColor: theme.palette.warning['400'],
-                marginBottom: '10px',
-                marginTop: '15px'
-              }}
-            />
-
-            <Box mt={2}>
-              <FormControl>
-                <FormLabel
-                  id="demo-controlled-radio-buttons-group"
-                  style={{ color: theme.palette.warning['400'] }}>
-                  {t('COMMON.NAMES')}
-                </FormLabel>
-
-                <RadioGroup
-                  aria-labelledby="demo-controlled-radio-buttons-group"
-                  name="controlled-radio-buttons-group"
-                  value={valueName}
-                  onChange={handleChangeNames}>
-                  <FormControlLabel
-                    value="asc"
-                    control={<Radio sx={{ ml: '300px' }} />}
-                    label="A to Z"
-                    labelPlacement="start"
-                    sx={{ fontWeight: '500', fontSize: '14px' }}
-                  />
-                  <FormControlLabel
-                    value="desc"
-                    labelPlacement="start"
-                    sx={{ fontWeight: '500', fontSize: '14px' }}
-                    control={<Radio sx={{ ml: '300px' }} />}
-                    label="Z to A"
-                  />
-                </RadioGroup>
-              </FormControl>
-            </Box>
-            <Box mt={2}>
-              {' '}
-              <FormControl>
-                <FormLabel
-                  id="demo-controlled-radio-buttons-group"
-                  style={{ color: theme.palette.warning['400'] }}>
-                  {t('COMMON.ATTENDANCE')}
-                </FormLabel>
-
-                <RadioGroup
-                  aria-labelledby="demo-controlled-radio-buttons-group"
-                  name="controlled-radio-buttons-group"
-                  value={valueAttendance}
-                  onChange={handleChangeAttendance}>
-                  <FormControlLabel
-                    value="asc"
-                    control={<Radio sx={{ ml: '270px' }} />}
-                    label={t('COMMON.LOW_TO_HIGH')}
-                    labelPlacement="start"
-                    sx={{ fontWeight: '500', fontSize: '14px', m: '0px' }}
-                  />
-                  <FormControlLabel
-                    value="desc"
-                    labelPlacement="start"
-                    sx={{ fontWeight: '500', fontSize: '14px', m: '0px' }}
-                    control={<Radio sx={{ ml: '270px' }} />}
-                    label={t('COMMON.HIGH_TO_LOW')}
-                  />
-                </RadioGroup>
-              </FormControl>
-            </Box>
-            {/* <Box mt={2}>
-              {' '}
-              <FormControl>
-                <FormLabel
-                  id="demo-controlled-radio-buttons-group"
-                  style={{ color: theme.palette.warning['400'] }}>
-                  {t('COMMON.CLASS_MISSED')}
-                </FormLabel>
-
-                <RadioGroup
-                  aria-labelledby="demo-controlled-radio-buttons-group"
-                  name="controlled-radio-buttons-group"
-                  value={valueClassMissed}
-                  onChange={handleChangeClassMissed}
-                  // style={{ flexDirection: "row" }}
-                >
-                  <FormControlLabel
-                    value="lowToHigh"
-                    control={<Radio sx={{ ml: '270px' }} />}
-                    label={t('COMMON.LOW_TO_HIGH')}
-                    labelPlacement="start"
-                    sx={{ fontWeight: '500', fontSize: '14px', m: '0px' }}
-                  />
-                  <FormControlLabel
-                    value="highToLow"
-                    labelPlacement="start"
-                    sx={{ fontWeight: '500', fontSize: '14px', m: '0px' }}
-                    control={<Radio sx={{ ml: '270px' }} />}
-                    label={t('COMMON.HIGH_TO_LOW')}
-                  />
-                </RadioGroup>
-              </FormControl>
-            </Box> */}
-            <Divider
-              style={{
-                backgroundColor: theme.palette.warning['400'],
-                marginBottom: '10px',
-                marginTop: '15px'
-              }}
-            />
-          </Box>
-        </ModalComponent>
+        <SortingModal
+          isModalOpen={modalOpen}
+          handleCloseModal={handleCloseModal}
+          handleSorting={handleSorting}
+        />
       </Stack>
       {/*------------------student list */}
       <Stack>
@@ -440,9 +313,6 @@ export default function MyClassDetails() {
             </div>
           );
         })}
-        <Box display={'flex'} justifyContent={'center'}>
-          <Pagination count={limit} page={page} onChange={handleChangePage} />
-        </Box>
       </Stack>
     </>
   );

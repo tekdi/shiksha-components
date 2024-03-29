@@ -28,89 +28,45 @@ import { useTranslation } from 'react-i18next';
 import { useTheme } from '@mui/material/styles';
 import shadows from '@mui/material/styles/shadows';
 
-export default function SearchSortBar() {
-  const [modalOpen, setModalOpen] = React.useState(false);
-  const [nestedModalOpen, setNestedModalOpen] = React.useState(false);
-  const [open, setOpen] = React.useState(false);
-  const [valueName, setValueName] = React.useState('female');
-  const [valueAttendance, setValueAttendance] = React.useState('lowToHigh');
-  const [valueClassMissed, setValueClassMissed] = React.useState('lowToHigh');
+interface sortCardProps {
+  handleSorting: (sortByName: string, sortByAttendance: string) => void;
+  handleCloseModal: () => void;
+  isModalOpen: boolean;
+}
+
+const SortingModal: React.FC<sortCardProps> = ({
+  handleSorting,
+  isModalOpen,
+  handleCloseModal
+}) => {
+  const [sortByName, setsortByName] = React.useState('');
+  const [sortByAttendance, setsortByAttendance] = React.useState('');
   const { t } = useTranslation();
   const theme = useTheme<any>();
 
+  // handle changes names from sorting
   const handleChangeNames = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValueName(event.target.value);
+    setsortByName(event.target.value);
   };
 
+  // handle chnage attandance in sorting
   const handleChangeAttendance = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValueAttendance(event.target.value);
-  };
-  const handleChangeClassMissed = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValueClassMissed(event.target.value);
-  };
-  const handleOpenModal = () => {
-    setModalOpen(true);
+    setsortByAttendance(event.target.value);
   };
 
-  const handleCloseModal = () => {
-    setModalOpen(false);
+  const handleApplySort = () => {
+    handleSorting(sortByName, sortByAttendance);
+    handleCloseModal();
   };
 
   return (
     <>
-      <Box
-        // display={'flex'}
-        mt={3}
-        mb={3}
-        // justifyContent={'space-between'}
-        // alignItems={'center'}
-        boxShadow={'none'}>
-        <Grid container alignItems="center" display={'flex'} justifyContent="space-between">
-          <Grid item xs={6}>
-            <Paper
-              component="form"
-              sx={{
-                // p: '2px 4px',
-                display: 'flex',
-                alignItems: 'center',
-                width: 'auto',
-                borderRadius: '100px',
-                background: theme.palette.warning.A700,
-                boxShadow: 'none'
-              }}>
-              <InputBase
-                sx={{ ml: 1, flex: 1, mb: '0' }}
-                placeholder={t('COMMON.SEARCH_STUDENT') + '..'}
-                inputProps={{ 'aria-label': 'search google maps' }}
-              />
-              <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
-                <SearchIcon />
-              </IconButton>
-            </Paper>
-          </Grid>
-          <Grid item xs={3}>
-            <Button
-              onClick={handleOpenModal}
-              sx={{
-                color: theme.palette.warning.A200,
-                height: 'auto',
-                width: 'auto',
-                padding: '6px, 8px, 6px, 16px'
-              }}
-              endIcon={<ArrowDropDownSharpIcon />}
-              size="small"
-              variant="outlined">
-              {t('COMMON.SORT_BY')}
-            </Button>
-          </Grid>
-        </Grid>
-      </Box>
-
       {/* ------------------modal for sorting ------------------- */}
       <ModalComponent
-        open={modalOpen}
+        open={isModalOpen}
         onClose={handleCloseModal}
         heading={'Sort By'}
+        handleApplySort={handleApplySort}
         // SubHeading={"Sort"}
         btnText="apply">
         <Box>
@@ -133,17 +89,17 @@ export default function SearchSortBar() {
               <RadioGroup
                 aria-labelledby="demo-controlled-radio-buttons-group"
                 name="controlled-radio-buttons-group"
-                value={valueName}
+                value={sortByName}
                 onChange={handleChangeNames}>
                 <FormControlLabel
-                  value="aToz"
+                  value="asc"
                   control={<Radio sx={{ ml: '300px' }} />}
                   label="A to Z"
                   labelPlacement="start"
                   sx={{ fontWeight: '500', fontSize: '14px' }}
                 />
                 <FormControlLabel
-                  value="zToA"
+                  value="desc"
                   labelPlacement="start"
                   sx={{ fontWeight: '500', fontSize: '14px' }}
                   control={<Radio sx={{ ml: '300px' }} />}
@@ -164,17 +120,17 @@ export default function SearchSortBar() {
               <RadioGroup
                 aria-labelledby="demo-controlled-radio-buttons-group"
                 name="controlled-radio-buttons-group"
-                value={valueAttendance}
+                value={sortByAttendance}
                 onChange={handleChangeAttendance}>
                 <FormControlLabel
-                  value="lowToHigh"
+                  value="asc"
                   control={<Radio sx={{ ml: '270px' }} />}
                   label={t('COMMON.LOW_TO_HIGH')}
                   labelPlacement="start"
                   sx={{ fontWeight: '500', fontSize: '14px', m: '0px' }}
                 />
                 <FormControlLabel
-                  value="highToLow"
+                  value="desc"
                   labelPlacement="start"
                   sx={{ fontWeight: '500', fontSize: '14px', m: '0px' }}
                   control={<Radio sx={{ ml: '270px' }} />}
@@ -183,39 +139,39 @@ export default function SearchSortBar() {
               </RadioGroup>
             </FormControl>
           </Box>
-          <Box mt={2}>
-            {' '}
-            <FormControl>
-              <FormLabel
-                id="demo-controlled-radio-buttons-group"
-                style={{ color: theme.palette.warning['400'] }}>
-                {t('COMMON.CLASS_MISSED')}
-              </FormLabel>
+          {/* <Box mt={2}>
+              {' '}
+              <FormControl>
+                <FormLabel
+                  id="demo-controlled-radio-buttons-group"
+                  style={{ color: theme.palette.warning['400'] }}>
+                  {t('COMMON.CLASS_MISSED')}
+                </FormLabel>
 
-              <RadioGroup
-                aria-labelledby="demo-controlled-radio-buttons-group"
-                name="controlled-radio-buttons-group"
-                value={valueClassMissed}
-                onChange={handleChangeClassMissed}
-                // style={{ flexDirection: "row" }}
-              >
-                <FormControlLabel
-                  value="lowToHigh"
-                  control={<Radio sx={{ ml: '270px' }} />}
-                  label={t('COMMON.LOW_TO_HIGH')}
-                  labelPlacement="start"
-                  sx={{ fontWeight: '500', fontSize: '14px', m: '0px' }}
-                />
-                <FormControlLabel
-                  value="highToLow"
-                  labelPlacement="start"
-                  sx={{ fontWeight: '500', fontSize: '14px', m: '0px' }}
-                  control={<Radio sx={{ ml: '270px' }} />}
-                  label={t('COMMON.HIGH_TO_LOW')}
-                />
-              </RadioGroup>
-            </FormControl>
-          </Box>
+                <RadioGroup
+                  aria-labelledby="demo-controlled-radio-buttons-group"
+                  name="controlled-radio-buttons-group"
+                  value={valueClassMissed}
+                  onChange={handleChangeClassMissed}
+                  // style={{ flexDirection: "row" }}
+                >
+                  <FormControlLabel
+                    value="lowToHigh"
+                    control={<Radio sx={{ ml: '270px' }} />}
+                    label={t('COMMON.LOW_TO_HIGH')}
+                    labelPlacement="start"
+                    sx={{ fontWeight: '500', fontSize: '14px', m: '0px' }}
+                  />
+                  <FormControlLabel
+                    value="highToLow"
+                    labelPlacement="start"
+                    sx={{ fontWeight: '500', fontSize: '14px', m: '0px' }}
+                    control={<Radio sx={{ ml: '270px' }} />}
+                    label={t('COMMON.HIGH_TO_LOW')}
+                  />
+                </RadioGroup>
+              </FormControl>
+            </Box> */}
           <Divider
             style={{
               backgroundColor: theme.palette.warning['400'],
@@ -227,4 +183,6 @@ export default function SearchSortBar() {
       </ModalComponent>
     </>
   );
-}
+};
+
+export default SortingModal;

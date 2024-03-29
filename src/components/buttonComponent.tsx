@@ -11,6 +11,7 @@ export default function ButtonFunctional({ handleClickButton, buttonName }: Butt
     <Button
       variant="contained"
       style={{
+        boxShadow: 'none',
         background: theme.components.MuiButton.styleOverrides.containedSecondary.backgroundColor,
         color: theme.components.MuiButton.styleOverrides.root.color,
         borderRadius: '100px',
@@ -18,8 +19,7 @@ export default function ButtonFunctional({ handleClickButton, buttonName }: Butt
         height: '40px',
         marginTop: '20px'
       }}
-      onClick={handleClickButton}
-    >
+      onClick={handleClickButton}>
       {buttonName}
     </Button>
   );
