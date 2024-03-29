@@ -18,11 +18,13 @@
     "TEST_REPORT": "चाचणी अहवाल",
     "BASIC_DETAILS": "मूलभूत तपशील",
     "DOB": "जन्मतारीख",
+    "LOGOUT":"बाहेर पडणे",
+
     "OVERALL_ATTENDANCE": "एकूण उपस्थिती"
   },
   "LOGIN_PAGE": {
     "USERNAME": "वापरकर्तानाव",
-    "PASSWORD": "संकेतशब्द",
+    "PASSWORD": "पासवर्ड",
     "LOGIN": "लॉग इन करा",
     "USERNAME_PLACEHOLDER": "वापरकर्तानाव प्रविष्ट करा",
     "PASSWORD_PLACEHOLDER": "पासवर्ड टाका"
