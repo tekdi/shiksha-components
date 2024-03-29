@@ -384,7 +384,7 @@ const Profile = () => {
 
 
             <StudentStatsCard
-              label1="Test Score"
+              label1={t('PROFILE.INTERVIEW_TEST_SCORES')}
               value1="82%"
               label2={true}
               value2="02/1/25"
