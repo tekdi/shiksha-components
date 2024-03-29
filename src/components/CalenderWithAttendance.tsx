@@ -1,8 +1,13 @@
-import React, { useState, useMemo, useEffect } from "react";
-import PropTypes from "prop-types";
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
-import { CheckCircleOutlineOutlined, CancelOutlined, RemoveCircleOutline, RemoveOutlined } from '@mui/icons-material';
+import React, { useState, useMemo, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import {
+  CheckCircleOutlineOutlined,
+  CancelOutlined,
+  RemoveCircleOutline,
+  RemoveOutlined
+} from '@mui/icons-material';
 import '../App.css';
 
 interface CalendarWithAttendanceProps {
@@ -15,19 +20,30 @@ interface CalendarWithAttendanceProps {
   onDateChange: (date: Date) => void;
 }
 
-const CalendarWithAttendance: React.FC<CalendarWithAttendanceProps> = ({ presentDates, absentDates, halfDayDates, notMarkedDates, futureDates, onChange, onDateChange }) => {
+const CalendarWithAttendance: React.FC<CalendarWithAttendanceProps> = ({
+  presentDates,
+  absentDates,
+  halfDayDates,
+  notMarkedDates,
+  futureDates,
+  onChange,
+  onDateChange
+}) => {
   const [date, setDate] = useState(new Date());
   const reducedPresentDates = useMemo(() => reduceDatesByOneDay(presentDates), [presentDates]);
   const reducedHalfDates = useMemo(() => reduceDatesByOneDay(halfDayDates), [halfDayDates]);
   const reducedAbsentDates = useMemo(() => reduceDatesByOneDay(absentDates), [absentDates]);
-  const reducedNotMarkedDates = useMemo(() => reduceDatesByOneDay(notMarkedDates), [notMarkedDates]);
+  const reducedNotMarkedDates = useMemo(
+    () => reduceDatesByOneDay(notMarkedDates),
+    [notMarkedDates]
+  );
   const reducedFutureDates = useMemo(() => reduceDatesByOneDay(futureDates), [futureDates]);
 
   useEffect(() => {
     const currentDate = new Date();
-    localStorage.setItem("activeStartDate", currentDate.toDateString());
-    console.log("activeStartDate child", currentDate);
-  }, [])
+    localStorage.setItem('activeStartDate', currentDate.toDateString());
+    console.log('activeStartDate child', currentDate);
+  }, []);
 
   function reduceDatesByOneDay(dates: string[]) {
     return dates.map((dateString) => {
@@ -54,12 +70,12 @@ const CalendarWithAttendance: React.FC<CalendarWithAttendanceProps> = ({ present
       return 'attendanceNotMarked';
     }
     if (reducedFutureDates.includes(dateString)) {
-      return "futureDate";
+      return 'futureDate';
     }
     return null;
   }
 
-  function tileContent({ date, view }: { date: Date, view: string }) {
+  function tileContent({ date, view }: { date: Date; view: string }) {
     if (view !== 'month') return null;
     const status = getAttendanceStatus(date);
     switch (status) {
@@ -92,7 +108,7 @@ const CalendarWithAttendance: React.FC<CalendarWithAttendanceProps> = ({ present
     }
   }
 
-  function tileClassName({ date, view }: { date: Date, view: string }) {
+  function tileClassName({ date, view }: { date: Date; view: string }) {
     if (view !== 'month') return null;
     const classes = ['tile-day'];
     if (date.toDateString() === new Date().toDateString()) {
@@ -104,21 +120,25 @@ const CalendarWithAttendance: React.FC<CalendarWithAttendanceProps> = ({ present
     return classes.join(' ');
   }
 
-  const formatShortWeekday: (locale: string | undefined, date: Date) => string = (locale, date) =>{
+  const formatShortWeekday: (locale: string | undefined, date: Date) => string = (locale, date) => {
     if (!date) {
-        return '';
+      return '';
     }
     const weekdays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
     return weekdays[date.getDay()];
-};
+  };
 
-  const handleActiveStartDateChange: ({ action, activeStartDate, value, view }: any) => void = ({ activeStartDate }) => {
-    console.log("Active start date changed:", activeStartDate);
+  const handleActiveStartDateChange: ({ action, activeStartDate, value, view }: any) => void = ({
+    activeStartDate
+  }) => {
+    console.log('Active start date changed:', activeStartDate);
     // localStorage.setItem("activeStartDate", activeStartDate);
     onChange(activeStartDate);
   };
 
-    const handleDateChange: (value: any, event: React.MouseEvent<HTMLButtonElement>) => void = ({ newDate }) => {
+  const handleDateChange: (value: any, event: React.MouseEvent<HTMLButtonElement>) => void = ({
+    newDate
+  }) => {
     // Handle the selected date here
     console.log('Selected date:', newDate);
     setDate(newDate); // Update state with the new selected date if needed
@@ -149,7 +169,7 @@ CalendarWithAttendance.propTypes = {
   halfDayDates: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   notMarkedDates: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   onChange: PropTypes.func.isRequired,
-  onDateChange: PropTypes.func.isRequired,
+  onDateChange: PropTypes.func.isRequired
 };
 
 export default CalendarWithAttendance;

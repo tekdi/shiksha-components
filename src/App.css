@@ -41,7 +41,7 @@
 
 .react-calendar {
   width: 100% !important;
- }
+}
 
 .react-calendar_month-viewdays_day {
   margin: 12px !important;
@@ -80,7 +80,7 @@
 }
 
 .calender-body {
-  background-color: #E7F3F8 !important;
+  background-color: #e7f3f8 !important;
 }
 
 .react-calendar__tile--active {

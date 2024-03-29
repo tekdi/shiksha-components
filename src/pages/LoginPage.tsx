@@ -77,7 +77,6 @@ const LoginPage = () => {
 
         const userResponse = await getUserId();
         localStorage.setItem('userId', userResponse?.userId);
-
       }
       setLoading(false);
       navigate('/dashboard');

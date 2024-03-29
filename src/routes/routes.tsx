@@ -11,7 +11,6 @@ const Profile = lazy(() => import('../pages/Profile'));
 const StudentDetails = lazy(() => import('../pages/StudentBasicDetails'));
 const Logout = lazy(() => import('../components/Logout'));
 
-
 function AllRoutes(): JSX.Element {
   const { t } = useTranslation();
   return (
@@ -25,7 +24,6 @@ function AllRoutes(): JSX.Element {
             <Route path="/class-details" element={<MyClassDetails />} />
             <Route path="/user-attendance-history" element={<UserAttendanceHistory />} />
             <Route path="/logout" element={<Logout />} />
-
           </Route>
         </Routes>
         <Routes>
