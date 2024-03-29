@@ -3,7 +3,7 @@ import { Modal, Typography, Box } from '@mui/material';
 import ButtonFunctional from './buttonComponent';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 import { useTranslation } from 'react-i18next';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 interface ModalProps {
   open: boolean;
   onClose: () => void;
@@ -13,14 +13,7 @@ interface ModalProps {
   btnText: string;
 }
 
-const ModalComponent: React.FC<ModalProps> = ({
-  open,
-  onClose,
-  heading,
-  SubHeading,
-  children
-}) => {
-
+const ModalComponent: React.FC<ModalProps> = ({ open, onClose, heading, SubHeading, children }) => {
   // const style = {
   //   position: 'absolute',
   //   top: '50%',
@@ -35,9 +28,7 @@ const ModalComponent: React.FC<ModalProps> = ({
 
   const { t } = useTranslation();
 
-  const handleClick = () => {
-
-  };
+  const handleClick = () => {};
 
   return (
     // <Modal open={open} onClose={onClose}>
@@ -87,7 +78,8 @@ const ModalComponent: React.FC<ModalProps> = ({
         <Typography variant="h6">{SubHeading}</Typography>
         <Box mt={2}>{children}</Box>
         <Box mt={2} display="flex" justifyContent="flex-end">
-          <ButtonFunctional buttonName={t('COMMON.APPLY')} handleClickButton={handleClick} /> {/* You may use t('COMMON.APPLY') */}
+          <ButtonFunctional buttonName={t('COMMON.APPLY')} handleClickButton={handleClick} />{' '}
+          {/* You may use t('COMMON.APPLY') */}
         </Box>
       </Box>
     </Modal>
@@ -101,7 +93,6 @@ ModalComponent.propTypes = {
   SubHeading: PropTypes.string.isRequired,
   btnText: PropTypes.string.isRequired,
   children: PropTypes.node
-
 };
 
 export default ModalComponent;

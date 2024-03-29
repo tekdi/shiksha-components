@@ -73,11 +73,10 @@ const LoginPage = () => {
       console.log(response);
       if (response) {
         const token = response?.access_token;
-        localStorage.setItem('token', JSON.stringify(token));
-
+      
+        localStorage.setItem('token', token);
         const userResponse = await getUserId();
         localStorage.setItem('userId', userResponse?.userId);
-
       }
       setLoading(false);
       navigate('/dashboard');
@@ -91,11 +90,11 @@ const LoginPage = () => {
     i18n.changeLanguage(event.target.value);
   };
   return (
-    <Box display="flex" flexDirection="column" bgcolor={'black'}>
+    <Box display="flex" flexDirection="column" bgcolor={'black'} minHeight={'100vh'}>
       {loading && <Loader showBackdrop={true} loadingText={t('LOADING')} />}
       <Box
         display={'flex'}
-        flexGrow={1}
+        // flexGrow={1}
         bgcolor="black"
         overflow="auto"
         alignItems={'center'}

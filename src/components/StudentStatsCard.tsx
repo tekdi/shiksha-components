@@ -17,7 +17,7 @@ const StudentStatsCard: React.FC<StudentStatsCard> = ({ label1, value1, label2, 
   return (
     <Box
       height="5rem"
-      gap="1rem"
+      gap="5rem"
       border="1px solid #D0C5B4" //Add color from colorScheme
       borderRadius="1rem"
       display="flex"
@@ -25,9 +25,11 @@ const StudentStatsCard: React.FC<StudentStatsCard> = ({ label1, value1, label2, 
       alignItems="center"
       bgcolor="white"
       margin="0px"
-      textAlign="left"
+      flexDirection={'row'}
+      // textAlign="left"
+      sx={{ padding: '1rem' }}
     >
-      <Stack sx={{ padding: '1rem', minWidth: '100%' }}>
+      <Box>
         <Typography
           marginTop={'10px'}
           fontSize="11px"
@@ -46,20 +48,21 @@ const StudentStatsCard: React.FC<StudentStatsCard> = ({ label1, value1, label2, 
         >
           {value1}
         </Typography>
-        {label2 ? (
-          <Typography
-            fontSize="0.675rem"
-            fontWeight="bold"
-            lineHeight="1rem"
-            sx={{ color: theme.palette.warning['400'] }}
-            marginBottom={'0px'}
-          >
-            {t('PROFILE.HELD_ON')}
+      </Box>
 
-            {value2}
-          </Typography>
-        ) : null}
-      </Stack>
+      {label2 ? (
+        <Typography
+          fontSize="0.675rem"
+          fontWeight="bold"
+          lineHeight="1rem"
+          sx={{ color: theme.palette.warning['400'] }}
+          marginBottom={'0px'}
+        >
+          {t('PROFILE.HELD_ON')}
+
+          {value2}
+        </Typography>
+      ) : null}
     </Box>
   );
 };

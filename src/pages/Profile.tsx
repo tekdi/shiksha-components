@@ -20,12 +20,13 @@ import CloseIcon from '@mui/icons-material/Close';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import { getUser, editEditUser } from '../services/profileService.ts';
 import { useTheme } from '@mui/material/styles';
-import default_user from '/default_user.png';
+import defaultUser from '/default_user.png';
 import { decodeToken } from '../utils/Helper';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { UserData } from '../utils/Interfaces.ts';
+import Loader from '../components/Loader.tsx';
 
 const Profile = () => {
-
   interface CustomField {
     fieldId: string;
     label: string;
@@ -36,7 +37,8 @@ const Profile = () => {
 
   interface updateCustomField {
     fieldId: string;
-    value: string;  }
+    value: string;
+  }
   const { t } = useTranslation();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -75,13 +77,18 @@ const Profile = () => {
   const options = ['Option 1', 'Option 2'];
   const [value, setValue] = React.useState<string | null>(options[0]);
   const [inputValue, setInputValue] = React.useState('');
+  const [loading, setLoading] = useState(false);
+
+  const backButtonEvent = () => {
+    window.history.back();
+  };
   const handleUpdateClick = async () => {
     try {
       const userDetails = {
         userData: {
           name: updatedName ?? userData?.name,
           // phone: updatedPhone ?? userData?.phone,
-          email: updatedEmail ?? userData?.email,
+          email: updatedEmail ?? userData?.email
         },
         customFields: updatedCustomFields.length > 0 ? updatedCustomFields : customFieldsData
       };
@@ -89,24 +96,28 @@ const Profile = () => {
       if (userId) {
         const response = await editEditUser(userId, userDetails);
       }
+      setOpen(false);
+      // setLoading(true);
     } catch (error) {
+      // setLoading(false);
+
       console.log(error);
+    } finally {
+      // setLoading(false)
     }
   };
   const handleFieldChange = (fieldId: string, value: string) => {
-   
     const newData: updateCustomField[] = [
       {
         fieldId: fieldId,
         value: value
-      },
-     
+      }
+
       // Add more objects as needed
     ];
-    setUpdatedCustomFields(prevState => [...prevState, ...newData])
-   
+    setUpdatedCustomFields(newData);
   };
-  
+
   useEffect(() => {
     const fetchUserDetails = async () => {
       const userId = localStorage.getItem('userId');
@@ -136,6 +147,23 @@ const Profile = () => {
         justifyContent={'center'}
         alignItems={'center'}
       >
+        <Box sx={{ flex: '1', minWidth: '100%' }} display="flex" flexDirection="row" gap="5px">
+          <ArrowBackIcon onClick={backButtonEvent} />
+
+          <Typography
+            variant="h3"
+            style={{
+              letterSpacing: '0.1px',
+              textAlign: 'left',
+              marginBottom: '2px'
+              // marginBottom:"4px"
+              // color: theme.palette.warning['400']
+            }}
+          >
+            {t('PROFILE.MY_PROFILE')}
+          </Typography>
+        </Box>
+
         <Box
           sx={{
             flex: '1',
@@ -150,7 +178,7 @@ const Profile = () => {
           display="flex"
           flexDirection="row"
         >
-          <img src={default_user} alt="user" style={{ margin: '2px' }} />
+          <img src={defaultUser} alt="user" style={{ margin: '2px' }} />
           <Box>
             <Typography
               variant="h2"
@@ -263,32 +291,33 @@ const Profile = () => {
         </Box>
 
         <Box sx={{ flex: '1', minWidth: '100%' }}>
-        {customFieldsData && customFieldsData.map((field) => (
-            <Grid item xs={12} key={field.fieldId}>
-              {field.type === 'text' && (
-                <Box display="flex" flexDirection="row" gap="10px">
-                  <Typography
-                    variant="h3"
-                    style={{
-                      textAlign: 'left',
-                      color: theme.palette.warning['400']
-                    }}
-                  >
-                    {field.label}:
-                  </Typography>{' '}
-                  <Typography
-                    variant="h4"
-                    style={{
-                      letterSpacing: '0.25px',
-                      textAlign: 'left'
-                    }}
-                  >
-                    {field.value}
-                  </Typography>
-                </Box>
-              )}
-            </Grid>
-          ))}
+          {customFieldsData &&
+            customFieldsData.map((field) => (
+              <Grid item xs={12} key={field.fieldId}>
+                {field.type === 'text' && (
+                  <Box display="flex" flexDirection="row" gap="10px">
+                    <Typography
+                      variant="h3"
+                      style={{
+                        textAlign: 'left',
+                        color: theme.palette.warning['400']
+                      }}
+                    >
+                      {field.label}:
+                    </Typography>{' '}
+                    <Typography
+                      variant="h4"
+                      style={{
+                        letterSpacing: '0.25px',
+                        textAlign: 'left'
+                      }}
+                    >
+                      {field.value}
+                    </Typography>
+                  </Box>
+                )}
+              </Grid>
+            ))}
         </Box>
 
         <Box sx={{ flex: '1', minWidth: '100%' }}>
@@ -345,14 +374,7 @@ const Profile = () => {
             justifyContent={'center'}
           >
             <StudentStatsCard
-              label1="Interview Score"
-              value1="82%"
-              label2={true}
-              value2="02/1/25"
-            />
-
-            <StudentStatsCard
-              label1="Interview Score"
+              label1={t('PROFILE.INTERVIEW_TEST_SCORES')}
               value1="82%"
               label2={true}
               value2="02/1/25"
@@ -405,22 +427,34 @@ const Profile = () => {
             >
               <Box
                 sx={{
-                  flex: '1',
+                  //flex: '1',
                   textAlign: 'center',
-                  marginLeft: '19px'
+                  marginLeft: '5%'
                 }}
                 borderRadius={'12px'}
                 border={'1px'}
                 bgcolor="warning.A400"
                 display="flex"
-                flexDirection="row"
+                flexDirection="column"
               >
-                <img src={default_user} alt="user" />
+                <img src={defaultUser} alt="user" />
                 <Box>
                   <Button
                     sx={{
-                      marginTop: '35px',
-                      textAlign: 'center'
+                      minWidth: '100%',
+
+                      padding: '10px 24px 10px 16px',
+                      borderRadius: '12px',
+                      marginTop: '10px',
+                      flex: '1',
+                      textAlign: 'center',
+                      color: 'black',
+                      border: '1px solid black',
+                      borderColor: 'black',
+                      backgroundColor: 'warning.A400',
+                      '&:hover': {
+                        backgroundColor: 'warning.A400'
+                      }
                     }}
                   >
                     {t('PROFILE.UPDATE_PICTURE')}
@@ -460,20 +494,21 @@ const Profile = () => {
                 defaultValue={userData?.email}
                 onChange={(e) => setUpdatedEmail(e.target.value)}
               />
-  {customFieldsData && customFieldsData.map((field) => (
-                <Grid item xs={12} key={field.fieldId}>
-                  {field.type === 'text' && (
-                    <TextField
-                      fullWidth
-                      name={field.fieldId}
-                      label={field.label}
-                      variant="outlined"
-                      defaultValue={field.value}
-                      onChange={(e) => handleFieldChange(field.fieldId, e.target.value)}
-                    />
-                  )}
-                </Grid>
-              ))}
+              {customFieldsData &&
+                customFieldsData.map((field) => (
+                  <Grid item xs={12} key={field.fieldId}>
+                    {field.type === 'text' && (
+                      <TextField
+                        fullWidth
+                        name={field.fieldId}
+                        label={field.label}
+                        variant="outlined"
+                        defaultValue={field.value}
+                        onChange={(e) => handleFieldChange(field.fieldId, e.target.value)}
+                      />
+                    )}
+                  </Grid>
+                ))}
               <Box>
                 <TextField
                   label={t('PROFILE.BIO')}
@@ -495,6 +530,8 @@ const Profile = () => {
             <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
               <Button
                 sx={{
+                  minWidth: '100%',
+
                   color: 'black',
                   backgroundColor: 'containedSecondary',
                   '&:hover': {

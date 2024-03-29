@@ -1,10 +1,5 @@
 import * as React from 'react';
-import {
-  Box,
-  Card,
-  CardContent,
-  Typography,
-} from '@mui/material';
+import { Box, Card, CardContent, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import Header from '../components/Header';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
