@@ -68,7 +68,7 @@ export default function MyClassDetails() {
       });
       const result = response;
       if (result?.statusCode === 200) {
-        const data = result?.data;
+        const data = result?.data?.report;
         setClassData(data);
       }
     } catch (error) {

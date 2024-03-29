@@ -29,7 +29,7 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
         // padding="1rem"
       >
         <Grid container alignItems="center" justifyContent="space-between" p={2}>
-          <Grid item xs={3}>
+          <Grid item xs={8}>
             <Link
               href="#"
               underline="always"
@@ -41,7 +41,7 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
               <Typography m={0}>{name}</Typography>
             </Link>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={4}>
             <Typography
               m={0}
               fontSize="1rem"
