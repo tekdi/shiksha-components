@@ -7,7 +7,7 @@ interface StudentsStatsListProps {
   label1: string;
   value1: string;
   label2: string;
-  value2: string;
+  value2: number;
 }
 
 const StudentsStatsList: React.FC<StudentsStatsListProps> = ({

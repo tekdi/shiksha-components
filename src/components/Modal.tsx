@@ -1,11 +1,9 @@
 // import { useState } from 'react';
-import { Modal, Typography, Box, IconButton, Button } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import CustomButton from './CustomButton';
+import { Modal, Typography, Box } from '@mui/material';
 import ButtonFunctional from './buttonComponent';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 import { useTranslation } from 'react-i18next';
-
+import PropTypes from 'prop-types';
 interface ModalProps {
   open: boolean;
   onClose: () => void;
@@ -13,7 +11,7 @@ interface ModalProps {
   SubHeading?: string;
   children?: React.ReactNode;
   btnText: string;
-  handleApplySort: ()=> void;
+  handleApplySort: () => void;
 }
 
 const ModalComponent: React.FC<ModalProps> = ({
@@ -25,18 +23,21 @@ const ModalComponent: React.FC<ModalProps> = ({
   btnText,
   handleApplySort
 }) => {
-  const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    boxShadow: 24,
-    p: 4,
-    borderRadius: '1rem'
-  };
+  // const style = {
+  //   position: 'absolute',
+  //   top: '50%',
+  //   left: '50%',
+  //   transform: 'translate(-50%, -50%)',
+  //   width: 400,
+  //   bgcolor: 'background.paper',
+  //   boxShadow: 24,
+  //   p: 4,
+  //   borderRadius: '1rem'
+  // };
+
   const { t } = useTranslation();
+
+  const handleClick = () => {};
 
   return (
     // <Modal open={open} onClose={onClose}>
@@ -91,6 +92,15 @@ const ModalComponent: React.FC<ModalProps> = ({
       </Box>
     </Modal>
   );
+};
+
+ModalComponent.propTypes = {
+  open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  heading: PropTypes.string.isRequired,
+  SubHeading: PropTypes.string.isRequired,
+  btnText: PropTypes.string.isRequired,
+  children: PropTypes.node
 };
 
 export default ModalComponent;

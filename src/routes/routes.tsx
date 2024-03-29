@@ -9,6 +9,8 @@ import PrivateRoute from '../utils/PrivateRoute';
 const LoginPage = lazy(() => import('../pages/LoginPage'));
 const Profile = lazy(() => import('../pages/Profile'));
 const StudentDetails = lazy(() => import('../pages/StudentBasicDetails'));
+const Logout = lazy(() => import('../components/Logout'));
+
 
 function AllRoutes(): JSX.Element {
   const { t } = useTranslation();
@@ -22,6 +24,8 @@ function AllRoutes(): JSX.Element {
             <Route path="/student-details" element={<StudentDetails />} />
             <Route path="/class-details" element={<MyClassDetails />} />
             <Route path="/user-attendance-history" element={<UserAttendanceHistory />} />
+            <Route path="/logout" element={<Logout />} />
+
           </Route>
         </Routes>
         <Routes>

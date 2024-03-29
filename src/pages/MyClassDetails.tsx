@@ -1,26 +1,22 @@
 import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import InputBase from '@mui/material/InputBase';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import DirectionsIcon from '@mui/icons-material/Directions';
 import {
   Box,
   Button,
   Card,
   CardContent,
+  Divider,
   FormControl,
   FormControlLabel,
   FormLabel,
   Grid,
+  IconButton,
+  InputBase,
   Pagination,
+  Paper,
   Radio,
   RadioGroup,
   ThemeProvider,
-  Typography,
-  createMuiTheme
+  Typography
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import Header from '../components/Header';
@@ -35,6 +31,7 @@ import { Link } from 'react-router-dom';
 import ModalComponent from '../components/Modal';
 import { getMyClassDetails } from '../services/MyClassDetailsService';
 import { useTranslation } from 'react-i18next';
+import SearchIcon from '@mui/icons-material/Search';
 
 // import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ArrowDropDownSharpIcon from '@mui/icons-material/ArrowDropDownSharp';

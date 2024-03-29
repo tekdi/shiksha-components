@@ -19,7 +19,8 @@
     "ATTENDANCE": "Attendance",
     "ATTENDANCE_REPORT": "Attendance Report",
     "TEST_REPORT": "Test Report",
-    "BASIC_DETAILS": "Basic Details"
+    "BASIC_DETAILS": "Basic Details",
+    "DOB":"Date of Birth"
   },
   "LOGIN_PAGE": {
     "USERNAME": "Username",
@@ -49,10 +50,11 @@
     "PHONE": "Phone",
     "EMAIL_ID": "Email ID",
     "BIO": "Bio",
-    "INTERVIEW_TEST_SCORES": "Interview & Test Scores",
+    "INTERVIEW_TEST_SCORES": "Test Scores",
     "UPDATE_PICTURE": "Update Picture",
     "FULL_NAME": "Full Name",
     "LOCATION": "Location",
-    "HELD_ON": "Held on:"
+    "HELD_ON": "Held on:",
+    "MY_PROFILE":"My profile"
   }
 }
