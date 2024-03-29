@@ -22,18 +22,14 @@ const StudentDetails: React.FC = () => {
 
   useEffect(() => {
     const fetchUserDetails = async () => {
-      const token: string | null = localStorage.getItem('token');
+      const userId = localStorage.getItem('userId');
       try {
-        if (token) {
-          const payload: any = decodeToken(token);
-          const xHasuraUserId: string | undefined =
-            payload['https://hasura.io/jwt/claims']['x-hasura-user-id'];
-          if (xHasuraUserId) {
-            const response = await getUser(xHasuraUserId);
-            const userDataFromJson: UserData | undefined = response?.result?.userData;
-            if (userDataFromJson) {
-              setUserData(userDataFromJson);
-            }
+        if (userId) {
+          const response = await getUser(userId);
+          console.log('response', response);
+          const userDataFromJson: UserData | undefined = response?.result?.userData;
+          if (userDataFromJson) {
+            setUserData(userDataFromJson);
           }
         }
       } catch (error) {
