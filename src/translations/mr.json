@@ -18,7 +18,7 @@
     "TEST_REPORT": "चाचणी अहवाल",
     "BASIC_DETAILS": "मूलभूत तपशील",
     "DOB": "जन्मतारीख",
-    "LOGOUT":"बाहेर पडणे",
+    "LOGOUT": "बाहेर पडणे",
 
     "OVERALL_ATTENDANCE": "एकूण उपस्थिती"
   },
@@ -34,7 +34,8 @@
     "MY_CLASSES": "माझ्या क्लासेस",
     "ADD_NEW_CLASS": "नवीन क्लास जोडा",
     "NEW_REMOTE_CLASS": "नवीन रिमोट क्लास",
-    "NEW_PHYSICAL_CLASS": "नवीन शारीरिक वर्ग"
+    "NEW_PHYSICAL_CLASS": "नवीन शारीरिक वर्ग",
+    "CLASS": "वर्ग"
   },
   "ATTENDANCE": {
     "TOTAL_STUDENTS": "एकूण विद्यार्थी: {{count}}",

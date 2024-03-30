@@ -27,6 +27,9 @@ import MarkAttendance from '../components/MarkAttendance';
 import { markAttendance, bulkAttendance } from '../services/AttendanceService';
 import { AttendanceParams } from '../utils/Interfaces';
 import { cohortList } from '../services/CohortServices';
+import { getMyClassDetails } from '../services/MyClassDetailsService';
+import { getTodayDate } from '../utils/Helper';
+import Loader from '../components/Loader';
 
 interface DashboardProps {
   //   buttonText: string;
@@ -37,62 +40,43 @@ interface DataItem {
   // Add other properties as needed
 }
 
+interface user {
+  key: string;
+}
+
+interface cohort {
+  cohortId: string;
+  name: string;
+  value: string;
+}
+
 let userId: string = '';
 let contextId: string = '';
 
 const Dashboard: React.FC<DashboardProps> = () => {
+  const [open, setOpen] = React.useState(false);
+  const [selfAttendanceDetails, setSelfAttendanceDetails] = React.useState(null);
+  const [cohortsData, setCohortsData] = React.useState<Array<cohort>>([]);
+  const [classes, setClasses] = React.useState('');
+  const [cohortId, setCohortId] = React.useState(null);
+  const [openMarkAttendance, setOpenMarkAttendance] = React.useState(false);
+  const [cohortMemberList, setCohortMemberList] = React.useState<Array<user>>([]);
+  const [numberOfCohortMembers, setNumberOfCohortMembers] = React.useState(0);
+  const [currentDate, setCurrentDate] = React.useState(getTodayDate);
+  const [bulkAttendanceStatus, setBulkAttendanceStatus] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
+
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [open, setOpen] = React.useState(false);
-  const [cohorts, setCohorts] = React.useState<string[] | null>(null);
-  const [openMarkAttendance, setOpenMarkAttendance] = React.useState(false);
-  const handleModalToggle = () => setOpen(!open);
-  const handleMarkAttendanceModal = () => setOpenMarkAttendance(!openMarkAttendance);
-  const [classes, setClasses] = React.useState('');
-  const limit = 'string';
+  const limit = 100;
   const page = 0;
-  const filters = {};
-  const userAttendance = [{ userId: 'string', attendance: 'present' }];
-  const attendanceDate = 'string';
-  const contextId = 'string';
-
-  useEffect(() => {
-    const fetchCohortList = async () => {
-      try {
-        const resp = await cohortList({ limit, page, filters });
-        const extractedNames = resp?.data
-          ?.map((item: DataItem) => item.name)
-          .filter((name: string) => name);
-        console.log(`response cohort list`, extractedNames);
-        setCohorts(extractedNames);
-      } catch (error) {
-        console.error('Error fetching  cohort list:', error);
-      }
-    };
-    fetchCohortList();
-  }, []);
-
-  useEffect(() => {
-    const markBulkAttendance = async () => {
-      try {
-        const response = await bulkAttendance({ attendanceDate, contextId, userAttendance });
-        console.log(`response bulkAttendance`, response);
-        const resp = response?.data;
-        console.log(`resp`, resp);
-      } catch (error) {
-        console.error('Error fetching  cohort list:', error);
-      }
-    };
-    markBulkAttendance();
-  }, []);
-
+  // const userAttendance = [{ userId: localStorage.getItem('userId'), attendance: 'present' }];
+  const attendanceDate = currentDate;
+  const contextId = classes;
+  const report = false;
+  const offset = 0;
   const theme = useTheme<any>();
-
-  React.useEffect(() => {}, []);
-
-  const handleChange = (event: SelectChangeEvent) => {
-    setClasses(event.target.value as string);
-  };
+  ``;
   const modalContainer = {
     position: 'absolute',
     top: '50%',
@@ -104,35 +88,153 @@ const Dashboard: React.FC<DashboardProps> = () => {
     boxShadow: 24,
     p: 4
   };
+
+  useEffect(() => {
+    const fetchCohortList = async () => {
+      // const userId = localStorage.getItem('userId');
+      let userId = '0f7c947f-3258-4959-80a6-d340c3639e7d';
+      setLoading(true);
+      try {
+        if (userId) {
+          const resp = await cohortList(userId);
+          const extractedNames = resp?.result?.cohortData;
+          const filteredData = extractedNames
+            .flatMap((item: any) => {
+              const addressData = item.customField.find((field: any) => field.label === 'address');
+              const classTypeData = item.customField.find(
+                (field: any) => field.label === 'Class Type'
+              );
+              return [
+                addressData
+                  ? { cohortId: item.cohortId, name: item.name, value: addressData.value }
+                  : null,
+                classTypeData
+                  ? { cohortId: item.cohortId, name: item.name, value: classTypeData.value }
+                  : null
+              ];
+            })
+            .filter(Boolean);
+          // console.log(`response cohort list`, filteredData);
+          setCohortsData(filteredData);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error('Error fetching  cohort list:', error);
+        setLoading(false);
+      }
+    };
+    fetchCohortList();
+  }, []);
+
+  useEffect(() => {
+    const getCohortMemberList = async () => {
+      setLoading(true);
+      try {
+        const response = await getMyClassDetails({
+          contextId,
+          attendanceDate,
+          report,
+          limit,
+          offset
+        });
+        const resp = response?.data;
+        setCohortMemberList(resp);
+        setNumberOfCohortMembers(resp?.length);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching cohort list:', error);
+        setLoading(false);
+      }
+    };
+    getCohortMemberList();
+  }, [classes]);
+
+  const handleModalToggle = () => setOpen(!open);
+  const handleMarkAttendanceModal = () => setOpenMarkAttendance(!openMarkAttendance);
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setClasses(event.target.value as string);
+  };
+
   const submitAttendance = async (date: string, status: string) => {
-    console.log(date, status);
+    //console.log(date, status);
     const attendanceData: AttendanceParams = {
       attendanceDate: date,
       attendance: status,
       userId,
       contextId
     };
+    setLoading(true);
     try {
       const response = await markAttendance(attendanceData);
       if (response) {
-        console.log('response markAttendese', response);
+        //console.log(response);
         handleMarkAttendanceModal();
       }
+      setLoading(false);
     } catch (error) {
       console.error('error', error);
+      setLoading(false);
     }
   };
 
-  const submitBulkAttendanceAction = (status: string) => {
-    console.log(status);
+  const submitBulkAttendanceAction = (
+    isBulkAction: boolean,
+    status: string,
+    id?: string | undefined
+  ) => {
+    const updatedAttendanceList = cohortMemberList?.map((user: any) => {
+      if (isBulkAction) {
+        user.attendance = status;
+        setBulkAttendanceStatus(status);
+      } else {
+        setBulkAttendanceStatus('');
+        if (user.userId === id) {
+          user.attendance = status;
+        }
+      }
+      return user;
+    });
+    setCohortMemberList(updatedAttendanceList);
   };
   const viewAttendanceHistory = () => {
     navigate('/user-attendance-history');
   };
 
+  const handleSave = () => {
+    const userAttendance = cohortMemberList?.map((user: any) => {
+      return {
+        userId: user.userId,
+        attendance: user.attendance
+      };
+    });
+    if (userAttendance) {
+      const data = {
+        attendanceDate: currentDate,
+        contextId,
+        userAttendance
+      };
+      const markBulkAttendance = async () => {
+        setLoading(true);
+        try {
+          const response = await bulkAttendance(data);
+          //console.log(`response bulkAttendance`, response);
+          const resp = response?.data;
+          //console.log(`resp`, resp);
+          setLoading(false);
+        } catch (error) {
+          console.error('Error fetching  cohort list:', error);
+          setLoading(false);
+        }
+      };
+      markBulkAttendance();
+    }
+  };
+
   return (
     <Box minHeight="100vh" textAlign={'center'}>
       <Header />
+      {loading && <Loader showBackdrop={true} loadingText={t('LOADING')} />}
       <Box display={'flex'} flexDirection={'column'} gap={'1rem'} padding={'1rem'}>
         <Box display={'flex'} sx={{ color: theme.palette.warning['A200'] }}>
           <TodayIcon />
@@ -152,7 +254,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
             style={{ fontWeight: '800', fontSize: '1.2rem' }}>
             {t('COMMON.MARK_MY_ATTENDANCE')}
           </Typography>
-          <Typography sx={{ color: theme.palette.warning['A400'] }}>25 May 2024</Typography>
+          <Typography sx={{ color: theme.palette.warning['A400'] }}>{currentDate}</Typography>
           <Stack direction="row" spacing={1} marginTop={1} justifyContent={'space-between'}>
             <Button
               variant="text"
@@ -193,77 +295,90 @@ const Dashboard: React.FC<DashboardProps> = () => {
             <Box
               sx={{ ...modalContainer, borderColor: theme.palette.warning['A400'] }}
               borderRadius={'1rem'}
-              height="80%">
-              <Box display={'flex'} justifyContent={'space-between'}>
-                <Box marginBottom={'0px'}>
-                  <Typography variant="h2" component="h2" marginBottom={'0px'} fontWeight={'bold'}>
-                    {t('COMMON.MARK_STUDENT_ATTENDANCE')}
-                  </Typography>
-                  <Typography variant="h2" component="h2">
-                    25 May 2024
-                  </Typography>
+              height={'80%'}
+            >
+              <Box height={'100%'} width={'100%'}>
+                <Box display={'flex'} justifyContent={'space-between'}>
+                  <Box marginBottom={'0px'}>
+                    <Typography
+                      variant="h2"
+                      component="h2"
+                      marginBottom={'0px'}
+                      fontWeight={'bold'}
+                    >
+                      {t('COMMON.MARK_STUDENT_ATTENDANCE')}
+                    </Typography>
+                    <Typography variant="h2" component="h2">
+                      {currentDate}
+                    </Typography>
+                  </Box>
+                  <Box onClick={() => handleModalToggle()}>
+                    <CloseIcon />
+                  </Box>
                 </Box>
-                <Box onClick={() => handleModalToggle()}>
-                  <CloseIcon />
+                <Divider sx={{ borderBottomWidth: '0.15rem' }} />
+                {loading && <Loader showBackdrop={true} loadingText={t('LOADING')} />}
+                <Box sx={{ mt: 2 }}>
+                  <Box sx={{ minWidth: 120 }}>
+                    <FormControl fullWidth>
+                      <InputLabel>{t('DASHBOARD.CLASS')}</InputLabel>
+                      <Select value={classes} label="Class" onChange={handleChange}>
+                        {cohortsData?.map((cohort) => (
+                          <MenuItem key={cohort.cohortId} value={cohort.cohortId}>
+                            {cohort.name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Box>
                 </Box>
-              </Box>
-              <Divider sx={{ borderBottomWidth: '0.15rem' }} />
-              <Box sx={{ mt: 2 }}>
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel>Class</InputLabel>
-                    <Select value={classes} label="Class" onChange={handleChange}>
-                      {cohorts?.map((item: string, index: number) => (
-                        <MenuItem key={index} value={item}>
-                          {item}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
+                <Typography>
+                  {t('ATTENDANCE.TOTAL_STUDENTS', { count: numberOfCohortMembers })}
+                </Typography>
+                <Box height={'57%'} sx={{ overflowY: 'scroll' }}>
+                  <AttendanceStatusListView
+                    isEdit={true}
+                    isBulkAction={true}
+                    bulkAttendanceStatus={bulkAttendanceStatus}
+                    handleBulkAction={submitBulkAttendanceAction}
+                  />
+                  {cohortMemberList?.map((user: any) => (
+                    <AttendanceStatusListView
+                      key={user.userId}
+                      userData={user}
+                      isEdit={true}
+                      bulkAttendanceStatus={bulkAttendanceStatus}
+                      handleBulkAction={submitBulkAttendanceAction}
+                    />
+                  ))}
                 </Box>
-              </Box>
-              <Typography>{t('ATTENDANCE.TOTAL_STUDENTS')}</Typography>
-              <Box height={'58%'} overflow={'scroll'}>
-                <AttendanceStatusListView
-                  studentName={t('ATTENDANCE.MARK_ALL')}
-                  currentStatus="notmarked"
-                  isEdit={true}
-                  isBulkAction={true}
-                  handleBulkAction={submitBulkAttendanceAction}
-                />
-                <AttendanceStatusListView
-                  studentName={'Ajay'}
-                  currentStatus="notmarked"
-                  isEdit={true}
-                />
-                <AttendanceStatusListView
-                  studentName={'Vijay'}
-                  currentStatus="notmarked"
-                  isEdit={true}
-                />
-                <AttendanceStatusListView
-                  studentName={'Deepak'}
-                  currentStatus="notmarked"
-                  isEdit={true}
-                />
-                <AttendanceStatusListView
-                  studentName={'Vinod'}
-                  currentStatus="notmarked"
-                  isEdit={true}
-                />
-              </Box>
-              <Box
-                display={'flex'}
-                flexDirection={'row'}
-                justifyContent={'space-evenly'}
-                marginBottom={0}>
-                <Button variant="outlined" style={{ width: '8rem' }}>
-                  {' '}
-                  {t('COMMON.CLEAR_ALL')}
-                </Button>
-                <Button variant="contained" color="primary" style={{ width: '8rem' }}>
-                  {t('COMMON.SAVE')}
-                </Button>
+
+                <Box
+                  position={'absolute'}
+                  bottom="30px"
+                  display={'flex'}
+                  gap={'20px'}
+                  flexDirection={'row'}
+                  justifyContent={'space-evenly'}
+                  marginBottom={0}
+                >
+                  <Button
+                    variant="outlined"
+                    style={{ width: '8rem' }}
+                    onClick={() => submitBulkAttendanceAction(true, '', '')}
+                  >
+                    {' '}
+                    {t('COMMON.CLEAR_ALL')}
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    style={{ width: '8rem' }}
+                    onClick={handleSave}
+                  >
+                    {t('COMMON.SAVE')}
+                  </Button>
+                </Box>
               </Box>
             </Box>
           </Fade>
@@ -291,6 +406,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
             </Button>
           </Box>
         </Stack>
+
         <Box
           display={'flex'}
           flexDirection={'column'}
@@ -299,17 +415,25 @@ const Dashboard: React.FC<DashboardProps> = () => {
           width={'auto'}
           sx={{ bgcolor: theme.palette.secondary.light }}
           p={'1rem'}
-          borderRadius={'1rem'}>
-          <Typography>Gurukrupa Building, Paud Road</Typography>
-          <CohortCard showBackground={true} isRemote={false} cohortName={'Class A'} />
-          <Typography pt={'0.5rem'}>Remote</Typography>
-          <CohortCard showBackground={true} isRemote={true} cohortName={'Class B'} />
+          borderRadius={'1rem'}
+        >
+          {cohortsData &&
+            cohortsData.map((cohort) => (
+              <Box key={cohort.cohortId}>
+                <Typography>{cohort.value}</Typography>
+                <CohortCard
+                  showBackground={true}
+                  isRemote={cohort.value === 'remote'}
+                  cohortName={cohort.name}
+                />
+              </Box>
+            ))}
         </Box>
       </Box>
       <MarkAttendance
         isOpen={openMarkAttendance}
         isSelfAttendance={true}
-        date="2024-03-02"
+        date={currentDate}
         currentStatus="notmarked"
         handleClose={handleMarkAttendanceModal}
         handleSubmit={submitAttendance}

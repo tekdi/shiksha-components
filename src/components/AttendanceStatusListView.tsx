@@ -11,15 +11,13 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { AttendanceStatusListViewProps } from '../utils/Interfaces';
 
 const AttendanceStatusListView: React.FC<AttendanceStatusListViewProps> = ({
-  currentStatus,
-  studentName,
+  userData,
   isEdit = false,
   isBulkAction = false,
-  handleBulkAction = () => {}
+  handleBulkAction = () => {},
+  bulkAttendanceStatus = ''
 }) => {
   const { t } = useTranslation();
-  const [status, setStatus] = React.useState(currentStatus);
-  const [markAllStatus, setMarkAllStatus] = React.useState('');
   const theme = useTheme<any>();
 
   const boxStyling = {
@@ -33,30 +31,30 @@ const AttendanceStatusListView: React.FC<AttendanceStatusListViewProps> = ({
     backgroundColor: isBulkAction ? theme.palette.warning[800] : 'none'
   };
 
-  const handleClickAction = (selectedAction: string) => {
+  const handleClickAction = (isBulkAction: boolean, selectedAction: string, id?: string) => {
     if (isEdit) {
-      if (isBulkAction) {
-        handleBulkAction(selectedAction);
-        setMarkAllStatus(selectedAction);
-      } else {
-        setStatus(selectedAction);
-      }
+      handleBulkAction(isBulkAction, selectedAction, id);
     }
   };
-
   return (
     <Box sx={boxStyling}>
       <Typography variant="body1" marginRight="auto" marginY="auto">
-        {studentName}
+        {isBulkAction ? t('ATTENDANCE.MARK_ALL') : userData?.name}
       </Typography>
       <Box
         display="flex"
         flexDirection="column"
         alignItems="center"
         p={2}
-        onClick={() => handleClickAction(ATTENDANCE_ENUM.PRESENT)}
+        onClick={() =>
+          handleClickAction(
+            isBulkAction,
+            ATTENDANCE_ENUM.PRESENT,
+            isBulkAction ? '' : userData?.userId
+          )
+        }
       >
-        {[status, markAllStatus].includes(ATTENDANCE_ENUM.PRESENT) ? (
+        {[userData?.attendance, bulkAttendanceStatus].includes(ATTENDANCE_ENUM.PRESENT) ? (
           <CheckCircleIcon />
         ) : (
           <CheckCircleOutlineIcon />
@@ -70,9 +68,15 @@ const AttendanceStatusListView: React.FC<AttendanceStatusListViewProps> = ({
         flexDirection="column"
         alignItems="center"
         p={2}
-        onClick={() => handleClickAction(ATTENDANCE_ENUM.ABSENT)}
+        onClick={() =>
+          handleClickAction(
+            isBulkAction,
+            ATTENDANCE_ENUM.ABSENT,
+            isBulkAction ? '' : userData?.userId
+          )
+        }
       >
-        {[status, markAllStatus].includes(ATTENDANCE_ENUM.ABSENT) ? (
+        {[userData?.attendance, bulkAttendanceStatus].includes(ATTENDANCE_ENUM.ABSENT) ? (
           <CancelIcon />
         ) : (
           <HighlightOffIcon />

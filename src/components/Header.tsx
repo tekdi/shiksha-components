@@ -89,7 +89,8 @@ const Header: React.FC = () => {
         direction="row"
         justifyContent={'space-between'}
         alignItems={'center'}
-        height="auto">
+        height="auto"
+      >
         <Box mt={'0.5rem'}>
           <FormControl sx={{ m: 1 }}>
             <Select
@@ -102,7 +103,8 @@ const Header: React.FC = () => {
                 color: theme.palette.warning['200'],
                 width: '5rem',
                 marginBottom: '0rem'
-              }}>
+              }}
+            >
               {config?.languages.map((lang) => (
                 <MenuItem value={lang.code} key={lang.code}>
                   {lang.code.toUpperCase()}
@@ -120,7 +122,8 @@ const Header: React.FC = () => {
           id="akshta"
           aria-controls={open ? 'account-menu' : undefined}
           aria-haspopup="true"
-          aria-expanded={open ? 'true' : undefined}>
+          aria-expanded={open ? 'true' : undefined}
+        >
           <AccountCircleIcon fontSize="large" color="action" />
         </Box>
         <div>
@@ -131,7 +134,8 @@ const Header: React.FC = () => {
             }}
             anchorEl={anchorEl}
             open={open}
-            onClose={handleClose}>
+            onClose={handleClose}
+          >
             <MenuItem onClick={handleProfileClick} disableRipple>
               <PersonOutlineOutlinedIcon />
               {t('PROFILE.MY_PROFILE')}{' '}
@@ -142,7 +146,6 @@ const Header: React.FC = () => {
             </MenuItem>
           </StyledMenu>
         </div>
-
       </Stack>
       <Divider sx={{ borderBottomWidth: '0.15rem' }} />
     </>
