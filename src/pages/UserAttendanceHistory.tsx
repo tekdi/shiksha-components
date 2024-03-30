@@ -27,7 +27,7 @@ const UserAttendanceHistory = () => {
   const handleMarkAttendanceModal = () => setOpenMarkAttendance(!openMarkAttendance);
 
   let userId: string = '';
-
+let contextId: string='';
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -42,7 +42,8 @@ const UserAttendanceHistory = () => {
           fromDate: formattedFirstDay,
           toDate: formattedLastDay,
           filters: {
-            userId
+            userId,
+            contextId
           }
         };
 

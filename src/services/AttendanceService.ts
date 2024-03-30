@@ -36,7 +36,7 @@ export const bulkAttendance = async ({
 };
 
 export const getAttendanceByDate = async ({
-  filters: { userId },
+  filters: { userId, contextId },
   fromDate,
   toDate
 }: AttendanceByDateParams): Promise<any> => {
@@ -45,7 +45,7 @@ export const getAttendanceByDate = async ({
     const response = await post(apiUrl, {
       fromDate,
       toDate,
-      filters: { userId }
+      filters: { userId , contextId}
     });
     return response?.data;
   } catch (error) {

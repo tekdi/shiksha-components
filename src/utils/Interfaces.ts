@@ -19,6 +19,7 @@ export interface MarkAttendanceProps {
   currentStatus: string;
   handleClose: () => void;
   handleSubmit: (attendanceDate: string, attendance: string) => void;
+  message?:string
 }
 
 export interface AttendanceStatusListViewProps {
@@ -50,6 +51,7 @@ export interface AttendanceByDateParams {
   toDate: string;
   filters: {
     userId: string;
+    contextId:string
   };
 }
 

@@ -21,8 +21,12 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'; //Half-Day
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { MarkAttendanceProps } from '../utils/Interfaces';
+import Snackbar, { SnackbarOrigin } from '@mui/material/Snackbar';
 
-// Define a type for the icon prop
+interface State extends SnackbarOrigin {
+  openModal: boolean;
+}
+
 type IconType = React.ReactElement<typeof Icon>;
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -41,16 +45,39 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
   name,
   currentStatus,
   handleClose,
-  handleSubmit
+  handleSubmit,
+  message
 }) => {
   const { t } = useTranslation();
   const [status, setStatus] = React.useState(currentStatus);
   const theme = useTheme<any>();
 
-  const submitAttendance = () => {
+  
+
+  const [state, setState] = React.useState<State>({
+    openModal: false,
+    vertical: 'top',
+    horizontal: 'center'
+  });
+  const { vertical, horizontal, openModal } = state;
+
+  const submitAttendance = (newState: SnackbarOrigin) => () => {
     handleSubmit(date, status);
+
+    setState({ ...newState, openModal: true });
+    setTimeout(() => {
+      handleClose2();
+    }, 5000);
   };
 
+  const handleClose2 = () => {
+    setState({ ...state, openModal: false });
+  };
+  const handleClear = () => {
+    if (status !== ATTENDANCE_ENUM.NOT_MARKED) {
+      setStatus(ATTENDANCE_ENUM.NOT_MARKED);
+    }
+  };
   const getButtonComponent = (value: string, icon1: IconType, icon2: IconType, text: string) => {
     return (
       <Box
@@ -58,8 +85,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
         flexDirection="column"
         alignItems="center"
         p={2}
-        onClick={() => setStatus(value)}
-      >
+        onClick={() => setStatus(value)}>
         {status === value ? icon1 : icon2}
         <Typography marginTop={1}>{text}</Typography>
       </Box>
@@ -71,8 +97,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={isOpen}
-        sx={{ borderRadius: '16px' }}
-      >
+        sx={{ borderRadius: '16px' }}>
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
           <Typography variant="h2" sx={{ marginBottom: 0 }}>
             {currentStatus === ATTENDANCE_ENUM.NOT_MARKED
@@ -92,8 +117,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
             right: 8,
             top: 8,
             color: theme.palette.warning['A200']
-          }}
-        >
+          }}>
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
@@ -111,39 +135,45 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
               <HighlightOffIcon />,
               isSelfAttendance ? t('ATTENDANCE.ON_LEAVE') : t('ATTENDANCE.ABSENT')
             )}
-            {isSelfAttendance &&
+            {/* {isSelfAttendance &&
               getButtonComponent(
                 ATTENDANCE_ENUM.HALF_DAY,
                 <RemoveCircleIcon />,
                 <RemoveCircleOutlineIcon />,
                 t('ATTENDANCE.HALF_DAY')
-              )}
+              )} */}
           </Box>
         </DialogContent>
         <DialogActions>
-          {/* <Button
+          <Button
                         variant="outlined"
                         autoFocus
-                        onClick={handleClose}
+                        onClick={handleClear}
                         sx={{
-                            width: '100%',
-                            display: currentStatus === ATTENDANCE_ENUM.NOT_MARKED ? 'none' : 'block'
-                        }}
+                          width: '100%'
+                        }} 
                     >
-                        Clear
-                    </Button> */}
+                         {t('ATTENDANCE.CLEAR')}
+                    </Button>
           <Button
             variant="contained"
-            onClick={submitAttendance}
+            onClick={submitAttendance({ vertical: 'bottom', horizontal: 'center' })}
             disabled={status === ATTENDANCE_ENUM.NOT_MARKED || status === currentStatus}
             sx={{
               width: '100%'
-            }}
-          >
+            }}>
             {currentStatus === ATTENDANCE_ENUM.NOT_MARKED ? t('COMMON.SAVE') : t('COMMON.UPDATE')}
           </Button>
         </DialogActions>
       </BootstrapDialog>
+
+      <Snackbar
+        anchorOrigin={{ vertical, horizontal }}
+        open={openModal}
+        onClose={handleClose2}
+        message={message}
+        key={vertical + horizontal}
+      />
     </React.Fragment>
   );
 };
