@@ -99,7 +99,8 @@ const StudentDetails: React.FC = () => {
               fontSize: '15px'
             }}
             variant="h6"
-            gutterBottom>
+            gutterBottom
+          >
             {t('COMMON.ATTENDANCE_REPORT')}
           </Typography>
           <Link to="/history">
@@ -111,7 +112,8 @@ const StudentDetails: React.FC = () => {
                   fontSize: '14px'
                 }}
                 variant="h6"
-                gutterBottom>
+                gutterBottom
+              >
                 {t('DASHBOARD.HISTORY')}
               </Typography>
               <EastIcon
@@ -123,7 +125,7 @@ const StudentDetails: React.FC = () => {
         </Box>
         <Box>
           <FormControl sx={{ m: 1, minWidth: 320, minHeight: 20 }}>
-            <Select sx={{ height: '32px' }} >
+            <Select sx={{ height: '32px' }}>
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
@@ -138,7 +140,8 @@ const StudentDetails: React.FC = () => {
             bgcolor: theme.palette.secondary.light,
             borderRadius: theme.spacing(3),
             boxShadow: 'none'
-          }}>
+          }}
+        >
           <CardContent>
             <Typography> {t('COMMON.OVERALL_ATTENDANCE')}</Typography>
             <Typography
@@ -195,7 +198,8 @@ const StudentDetails: React.FC = () => {
                         fontSize: '15px'
                       }}
                       variant="h6"
-                      gutterBottom>
+                      gutterBottom
+                    >
                       {data.title}
                     </Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -205,7 +209,8 @@ const StudentDetails: React.FC = () => {
                           fontSize: '14px'
                         }}
                         variant="h6"
-                        gutterBottom>
+                        gutterBottom
+                      >
                         {data.linkText}
                       </Typography>
                     </Box>
