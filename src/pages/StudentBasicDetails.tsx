@@ -19,11 +19,16 @@ import { getUser } from '../services/profileService';
 import { useTranslation } from 'react-i18next';
 import { UserData } from '../utils/Interfaces';
 import Divider from '@mui/material/Divider';
+import { getAttendanceReport } from '../services/AttendanceService';
 
 const StudentDetails: React.FC = () => {
   const { t } = useTranslation();
   const theme: Theme = useTheme();
   const [userData, setUserData] = useState<UserData | null>(null);
+  const [attendanceReport, setAttendanceReport] = useState<UserData | null>(null);
+  const [limit, setLimit] = useState<number>(10);
+  const [page, setPage] = useState<number>(1);
+  const [filter, setFilter] = useState<object>({});
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -42,6 +47,31 @@ const StudentDetails: React.FC = () => {
     };
     fetchUserDetails();
   }, []);
+
+  useEffect(() => {
+    getOverallAttendance(limit, page, filter);
+  }, [limit, page, filter]);
+
+  const getOverallAttendance = async (limitvalue: number, value: number, filter: object) => {
+    try {
+      const contextId = 'e371526c-28f9-4646-b19a-a54d5f191ad2';
+      const report = true;
+      const pageLimit = limitvalue;
+      const response = await getAttendanceReport({
+        contextId,
+        report,
+        limit: pageLimit,
+        filters: filter
+      });
+      const result = response;
+      if (result?.statusCode === 200) {
+        const data = result?.data?.report;
+        setAttendanceReport(data);
+      }
+    } catch (error) {
+      console.error('Error fetching  attendance report:', error);
+    }
+  };
 
   const componentData = [
     { title: t('Overall'), linkText: '79%' },
@@ -73,7 +103,7 @@ const StudentDetails: React.FC = () => {
       <Box mt={3} display="flex" gap={2} alignItems="flex-start">
         <Link to="/">
           <ArrowBackIcon
-            sx={{ color: (theme.palette.warning as any)['A200'], fontSize: 'large' }}
+            sx={{ color: (theme.palette.warning as any)['A200'], fontSize: '1.5rem' }}
           />
         </Link>
         <Stack>
@@ -82,7 +112,8 @@ const StudentDetails: React.FC = () => {
             sx={{
               fontFamily: theme.typography.fontFamily,
               fontSize: '22px'
-            }}>
+            }}
+          >
             Class A
           </Typography>
         </Stack>
@@ -98,7 +129,8 @@ const StudentDetails: React.FC = () => {
               fontSize: '15px'
             }}
             variant="h6"
-            gutterBottom>
+            gutterBottom
+          >
             {t('COMMON.ATTENDANCE_REPORT')}
           </Typography>
           <Link to="/history">
@@ -110,7 +142,8 @@ const StudentDetails: React.FC = () => {
                   fontSize: '14px'
                 }}
                 variant="h6"
-                gutterBottom>
+                gutterBottom
+              >
                 {t('DASHBOARD.HISTORY')}
               </Typography>
               <EastIcon
@@ -122,7 +155,11 @@ const StudentDetails: React.FC = () => {
         </Box>
         <Box>
           <FormControl sx={{ m: 1, minWidth: 320, minHeight: 20 }}>
-            <Select sx={{ height: '32px' }} >
+            <Select
+              value={limit}
+              onChange={(e) => setLimit(e.target.value as number)}
+              sx={{ height: '32px' }}
+            >
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
@@ -137,13 +174,15 @@ const StudentDetails: React.FC = () => {
             bgcolor: theme.palette.secondary.light,
             borderRadius: theme.spacing(3),
             boxShadow: 'none'
-          }}>
+          }}
+        >
           <CardContent>
             <Typography> {t('COMMON.OVERALL_ATTENDANCE')}</Typography>
             <Typography
               sx={{ color: theme.palette.text.secondary, fontSize: '14px', fontWeight: 500 }}
               variant="h6"
-              gutterBottom>
+              gutterBottom
+            >
               As of 24 May
             </Typography>
             <Box
@@ -153,7 +192,8 @@ const StudentDetails: React.FC = () => {
                 justifyContent: 'center',
                 display: 'flex',
                 marginTop: 2
-              }}>
+              }}
+            >
               {renderStatsCard('Attendance', '78%')}
               {renderStatsCard('Classes Missed', '2')}
             </Box>
@@ -166,7 +206,8 @@ const StudentDetails: React.FC = () => {
             bgcolor: theme.palette.secondary.light,
             borderRadius: theme.spacing(3),
             boxShadow: 'none'
-          }}>
+          }}
+        >
           <CardContent>
             <Typography
               sx={{
@@ -175,7 +216,8 @@ const StudentDetails: React.FC = () => {
                 fontSize: '15px'
               }}
               variant="h6"
-              gutterBottom>
+              gutterBottom
+            >
               {t('COMMON.TEST_REPORT')}
             </Typography>
             <CustomSelect />
@@ -190,7 +232,8 @@ const StudentDetails: React.FC = () => {
                         fontSize: '15px'
                       }}
                       variant="h6"
-                      gutterBottom>
+                      gutterBottom
+                    >
                       {data.title}
                     </Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -200,7 +243,8 @@ const StudentDetails: React.FC = () => {
                           fontSize: '14px'
                         }}
                         variant="h6"
-                        gutterBottom>
+                        gutterBottom
+                      >
                         {data.linkText}
                       </Typography>
                     </Box>
@@ -219,7 +263,8 @@ const StudentDetails: React.FC = () => {
           boxShadow: 'none',
           marginTop: '10px',
           overflow: 'auto'
-        }}>
+        }}
+      >
         <CardContent>
           <Typography
             sx={{
@@ -228,7 +273,8 @@ const StudentDetails: React.FC = () => {
               fontWeight: 500
             }}
             variant="h6"
-            gutterBottom>
+            gutterBottom
+          >
             {t('COMMON.BASIC_DETAILS')}
           </Typography>
         </CardContent>
@@ -240,14 +286,16 @@ const StudentDetails: React.FC = () => {
             margin: 'auto',
             borderRadius: theme.spacing(2),
             boxShadow: 'none'
-          }}>
+          }}
+        >
           <Box sx={{ padding: '16px' }}>
             <Typography
               sx={{
                 color: theme.palette.text.secondary,
                 fontSize: '14px',
                 fontWeight: 600
-              }}>
+              }}
+            >
               {t('COMMON.DOB')}
             </Typography>
             <Typography sx={{ fontWeight: 500 }}>{userData?.dob}</Typography>

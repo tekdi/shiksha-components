@@ -63,3 +63,10 @@ export interface UserData {
   email: string;
   dob?: string;
 }
+
+export interface AttendanceReports {
+  contextId: string;
+  report: boolean;
+  limit: number;
+  filters: object;
+}
