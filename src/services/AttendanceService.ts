@@ -66,7 +66,6 @@ export const getAttendanceReport = async ({
   const apiUrl: string = `${import.meta.env.VITE_BASE_URL}/attendance/report`;
   try {
     const response = await post(apiUrl, { contextId, report, limit, filters });
-    console.log('data', response?.data);
     return response?.data;
   } catch (e) {
     console.log(e);

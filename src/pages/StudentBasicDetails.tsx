@@ -65,7 +65,7 @@ const StudentDetails: React.FC = () => {
       });
       const result = response;
       if (result?.statusCode === 200) {
-        const data = result?.data?.report;
+        const data = result?.data;
         setAttendanceReport(data);
       }
     } catch (error) {
@@ -112,8 +112,7 @@ const StudentDetails: React.FC = () => {
             sx={{
               fontFamily: theme.typography.fontFamily,
               fontSize: '22px'
-            }}
-          >
+            }}>
             Class A
           </Typography>
         </Stack>
@@ -129,8 +128,7 @@ const StudentDetails: React.FC = () => {
               fontSize: '15px'
             }}
             variant="h6"
-            gutterBottom
-          >
+            gutterBottom>
             {t('COMMON.ATTENDANCE_REPORT')}
           </Typography>
           <Link to="/student-attendance-history">
@@ -142,8 +140,7 @@ const StudentDetails: React.FC = () => {
                   fontSize: '14px'
                 }}
                 variant="h6"
-                gutterBottom
-              >
+                gutterBottom>
                 {t('DASHBOARD.HISTORY')}
               </Typography>
               <EastIcon
@@ -170,15 +167,13 @@ const StudentDetails: React.FC = () => {
             bgcolor: theme.palette.secondary.light,
             borderRadius: theme.spacing(3),
             boxShadow: 'none'
-          }}
-        >
+          }}>
           <CardContent>
             <Typography> {t('COMMON.OVERALL_ATTENDANCE')}</Typography>
             <Typography
               sx={{ color: theme.palette.text.secondary, fontSize: '14px', fontWeight: 500 }}
               variant="h6"
-              gutterBottom
-            >
+              gutterBottom>
               As of 24 May
             </Typography>
             <Box
@@ -188,10 +183,12 @@ const StudentDetails: React.FC = () => {
                 justifyContent: 'center',
                 display: 'flex',
                 marginTop: 2
-              }}
-            >
-              {renderStatsCard('Attendance', '78%')}
-              {renderStatsCard('Classes Missed', '2')}
+              }}>
+              {renderStatsCard(
+                'Attendance',
+                attendanceReport?.average?.average_attendance_percentage
+              )}
+              {renderStatsCard('Classes Missed', '0')}
             </Box>
           </CardContent>
         </Card>
@@ -202,8 +199,7 @@ const StudentDetails: React.FC = () => {
             bgcolor: theme.palette.secondary.light,
             borderRadius: theme.spacing(3),
             boxShadow: 'none'
-          }}
-        >
+          }}>
           <CardContent>
             <Typography
               sx={{
@@ -212,8 +208,7 @@ const StudentDetails: React.FC = () => {
                 fontSize: '15px'
               }}
               variant="h6"
-              gutterBottom
-            >
+              gutterBottom>
               {t('COMMON.TEST_REPORT')}
             </Typography>
             <CustomSelect />
@@ -228,8 +223,7 @@ const StudentDetails: React.FC = () => {
                         fontSize: '15px'
                       }}
                       variant="h6"
-                      gutterBottom
-                    >
+                      gutterBottom>
                       {data.title}
                     </Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -239,8 +233,7 @@ const StudentDetails: React.FC = () => {
                           fontSize: '14px'
                         }}
                         variant="h6"
-                        gutterBottom
-                      >
+                        gutterBottom>
                         {data.linkText}
                       </Typography>
                     </Box>
@@ -259,8 +252,7 @@ const StudentDetails: React.FC = () => {
           boxShadow: 'none',
           marginTop: '10px',
           overflow: 'auto'
-        }}
-      >
+        }}>
         <CardContent>
           <Typography
             sx={{
@@ -269,8 +261,7 @@ const StudentDetails: React.FC = () => {
               fontWeight: 500
             }}
             variant="h6"
-            gutterBottom
-          >
+            gutterBottom>
             {t('COMMON.BASIC_DETAILS')}
           </Typography>
         </CardContent>
@@ -282,16 +273,14 @@ const StudentDetails: React.FC = () => {
             margin: 'auto',
             borderRadius: theme.spacing(2),
             boxShadow: 'none'
-          }}
-        >
+          }}>
           <Box sx={{ padding: '16px' }}>
             <Typography
               sx={{
                 color: theme.palette.text.secondary,
                 fontSize: '14px',
                 fontWeight: 600
-              }}
-            >
+              }}>
               {t('COMMON.DOB')}
             </Typography>
             <Typography sx={{ fontWeight: 500 }}>{userData?.dob}</Typography>
