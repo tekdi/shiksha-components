@@ -36,16 +36,18 @@ export const bulkAttendance = async ({
 };
 
 export const getAttendanceByDate = async ({
-  filters: { userId, contextId },
   fromDate,
-  toDate
+  toDate,
+  page,
+  filters: { userId, contextId }
 }: AttendanceByDateParams): Promise<any> => {
   const apiUrl: string = `${import.meta.env.VITE_BASE_URL}/attendance/bydate`;
   try {
     const response = await post(apiUrl, {
       fromDate,
       toDate,
-      filters: { userId , contextId}
+      page,
+      filters: { contextId, userId }
     });
     return response?.data;
   } catch (error) {

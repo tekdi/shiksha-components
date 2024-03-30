@@ -46,9 +46,17 @@ export interface cohortListParam {
   userId: string;
 }
 
+export interface cohortDetailsList {
+  contextId: string;
+  report: boolean;
+  limit: number;
+  offset: number;
+  filters: object;
+}
 export interface AttendanceByDateParams {
   fromDate: string;
   toDate: string;
+  page:number
   filters: {
     userId: string;
     contextId:string
@@ -65,10 +73,9 @@ export interface UserData {
   dob?: string;
 }
 
-export interface cohortDetailsList {
-  contextId: string;
-  attendanceDate: string;
-  report: boolean;
-  limit: number;
-  offset: number;
+export interface Student {
+  name: string;
+  attendance_percentage: number;
+  label1: string;
+  label2: string;
 }

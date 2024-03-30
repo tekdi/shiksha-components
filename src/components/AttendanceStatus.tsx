@@ -1,10 +1,11 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Grid, Typography } from '@mui/material';
 import {
   RemoveCircleOutline,
   CheckCircleOutlineOutlined,
   CancelOutlined,
   CreateOutlined
 } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 interface AttendanceStatusProps {
   status: string;
@@ -12,6 +13,8 @@ interface AttendanceStatusProps {
 }
 
 function AttendanceStatus({ status, onUpdate }: AttendanceStatusProps) {
+  const { t } = useTranslation();
+
   let icon, message;
   switch (status) {
     case 'Present':
@@ -37,23 +40,26 @@ function AttendanceStatus({ status, onUpdate }: AttendanceStatusProps) {
   }
 
   return (
-    <Box display="flex" alignItems="center" width="100%">
-      {icon && <div className={`${status.toLowerCase()}-marker`}>{icon}</div>}
-      <Typography marginBottom={0} fontSize="16px">
-        {message}
-      </Typography>
-      {onUpdate && (
-        <Box position="absolute" right="0" paddingRight="1rem">
-          <Button
-            variant="text"
-            endIcon={<CreateOutlined />}
-            onClick={onUpdate}
-            disabled={status === 'Future date'}
-          >
-            Update
-          </Button>
-        </Box>
-      )}
+    <Box>
+      <Grid container display={'flex'} justifyContent="space-around" alignItems={'center'}>
+        <Grid item xs={6} display={'flex'}>
+          {icon && <div className={`${status.toLowerCase()}-marker`}>{icon}</div>}
+          <Typography marginBottom={0} fontSize="16px" ml={1}>
+            {message}
+          </Typography>
+        </Grid>{' '}
+        {onUpdate && (
+          <Grid item xs={6}>
+            <Button
+              variant="text"
+              endIcon={<CreateOutlined />}
+              onClick={onUpdate}
+              disabled={status === 'Future date'}>
+              {t('COMMON.UPDATE')}
+            </Button>
+          </Grid>
+        )}
+      </Grid>
     </Box>
   );
 }

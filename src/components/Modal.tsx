@@ -11,9 +11,18 @@ interface ModalProps {
   SubHeading?: string;
   children?: React.ReactNode;
   btnText: string;
+  handleApplySort: () => void;
 }
 
-const ModalComponent: React.FC<ModalProps> = ({ open, onClose, heading, SubHeading, children }) => {
+const ModalComponent: React.FC<ModalProps> = ({
+  open,
+  onClose,
+  heading,
+  SubHeading,
+  children,
+  btnText,
+  handleApplySort
+}) => {
   // const style = {
   //   position: 'absolute',
   //   top: '50%',
@@ -78,7 +87,7 @@ const ModalComponent: React.FC<ModalProps> = ({ open, onClose, heading, SubHeadi
         <Typography variant="h6">{SubHeading}</Typography>
         <Box mt={2}>{children}</Box>
         <Box mt={2} display="flex" justifyContent="flex-end">
-          <ButtonFunctional buttonName={t('COMMON.APPLY')} handleClickButton={handleClick} />{' '}
+          <ButtonFunctional handleClickButton={handleApplySort} buttonName={t('COMMON.APPLY')} />{' '}
           {/* You may use t('COMMON.APPLY') */}
         </Box>
       </Box>

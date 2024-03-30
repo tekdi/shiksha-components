@@ -18,7 +18,7 @@ import AttendanceStatus from '../components/AttendanceStatus';
 import MarkAttendance from '../components/MarkAttendance';
 import { useTranslation } from 'react-i18next';
 
-const UserAttendanceHistory = () => {
+const StudentAttendanceHistory = () => {
   const theme = useTheme<any>();
   const { t } = useTranslation();
   const [attendanceData, setAttendanceData] = useState<any[]>([]);
@@ -37,7 +37,6 @@ const UserAttendanceHistory = () => {
   const [openMarkAttendance, setOpenMarkAttendance] = useState(false);
   const handleMarkAttendanceModal = () => setOpenMarkAttendance(!openMarkAttendance);
 
-let contextId: string='';
   let userId: string = '00772d32-3f60-4a8e-a5e0-d0110c5c42fb';
 
   useEffect(() => {
@@ -210,24 +209,13 @@ let contextId: string='';
           <Box position={'absolute'} left={'0'}>
             <KeyboardBackspaceOutlinedIcon sx={{ color: theme.palette.warning['A200'] }} />
           </Box>
+          <Box>
+            <Typography marginBottom={'0px'} fontSize={'25px'}>
+              {t('ATTENDANCE.MY_ATTENDANCE_HISTORY')}
+            </Typography>
 
-          <Typography marginBottom={'0px'} fontSize={'25px'}>
-            {t('ATTENDANCE.MY_ATTENDANCE_HISTORY')}
-          </Typography>
-        </Box>
-      </Box>
-      <Box mt={2} display={'flex'} justifyContent={'center'} m={2}>
-        <Box sx={{ width: '100%', maxWidth: 580 }}>
-          <FormControl fullWidth>
-            <InputLabel>Center</InputLabel>
-            <Select value={center} label="Center" onChange={handleChange}>
-              {/* {cohorts?.map((item: string, index: number) => ( */}
-              <MenuItem key={'index'} value={'item'}>
-                item
-              </MenuItem>
-              {/* ))} */}
-            </Select>
-          </FormControl>
+            <Typography fontSize={'15px'}>Khapari Dharmu (Chimur, Chandrapur)</Typography>
+          </Box>
         </Box>
       </Box>
 
@@ -265,4 +253,4 @@ let contextId: string='';
   );
 };
 
-export default UserAttendanceHistory;
+export default StudentAttendanceHistory;

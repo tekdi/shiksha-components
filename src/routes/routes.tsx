@@ -7,6 +7,7 @@ import UserAttendanceHistory from '../pages/UserAttendanceHistory';
 const MyClassDetails = lazy(() => import('../pages/MyClassDetails'));
 import PrivateRoute from '../utils/PrivateRoute';
 import PageNotFound from '../pages/PageNotFound';
+import StudentAttendanceHistory from '../pages/StudentAttendanceHistory';
 const LoginPage = lazy(() => import('../pages/LoginPage'));
 const Profile = lazy(() => import('../pages/Profile'));
 const StudentDetails = lazy(() => import('../pages/StudentBasicDetails'));
@@ -24,6 +25,7 @@ function AllRoutes(): JSX.Element {
             <Route path="/student-details" element={<StudentDetails />} />
             <Route path="/class-details" element={<MyClassDetails />} />
             <Route path="/user-attendance-history" element={<UserAttendanceHistory />} />
+            <Route path="/student-attendance-history" element={<StudentAttendanceHistory />} />
             <Route path="/logout" element={<Logout />} />
           </Route>
           <Route path="/" element={<LoginPage />} />
