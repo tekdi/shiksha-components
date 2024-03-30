@@ -51,6 +51,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
   const { t } = useTranslation();
   const [status, setStatus] = React.useState(currentStatus);
   const theme = useTheme<any>();
+ const SNACKBAR_AUTO_HIDE_DURATION = 5000;
 
   
 
@@ -67,7 +68,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
     setState({ ...newState, openModal: true });
     setTimeout(() => {
       handleClose2();
-    }, 5000);
+    }, SNACKBAR_AUTO_HIDE_DURATION);
   };
 
   const handleClose2 = () => {
