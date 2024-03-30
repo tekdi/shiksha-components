@@ -10,7 +10,7 @@ import SearchSortBar from '../components/SearchSortBar';
 import StudentStatsCard from '../components/StudentStatsCard';
 import EastIcon from '@mui/icons-material/East';
 import { Link } from 'react-router-dom';
-import { getClassDetails } from '../services/MyClassDetailsService';
+import { getMyClassDetails } from '../services/MyClassDetailsService';
 
 export default function MyClassDetails() {
   const [classData, setClassData] = React.useState<any[]>([]);
@@ -19,11 +19,11 @@ export default function MyClassDetails() {
   };
   const theme = useTheme<any>();
 
-  React.useEffect(() => {
-    getClassDetails().then((response: (typeof classData)[]) => {
-      setClassData(response);
-    });
-  }, []);
+  // React.useEffect(() => {
+  //   getMyClassDetails().then((response: (typeof classData)[]) => {
+  //     setClassData(response);
+  //   });
+  // }, []);
 
   return (
     <>

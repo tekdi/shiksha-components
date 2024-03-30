@@ -1,66 +1,20 @@
-export const data = [
-  {
-    name: 'ananyaj',
-    value1: '34',
-    label1: 'Attendance',
-    value2: '7',
-    label2: 'Class Missed'
-  },
-  {
-    name: 'Upendra',
-    value1: '74',
-    label1: 'Attendance',
-    value2: '7',
-    label2: 'Class Missed'
-  },
-  {
-    name: 'Upendra1',
-    value1: '79',
-    label1: 'Attendance',
-    value2: '0',
-    label2: 'Class Missed'
-  },
-  {
-    name: 'Upendra2',
-    value1: '74',
-    label1: 'Attendance',
-    value2: '7',
-    label2: 'Class Missed'
-  },
-  {
-    name: 'Upendra3',
-    value1: '74',
-    label1: 'Attendance',
-    value2: '7',
-    label2: 'Class Missed'
-  },
-  {
-    name: 'Upendra4',
-    value1: '74',
-    label1: 'Attendance',
-    value2: '7',
-    label2: 'Class Missed'
-  },
-  {
-    name: 'Upendra4',
-    value1: '74',
-    label1: 'Attendance',
-    value2: '7',
-    label2: 'Class Missed'
-  },
-  {
-    name: 'Upendra5',
-    value1: '74',
-    label1: 'Attendance',
-    value2: '7',
-    label2: 'Class Missed'
+import { cohortDetailsList } from '../utils/Interfaces';
+import { post } from './RestClient';
+// get class details or cohort details of all student
+export const getMyClassDetails = async ({
+  contextId,
+  attendanceDate,
+  report,
+  limit,
+  offset
+}: cohortDetailsList): Promise<any> => {
+  const apiUrl: string = `${import.meta.env.VITE_BASE_URL}/attendance/report`;
+  try {
+    const response = await post(apiUrl, { contextId, attendanceDate, report, limit, offset }); //contextId, report, limit, offset, filters
+    console.log('data', response?.data);
+    return response?.data;
+  } catch (error) {
+    console.error('error in attendance report api ', error);
+    throw error;
   }
-];
-
-export const getClassDetails = (): Promise<any[]> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(data);
-    }, 1000);
-  });
 };
