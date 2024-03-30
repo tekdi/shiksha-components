@@ -20,9 +20,9 @@
     "ATTENDANCE_REPORT": "Attendance Report",
     "TEST_REPORT": "Test Report",
     "BASIC_DETAILS": "Basic Details",
-    "DOB":"Date of Birth",
-    "LOGOUT":"Log out",
-    "OVERALL_ATTENDANCE":"Overall Attendance"
+    "DOB": "Date of Birth",
+    "LOGOUT": "Log out",
+    "OVERALL_ATTENDANCE": "Overall Attendance"
   },
   "LOGIN_PAGE": {
     "USERNAME": "Username",
@@ -36,7 +36,8 @@
     "MY_CLASSES": "My Classes",
     "ADD_NEW_CLASS": "Add New Class",
     "NEW_REMOTE_CLASS": "New Remote Class",
-    "NEW_PHYSICAL_CLASS": "New Physical Class"
+    "NEW_PHYSICAL_CLASS": "New Physical Class",
+    "CLASS": "Class"
   },
   "ATTENDANCE": {
     "TOTAL_STUDENTS": "Total No of Students: {{count}}",
@@ -44,7 +45,8 @@
     "ABSENT": "Absent",
     "HALF_DAY": "Half Day",
     "ON_LEAVE": "On Leave",
-    "MARK_ALL": "Mark All"
+    "MARK_ALL": "Mark All",
+    "MY_ATTENDANCE_HISTORY":"My Attendance History"
   },
   "PROFILE": {
     "EDIT_PROFILE": "Edit Profile",

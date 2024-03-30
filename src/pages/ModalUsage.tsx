@@ -21,6 +21,7 @@ const ModalUsage = () => {
   const closeNestedModal = () => {
     setNestedModalOpen(false);
   };
+  const handleClick = () => {};
   return (
     <>
       <Grid
@@ -41,6 +42,7 @@ const ModalUsage = () => {
         heading={'Mark attendance'}
         SubHeading={'date'}
         btnText="apply"
+        handleApplySort={handleClick}
       >
         <TextField label="Input Field" variant="outlined" />
         <Box>
@@ -55,6 +57,7 @@ const ModalUsage = () => {
 
       {nestedModalOpen && (
         <ModalComponent
+          handleApplySort={handleClick}
           open={nestedModalOpen}
           onClose={closeNestedModal}
           heading={'nested modal'}

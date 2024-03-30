@@ -1,11 +1,12 @@
 import React from 'react';
 
-import { Box, Link, Stack, Typography } from '@mui/material';
+import { Box, Grid, Link, Pagination, Stack, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import { useTranslation } from 'react-i18next';
 interface StudentsStatsListProps {
   name: string;
   label1: string;
-  value1: string;
+  value1: number;
   label2: string;
   value2: number;
 }
@@ -18,67 +19,75 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
   value2
 }) => {
   const theme = useTheme<any>();
+  const { t } = useTranslation();
   return (
-    <Box
-      // width="100%"
-      height="4.5rem"
-      gap="1rem"
-      borderTop="1px solid #7F7667" //Add color from colorScheme
-      display="flex"
-      justifyContent="space-around"
-      alignItems="center"
-      sx={{ borderColor: theme.palette.warning['200'] }}
-      margin="0px"
-    >
-      <Link
-        href="#"
-        underline="always"
-        color="#000000" //Add color from colorScheme
-        fontSize="0.875rem"
-        fontWeight="400"
-        lineHeight="1.25rem"
-        padding="1rem"
+    <Stack>
+      <Box
+        height="60px"
+        borderTop={`1px solid  ${theme.palette.warning['300']}`}
+        margin="0px"
+        alignItems={'center'}
+        // padding="1rem"
       >
-        {name}
-      </Link>
-
-      <Stack>
-        <Typography
-          fontSize="1rem"
-          fontWeight="bold"
-          lineHeight="1.5rem"
-          color="black" //Add color from colorScheme
-        >
-          {value1}
-        </Typography>
-        <Typography
-          fontSize="0.6875rem"
-          fontWeight="500"
-          lineHeight="1rem"
-          sx={{ color: theme.palette.warning['200'] }}
-        >
-          {label1}
-        </Typography>
-      </Stack>
-      <Stack>
-        <Typography
-          fontSize="1rem"
-          fontWeight="bold"
-          lineHeight="1.5rem"
-          color="black" //Add color from colorScheme
-        >
-          {value2}
-        </Typography>
-        <Typography
-          fontSize="0.6875rem"
-          fontWeight="500"
-          lineHeight="1rem"
-          sx={{ color: theme.palette.warning['200'] }}
-        >
-          {label2}
-        </Typography>
-      </Stack>
-    </Box>
+        <Grid container alignItems="center" justifyContent="space-between" p={2}>
+          <Grid item xs={8}>
+            <Link
+              href="#"
+              underline="always"
+              color={theme.palette.text.primary}
+              fontSize="0.875rem"
+              fontWeight="400"
+              lineHeight="1.25rem"
+            >
+              <Typography m={0}>{name}</Typography>
+            </Link>
+          </Grid>
+          <Grid item xs={4}>
+            <Typography
+              m={0}
+              fontSize="1rem"
+              fontWeight="bold"
+              lineHeight="1.5rem"
+              color={theme.palette.text.primary}
+              textAlign="end"
+            >
+              {value1}
+            </Typography>
+            <Typography
+              m={0}
+              fontSize="0.6875rem"
+              fontWeight="500"
+              lineHeight="1rem"
+              color={theme.palette.warning.main}
+              textAlign="end"
+            >
+             {t("COMMON.ATTENDANCE")}
+            </Typography>
+          </Grid>
+          {/* -------------------- code commented as per requirement -------------------
+         <Grid item xs={3}>
+          <Typography
+            m={0}
+            fontSize="1rem"
+            fontWeight="bold"
+            lineHeight="1.5rem"
+            color={theme.palette.text.primary}
+            textAlign="center">
+            {value2}
+          </Typography>
+          <Typography
+            m={0}
+            fontSize="0.6875rem"
+            fontWeight="500"
+            lineHeight="1rem"
+            color={theme.palette.warning.main}
+            textAlign="center">
+            Class Missed
+          </Typography>
+        </Grid> */}
+        </Grid>
+      </Box>
+    </Stack>
   );
 };
 

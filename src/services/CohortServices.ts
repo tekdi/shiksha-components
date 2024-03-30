@@ -1,13 +1,13 @@
 import { cohortListParam } from '../utils/Interfaces';
-import { post } from './RestClient';
+import { get } from './RestClient';
 
-export const cohortList = async ({ limit, page, filters }: cohortListParam): Promise<any> => {
-  const apiUrl: string = `${import.meta.env.VITE_BASE_URL}/cohort/search`;
+export const cohortList = async (userId: string): Promise<any> => {
+  const apiUrl: string = `${import.meta.env.VITE_BASE_URL}/cohort/cohortList/${userId}`;
   try {
-    const response = await post(apiUrl, { limit, page, filters });
+    const response = await get(apiUrl);
     return response?.data;
   } catch (error) {
-    console.error('error in marking attendance', error);
+    console.error('error in getting cohort list', error);
     throw error;
   }
 };

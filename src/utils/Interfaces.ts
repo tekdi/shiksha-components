@@ -22,16 +22,17 @@ export interface MarkAttendanceProps {
 }
 
 export interface AttendanceStatusListViewProps {
-  currentStatus: string;
-  studentName: string;
+  userData?: UserAttendanceObj;
   isEdit?: boolean;
   isBulkAction?: boolean;
-  handleBulkAction?: (status: string) => void;
+  handleBulkAction?: (isBulkAction: boolean, status: string, id?: string | undefined) => void;
+  bulkAttendanceStatus?: string;
 }
 
 export interface UserAttendanceObj {
   userId: string;
   attendance: string;
+  name?: string;
 }
 
 export interface BulkAttendanceParams {
@@ -41,16 +42,23 @@ export interface BulkAttendanceParams {
 }
 
 export interface cohortListParam {
-  limit: 'string';
-  page: number;
-  filters: object;
+  userId: string;
 }
 
+export interface cohortDetailsList {
+  contextId: string;
+  report: boolean;
+  limit: number;
+  offset: number;
+  filters: object;
+}
 export interface AttendanceByDateParams {
   fromDate: string;
   toDate: string;
+  page:number
   filters: {
     userId: string;
+    contextId:string
   };
 }
 
@@ -69,4 +77,11 @@ export interface AttendanceReports {
   report: boolean;
   limit: number;
   filters: object;
+}
+
+export interface Student {
+  name: string;
+  attendance_percentage: number;
+  label1: string;
+  label2: string;
 }

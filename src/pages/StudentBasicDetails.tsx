@@ -133,7 +133,7 @@ const StudentDetails: React.FC = () => {
           >
             {t('COMMON.ATTENDANCE_REPORT')}
           </Typography>
-          <Link to="/history">
+          <Link to="/student-attendance-history">
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Typography
                 sx={{
@@ -155,11 +155,7 @@ const StudentDetails: React.FC = () => {
         </Box>
         <Box>
           <FormControl sx={{ m: 1, minWidth: 320, minHeight: 20 }}>
-            <Select
-              value={limit}
-              onChange={(e) => setLimit(e.target.value as number)}
-              sx={{ height: '32px' }}
-            >
+            <Select sx={{ height: '32px' }}>
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
