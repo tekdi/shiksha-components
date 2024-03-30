@@ -47,7 +47,7 @@ interface user {
 interface cohort {
   cohortId: string;
   name: string;
-  value:string
+  value: string;
 }
 
 let userId: string = '';
@@ -56,7 +56,7 @@ let contextId: string = '';
 const Dashboard: React.FC<DashboardProps> = () => {
   const [open, setOpen] = React.useState(false);
   const [selfAttendanceDetails, setSelfAttendanceDetails] = React.useState(null);
-  const [cohortsData, setCohortsData] = React.useState<Array<cohort>>([])
+  const [cohortsData, setCohortsData] = React.useState<Array<cohort>>([]);
   const [classes, setClasses] = React.useState('');
   const [cohortId, setCohortId] = React.useState(null);
   const [openMarkAttendance, setOpenMarkAttendance] = React.useState(false);
@@ -99,9 +99,11 @@ const Dashboard: React.FC<DashboardProps> = () => {
           const resp = await cohortList(userId);
           const extractedNames = resp?.result?.cohortData;
           const filteredData = extractedNames
-            .flatMap((item:any) => {
-              const addressData = item.customField.find((field:any) => field.label === 'address');
-              const classTypeData = item.customField.find((field:any) => field.label === 'Class Type');
+            .flatMap((item: any) => {
+              const addressData = item.customField.find((field: any) => field.label === 'address');
+              const classTypeData = item.customField.find(
+                (field: any) => field.label === 'Class Type'
+              );
               return [
                 addressData
                   ? { cohortId: item.cohortId, name: item.name, value: addressData.value }
@@ -176,8 +178,12 @@ const Dashboard: React.FC<DashboardProps> = () => {
     }
   };
 
-  const submitBulkAttendanceAction = (isBulkAction: boolean, status: string, id?: string | undefined) => {
-    const updatedAttendanceList = cohortMemberList?.map((user:any) => {
+  const submitBulkAttendanceAction = (
+    isBulkAction: boolean,
+    status: string,
+    id?: string | undefined
+  ) => {
+    const updatedAttendanceList = cohortMemberList?.map((user: any) => {
       if (isBulkAction) {
         user.attendance = status;
         setBulkAttendanceStatus(status);
@@ -196,7 +202,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
   };
 
   const handleSave = () => {
-    const userAttendance = cohortMemberList?.map((user:any) => {
+    const userAttendance = cohortMemberList?.map((user: any) => {
       return {
         userId: user.userId,
         attendance: user.attendance
@@ -324,10 +330,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
                       <InputLabel>{t('DASHBOARD.CLASS')}</InputLabel>
                       <Select value={classes} label="Class" onChange={handleChange}>
                         {cohortsData?.map((cohort) => (
-                          <MenuItem
-                            key={cohort.cohortId}
-                            value={cohort.cohortId}
-                          >
+                          <MenuItem key={cohort.cohortId} value={cohort.cohortId}>
                             {cohort.name}
                           </MenuItem>
                         ))}
@@ -339,14 +342,13 @@ const Dashboard: React.FC<DashboardProps> = () => {
                   {t('ATTENDANCE.TOTAL_STUDENTS', { count: numberOfCohortMembers })}
                 </Typography>
                 <Box height={'57%'} sx={{ overflowY: 'scroll' }}>
-                  
                   <AttendanceStatusListView
                     isEdit={true}
                     isBulkAction={true}
                     bulkAttendanceStatus={bulkAttendanceStatus}
                     handleBulkAction={submitBulkAttendanceAction}
                   />
-                  {cohortMemberList?.map((user:any) => (
+                  {cohortMemberList?.map((user: any) => (
                     <AttendanceStatusListView
                       key={user.userId}
                       userData={user}
