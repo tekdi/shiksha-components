@@ -36,9 +36,10 @@ export default function MyClassDetails() {
   // state declaration
   const [classData, setClassData] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [limit, setLimit] = React.useState(10);
+  const [limit, setLimit] = React.useState(100);
   const [searchWord, setSearchWord] = React.useState('');
   const [modalOpen, setModalOpen] = React.useState(false);
+  const [averagePercentage, setAveragePercentage] = React.useState(0);
 
   // functions
 
@@ -68,8 +69,13 @@ export default function MyClassDetails() {
       });
       const result = response;
       if (result?.statusCode === 200) {
-        const data = result?.data?.report;
-        setClassData(data);
+        const dataReport = result?.data?.report;
+        setClassData(dataReport);
+
+        const average = result?.data?.average;
+        const attendance_percentage = Math.round(average?.average_attendance_percentage);
+
+        setAveragePercentage(attendance_percentage);
       }
     } catch (error) {
       console.error('Error fetching  cohort list:', error);
@@ -124,7 +130,7 @@ export default function MyClassDetails() {
         <Box>
           <Header />
           <Box mt={3} display={'flex'} gap={2} alignItems={'flex-start'}>
-            <Link to={'/'} color={theme.palette.warning.A200}>
+            <Link to={'/Dashboard'} color={theme.palette.warning.A200}>
               <ArrowBackIcon color={theme.palette.warning.A200} fontSize="medium" />
             </Link>
             <Stack>
@@ -200,7 +206,7 @@ export default function MyClassDetails() {
               <Grid item xs={5}>
                 <StudentStatsCard
                   label1="Attendance"
-                  value1="78%" // Sample attendance data, replace with actual data
+                  value1={averagePercentage + '%'} // Sample attendance data, replace with actual data
                   label2={false}
                   value2="5" // Sample late arrivals data, replace with actual data
                 />
@@ -300,7 +306,6 @@ export default function MyClassDetails() {
             </div>
           );
         })}
-        ;
       </Stack>
     </>
   );

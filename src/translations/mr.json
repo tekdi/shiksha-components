@@ -38,7 +38,8 @@
   },
   "ATTENDANCE": {
     "TOTAL_STUDENTS": "एकूण विद्यार्थी: {{count}}",
-    "MARK_ALL": "सर्व चिन्हित करा"
+    "MARK_ALL": "सर्व चिन्हित करा",
+    "MY_ATTENDANCE_HISTORY":"माझ्या उपस्थितीचा इतिहास"
   },
   "PROFILE": {
     "EDIT_PROFILE": "प्रोफाइल संपादित करा",
