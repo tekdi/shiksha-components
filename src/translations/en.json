@@ -45,7 +45,8 @@
     "ABSENT": "Absent",
     "HALF_DAY": "Half Day",
     "ON_LEAVE": "On Leave",
-    "MARK_ALL": "Mark All"
+    "MARK_ALL": "Mark All",
+    "MY_ATTENDANCE_HISTORY":"My Attendance History"
   },
   "PROFILE": {
     "EDIT_PROFILE": "Edit Profile",
