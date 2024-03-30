@@ -19,11 +19,16 @@ import { getUser } from '../services/profileService';
 import { useTranslation } from 'react-i18next';
 import { UserData } from '../utils/Interfaces';
 import Divider from '@mui/material/Divider';
+import { getAttendanceReport } from '../services/AttendanceService';
 
 const StudentDetails: React.FC = () => {
   const { t } = useTranslation();
   const theme: Theme = useTheme();
   const [userData, setUserData] = useState<UserData | null>(null);
+  const [attendanceReport, setAttendanceReport] = useState<UserData | null>(null);
+  const [limit, setLimit] = useState<number>(10);
+  const [page, setPage] = useState<number>(1);
+  const [filter, setFilter] = useState<object>({});
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -42,6 +47,31 @@ const StudentDetails: React.FC = () => {
     };
     fetchUserDetails();
   }, []);
+
+  useEffect(() => {
+    getOverallAttendance(limit, page, filter);
+  }, [limit, page, filter]);
+
+  const getOverallAttendance = async (limitvalue: number, value: number, filter: object) => {
+    try {
+      const contextId = 'e371526c-28f9-4646-b19a-a54d5f191ad2';
+      const report = true;
+      const pageLimit = limitvalue;
+      const response = await getAttendanceReport({
+        contextId,
+        report,
+        limit: pageLimit,
+        filters: filter
+      });
+      const result = response;
+      if (result?.statusCode === 200) {
+        const data = result?.data?.report;
+        setAttendanceReport(data);
+      }
+    } catch (error) {
+      console.error('Error fetching  attendance report:', error);
+    }
+  };
 
   const componentData = [
     { title: t('Overall'), linkText: '79%' },
@@ -73,7 +103,7 @@ const StudentDetails: React.FC = () => {
       <Box mt={3} display="flex" gap={2} alignItems="flex-start">
         <Link to="/">
           <ArrowBackIcon
-            sx={{ color: (theme.palette.warning as any)['A200'], fontSize: 'large' }}
+            sx={{ color: (theme.palette.warning as any)['A200'], fontSize: '1.5rem' }}
           />
         </Link>
         <Stack>
@@ -122,7 +152,10 @@ const StudentDetails: React.FC = () => {
         </Box>
         <Box>
           <FormControl sx={{ m: 1, minWidth: 320, minHeight: 20 }}>
-            <Select sx={{ height: '32px' }} >
+            <Select
+              value={limit}
+              onChange={(e) => setLimit(e.target.value as number)}
+              sx={{ height: '32px' }}>
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
