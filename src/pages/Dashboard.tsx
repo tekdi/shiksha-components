@@ -27,7 +27,7 @@ import MarkAttendance from '../components/MarkAttendance';
 import { markAttendance, bulkAttendance } from '../services/AttendanceService';
 import { AttendanceParams } from '../utils/Interfaces';
 import { cohortList } from '../services/CohortServices';
-import { getMyClassDetails } from '../services/MyClassDetailsService';
+import { getMyCohortList } from '../services/MyClassDetailsService'; //getMyCohortList
 import { getTodayDate } from '../utils/Helper';
 import Loader from '../components/Loader';
 import { getAttendanceByDate } from '../services/AttendanceService';
@@ -137,7 +137,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
     const getCohortMemberList = async () => {
       setLoading(true);
       try {
-        const response = await getMyClassDetails({
+        const response = await getMyCohortList({
           contextId,
           attendanceDate,
           report,
