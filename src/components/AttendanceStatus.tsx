@@ -54,7 +54,8 @@ function AttendanceStatus({ status, onUpdate }: AttendanceStatusProps) {
               variant="text"
               endIcon={<CreateOutlined />}
               onClick={onUpdate}
-              disabled={status === 'Future date'}>
+              disabled={status === 'Future date'}
+            >
               {t('COMMON.UPDATE')}
             </Button>
           </Grid>

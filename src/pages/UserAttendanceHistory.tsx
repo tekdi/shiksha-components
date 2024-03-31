@@ -39,8 +39,8 @@ const UserAttendanceHistory = () => {
   const handleMarkAttendanceModal = () => setOpenMarkAttendance(!openMarkAttendance);
   const [loading, setLoading] = React.useState(false);
   const [AttendanceMessage, setAttendanceMessage] = React.useState('');
- 
-let contextId: string='';
+
+  let contextId: string = '';
   let userId: string = '00772d32-3f60-4a8e-a5e0-d0110c5c42fb';
 
   useEffect(() => {
@@ -192,15 +192,15 @@ let contextId: string='';
   };
 
   const submitAttendance = async (date: string, status: string) => {
-    console.log("submit")
-    const teachercontextId=localStorage.getItem('parentCohortId')
+    console.log('submit');
+    const teachercontextId = localStorage.getItem('parentCohortId');
     //console.log(date, status);
     if (userId && teachercontextId) {
       const attendanceData: AttendanceParams = {
         attendanceDate: date,
         attendance: status,
         userId,
-        contextId:teachercontextId
+        contextId: teachercontextId
       };
       setLoading(true);
       try {
@@ -208,7 +208,7 @@ let contextId: string='';
         if (response) {
           //console.log(response);
           handleMarkAttendanceModal();
-          setAttendanceMessage(t('ATTENDANCE.ATTENDANCE_MARKED_SUCCESSFULLY') );
+          setAttendanceMessage(t('ATTENDANCE.ATTENDANCE_MARKED_SUCCESSFULLY'));
         }
         setLoading(false);
       } catch (error) {
@@ -227,14 +227,16 @@ let contextId: string='';
         flexDirection={'column'}
         gap={'1rem'}
         padding={'1rem'}
-        alignItems={'center'}>
+        alignItems={'center'}
+      >
         <Box
           display={'flex'}
           sx={{ color: theme.palette.warning['A200'] }}
           gap={'10px'}
           width={'100%'}
           justifyContent={'center'}
-          position={'relative'}>
+          position={'relative'}
+        >
           <Box position={'absolute'} left={'0'}>
             <KeyboardBackspaceOutlinedIcon sx={{ color: theme.palette.warning['A200'] }} />
           </Box>
@@ -284,8 +286,8 @@ let contextId: string='';
       <MarkAttendance
         isOpen={openMarkAttendance}
         isSelfAttendance={true}
-        date={selectedDate.toISOString().split('T')[0]} 
-        currentStatus={ status}
+        date={selectedDate.toISOString().split('T')[0]}
+        currentStatus={status}
         handleClose={handleMarkAttendanceModal}
         handleSubmit={submitAttendance}
         message={AttendanceMessage}

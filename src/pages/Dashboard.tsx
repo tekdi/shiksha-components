@@ -71,7 +71,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
   const [loading, setLoading] = React.useState(false);
   const [AttendanceMessage, setAttendanceMessage] = React.useState('');
   const [attendanceStatus, setAttendanceStatus] = React.useState('');
-  const [isAllAttendanceMarked, setIsAllAttendanceMarked] = React.useState(false)
+  const [isAllAttendanceMarked, setIsAllAttendanceMarked] = React.useState(false);
 
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -80,7 +80,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
   // const userAttendance = [{ userId: localStorage.getItem('userId'), attendance: 'present' }];
   const attendanceDate = currentDate;
   let contextId = classes;
-//  const [TeachercontextId, setTeacherContextId] = React.useState("");
+  //  const [TeachercontextId, setTeacherContextId] = React.useState("");
 
   const report = false;
   const offset = 0;
@@ -107,9 +107,9 @@ const Dashboard: React.FC<DashboardProps> = () => {
         if (userId) {
           const resp = await cohortList(userId);
           const extractedNames = resp?.result?.cohortData;
-          localStorage.setItem('parentCohortId' , extractedNames[0].parentId)
-        //  setTeacherContextId(extractedNames[0].parentId)
-        //  console.log("p",extractedNames[0].parentId)
+          localStorage.setItem('parentCohortId', extractedNames[0].parentId);
+          //  setTeacherContextId(extractedNames[0].parentId)
+          //  console.log("p",extractedNames[0].parentId)
 
           const filteredData = extractedNames
             .flatMap((item: any) => {
@@ -130,10 +130,6 @@ const Dashboard: React.FC<DashboardProps> = () => {
           // console.log(`response cohort list`, filteredData);
           setCohortsData(filteredData);
           setLoading(false);
-
-          
-
-
         }
       } catch (error) {
         console.error('Error fetching  cohort list:', error);
@@ -168,21 +164,22 @@ const Dashboard: React.FC<DashboardProps> = () => {
 
   const handleModalToggle = () => setOpen(!open);
   const handleMarkAttendanceModal = () => setOpenMarkAttendance(!openMarkAttendance);
-  const handleMarkUpdateAttendanceModal = () => setOpenMarkUpdateAttendance(!openMarkUpdateAttendance);
+  const handleMarkUpdateAttendanceModal = () =>
+    setOpenMarkUpdateAttendance(!openMarkUpdateAttendance);
 
   const handleChange = (event: SelectChangeEvent) => {
     setClasses(event.target.value as string);
   };
 
   const submitAttendance = async (date: string, status: string) => {
-    const teachercontextId=localStorage.getItem('parentCohortId')
+    const teachercontextId = localStorage.getItem('parentCohortId');
     //console.log(date, status);
     if (userId && teachercontextId) {
       const attendanceData: AttendanceParams = {
         attendanceDate: date,
         attendance: status,
         userId,
-        contextId:teachercontextId
+        contextId: teachercontextId
       };
       setLoading(true);
       try {
@@ -267,15 +264,15 @@ const Dashboard: React.FC<DashboardProps> = () => {
     //setContextId('17a82258-8b11-4c71-8b93-b0cac11826e3') // this one is for testing purpose
     const fetchUserDetails = async () => {
       try {
-        const TeachercontextId=localStorage.getItem('parentCohortId');
+        const TeachercontextId = localStorage.getItem('parentCohortId');
 
-        if (userId && TeachercontextId ) {
+        if (userId && TeachercontextId) {
           const attendanceData: TeacherAttendanceByDateParams = {
             fromDate: '2024-02-01',
             toDate: '2024-03-02',
             filters: {
               userId,
-            contextId:TeachercontextId
+              contextId: TeachercontextId
             }
           };
           const response = await getTeacherAttendanceByDate(attendanceData);
@@ -309,11 +306,13 @@ const Dashboard: React.FC<DashboardProps> = () => {
           padding={'1rem'}
           borderRadius={'1rem'}
           bgcolor={'black'}
-          textAlign={'left'}>
+          textAlign={'left'}
+        >
           <Typography
             marginBottom={'0px'}
             sx={{ color: theme.palette.warning['A400'] }}
-            style={{ fontWeight: '800', fontSize: '1.2rem' }}>
+            style={{ fontWeight: '800', fontSize: '1.2rem' }}
+          >
             {t('COMMON.MARK_MY_ATTENDANCE')}
           </Typography>
           <Typography sx={{ color: theme.palette.warning['A400'] }}>{currentDate}</Typography>
@@ -321,14 +320,16 @@ const Dashboard: React.FC<DashboardProps> = () => {
             <Button
               variant="text"
               sx={{ color: theme.palette.primary.main, padding: theme.spacing(1) }}
-              onClick={viewAttendanceHistory}>
+              onClick={viewAttendanceHistory}
+            >
               {t('DASHBOARD.HISTORY')}
             </Button>
             <Button
               variant="contained"
               color="primary"
               style={{ width: '12.5rem', padding: theme.spacing(1) }}
-              onClick={handleMarkAttendanceModal}>
+              onClick={handleMarkAttendanceModal}
+            >
               {t('COMMON.MARK_MY_ATTENDANCE')}
             </Button>
           </Stack>
@@ -338,7 +339,8 @@ const Dashboard: React.FC<DashboardProps> = () => {
           variant="outlined"
           fullWidth
           onClick={handleModalToggle}
-          style={{ padding: theme.spacing(1) }}>
+          style={{ padding: theme.spacing(1) }}
+        >
           {t('COMMON.MARK_STUDENT_ATTENDANCE')}
         </Button>
         <Modal
@@ -352,12 +354,14 @@ const Dashboard: React.FC<DashboardProps> = () => {
             backdrop: {
               timeout: 500
             }
-          }}>
+          }}
+        >
           <Fade in={open}>
             <Box
               sx={{ ...modalContainer, borderColor: theme.palette.warning['A400'] }}
               borderRadius={'1rem'}
-              height={'80%'}>
+              height={'80%'}
+            >
               <Box height={'100%'} width={'100%'}>
                 <Box display={'flex'} justifyContent={'space-between'}>
                   <Box marginBottom={'0px'}>
@@ -365,7 +369,8 @@ const Dashboard: React.FC<DashboardProps> = () => {
                       variant="h2"
                       component="h2"
                       marginBottom={'0px'}
-                      fontWeight={'bold'}>
+                      fontWeight={'bold'}
+                    >
                       {t('COMMON.MARK_STUDENT_ATTENDANCE')}
                     </Typography>
                     <Typography variant="h2" component="h2">
@@ -412,31 +417,34 @@ const Dashboard: React.FC<DashboardProps> = () => {
                     />
                   ))}
                 </Box>
-                  <Box
-                    position={'absolute'}
-                    bottom="30px"
-                    display={'flex'}
-                    gap={'20px'}
-                    flexDirection={'row'}
-                    justifyContent={'space-evenly'}
-                    marginBottom={0}>
-                    <Button
-                      variant="outlined"
-                      style={{ width: '8rem' }}
-                      disabled = {isAllAttendanceMarked ? false : true}
-                      onClick={() => submitBulkAttendanceAction(true, '', '')}>
-                      {' '}
-                      {t('COMMON.CLEAR_ALL')}
-                    </Button>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      style={{ width: '8rem' }}
-                      disabled = {isAllAttendanceMarked ? false : true}
-                      onClick={handleSave}>
-                      {t('COMMON.SAVE')}
-                    </Button>
-                  </Box>
+                <Box
+                  position={'absolute'}
+                  bottom="30px"
+                  display={'flex'}
+                  gap={'20px'}
+                  flexDirection={'row'}
+                  justifyContent={'space-evenly'}
+                  marginBottom={0}
+                >
+                  <Button
+                    variant="outlined"
+                    style={{ width: '8rem' }}
+                    disabled={isAllAttendanceMarked ? false : true}
+                    onClick={() => submitBulkAttendanceAction(true, '', '')}
+                  >
+                    {' '}
+                    {t('COMMON.CLEAR_ALL')}
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    style={{ width: '8rem' }}
+                    disabled={isAllAttendanceMarked ? false : true}
+                    onClick={handleSave}
+                  >
+                    {t('COMMON.SAVE')}
+                  </Button>
+                </Box>
               </Box>
             </Box>
           </Fade>
@@ -448,7 +456,8 @@ const Dashboard: React.FC<DashboardProps> = () => {
           direction={'row'}
           justifyContent={'space-between'}
           alignItems={'center'}
-          padding={'2px'}>
+          padding={'2px'}
+        >
           <Box>
             <Button variant="text" sx={{ color: theme.palette.warning['300'] }}>
               {t('DASHBOARD.MY_CLASSES')}
@@ -458,7 +467,8 @@ const Dashboard: React.FC<DashboardProps> = () => {
             display={'flex'}
             justifyContent={'center'}
             alignItems={'center'}
-            sx={{ color: theme.palette.secondary.main }}>
+            sx={{ color: theme.palette.secondary.main }}
+          >
             <Button variant="text" sx={{ color: theme.palette.secondary.main }} disabled>
               {t('DASHBOARD.ADD_NEW_CLASS')} <AddIcon />
             </Button>
@@ -473,7 +483,8 @@ const Dashboard: React.FC<DashboardProps> = () => {
           width={'auto'}
           sx={{ bgcolor: theme.palette.secondary.light }}
           p={'1rem'}
-          borderRadius={'1rem'}>
+          borderRadius={'1rem'}
+        >
           {cohortsData &&
             cohortsData.map((cohort) => (
               <Box key={cohort.cohortId}>
