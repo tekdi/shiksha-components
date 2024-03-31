@@ -119,7 +119,7 @@ const LoginPage = () => {
   };
   const action = useMemo(() => (
     <React.Fragment>
-      <Typography>{t('LOGIN_PAGE.USERNAME_PASSWORD_NOT_CORRECT')}</Typography>
+      {/* <Typography>{t('LOGIN_PAGE.USERNAME_PASSWORD_NOT_CORRECT')}</Typography> */}
 
       <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
         <CloseIcon fontSize="small" />
@@ -241,6 +241,7 @@ const LoginPage = () => {
           className="alert"
           autoHideDuration={5000}
           key={vertical + horizontal}
+          message={t('LOGIN_PAGE.USERNAME_PASSWORD_NOT_CORRECT')}
           action={action}
         />
       </Box>
