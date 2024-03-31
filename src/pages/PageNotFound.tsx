@@ -1,5 +1,5 @@
 import { Box, Container } from '@mui/material';
-import PageNotFoundIcon from '../../public/error-404.png';
+import PageNotFoundIcon from '/error-404.png';
 import Header from '../components/Header';
 
 function PageNotFound() {

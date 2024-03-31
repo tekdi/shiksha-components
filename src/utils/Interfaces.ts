@@ -18,7 +18,9 @@ export interface MarkAttendanceProps {
   name?: string;
   currentStatus: string;
   handleClose: () => void;
+
   handleSubmit: (attendanceDate: string, attendance: string) => void;
+  message?:string;
 }
 
 export interface AttendanceStatusListViewProps {
@@ -50,12 +52,22 @@ export interface cohortDetailsList {
   report: boolean;
   limit: number;
   offset: number;
-  filters: object;
+  filters?: object;
+  attendanceDate?: string;
 }
 export interface AttendanceByDateParams {
   fromDate: string;
   toDate: string;
-  page:number
+  page:number  
+  filters: {
+    userId: string;
+    contextId:string
+  };
+}
+
+export interface TeacherAttendanceByDateParams {
+  fromDate: string;
+  toDate: string;
   filters: {
     userId: string;
     contextId:string

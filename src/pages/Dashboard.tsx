@@ -25,11 +25,13 @@ import AttendanceStatusListView from '../components/AttendanceStatusListView';
 import { useTheme } from '@mui/material/styles';
 import MarkAttendance from '../components/MarkAttendance';
 import { markAttendance, bulkAttendance } from '../services/AttendanceService';
-import { AttendanceParams } from '../utils/Interfaces';
+import { AttendanceParams, TeacherAttendanceByDateParams } from '../utils/Interfaces';
 import { cohortList } from '../services/CohortServices';
-import { getMyClassDetails } from '../services/MyClassDetailsService';
+import { getMyCohortList } from '../services/MyClassDetailsService'; //getMyCohortList
 import { getTodayDate } from '../utils/Helper';
 import Loader from '../components/Loader';
+import { getTeacherAttendanceByDate} from '../services/AttendanceService';
+import { ATTENDANCE_ENUM } from '../utils/Helper';
 
 interface DashboardProps {
   //   buttonText: string;
@@ -50,7 +52,7 @@ interface cohort {
   value: string;
 }
 
-let userId: string = '';
+let userId = localStorage.getItem('userId');
 let contextId: string = '';
 
 const Dashboard: React.FC<DashboardProps> = () => {
@@ -60,11 +62,15 @@ const Dashboard: React.FC<DashboardProps> = () => {
   const [classes, setClasses] = React.useState('');
   const [cohortId, setCohortId] = React.useState(null);
   const [openMarkAttendance, setOpenMarkAttendance] = React.useState(false);
+  const [openMarkUpdateAttendance, setOpenMarkUpdateAttendance] = React.useState(false);
+
   const [cohortMemberList, setCohortMemberList] = React.useState<Array<user>>([]);
   const [numberOfCohortMembers, setNumberOfCohortMembers] = React.useState(0);
   const [currentDate, setCurrentDate] = React.useState(getTodayDate);
   const [bulkAttendanceStatus, setBulkAttendanceStatus] = React.useState('');
   const [loading, setLoading] = React.useState(false);
+  const [AttendanceMessage, setAttendanceMessage] = React.useState('');
+  const [attendanceStatus, setAttendanceStatus] = React.useState('');
 
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -72,7 +78,9 @@ const Dashboard: React.FC<DashboardProps> = () => {
   const page = 0;
   // const userAttendance = [{ userId: localStorage.getItem('userId'), attendance: 'present' }];
   const attendanceDate = currentDate;
-  const contextId = classes;
+  let contextId = classes;
+//  const [TeachercontextId, setTeacherContextId] = React.useState("");
+
   const report = false;
   const offset = 0;
   const theme = useTheme<any>();
@@ -98,6 +106,10 @@ const Dashboard: React.FC<DashboardProps> = () => {
         if (userId) {
           const resp = await cohortList(userId);
           const extractedNames = resp?.result?.cohortData;
+          localStorage.setItem('parentCohortId' , extractedNames[0].parentId)
+        //  setTeacherContextId(extractedNames[0].parentId)
+        //  console.log("p",extractedNames[0].parentId)
+
           const filteredData = extractedNames
             .flatMap((item: any) => {
               const addressData = item.customField.find((field: any) => field.label === 'address');
@@ -117,6 +129,10 @@ const Dashboard: React.FC<DashboardProps> = () => {
           // console.log(`response cohort list`, filteredData);
           setCohortsData(filteredData);
           setLoading(false);
+
+          
+
+
         }
       } catch (error) {
         console.error('Error fetching  cohort list:', error);
@@ -130,7 +146,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
     const getCohortMemberList = async () => {
       setLoading(true);
       try {
-        const response = await getMyClassDetails({
+        const response = await getMyCohortList({
           contextId,
           attendanceDate,
           report,
@@ -151,30 +167,36 @@ const Dashboard: React.FC<DashboardProps> = () => {
 
   const handleModalToggle = () => setOpen(!open);
   const handleMarkAttendanceModal = () => setOpenMarkAttendance(!openMarkAttendance);
+  const handleMarkUpdateAttendanceModal = () => setOpenMarkUpdateAttendance(!openMarkUpdateAttendance);
 
   const handleChange = (event: SelectChangeEvent) => {
     setClasses(event.target.value as string);
   };
 
   const submitAttendance = async (date: string, status: string) => {
+    const teachercontextId=localStorage.getItem('parentCohortId')
     //console.log(date, status);
-    const attendanceData: AttendanceParams = {
-      attendanceDate: date,
-      attendance: status,
-      userId,
-      contextId
-    };
-    setLoading(true);
-    try {
-      const response = await markAttendance(attendanceData);
-      if (response) {
-        //console.log(response);
-        handleMarkAttendanceModal();
+    if (userId && teachercontextId) {
+      const attendanceData: AttendanceParams = {
+        attendanceDate: date,
+        attendance: status,
+        userId,
+        contextId:teachercontextId
+      };
+      setLoading(true);
+      try {
+        const response = await markAttendance(attendanceData);
+        if (response) {
+          //console.log(response);
+          handleMarkAttendanceModal();
+          setAttendanceMessage(t('ATTENDANCE.ATTENDANCE_MARKED_SUCCESSFULLY') );
+        }
+        setLoading(false);
+      } catch (error) {
+        setAttendanceMessage(t('ATTENDANCE.ATTENDANCE_MARKED_UNSUCCESSFULLY'));
+        console.error('error', error);
+        setLoading(false);
       }
-      setLoading(false);
-    } catch (error) {
-      console.error('error', error);
-      setLoading(false);
     }
   };
 
@@ -231,6 +253,41 @@ const Dashboard: React.FC<DashboardProps> = () => {
     }
   };
 
+  useEffect(() => {
+    //let userId = '70861cf2-d00c-475a-a909-d58d0062c880';
+    //"contextId": "17a82258-8b11-4c71-8b93-b0cac11826e3"
+  //  contextId = '17a82258-8b11-4c71-8b93-b0cac11826e3';
+   
+//setContextId('17a82258-8b11-4c71-8b93-b0cac11826e3') // this one is for testing purpose
+    const fetchUserDetails = async () => {
+      try {
+        const TeachercontextId=localStorage.getItem('parentCohortId');
+
+        if (userId && TeachercontextId ) {
+          const attendanceData: TeacherAttendanceByDateParams = {
+            fromDate: '2024-02-01',
+            toDate: '2024-03-02',
+            filters: {
+              userId,
+            contextId:TeachercontextId
+            }
+          };
+           const response = await getTeacherAttendanceByDate(attendanceData);
+          if (response?.data?.length === 0) {
+            setAttendanceStatus(ATTENDANCE_ENUM.NOT_MARKED);
+
+          } else {
+            setAttendanceMessage(response.data[0].attendance);
+          }
+        }
+      } catch (Error) {
+        console.log('error');
+
+        console.error(Error);
+      }
+    };
+    fetchUserDetails();
+  }, []);
   return (
     <Box minHeight="100vh" textAlign={'center'}>
       <Header />
@@ -295,8 +352,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
             <Box
               sx={{ ...modalContainer, borderColor: theme.palette.warning['A400'] }}
               borderRadius={'1rem'}
-              height={'80%'}
-            >
+              height={'80%'}>
               <Box height={'100%'} width={'100%'}>
                 <Box display={'flex'} justifyContent={'space-between'}>
                   <Box marginBottom={'0px'}>
@@ -304,8 +360,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
                       variant="h2"
                       component="h2"
                       marginBottom={'0px'}
-                      fontWeight={'bold'}
-                    >
+                      fontWeight={'bold'}>
                       {t('COMMON.MARK_STUDENT_ATTENDANCE')}
                     </Typography>
                     <Typography variant="h2" component="h2">
@@ -360,13 +415,11 @@ const Dashboard: React.FC<DashboardProps> = () => {
                   gap={'20px'}
                   flexDirection={'row'}
                   justifyContent={'space-evenly'}
-                  marginBottom={0}
-                >
+                  marginBottom={0}>
                   <Button
                     variant="outlined"
                     style={{ width: '8rem' }}
-                    onClick={() => submitBulkAttendanceAction(true, '', '')}
-                  >
+                    onClick={() => submitBulkAttendanceAction(true, '', '')}>
                     {' '}
                     {t('COMMON.CLEAR_ALL')}
                   </Button>
@@ -374,8 +427,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
                     variant="contained"
                     color="primary"
                     style={{ width: '8rem' }}
-                    onClick={handleSave}
-                  >
+                    onClick={handleSave}>
                     {t('COMMON.SAVE')}
                   </Button>
                 </Box>
@@ -415,8 +467,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
           width={'auto'}
           sx={{ bgcolor: theme.palette.secondary.light }}
           p={'1rem'}
-          borderRadius={'1rem'}
-        >
+          borderRadius={'1rem'}>
           {cohortsData &&
             cohortsData.map((cohort) => (
               <Box key={cohort.cohortId}>
@@ -434,9 +485,10 @@ const Dashboard: React.FC<DashboardProps> = () => {
         isOpen={openMarkAttendance}
         isSelfAttendance={true}
         date={currentDate}
-        currentStatus="notmarked"
+        currentStatus={attendanceStatus}
         handleClose={handleMarkAttendanceModal}
         handleSubmit={submitAttendance}
+        message={AttendanceMessage}
       />
     </Box>
   );
