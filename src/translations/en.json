@@ -49,7 +49,10 @@
     "CLEAR":"clear",
     "ATTENDANCE_MARKED_SUCCESSFULLY":"Attendance marked successfully",
     "ATTENDANCE_MARKED_UNSUCCESSFULLY":"Attendance not marked",
-    "MY_ATTENDANCE_HISTORY":"My Attendance History"
+    "MY_ATTENDANCE_HISTORY":"My Attendance History",
+    "UPDATE_ATTENDANCE_ALERT":"Are you sure you want to update this attendance?",
+    "CLEAR_ATTENDANCE_ALERT":"Are you sure you want to clear this attendance?"
+
   },
   "PROFILE": {
     "EDIT_PROFILE": "Edit Profile",

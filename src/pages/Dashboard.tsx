@@ -62,6 +62,8 @@ const Dashboard: React.FC<DashboardProps> = () => {
   const [classes, setClasses] = React.useState('');
   const [cohortId, setCohortId] = React.useState(null);
   const [openMarkAttendance, setOpenMarkAttendance] = React.useState(false);
+  const [openMarkUpdateAttendance, setOpenMarkUpdateAttendance] = React.useState(false);
+
   const [cohortMemberList, setCohortMemberList] = React.useState<Array<user>>([]);
   const [numberOfCohortMembers, setNumberOfCohortMembers] = React.useState(0);
   const [currentDate, setCurrentDate] = React.useState(getTodayDate);
@@ -77,7 +79,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
   // const userAttendance = [{ userId: localStorage.getItem('userId'), attendance: 'present' }];
   const attendanceDate = currentDate;
   let contextId = classes;
-  //const [contextId, setContextId] = React.useState(classes);
+//  const [TeachercontextId, setTeacherContextId] = React.useState("");
 
   const report = false;
   const offset = 0;
@@ -104,6 +106,10 @@ const Dashboard: React.FC<DashboardProps> = () => {
         if (userId) {
           const resp = await cohortList(userId);
           const extractedNames = resp?.result?.cohortData;
+          localStorage.setItem('parentCohortId' , extractedNames[0].parentId)
+        //  setTeacherContextId(extractedNames[0].parentId)
+        //  console.log("p",extractedNames[0].parentId)
+
           const filteredData = extractedNames
             .flatMap((item: any) => {
               const addressData = item.customField.find((field: any) => field.label === 'address');
@@ -123,6 +129,10 @@ const Dashboard: React.FC<DashboardProps> = () => {
           // console.log(`response cohort list`, filteredData);
           setCohortsData(filteredData);
           setLoading(false);
+
+          
+
+
         }
       } catch (error) {
         console.error('Error fetching  cohort list:', error);
@@ -157,19 +167,21 @@ const Dashboard: React.FC<DashboardProps> = () => {
 
   const handleModalToggle = () => setOpen(!open);
   const handleMarkAttendanceModal = () => setOpenMarkAttendance(!openMarkAttendance);
+  const handleMarkUpdateAttendanceModal = () => setOpenMarkUpdateAttendance(!openMarkUpdateAttendance);
 
   const handleChange = (event: SelectChangeEvent) => {
     setClasses(event.target.value as string);
   };
 
   const submitAttendance = async (date: string, status: string) => {
+    const teachercontextId=localStorage.getItem('parentCohortId')
     //console.log(date, status);
-    if (userId) {
+    if (userId && teachercontextId) {
       const attendanceData: AttendanceParams = {
         attendanceDate: date,
         attendance: status,
         userId,
-        contextId
+        contextId:teachercontextId
       };
       setLoading(true);
       try {
@@ -249,13 +261,15 @@ const Dashboard: React.FC<DashboardProps> = () => {
 //setContextId('17a82258-8b11-4c71-8b93-b0cac11826e3') // this one is for testing purpose
     const fetchUserDetails = async () => {
       try {
-        if (userId) {
+        const TeachercontextId=localStorage.getItem('parentCohortId');
+
+        if (userId && TeachercontextId ) {
           const attendanceData: TeacherAttendanceByDateParams = {
             fromDate: '2024-02-01',
             toDate: '2024-03-02',
             filters: {
               userId,
-            //  contextId
+            contextId:TeachercontextId
             }
           };
            const response = await getTeacherAttendanceByDate(attendanceData);
