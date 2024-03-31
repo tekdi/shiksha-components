@@ -116,7 +116,6 @@ const Header: React.FC = () => {
         <Box
           onClick={handleClick}
           sx={{ cursor: 'pointer', position: 'relative' }}
-          id="akshta"
           aria-controls={open ? 'account-menu' : undefined}
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}

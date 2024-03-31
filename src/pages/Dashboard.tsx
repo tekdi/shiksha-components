@@ -305,7 +305,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
           width={'auto'}
           padding={'1rem'}
           borderRadius={'1rem'}
-          bgcolor={'black'}
+          bgcolor={theme.palette.warning['A200']}
           textAlign={'left'}
         >
           <Typography

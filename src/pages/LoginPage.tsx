@@ -129,12 +129,10 @@ const LoginPage = () => {
 
   return (
     <form onSubmit={handleFormSubmit}>
-      <Box display="flex" flexDirection="column" bgcolor={'black'} minHeight={'100vh'}>
+      <Box display="flex" flexDirection="column" bgcolor={theme.palette.warning.A200} minHeight={'100vh'}>
         {loading && <Loader showBackdrop={true} loadingText={t('LOADING')} />}
         <Box
           display={'flex'}
-          // flexGrow={1}
-          bgcolor="black"
           overflow="auto"
           alignItems={'center'}
           justifyContent={'center'}
