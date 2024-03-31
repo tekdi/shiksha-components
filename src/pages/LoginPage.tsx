@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   Box,
   Button,
@@ -111,24 +111,22 @@ const LoginPage = () => {
   };
 
   const handleClick = (newState: SnackbarOrigin) => () => {
-    console.log('c');
     setState({ ...newState, openModal: true });
   };
 
   const handleClose = () => {
     setState({ ...state, openModal: false });
   };
-  const action = (
+  const action = useMemo(() => (
     <React.Fragment>
-      <Typography>
-      {t('LOGIN_PAGE.USERNAME_PASSWORD_NOT_CORRECT')}
-        </Typography>
+      <Typography>{t('LOGIN_PAGE.USERNAME_PASSWORD_NOT_CORRECT')}</Typography>
 
       <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
         <CloseIcon fontSize="small" />
       </IconButton>
     </React.Fragment>
-  );
+  ), [t]);
+
   return (
     <form onSubmit={handleFormSubmit}>
       <Box display="flex" flexDirection="column" bgcolor={'black'} minHeight={'100vh'}>
