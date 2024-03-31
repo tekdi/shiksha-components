@@ -18,6 +18,7 @@ export interface MarkAttendanceProps {
   name?: string;
   currentStatus: string;
   handleClose: () => void;
+
   handleSubmit: (attendanceDate: string, attendance: string) => void;
   message?:string;
 }
@@ -69,7 +70,7 @@ export interface TeacherAttendanceByDateParams {
   toDate: string;
   filters: {
     userId: string;
-   // contextId:string
+    contextId:string
   };
 }
 

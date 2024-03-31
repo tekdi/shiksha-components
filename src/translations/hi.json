@@ -49,7 +49,9 @@
     "CLEAR": "साफ़ करें",
     "ATTENDANCE_MARKED_SUCCESSFULLY": "उपस्थिति सफलतापूर्वक चिह्नित की गई है",
     "ATTENDANCE_MARKED_UNSUCCESSFULLY": "उपस्थिति चिह्नित नहीं की गई",
-    "MY_ATTENDANCE_HISTORY":"मेरी उपस्थिति का इतिहास"
+    "MY_ATTENDANCE_HISTORY":"मेरी उपस्थिति का इतिहास",
+    "UPDATE_ATTENDANCE_ALERT": "आपलं खात्री करायला खात्री आहे का?",
+  "CLEAR_ATTENDANCE_ALERT": "आपल्याकडून हजेरी साफ करायला खात्री आहे का?"
   },
   "PROFILE": {
     "EDIT_PROFILE": "प्रोफ़ाइल संपादित करें",

@@ -63,7 +63,7 @@ export const getTeacherAttendanceByDate = async ({
   fromDate,
   toDate,
   filters: { userId,
-    // contextId
+contextId
      }
 }: TeacherAttendanceByDateParams): Promise<any> => {
   const apiUrl: string = `${import.meta.env.VITE_BASE_URL}/attendance/bydate`;
@@ -72,7 +72,7 @@ export const getTeacherAttendanceByDate = async ({
       fromDate,
       toDate,
       filters: {
-        // contextId, 
+       contextId, 
         userId }
     });
     return response?.data;
