@@ -46,13 +46,12 @@
     "HALF_DAY": "Half Day",
     "ON_LEAVE": "On Leave",
     "MARK_ALL": "Mark All",
-    "CLEAR":"clear",
-    "ATTENDANCE_MARKED_SUCCESSFULLY":"Attendance marked successfully",
-    "ATTENDANCE_MARKED_UNSUCCESSFULLY":"Attendance not marked",
-    "MY_ATTENDANCE_HISTORY":"My Attendance History",
-    "UPDATE_ATTENDANCE_ALERT":"Are you sure you want to update this attendance?",
-    "CLEAR_ATTENDANCE_ALERT":"Are you sure you want to clear this attendance?"
-
+    "CLEAR": "clear",
+    "ATTENDANCE_MARKED_SUCCESSFULLY": "Attendance marked successfully",
+    "ATTENDANCE_MARKED_UNSUCCESSFULLY": "Attendance not marked",
+    "MY_ATTENDANCE_HISTORY": "My Attendance History",
+    "UPDATE_ATTENDANCE_ALERT": "Are you sure you want to update this attendance?",
+    "CLEAR_ATTENDANCE_ALERT": "Are you sure you want to clear this attendance?"
   },
   "PROFILE": {
     "EDIT_PROFILE": "Edit Profile",
