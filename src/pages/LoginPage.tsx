@@ -120,7 +120,9 @@ const LoginPage = () => {
   };
   const action = (
     <React.Fragment>
-      <Typography>The username or password you enterred is incorrect</Typography>
+      <Typography>
+      {t('LOGIN_PAGE.USERNAME_PASSWORD_NOT_CORRECT')}
+        </Typography>
 
       <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
         <CloseIcon fontSize="small" />

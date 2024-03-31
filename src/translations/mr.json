@@ -27,7 +27,9 @@
     "PASSWORD": "पासवर्ड",
     "LOGIN": "लॉग इन करा",
     "USERNAME_PLACEHOLDER": "वापरकर्तानाव प्रविष्ट करा",
-    "PASSWORD_PLACEHOLDER": "पासवर्ड टाका"
+    "PASSWORD_PLACEHOLDER": "पासवर्ड टाका",
+    "USERNAME_PASSWORD_NOT_CORRECT": "आपलं वापरकर्तानाव किंवा संकेतशब्द चुकीचं आहे"
+
   },
   "DASHBOARD": {
     "HISTORY": "इतिहास",
