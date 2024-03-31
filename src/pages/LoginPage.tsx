@@ -117,19 +117,27 @@ const LoginPage = () => {
   const handleClose = () => {
     setState({ ...state, openModal: false });
   };
-  const action = useMemo(() => (
-    <React.Fragment>
-      {/* <Typography>{t('LOGIN_PAGE.USERNAME_PASSWORD_NOT_CORRECT')}</Typography> */}
+  const action = useMemo(
+    () => (
+      <React.Fragment>
+        {/* <Typography>{t('LOGIN_PAGE.USERNAME_PASSWORD_NOT_CORRECT')}</Typography> */}
 
-      <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
-        <CloseIcon fontSize="small" />
-      </IconButton>
-    </React.Fragment>
-  ), [t]);
+        <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+          <CloseIcon fontSize="small" />
+        </IconButton>
+      </React.Fragment>
+    ),
+    [t]
+  );
 
   return (
     <form onSubmit={handleFormSubmit}>
-      <Box display="flex" flexDirection="column" bgcolor={theme.palette.warning.A200} minHeight={'100vh'}>
+      <Box
+        display="flex"
+        flexDirection="column"
+        bgcolor={theme.palette.warning.A200}
+        minHeight={'100vh'}
+      >
         {loading && <Loader showBackdrop={true} loadingText={t('LOADING')} />}
         <Box
           display={'flex'}
@@ -137,7 +145,8 @@ const LoginPage = () => {
           alignItems={'center'}
           justifyContent={'center'}
           zIndex={99}
-          sx={{ margin: '32px 0' }}>
+          sx={{ margin: '32px 0' }}
+        >
           <img src={appLogo2} />
         </Box>
         <Box
@@ -149,7 +158,8 @@ const LoginPage = () => {
           borderRadius={'2rem 2rem 0 0'}
           zIndex={99}
           justifyContent={'center'}
-          p={'2rem'}>
+          p={'2rem'}
+        >
           <Box position={'relative'}>
             <Box mt={'0.5rem'}>
               <FormControl sx={{ m: '2rem 0 1rem' }}>
@@ -163,7 +173,8 @@ const LoginPage = () => {
                     color: theme.palette.warning['200'],
                     width: 'auto',
                     marginBottom: '0rem'
-                  }}>
+                  }}
+                >
                   {config?.languages.map((lang) => (
                     <MenuItem value={lang.code} key={lang.code}>
                       {lang.label}
@@ -200,7 +211,8 @@ const LoginPage = () => {
                         aria-label="toggle password visibility"
                         onClick={handleClickShowPassword}
                         onMouseDown={handleMouseDownPassword}
-                        edge="end">
+                        edge="end"
+                      >
                         {showPassword ? <VisibilityOff /> : <Visibility />}
                       </IconButton>
                     </InputAdornment>
@@ -219,13 +231,15 @@ const LoginPage = () => {
               textAlign={'center'}
               marginTop={'1rem'}
               bottom={'1rem'}
-              width={'100%'}>
+              width={'100%'}
+            >
               <Button
                 variant="contained"
                 type="submit"
                 fullWidth={true}
                 // onClick={(event) => loginButtonClick(event)}
-                disabled={isButtonDisabled}>
+                disabled={isButtonDisabled}
+              >
                 {t('LOGIN_PAGE.LOGIN')}
               </Button>
             </Box>
