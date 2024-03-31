@@ -46,6 +46,9 @@
     "HALF_DAY": "Half Day",
     "ON_LEAVE": "On Leave",
     "MARK_ALL": "Mark All",
+    "CLEAR":"clear",
+    "ATTENDANCE_MARKED_SUCCESSFULLY":"Attendance marked successfully",
+    "ATTENDANCE_MARKED_UNSUCCESSFULLY":"Attendance not marked",
     "MY_ATTENDANCE_HISTORY":"My Attendance History"
   },
   "PROFILE": {

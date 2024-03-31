@@ -37,6 +37,7 @@ const UserAttendanceHistory = () => {
   const [openMarkAttendance, setOpenMarkAttendance] = useState(false);
   const handleMarkAttendanceModal = () => setOpenMarkAttendance(!openMarkAttendance);
 
+let contextId: string='';
   let userId: string = '00772d32-3f60-4a8e-a5e0-d0110c5c42fb';
 
   useEffect(() => {
@@ -58,7 +59,7 @@ const UserAttendanceHistory = () => {
 
           fromDate: '2024-03-01',
           toDate: '2024-03-29',
-          page: 0,
+         // page: 0,
           filters: {
             contextId: '252fb59c-d641-417a-815b-d39e6f502fcf',
             userId: '00772d32-3f60-4a8e-a5e0-d0110c5c42fb'

@@ -46,6 +46,9 @@
     "HALF_DAY": "आधा दिन",
     "ON_LEAVE": "छुट्टी पर",
     "MARK_ALL": "सभी को चिन्हित करें",
+    "CLEAR": "साफ़ करें",
+    "ATTENDANCE_MARKED_SUCCESSFULLY": "उपस्थिति सफलतापूर्वक चिह्नित की गई है",
+    "ATTENDANCE_MARKED_UNSUCCESSFULLY": "उपस्थिति चिह्नित नहीं की गई",
     "MY_ATTENDANCE_HISTORY":"मेरी उपस्थिति का इतिहास"
   },
   "PROFILE": {
