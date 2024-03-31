@@ -106,5 +106,6 @@
 .alert .MuiSnackbarContent-root
 {
   background-color: #FFDAD6 !important;
-  color:#BA1A1A
+  color:#BA1A1A;
+  font-size: 0.75rem;
 }
