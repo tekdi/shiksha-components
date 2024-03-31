@@ -30,7 +30,7 @@ import { cohortList } from '../services/CohortServices';
 import { getMyCohortList } from '../services/MyClassDetailsService'; //getMyCohortList
 import { getTodayDate } from '../utils/Helper';
 import Loader from '../components/Loader';
-import { getTeacherAttendanceByDate} from '../services/AttendanceService';
+import { getTeacherAttendanceByDate } from '../services/AttendanceService';
 import { ATTENDANCE_ENUM } from '../utils/Helper';
 
 interface DashboardProps {
@@ -71,6 +71,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
   const [loading, setLoading] = React.useState(false);
   const [AttendanceMessage, setAttendanceMessage] = React.useState('');
   const [attendanceStatus, setAttendanceStatus] = React.useState('');
+  const [isAllAttendanceMarked, setIsAllAttendanceMarked] = React.useState(false)
 
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -100,7 +101,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
   useEffect(() => {
     const fetchCohortList = async () => {
       // const userId = localStorage.getItem('userId');
-      let userId = '0f7c947f-3258-4959-80a6-d340c3639e7d';
+      let userId = '0f7c947f-3258-4959-80a6-d340c3639e7d'; //
       setLoading(true);
       try {
         if (userId) {
@@ -189,7 +190,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
         if (response) {
           //console.log(response);
           handleMarkAttendanceModal();
-          setAttendanceMessage(t('ATTENDANCE.ATTENDANCE_MARKED_SUCCESSFULLY') );
+          setAttendanceMessage(t('ATTENDANCE.ATTENDANCE_MARKED_SUCCESSFULLY'));
         }
         setLoading(false);
       } catch (error) {
@@ -218,6 +219,11 @@ const Dashboard: React.FC<DashboardProps> = () => {
       return user;
     });
     setCohortMemberList(updatedAttendanceList);
+    const hasEmptyAttendance = () => {
+      const allAttendance = updatedAttendanceList.some((user) => user.attendance === '');
+      setIsAllAttendanceMarked(!allAttendance);
+    };
+    hasEmptyAttendance();
   };
   const viewAttendanceHistory = () => {
     navigate('/user-attendance-history');
@@ -240,9 +246,9 @@ const Dashboard: React.FC<DashboardProps> = () => {
         setLoading(true);
         try {
           const response = await bulkAttendance(data);
-          //console.log(`response bulkAttendance`, response);
-          const resp = response?.data;
-          //console.log(`resp`, resp);
+          // console.log(`response bulkAttendance`, response?.responses);
+          // const resp = response?.data;
+          // console.log(`data`, data);
           setLoading(false);
         } catch (error) {
           console.error('Error fetching  cohort list:', error);
@@ -256,9 +262,9 @@ const Dashboard: React.FC<DashboardProps> = () => {
   useEffect(() => {
     //let userId = '70861cf2-d00c-475a-a909-d58d0062c880';
     //"contextId": "17a82258-8b11-4c71-8b93-b0cac11826e3"
-  //  contextId = '17a82258-8b11-4c71-8b93-b0cac11826e3';
-   
-//setContextId('17a82258-8b11-4c71-8b93-b0cac11826e3') // this one is for testing purpose
+    //  contextId = '17a82258-8b11-4c71-8b93-b0cac11826e3';
+
+    //setContextId('17a82258-8b11-4c71-8b93-b0cac11826e3') // this one is for testing purpose
     const fetchUserDetails = async () => {
       try {
         const TeachercontextId=localStorage.getItem('parentCohortId');
@@ -272,10 +278,9 @@ const Dashboard: React.FC<DashboardProps> = () => {
             contextId:TeachercontextId
             }
           };
-           const response = await getTeacherAttendanceByDate(attendanceData);
+          const response = await getTeacherAttendanceByDate(attendanceData);
           if (response?.data?.length === 0) {
             setAttendanceStatus(ATTENDANCE_ENUM.NOT_MARKED);
-
           } else {
             setAttendanceMessage(response.data[0].attendance);
           }
@@ -407,30 +412,31 @@ const Dashboard: React.FC<DashboardProps> = () => {
                     />
                   ))}
                 </Box>
-
-                <Box
-                  position={'absolute'}
-                  bottom="30px"
-                  display={'flex'}
-                  gap={'20px'}
-                  flexDirection={'row'}
-                  justifyContent={'space-evenly'}
-                  marginBottom={0}>
-                  <Button
-                    variant="outlined"
-                    style={{ width: '8rem' }}
-                    onClick={() => submitBulkAttendanceAction(true, '', '')}>
-                    {' '}
-                    {t('COMMON.CLEAR_ALL')}
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    style={{ width: '8rem' }}
-                    onClick={handleSave}>
-                    {t('COMMON.SAVE')}
-                  </Button>
-                </Box>
+                  <Box
+                    position={'absolute'}
+                    bottom="30px"
+                    display={'flex'}
+                    gap={'20px'}
+                    flexDirection={'row'}
+                    justifyContent={'space-evenly'}
+                    marginBottom={0}>
+                    <Button
+                      variant="outlined"
+                      style={{ width: '8rem' }}
+                      disabled = {isAllAttendanceMarked ? false : true}
+                      onClick={() => submitBulkAttendanceAction(true, '', '')}>
+                      {' '}
+                      {t('COMMON.CLEAR_ALL')}
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      style={{ width: '8rem' }}
+                      disabled = {isAllAttendanceMarked ? false : true}
+                      onClick={handleSave}>
+                      {t('COMMON.SAVE')}
+                    </Button>
+                  </Box>
               </Box>
             </Box>
           </Fade>
