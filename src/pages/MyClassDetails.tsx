@@ -40,6 +40,7 @@ export default function MyClassDetails() {
   const [searchWord, setSearchWord] = React.useState('');
   const [modalOpen, setModalOpen] = React.useState(false);
   const [averagePercentage, setAveragePercentage] = React.useState(0);
+  
 
   // functions
 
@@ -181,7 +182,7 @@ export default function MyClassDetails() {
                 </Typography>
               </Box>
               <Box sx={{ display: 'flex' }}>
-                <Link to={''} style={{ display: 'flex' }}>
+                <Link to={'/class-attendance-history'} style={{ display: 'flex' }}>
                   <Typography
                     sx={{ color: theme.palette.secondary.main, fontSize: '16px' }}
                     mr={1}
