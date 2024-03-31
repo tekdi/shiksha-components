@@ -52,7 +52,6 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
   const [status, setStatus] = React.useState(currentStatus);
   const theme = useTheme<any>();
  const SNACKBAR_AUTO_HIDE_DURATION = 5000;
-
   
 
   const [state, setState] = React.useState<State>({

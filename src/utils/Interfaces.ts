@@ -57,10 +57,19 @@ export interface cohortDetailsList {
 export interface AttendanceByDateParams {
   fromDate: string;
   toDate: string;
- // page:number  
+  page:number  
   filters: {
     userId: string;
     contextId:string
+  };
+}
+
+export interface TeacherAttendanceByDateParams {
+  fromDate: string;
+  toDate: string;
+  filters: {
+    userId: string;
+   // contextId:string
   };
 }
 

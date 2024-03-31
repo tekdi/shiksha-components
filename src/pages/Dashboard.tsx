@@ -25,13 +25,12 @@ import AttendanceStatusListView from '../components/AttendanceStatusListView';
 import { useTheme } from '@mui/material/styles';
 import MarkAttendance from '../components/MarkAttendance';
 import { markAttendance, bulkAttendance } from '../services/AttendanceService';
-import { AttendanceParams } from '../utils/Interfaces';
+import { AttendanceParams, TeacherAttendanceByDateParams } from '../utils/Interfaces';
 import { cohortList } from '../services/CohortServices';
 import { getMyCohortList } from '../services/MyClassDetailsService'; //getMyCohortList
 import { getTodayDate } from '../utils/Helper';
 import Loader from '../components/Loader';
-import { getAttendanceByDate } from '../services/AttendanceService';
-import { AttendanceByDateParams } from '../utils/Interfaces';
+import { getTeacherAttendanceByDate} from '../services/AttendanceService';
 import { ATTENDANCE_ENUM } from '../utils/Helper';
 
 interface DashboardProps {
@@ -77,8 +76,8 @@ const Dashboard: React.FC<DashboardProps> = () => {
   const page = 0;
   // const userAttendance = [{ userId: localStorage.getItem('userId'), attendance: 'present' }];
   const attendanceDate = currentDate;
-  //let contextId = classes;
-  const [contextId, setContextId] = React.useState(classes);
+  let contextId = classes;
+  //const [contextId, setContextId] = React.useState(classes);
 
   const report = false;
   const offset = 0;
@@ -245,21 +244,21 @@ const Dashboard: React.FC<DashboardProps> = () => {
   useEffect(() => {
     //let userId = '70861cf2-d00c-475a-a909-d58d0062c880';
     //"contextId": "17a82258-8b11-4c71-8b93-b0cac11826e3"
-   // contextId = '17a82258-8b11-4c71-8b93-b0cac11826e3';
+  //  contextId = '17a82258-8b11-4c71-8b93-b0cac11826e3';
    
-setContextId('17a82258-8b11-4c71-8b93-b0cac11826e3') // this one is for testing purpose
+//setContextId('17a82258-8b11-4c71-8b93-b0cac11826e3') // this one is for testing purpose
     const fetchUserDetails = async () => {
       try {
         if (userId) {
-          const attendanceData: AttendanceByDateParams = {
+          const attendanceData: TeacherAttendanceByDateParams = {
             fromDate: '2024-02-01',
             toDate: '2024-03-02',
             filters: {
               userId,
-              contextId
+            //  contextId
             }
           };
-           const response = await getAttendanceByDate(attendanceData);
+           const response = await getTeacherAttendanceByDate(attendanceData);
           if (response?.data?.length === 0) {
             setAttendanceStatus(ATTENDANCE_ENUM.NOT_MARKED);
 
