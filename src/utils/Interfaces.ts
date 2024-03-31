@@ -51,7 +51,8 @@ export interface cohortDetailsList {
   report: boolean;
   limit: number;
   offset: number;
-  filters: object;
+  filters?: object;
+  attendanceDate?: string;
 }
 export interface AttendanceByDateParams {
   fromDate: string;
