@@ -1,7 +1,7 @@
 import { get, patch } from './RestClient';
 
-export const getUser = async (userId: string): Promise<any> => {
-  const apiUrl: string = `${import.meta.env.VITE_BASE_URL}/user/${userId}`;
+export const getUser = async (userId: string, role: string): Promise<any> => {
+  const apiUrl: string = `${import.meta.env.VITE_BASE_URL}/user/${userId}/${role}`;
   try {
     const response = await get(apiUrl);
     return response?.data;
