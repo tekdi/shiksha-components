@@ -210,7 +210,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
       >
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-update-dialog-title">
           <Typography variant="h2" sx={{ marginBottom: 0 }}>
-            t('ATTENDANCE.UPDATE_ATTENDANCE_ALERT')
+           { t('ATTENDANCE.UPDATE_ATTENDANCE_ALERT')}
           </Typography>
         </DialogTitle>
         {/* <Typography variant="h2">Mark Attendance</Typography> */}
@@ -247,7 +247,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
       >
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-clear-dialog-title">
           <Typography variant="h2" sx={{ marginBottom: 0 }}>
-            t('ATTENDANCE.CLEAR_ATTENDANCE_ALERT')
+           { t('ATTENDANCE.CLEAR_ATTENDANCE_ALERT')}
           </Typography>
         </DialogTitle>
         {/* <Typography variant="h2">Mark Attendance</Typography> */}
