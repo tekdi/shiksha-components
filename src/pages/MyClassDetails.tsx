@@ -127,7 +127,7 @@ export default function MyClassDetails() {
 
   return (
     <>
-      <Stack mr={4} ml={4}>
+      <Stack m={'0 8px'}>
         <Box>
           <Header />
           <Box mt={3} display={'flex'} gap={2} alignItems={'flex-start'}>

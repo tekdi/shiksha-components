@@ -388,8 +388,8 @@ const Dashboard: React.FC<DashboardProps> = () => {
                       {currentDate}
                     </Typography>
                   </Box>
-                  <Box onClick={() => handleModalToggle()}>
-                    <CloseIcon />
+                  <Box onClick={() => handleModalToggle()} >
+                    <CloseIcon sx={{ cursor: 'pointer' }} />
                   </Box>
                 </Box>
                 <Divider sx={{ borderBottomWidth: '0.15rem' }} />
