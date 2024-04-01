@@ -134,7 +134,7 @@ const StudentDetails: React.FC = () => {
             {t('COMMON.ATTENDANCE_REPORT')}
           </Typography>
           {userId && ( 
-            <Link to={`/student-attendance-history/${userId}`}>
+            <Link to={`/student-attendance-history/${cohortId}`}>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Typography
                   sx={{
