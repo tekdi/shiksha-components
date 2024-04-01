@@ -72,6 +72,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
   const [AttendanceMessage, setAttendanceMessage] = React.useState('');
   const [attendanceStatus, setAttendanceStatus] = React.useState('');
   const [isAllAttendanceMarked, setIsAllAttendanceMarked] = React.useState(false);
+  const [showUpdateButton, setShowUpdateButton] = React.useState(false);
 
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -100,8 +101,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
 
   useEffect(() => {
     const fetchCohortList = async () => {
-      // const userId = localStorage.getItem('userId');
-      let userId = '0f7c947f-3258-4959-80a6-d340c3639e7d'; //
+      const userId = localStorage.getItem('userId');
       setLoading(true);
       try {
         if (userId) {
@@ -130,6 +130,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
           // console.log(`response cohort list`, filteredData);
           setCohortsData(filteredData);
           setClasses(filteredData[0].cohortId);
+          setShowUpdateButton(true)
           setLoading(false);
         }
       } catch (error) {
@@ -220,6 +221,9 @@ const Dashboard: React.FC<DashboardProps> = () => {
     const hasEmptyAttendance = () => {
       const allAttendance = updatedAttendanceList.some((user) => user.attendance === '');
       setIsAllAttendanceMarked(!allAttendance);
+      if(!allAttendance){
+        setShowUpdateButton(true)
+      }
     };
     hasEmptyAttendance();
   };
@@ -247,6 +251,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
           // console.log(`response bulkAttendance`, response?.responses);
           // const resp = response?.data;
           // console.log(`data`, data);
+          setShowUpdateButton(true)
           setLoading(false);
         } catch (error) {
           console.error('Error fetching  cohort list:', error);
@@ -443,7 +448,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
                     disabled={isAllAttendanceMarked ? false : true}
                     onClick={handleSave}
                   >
-                    {t('COMMON.SAVE')}
+                    {showUpdateButton ? t('COMMON.UPDATE') : t('COMMON.SAVE')}
                   </Button>
                 </Box>
               </Box>
