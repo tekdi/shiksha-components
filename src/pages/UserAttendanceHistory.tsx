@@ -40,8 +40,8 @@ const UserAttendanceHistory = () => {
   const [loading, setLoading] = React.useState(false);
   const [AttendanceMessage, setAttendanceMessage] = React.useState('');
 
-  const userId: string = localStorage.getItem('userId');
-  const contextId: string = localStorage.getItem('parentCohortId');
+  const userId: string = localStorage.getItem('userId') || '';
+  const contextId: string = localStorage.getItem('parentCohortId') || '';
 
   useEffect(() => {
     const fetchData = async () => {
@@ -74,7 +74,6 @@ const UserAttendanceHistory = () => {
               setStatus((prevStatus) => item.attendance);
           }
       });
-      console.log(status);
       
         const presentDatesArray: string[] = [];
         const absentDatesArray: string[] = [];
@@ -121,6 +120,10 @@ const UserAttendanceHistory = () => {
 
     fetchData();
   }, [activeStartDate]);
+
+  useEffect(() => {
+    console.log(status); 
+}, [status]);
 
   useEffect(() => {
     localStorage.setItem('activeStartDate', activeStartDate.toISOString());

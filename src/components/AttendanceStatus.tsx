@@ -25,6 +25,10 @@ function AttendanceStatus({ status, onUpdate }: AttendanceStatusProps) {
       icon = <CancelOutlined />;
       message = 'Absent';
       break;
+    case 'on-leave':
+      icon = <CancelOutlined />;
+      message = 'Absent';
+      break;
     case 'Half-day':
       icon = <RemoveCircleOutline />;
       message = 'Half-day';
