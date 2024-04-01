@@ -86,6 +86,7 @@ export interface UserData {
 
 export interface AttendanceReports {
   contextId: string;
+  userId:string;
   report: boolean;
   limit: number;
   filters: object;

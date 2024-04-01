@@ -25,7 +25,7 @@ const StudentDetails: React.FC = () => {
   const { t } = useTranslation();
   const theme: Theme = useTheme();
   const [userData, setUserData] = useState<UserData | null>(null);
-  const [attendanceReport, setAttendanceReport] = useState<UserData | null>(null);
+  const [attendanceReport, setAttendanceReport] = useState<any>(null);
   const [limit, setLimit] = useState<number>(10);
   const [page, setPage] = useState<number>(1);
   const [filter, setFilter] = useState<object>({});
@@ -54,11 +54,13 @@ const StudentDetails: React.FC = () => {
 
   const getOverallAttendance = async (limitvalue: number, value: number, filter: object) => {
     try {
+      const userId = localStorage.getItem('userId');
       const contextId = 'e371526c-28f9-4646-b19a-a54d5f191ad2';
       const report = true;
       const pageLimit = limitvalue;
       const response = await getAttendanceReport({
         contextId,
+        userId, 
         report,
         limit: pageLimit,
         filters: filter
@@ -74,22 +76,22 @@ const StudentDetails: React.FC = () => {
   };
 
   const componentData = [
-    { title: t('Overall'), linkText: '79%' },
+    { title: t('Overall'), linkText: attendanceReport?.overallPercentage || '' },
     {
       title: t('Mathematics'),
-      linkText: '79%'
+      linkText: attendanceReport?.mathAttendancePercentage || ''
     },
     {
       title: t('English'),
-      linkText: '81%'
+      linkText: attendanceReport?.englishAttendancePercentage || ''
     },
     {
       title: t('Home Science'),
-      linkText: '74%'
+      linkText: attendanceReport?.homeScienceAttendancePercentage || ''
     },
     {
       title: t('Hindi'),
-      linkText: '66%'
+      linkText: attendanceReport?.hindiAttendancePercentage || ''
     }
   ];
 
@@ -186,7 +188,7 @@ const StudentDetails: React.FC = () => {
               }}>
               {renderStatsCard(
                 'Attendance',
-                attendanceReport?.average?.average_attendance_percentage
+                attendanceReport?.average?.average_attendance_percentage || ''
               )}
               {renderStatsCard('Classes Missed', '0')}
             </Box>
