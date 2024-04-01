@@ -33,8 +33,8 @@ const StudentDetails: React.FC = () => {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        if (userId) { // Check if userId is defined
-          const response = await getUser(userId);
+        if (userId) {
+          const response = await getUser(userId, "student");
           const userDataFromJson: UserData | undefined = response?.result?.userData;
           if (userDataFromJson) {
             setUserData(userDataFromJson);
