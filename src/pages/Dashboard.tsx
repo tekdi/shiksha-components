@@ -261,6 +261,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
       markBulkAttendance();
     }
   };
+    console.log("att", attendanceStatus)   
 
   useEffect(() => {
     //let userId = '70861cf2-d00c-475a-a909-d58d0062c880';
@@ -270,15 +271,18 @@ const Dashboard: React.FC<DashboardProps> = () => {
     //setContextId('17a82258-8b11-4c71-8b93-b0cac11826e3') // this one is for testing purpose
     const fetchUserDetails = async () => {
       try {
-        const TeachercontextId = localStorage.getItem('parentCohortId');
+        const parentCohortId = localStorage.getItem('parentCohortId');
+        
 
-        if (userId && TeachercontextId) {
+        if (userId && parentCohortId) {
+          const TeachercontextId = parentCohortId.replace(/\n/g, '');
+
           const attendanceData: TeacherAttendanceByDateParams = {
             fromDate: '2024-02-01',
             toDate: '2024-03-02',
             filters: {
               userId,
-              contextId: TeachercontextId
+              contextId:TeachercontextId
             }
           };
           const response = await getTeacherAttendanceByDate(attendanceData);
@@ -293,6 +297,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
 
         console.error(Error);
       }
+
     };
     fetchUserDetails();
   }, []);
@@ -398,7 +403,8 @@ const Dashboard: React.FC<DashboardProps> = () => {
                 <Typography>
                   {t('ATTENDANCE.TOTAL_STUDENTS', { count: numberOfCohortMembers })}
                 </Typography>
-                <Box height={'57%'} sx={{ overflowY: 'scroll' }}>
+                {cohortMemberList && (cohortMemberList.length !=0) ? <Box height={'58%'} sx={{ overflowY: 'scroll' }}>
+                <Box>
                   <AttendanceStatusListView
                     isEdit={true}
                     isBulkAction={true}
@@ -440,6 +446,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
                     {showUpdateButton ? t('COMMON.UPDATE') : t('COMMON.SAVE')}
                   </Button>
                 </Box>
+                </Box>: <Typography style={{ fontWeight: 'bold' }}>{t('COMMON.NO_DATA_FOUND')}</Typography>}
               </Box>
             </Box>
           </Fade>
@@ -467,7 +474,8 @@ const Dashboard: React.FC<DashboardProps> = () => {
             </Button>
           </Box>
         </Stack>
-
+        {loading && <Loader showBackdrop={true} loadingText={t('COMMON.LOADING')} />}
+        { cohortsData ?  
         <Box
           display={'flex'}
           flexDirection={'column'}
@@ -480,7 +488,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
           {cohortsData &&
             cohortsData.map((cohort) => (
               <Box key={cohort.cohortId}>
-                <Typography>{cohort.value}</Typography>
+                <Typography pt={'1rem'}>{cohort.value.charAt(0).toUpperCase() + cohort.value.slice(1)}</Typography>
                 <CohortCard
                   showBackground={true}
                   isRemote={cohort.value === 'remote'}
@@ -490,6 +498,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
               </Box>
             ))}
         </Box>
+        : <Typography>{t('COMMON.NO_DATA_FOUND')}</Typography>}
       </Box>
       <MarkAttendance
         isOpen={openMarkAttendance}
