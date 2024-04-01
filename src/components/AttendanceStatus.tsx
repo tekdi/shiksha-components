@@ -29,7 +29,7 @@ function AttendanceStatus({ status, onUpdate }: AttendanceStatusProps) {
       icon = <RemoveCircleOutline />;
       message = 'Half-day';
       break;
-    case 'Not marked':
+    case 'notmarked':
       message = 'Attendance not marked';
       break;
     case 'Future date':
