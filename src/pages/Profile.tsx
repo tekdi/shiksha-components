@@ -114,7 +114,7 @@ const Profile = () => {
 
     try {
       if (userId) {
-        const response = await getUser(userId);
+        const response = await getUser(userId, "teacher");
         const userDataFromJson = response?.result?.userData;
         setUserData(userDataFromJson);
         setCustomFieldsData(response?.result?.userData?.customFields);
@@ -227,13 +227,13 @@ const Profile = () => {
 
           <Box display="flex" flexDirection="column" gap="10px">
             <Box display="flex" flexDirection="row" gap="10px">
-              <LocalPhoneOutlinedIcon
+              {/* <LocalPhoneOutlinedIcon
                 style={{
                   marginTop: '9px'
                 }}
-              />
+              /> */}
               <Box display="flex" flexDirection={'column'}>
-                <Typography
+                {/* <Typography
                   variant="h4"
                   style={{
                     letterSpacing: '0.25px',
@@ -248,7 +248,7 @@ const Profile = () => {
                     color: theme.palette.warning['400']
                   }}>
                   {t('PROFILE.PHONE')}
-                </Typography>
+                </Typography> */}
               </Box>
             </Box>
             <Box display="flex" flexDirection="row" gap="10px">
@@ -279,8 +279,8 @@ const Profile = () => {
             </Box>
           </Box>
         </Box>
-
-        <Box sx={{ flex: '1', minWidth: '100%' }}>
+      { customFieldsData.length === 0 &&
+        (<Box sx={{ flex: '1', minWidth: '100%' }}>
           <Typography
             variant="h3"
             style={{
@@ -317,10 +317,11 @@ const Profile = () => {
                 )}
               </Grid>
             ))}
-        </Box>
+        </Box>)
+}
 
         <Box sx={{ flex: '1', minWidth: '100%' }}>
-          <Typography
+          {/* <Typography
             variant="h3"
             style={{
               letterSpacing: '0.1px',
@@ -338,7 +339,7 @@ const Profile = () => {
             }}>
             Teaching for a decade, my mission is to make math enjoyable and accessible, turning each
             lesson into a mathematical adventure.
-          </Typography>
+          </Typography> */}
         </Box>
         <Box
           sx={{
@@ -486,7 +487,7 @@ const Profile = () => {
                   </Grid>
                 ))}
               <Box>
-                <TextField
+                {/* <TextField
                   label={t('PROFILE.BIO')}
                   multiline
                   rows={4}
@@ -496,7 +497,7 @@ const Profile = () => {
                   value={bio}
                   onChange={handleBioChange}
                   variant="outlined"
-                />
+                /> */}
 
                 <FormHelperText style={{ textAlign: 'right' }}>{`${charCount}/150`}</FormHelperText>
               </Box>
