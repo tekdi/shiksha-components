@@ -142,7 +142,8 @@ export default function MyClassDetails() {
                 m={0}
                 fontSize={'11px'}
                 lineHeight={'16px'}
-                color={theme.palette.warning.A200}>
+                color={theme.palette.warning.A200}
+              >
                 Gurukrupa Building, Paud Road
               </Typography>
             </Stack>
@@ -159,25 +160,29 @@ export default function MyClassDetails() {
             borderRadius: '24px',
             marginTop: '20px',
             boxShadow: 'none'
-          }}>
+          }}
+        >
           <CardContent>
             <Box
               sx={{
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center'
-              }}>
+              }}
+            >
               <Box>
                 <Typography
                   sx={{ fontSize: '16px', fontWeight: 600, color: theme.palette.warning.A200 }}
                   variant="h6"
-                  gutterBottom>
+                  gutterBottom
+                >
                   {t('COMMON.ATTENDANCE_REPORT')}
                 </Typography>
                 <Typography
                   sx={{ fontSize: '14px', fontWeight: 600, color: theme.palette.warning['500'] }}
                   variant="h6"
-                  gutterBottom>
+                  gutterBottom
+                >
                   As of 24 May
                 </Typography>
               </Box>
@@ -187,7 +192,8 @@ export default function MyClassDetails() {
                     sx={{ color: theme.palette.secondary.main, fontSize: '16px' }}
                     mr={1}
                     variant="h6"
-                    gutterBottom>
+                    gutterBottom
+                  >
                     {t('DASHBOARD.HISTORY')}
                   </Typography>
                   <EastIcon fontSize="small" sx={{ color: theme.palette.secondary.main }} />
@@ -231,7 +237,8 @@ export default function MyClassDetails() {
           mb={3}
           // justifyContent={'space-between'}
           // alignItems={'center'}
-          boxShadow={'none'}>
+          boxShadow={'none'}
+        >
           <Grid container alignItems="center" display={'flex'} justifyContent="space-between">
             <Grid item xs={8}>
               <Paper
@@ -244,7 +251,8 @@ export default function MyClassDetails() {
                   borderRadius: '100px',
                   background: theme.palette.warning.A700,
                   boxShadow: 'none'
-                }}>
+                }}
+              >
                 <InputBase
                   sx={{ ml: 3, flex: 1, mb: '0', fontSize: '14px' }}
                   placeholder={t('COMMON.SEARCH_STUDENT') + '..'}
@@ -255,7 +263,8 @@ export default function MyClassDetails() {
                   type="button"
                   sx={{ p: '10px' }}
                   aria-label="search"
-                  onClick={handleSearchSubmit}>
+                  onClick={handleSearchSubmit}
+                >
                   <SearchIcon />
                 </IconButton>
               </Paper>
@@ -272,7 +281,8 @@ export default function MyClassDetails() {
                 }}
                 endIcon={<ArrowDropDownSharpIcon />}
                 size="small"
-                variant="outlined">
+                variant="outlined"
+              >
                 {/* {t('COMMON.SORT_BY')} */}
                 {t('COMMON.SORT_BY').length > 7
                   ? `${t('COMMON.SORT_BY').substring(0, 6)}...`

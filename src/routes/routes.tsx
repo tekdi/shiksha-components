@@ -1,5 +1,5 @@
 import { Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, redirect, Navigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { TextField } from '@mui/material';
 import Dashboard from '../pages/Dashboard';
@@ -24,8 +24,9 @@ function AllRoutes(): JSX.Element {
       <Suspense fallback={<TextField>{t('COMMON.LOADING')}</TextField>}>
         <Routes>
           <Route element={<PrivateRoute />}>
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/student-details" element={<StudentDetails />} />
             <Route path="/class-details" element={<MyClassDetails />} />
             <Route path="/user-attendance-history" element={<UserAttendanceHistory />} />
@@ -33,7 +34,7 @@ function AllRoutes(): JSX.Element {
             <Route path="/class-attendance-history" element={<ClassAttendanceHistory />} />
             <Route path="/logout" element={<Logout />} />
           </Route>
-          <Route path="/" element={<LoginPage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Suspense>

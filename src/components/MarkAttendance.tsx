@@ -51,8 +51,14 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
   const { t } = useTranslation();
   const [status, setStatus] = React.useState(currentStatus);
   const theme = useTheme<any>();
- const SNACKBAR_AUTO_HIDE_DURATION = 5000;
-  
+  const SNACKBAR_AUTO_HIDE_DURATION = 5000;
+  const [openMarkUpdateAttendance, setOpenMarkUpdateAttendance] = React.useState(false);
+  const handleMarkUpdateAttendanceModal = () =>
+    setOpenMarkUpdateAttendance(!openMarkUpdateAttendance);
+  const [openMarkClearAttendance, setOpenMarkClearAttendance] = React.useState(false);
+  const handleMarkClearAttendanceModal = () => {
+    setOpenMarkClearAttendance(!openMarkClearAttendance);
+  };
 
   const [state, setState] = React.useState<State>({
     openModal: false,
@@ -60,6 +66,15 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
     horizontal: 'center'
   });
   const { vertical, horizontal, openModal } = state;
+  const submitUpdateAttendance = () => {
+    handleClose();
+    handleMarkUpdateAttendanceModal();
+  };
+
+  const submitClearAttendance = () => {
+    handleClose();
+    handleMarkClearAttendanceModal();
+  };
 
   const submitAttendance = (newState: SnackbarOrigin) => () => {
     handleSubmit(date, status);
@@ -85,7 +100,8 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
         flexDirection="column"
         alignItems="center"
         p={2}
-        onClick={() => setStatus(value)}>
+        onClick={() => setStatus(value)}
+      >
         {status === value ? icon1 : icon2}
         <Typography marginTop={1}>{text}</Typography>
       </Box>
@@ -97,7 +113,8 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={isOpen}
-        sx={{ borderRadius: '16px' }}>
+        sx={{ borderRadius: '16px' }}
+      >
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
           <Typography variant="h2" sx={{ marginBottom: 0 }}>
             {currentStatus === ATTENDANCE_ENUM.NOT_MARKED
@@ -117,7 +134,8 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
             right: 8,
             top: 8,
             color: theme.palette.warning['A200']
-          }}>
+          }}
+        >
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
@@ -146,23 +164,113 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
         </DialogContent>
         <DialogActions>
           <Button
-                        variant="outlined"
-                        autoFocus
-                        onClick={handleClear}
-                        sx={{
-                          width: '100%'
-                        }} 
-                    >
-                         {t('ATTENDANCE.CLEAR')}
-                    </Button>
+            variant="outlined"
+            autoFocus
+            onClick={() => {
+              if (currentStatus === ATTENDANCE_ENUM.NOT_MARKED) {
+                {
+                  handleClear();
+                }
+              } else {
+                submitClearAttendance();
+              }
+            }}
+            sx={{
+              width: '100%'
+            }}
+          >
+            {t('ATTENDANCE.CLEAR')}
+          </Button>
+          <Button
+            variant="contained"
+            onClick={() => {
+              if (currentStatus === ATTENDANCE_ENUM.NOT_MARKED) {
+                {
+                  submitAttendance({ vertical: 'bottom', horizontal: 'center' });
+                }
+              } else {
+                submitUpdateAttendance();
+              }
+            }}
+            disabled={status === ATTENDANCE_ENUM.NOT_MARKED || status === currentStatus}
+            sx={{
+              width: '100%'
+            }}
+          >
+            {currentStatus === ATTENDANCE_ENUM.NOT_MARKED ? t('COMMON.SAVE') : t('COMMON.UPDATE')}
+          </Button>
+        </DialogActions>
+      </BootstrapDialog>
+
+      <BootstrapDialog
+        onClose={handleMarkUpdateAttendanceModal}
+        aria-labelledby="customized-update-dialog-title"
+        open={openMarkUpdateAttendance}
+        sx={{ borderRadius: '16px' }}
+      >
+        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-update-dialog-title">
+          <Typography variant="h2" sx={{ marginBottom: 0 }}>
+            t('ATTENDANCE.UPDATE_ATTENDANCE_ALERT')
+          </Typography>
+        </DialogTitle>
+        {/* <Typography variant="h2">Mark Attendance</Typography> */}
+
+        <DialogActions>
+          <Button
+            //  variant="outlined"
+            autoFocus
+            onClick={handleMarkUpdateAttendanceModal}
+            sx={{
+              width: '100%'
+            }}
+          >
+            No, go back
+          </Button>
           <Button
             variant="contained"
             onClick={submitAttendance({ vertical: 'bottom', horizontal: 'center' })}
             disabled={status === ATTENDANCE_ENUM.NOT_MARKED || status === currentStatus}
             sx={{
               width: '100%'
-            }}>
-            {currentStatus === ATTENDANCE_ENUM.NOT_MARKED ? t('COMMON.SAVE') : t('COMMON.UPDATE')}
+            }}
+          >
+            {t('COMMON.UPDATE')}
+          </Button>
+        </DialogActions>
+      </BootstrapDialog>
+
+      <BootstrapDialog
+        onClose={handleMarkClearAttendanceModal}
+        aria-labelledby="customized-clear-dialog-title"
+        open={openMarkClearAttendance}
+        sx={{ borderRadius: '16px' }}
+      >
+        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-clear-dialog-title">
+          <Typography variant="h2" sx={{ marginBottom: 0 }}>
+            t('ATTENDANCE.CLEAR_ATTENDANCE_ALERT')
+          </Typography>
+        </DialogTitle>
+        {/* <Typography variant="h2">Mark Attendance</Typography> */}
+
+        <DialogActions>
+          <Button
+            //  variant="outlined"
+            autoFocus
+            onClick={handleMarkClearAttendanceModal}
+            sx={{
+              width: '100%'
+            }}
+          >
+            No, go back
+          </Button>
+          <Button
+            variant="contained"
+            onClick={submitAttendance({ vertical: 'bottom', horizontal: 'center' })}
+            sx={{
+              width: '100%'
+            }}
+          >
+            Yes
           </Button>
         </DialogActions>
       </BootstrapDialog>
@@ -173,6 +281,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
         onClose={handleClose2}
         message={message}
         key={vertical + horizontal}
+        className="sample"
       />
     </React.Fragment>
   );

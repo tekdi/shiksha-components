@@ -12,11 +12,12 @@ import {
 import Header from '../components/Header';
 import { useTheme } from '@mui/material/styles';
 import KeyboardBackspaceOutlinedIcon from '@mui/icons-material/KeyboardBackspaceOutlined';
-import { getAttendanceByDate } from '../services/AttendanceService';
-import { AttendanceByDateParams } from '../utils/Interfaces';
+import { getAttendanceByDate, markAttendance } from '../services/AttendanceService';
+import { AttendanceByDateParams, AttendanceParams } from '../utils/Interfaces';
 import AttendanceStatus from '../components/AttendanceStatus';
 import MarkAttendance from '../components/MarkAttendance';
 import { useTranslation } from 'react-i18next';
+import Loader from '../components/Loader.tsx';
 
 const StudentAttendanceHistory = () => {
   const theme = useTheme<any>();
@@ -36,6 +37,8 @@ const StudentAttendanceHistory = () => {
   const [center, setCenter] = useState('');
   const [openMarkAttendance, setOpenMarkAttendance] = useState(false);
   const handleMarkAttendanceModal = () => setOpenMarkAttendance(!openMarkAttendance);
+  const [AttendanceMessage, setAttendanceMessage] = React.useState('');
+  const [loading, setLoading] = useState(false);
 
   let userId: string = '00772d32-3f60-4a8e-a5e0-d0110c5c42fb';
 
@@ -186,6 +189,31 @@ const StudentAttendanceHistory = () => {
     const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: 'long' };
     return new Intl.DateTimeFormat('en-US', options).format(date);
   };
+  const submitAttendance = async (date: string, status: string) => {
+    //console.log(date, status);
+    if (userId ) {
+      const attendanceData: AttendanceParams = {
+        attendanceDate: date,
+        attendance: status,
+        userId,
+        contextId:"252fb59c-d641-417a-815b-d39e6f502fcf"
+      };
+      setLoading(true);
+      try {
+        const response = await markAttendance(attendanceData);
+        if (response) {
+          //console.log(response);
+          handleMarkAttendanceModal();
+          setAttendanceMessage(t('ATTENDANCE.ATTENDANCE_MARKED_SUCCESSFULLY') );
+        }
+        setLoading(false);
+      } catch (error) {
+        setAttendanceMessage(t('ATTENDANCE.ATTENDANCE_MARKED_UNSUCCESSFULLY'));
+        console.error('error', error);
+        setLoading(false);
+      }
+    }
+  };
 
   const handleUpdate = () => {};
 
@@ -244,10 +272,10 @@ const StudentAttendanceHistory = () => {
       <MarkAttendance
         isOpen={openMarkAttendance}
         isSelfAttendance={true}
-        date={formatToShowDateMonth(selectedDate)}
-        currentStatus="notmarked"
+        date={selectedDate.toISOString().split('T')[0]}
+        currentStatus={ status}
         handleClose={handleMarkAttendanceModal}
-        handleSubmit={handleUpdate}
+        handleSubmit={submitAttendance}
       />
     </Box>
   );

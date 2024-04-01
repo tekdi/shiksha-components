@@ -97,3 +97,15 @@
   border-radius: 50%;
   padding: 5px;
 }
+
+.sample .MuiSnackbarContent-root
+{
+  background-color: green !important;
+}
+
+.alert .MuiSnackbarContent-root
+{
+  background-color: #FFDAD6 !important;
+  color:#BA1A1A;
+  font-size: 0.75rem;
+}
