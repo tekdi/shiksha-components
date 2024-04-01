@@ -23,7 +23,12 @@
     "DOB": "जन्म की तारीख",
     "LOGOUT": "लॉग आउट",
     "OVERALL_ATTENDANCE": "समग्र उपस्थिति",
-    "NO_DATA_FOUND":  "कोई डेटा नहीं मिला"
+    "NO_DATA_FOUND": "कोई डेटा नहीं मिला",
+    "LOCATION": "स्थान",
+    "MARITAL_STATUS": "वैवाहिक स्थिती",
+    "DROPOUT_YEAR": "ड्रॉपआउट वर्ष",
+    "EMPLOYMENT_STATUS": "रोज़गार स्थिति",
+    "ENROLLMENT_DATE": "नामांकन की तिथि"
   },
   "LOGIN_PAGE": {
     "USERNAME": "उपयोगकर्ता नाम",

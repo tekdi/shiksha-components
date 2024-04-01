@@ -8,7 +8,8 @@ import {
   MenuItem,
   Select,
   Stack,
-  Typography
+  Typography,
+  Divider
 } from '@mui/material';
 import { ArrowBack as ArrowBackIcon, East as EastIcon } from '@mui/icons-material';
 import { useTheme, Theme } from '@mui/material/styles';
@@ -17,28 +18,34 @@ import CustomSelect from '../components/CustomSelect';
 import { getUser } from '../services/profileService';
 import { useTranslation } from 'react-i18next';
 import { UserData } from '../utils/Interfaces';
-import Divider from '@mui/material/Divider';
 import { getAttendanceReport } from '../services/AttendanceService';
 import Header from '../components/Header';
 
 const StudentDetails: React.FC = () => {
   const { t } = useTranslation();
   const theme: Theme = useTheme();
-  const { cohortId, userId } = useParams<{ cohortId: string; userId?: string }>(); 
+  const { cohortId, userId } = useParams<{ cohortId: string; userId?: string }>();
   const [userData, setUserData] = useState<UserData | null>(null);
   const [attendanceReport, setAttendanceReport] = useState<any>(null);
   const [limit, setLimit] = useState<number>(10);
   const [page, setPage] = useState<number>(1);
   const [filter, setFilter] = useState<object>({});
+  const [maritalStatus, setMaritalStatus] = useState<string>('');
 
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
         if (userId) {
-          const response = await getUser(userId, "student");
+          const response = await getUser(userId, 'student');
           const userDataFromJson: UserData | undefined = response?.result?.userData;
           if (userDataFromJson) {
             setUserData(userDataFromJson);
+            const maritalStatusField = (
+              userDataFromJson.customFields as { label: string; value: string }[]
+            ).find((field) => field.label === 'Marital Status');
+            if (maritalStatusField) {
+              setMaritalStatus(maritalStatusField.value);
+            }
           }
         }
       } catch (error) {
@@ -50,11 +57,11 @@ const StudentDetails: React.FC = () => {
 
   useEffect(() => {
     getOverallAttendance(limit, page, filter);
-  }, [limit, page, filter, userId]); 
+  }, [limit, page, filter, userId]);
 
   const getOverallAttendance = async (limitvalue: number, value: number, filter: object) => {
     try {
-      if (!userId) return; 
+      if (!userId) return;
       const contextId = 'e371526c-28f9-4646-b19a-a54d5f191ad2';
       const report = true;
       const pageLimit = limitvalue;
@@ -79,19 +86,19 @@ const StudentDetails: React.FC = () => {
     { title: t('Overall'), linkText: attendanceReport?.overallPercentage || '' },
     {
       title: t('Mathematics'),
-      linkText: attendanceReport?.mathAttendancePercentage || ''
+      linkText: '79%'
     },
     {
       title: t('English'),
-      linkText: attendanceReport?.englishAttendancePercentage || ''
+      linkText: '65%'
     },
     {
       title: t('Home Science'),
-      linkText: attendanceReport?.homeScienceAttendancePercentage || ''
+      linkText: '73%'
     },
     {
       title: t('Hindi'),
-      linkText: attendanceReport?.hindiAttendancePercentage || ''
+      linkText: '56%'
     }
   ];
 
@@ -101,8 +108,9 @@ const StudentDetails: React.FC = () => {
 
   return (
     <>
+      <Header />
+
       <Box mt={3} display="flex" gap={2} alignItems="flex-start">
-        <Header/>
         <Link to="/">
           <ArrowBackIcon
             sx={{ color: (theme.palette.warning as any)['A200'], fontSize: '1.5rem' }}
@@ -133,7 +141,7 @@ const StudentDetails: React.FC = () => {
             gutterBottom>
             {t('COMMON.ATTENDANCE_REPORT')}
           </Typography>
-          {userId && ( 
+          {userId && (
             <Link to={`/student-attendance-history/${userId}`}>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Typography
@@ -285,7 +293,63 @@ const StudentDetails: React.FC = () => {
               }}>
               {t('COMMON.DOB')}
             </Typography>
-            <Typography sx={{ fontWeight: 500 }}>{userData?.dob}</Typography>
+            <Typography sx={{ fontWeight: 500 }}>{userData?.dob ? userData?.dob : '-'}</Typography>
+            <Typography
+              sx={{
+                color: theme.palette.text.secondary,
+                fontSize: '14px',
+                fontWeight: 600
+              }}>
+              {t('COMMON.LOCATION')}
+            </Typography>
+            <Typography sx={{ fontWeight: 500 }}>
+              {userData?.state ? userData?.state : '-'}
+            </Typography>
+            <Typography
+              sx={{
+                color: theme.palette.text.secondary,
+                fontSize: '14px',
+                fontWeight: 600
+              }}>
+              {t('COMMON.LATEST_EDUCATION')}
+            </Typography>
+            <Typography sx={{ fontWeight: 500 }}>-</Typography>
+            <Typography
+              sx={{
+                color: theme.palette.text.secondary,
+                fontSize: '14px',
+                fontWeight: 600
+              }}>
+              {t('COMMON.MARITAL_STATUS')}
+            </Typography>
+            <Typography sx={{ fontWeight: 500 }}>{maritalStatus || '-'}</Typography>
+            <Typography
+              sx={{
+                color: theme.palette.text.secondary,
+                fontSize: '14px',
+                fontWeight: 600
+              }}>
+              {t('COMMON.DROPOUT_YEAR')}
+            </Typography>
+            <Typography sx={{ fontWeight: 500 }}>-</Typography>
+            <Typography
+              sx={{
+                color: theme.palette.text.secondary,
+                fontSize: '14px',
+                fontWeight: 600
+              }}>
+              {t('COMMON.EMPLOYMENT_STATUS')}
+            </Typography>
+            <Typography sx={{ fontWeight: 500 }}>-</Typography>
+            <Typography
+              sx={{
+                color: theme.palette.text.secondary,
+                fontSize: '14px',
+                fontWeight: 600
+              }}>
+              {t('COMMON.ENROLLMENT_DATE')}
+            </Typography>
+            <Typography sx={{ fontWeight: 500 }}>-</Typography>
           </Box>
         </Card>
       </Card>
