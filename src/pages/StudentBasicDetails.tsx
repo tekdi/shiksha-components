@@ -23,7 +23,7 @@ import { getAttendanceReport } from '../services/AttendanceService';
 const StudentDetails: React.FC = () => {
   const { t } = useTranslation();
   const theme: Theme = useTheme();
-  const { cohortId, userId } = useParams<{ cohortId: string; userId?: string }>(); // Make userId optional
+  const { cohortId, userId } = useParams<{ cohortId: string; userId?: string }>(); 
   const [userData, setUserData] = useState<UserData | null>(null);
   const [attendanceReport, setAttendanceReport] = useState<any>(null);
   const [limit, setLimit] = useState<number>(10);
@@ -49,11 +49,11 @@ const StudentDetails: React.FC = () => {
 
   useEffect(() => {
     getOverallAttendance(limit, page, filter);
-  }, [limit, page, filter, userId]); // Include userId in dependency array
+  }, [limit, page, filter, userId]); 
 
   const getOverallAttendance = async (limitvalue: number, value: number, filter: object) => {
     try {
-      if (!userId) return; // Return early if userId is undefined
+      if (!userId) return; 
       const contextId = 'e371526c-28f9-4646-b19a-a54d5f191ad2';
       const report = true;
       const pageLimit = limitvalue;
@@ -131,7 +131,7 @@ const StudentDetails: React.FC = () => {
             gutterBottom>
             {t('COMMON.ATTENDANCE_REPORT')}
           </Typography>
-          {userId && ( // Render link only if userId is defined
+          {userId && ( 
             <Link to={`/student-attendance-history/${userId}`}>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Typography
