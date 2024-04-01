@@ -1,30 +1,26 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import CloseIcon from '@mui/icons-material/Close';
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
-import StudentStatsCard from '../components/StudentStatsCard.tsx';
-import {
-  TextField,
-  Button,
-  Typography,
-  Box,
-  Autocomplete,
-  IconButton,
-  FormHelperText,
-  Grid
-} from '@mui/material';
-import Header from '../components/Header.tsx';
-import Modal from '@mui/material/Modal';
-import CloseIcon from '@mui/icons-material/Close';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import { getUser, editEditUser } from '../services/profileService.ts';
+import {
+  Box,
+  Button,
+  FormHelperText,
+  Grid,
+  IconButton,
+  TextField,
+  Typography
+} from '@mui/material';
+import Modal from '@mui/material/Modal';
 import { useTheme } from '@mui/material/styles';
-import defaultUser from '/default_user.png';
-import { decodeToken } from '../utils/Helper';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import Header from '../components/Header.tsx';
+import StudentStatsCard from '../components/StudentStatsCard.tsx';
+import { editEditUser, getUser } from '../services/profileService.ts';
 import { UserData } from '../utils/Interfaces.ts';
-import Loader from '../components/Loader.tsx';
+import defaultUser from '/default_user.png';
 
 const Profile = () => {
   interface CustomField {
@@ -51,7 +47,7 @@ const Profile = () => {
   const [updatedPhone, setUpdatedPhone] = useState<string | null>(null);
   const [updatedEmail, setUpdatedEmail] = useState<string | null>(null);
   const [updatedCustomFields, setUpdatedCustomFields] = useState<updateCustomField[]>([]);
-  const [updatedBio, setUpdatedBio] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const [customFieldsData, setCustomFieldsData] = useState<CustomField[]>([]);
   const handleBioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,27 +75,26 @@ const Profile = () => {
     window.history.back();
   };
   const handleUpdateClick = async () => {
+    setLoading(true);
     try {
       const userDetails = {
         userData: {
           name: updatedName ?? userData?.name,
-          // phone: updatedPhone ?? userData?.phone,
           email: updatedEmail ?? userData?.email
         },
         customFields: updatedCustomFields.length > 0 ? updatedCustomFields : customFieldsData
       };
       const userId = localStorage.getItem('userId');
       if (userId) {
-        const response = await editEditUser(userId, userDetails);
+        await editEditUser(userId, userDetails);
+        await fetchUserDetails();
       }
       setOpen(false);
-      // setLoading(true);
+      setLoading(false);
     } catch (error) {
-      // setLoading(false);
+      setLoading(false);
 
       console.log(error);
-    } finally {
-      // setLoading(false)
     }
   };
   const handleFieldChange = (fieldId: string, value: string) => {
@@ -114,24 +109,26 @@ const Profile = () => {
     setUpdatedCustomFields(newData);
   };
 
-  useEffect(() => {
-    const fetchUserDetails = async () => {
-      const userId = localStorage.getItem('userId');
+  const fetchUserDetails = async () => {
+    const userId = localStorage.getItem('userId');
 
-      try {
-        if (userId) {
-          const response = await getUser(userId);
-          const userDataFromJson = response?.result?.userData;
-          setUserData(userDataFromJson);
-          setCustomFieldsData(response?.result?.userData?.customFields);
-          console.log(response?.result?.userData?.customFields);
-        }
-      } catch (error) {
-        console.error('Error fetching  user details:', error);
+    try {
+      if (userId) {
+        const response = await getUser(userId);
+        const userDataFromJson = response?.result?.userData;
+        setUserData(userDataFromJson);
+        setCustomFieldsData(response?.result?.userData?.customFields);
+        console.log(response?.result?.userData?.customFields);
       }
-    };
+    } catch (error) {
+      console.error('Error fetching  user details:', error);
+    }
+  };
+
+  useEffect(() => {
     fetchUserDetails();
   }, []);
+
   return (
     <Box display="flex" flexDirection="column" minHeight="100vh" minWidth={'100%'}>
       <Header />
@@ -141,10 +138,9 @@ const Profile = () => {
         padding={2}
         gap={'10px'}
         justifyContent={'center'}
-        alignItems={'center'}
-      >
+        alignItems={'center'}>
         <Box sx={{ flex: '1', minWidth: '100%' }} display="flex" flexDirection="row" gap="5px">
-          <ArrowBackIcon onClick={backButtonEvent} />
+          <ArrowBackIcon onClick={backButtonEvent} sx={{ cursor: 'pointer' }} />
 
           <Typography
             variant="h3"
@@ -152,10 +148,7 @@ const Profile = () => {
               letterSpacing: '0.1px',
               textAlign: 'left',
               marginBottom: '2px'
-              // marginBottom:"4px"
-              // color: theme.palette.warning['400']
-            }}
-          >
+            }}>
             {t('PROFILE.MY_PROFILE')}
           </Typography>
         </Box>
@@ -172,19 +165,26 @@ const Profile = () => {
           border={'1px'}
           bgcolor="warning.A400"
           display="flex"
-          flexDirection="row"
-        >
-          <img src={defaultUser} alt="user" style={{ margin: '2px' }} />
-          <Box>
-            <Typography
-              variant="h2"
-              sx={{
-                marginTop: '35px'
-              }}
-            >
+          flexDirection="row">
+          <img
+            src={defaultUser}
+            alt="user"
+            style={{ margin: '2px' }}
+            height={'100px'}
+            width={'100px'}
+          />
+          <Box
+            sx={{
+              marginLeft: '10px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '10px',
+              justifyContent: 'center'
+            }}>
+            <Typography variant="h2">
               {userData?.name}
               <br />
-              {userData?.role}
+              {/* {userData?.role} */}
             </Typography>
             <Typography variant="h5">
               {userData?.district}, {userData?.state}
@@ -210,8 +210,7 @@ const Profile = () => {
             }
           }}
           startIcon={<CreateOutlinedIcon />}
-          onClick={handleOpen}
-        >
+          onClick={handleOpen}>
           {t('PROFILE.EDIT_PROFILE')}
         </Button>
 
@@ -222,8 +221,7 @@ const Profile = () => {
               letterSpacing: '0.1px',
               textAlign: 'left',
               color: theme.palette.warning['400']
-            }}
-          >
+            }}>
             {t('PROFILE.CONTACT_INFORMATION')}
           </Typography>
 
@@ -240,8 +238,7 @@ const Profile = () => {
                   style={{
                     letterSpacing: '0.25px',
                     textAlign: 'left'
-                  }}
-                >
+                  }}>
                   8793607919
                 </Typography>
                 <Typography
@@ -249,8 +246,7 @@ const Profile = () => {
                   style={{
                     textAlign: 'left',
                     color: theme.palette.warning['400']
-                  }}
-                >
+                  }}>
                   {t('PROFILE.PHONE')}
                 </Typography>
               </Box>
@@ -268,8 +264,7 @@ const Profile = () => {
                   style={{
                     letterSpacing: '0.25px',
                     textAlign: 'left'
-                  }}
-                >
+                  }}>
                   {userData?.email}
                 </Typography>
                 <Typography
@@ -277,8 +272,7 @@ const Profile = () => {
                   style={{
                     textAlign: 'left',
                     color: theme.palette.warning['400']
-                  }}
-                >
+                  }}>
                   {t('PROFILE.EMAIL_ID')}
                 </Typography>
               </Box>
@@ -287,6 +281,17 @@ const Profile = () => {
         </Box>
 
         <Box sx={{ flex: '1', minWidth: '100%' }}>
+          <Typography
+            variant="h3"
+            style={{
+              padding: '10px 0px',
+              letterSpacing: '0.1px',
+              textAlign: 'left',
+              color: theme.palette.warning['400']
+            }}>
+            {t('PROFILE.OTHER_INFORMATION')}
+          </Typography>
+
           {customFieldsData &&
             customFieldsData.map((field) => (
               <Grid item xs={12} key={field.fieldId}>
@@ -297,8 +302,7 @@ const Profile = () => {
                       style={{
                         textAlign: 'left',
                         color: theme.palette.warning['400']
-                      }}
-                    >
+                      }}>
                       {field.label}:
                     </Typography>{' '}
                     <Typography
@@ -306,8 +310,7 @@ const Profile = () => {
                       style={{
                         letterSpacing: '0.25px',
                         textAlign: 'left'
-                      }}
-                    >
+                      }}>
                       {field.value}
                     </Typography>
                   </Box>
@@ -323,8 +326,7 @@ const Profile = () => {
               letterSpacing: '0.1px',
               textAlign: 'left',
               color: theme.palette.warning['400']
-            }}
-          >
+            }}>
             {t('PROFILE.BIO')}
           </Typography>
 
@@ -333,8 +335,7 @@ const Profile = () => {
             style={{
               letterSpacing: '0.1px',
               textAlign: 'left'
-            }}
-          >
+            }}>
             Teaching for a decade, my mission is to make math enjoyable and accessible, turning each
             lesson into a mathematical adventure.
           </Typography>
@@ -351,14 +352,14 @@ const Profile = () => {
           bgcolor="#E7F3F8"
           p={5}
           display="flex"
-          flexDirection="column"
-        >
+          flexDirection="column">
           <Typography
             variant="h2"
+            color={theme.palette.warning['A200']}
             style={{
-              textAlign: 'left'
-            }}
-          >
+              textAlign: 'left',
+              marginTop: '10px'
+            }}>
             {t('PROFILE.INTERVIEW_TEST_SCORES')}
           </Typography>
           <Box
@@ -367,13 +368,12 @@ const Profile = () => {
             gap="10px"
             marginTop="10px"
             alignItems={'center'}
-            justifyContent={'center'}
-          >
+            justifyContent={'center'}>
             <StudentStatsCard
               label1={t('PROFILE.INTERVIEW_TEST_SCORES')}
               value1="82%"
               label2={true}
-              value2="02/1/25"
+              value2="19 Feb, 2024"
             />
           </Box>
         </Box>
@@ -382,8 +382,7 @@ const Profile = () => {
           open={open}
           onClose={handleClose}
           aria-labelledby="edit-profile-modal"
-          aria-describedby="edit-profile-description"
-        >
+          aria-describedby="edit-profile-description">
           <Box sx={style} gap="10px" display="flex" flexDirection="column" borderRadius={'1rem'}>
             <Box
               sx={{
@@ -391,15 +390,13 @@ const Profile = () => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 mb: 2
-              }}
-            >
+              }}>
               <Typography
                 variant="h2"
                 style={{
                   textAlign: 'left',
                   color: '#4D4639'
-                }}
-              >
+                }}>
                 {t('PROFILE.EDIT_PROFILE')}
               </Typography>
 
@@ -410,8 +407,7 @@ const Profile = () => {
                 aria-label="close"
                 style={{
                   justifyContent: 'flex-end'
-                }}
-              >
+                }}>
                 <CloseIcon cursor="pointer" />
               </IconButton>
             </Box>
@@ -419,8 +415,7 @@ const Profile = () => {
               style={{
                 overflowY: 'auto'
               }}
-              id="modal-modal-description"
-            >
+              id="modal-modal-description">
               <Box
                 sx={{
                   //flex: '1',
@@ -431,8 +426,7 @@ const Profile = () => {
                 border={'1px'}
                 bgcolor="warning.A400"
                 display="flex"
-                flexDirection="column"
-              >
+                flexDirection="column">
                 <img src={defaultUser} alt="user" />
                 <Box>
                   <Button
@@ -451,8 +445,7 @@ const Profile = () => {
                       '&:hover': {
                         backgroundColor: 'warning.A400'
                       }
-                    }}
-                  >
+                    }}>
                     {t('PROFILE.UPDATE_PICTURE')}
                   </Button>
                 </Box>
@@ -466,22 +459,9 @@ const Profile = () => {
                 defaultValue={userData?.name}
                 onChange={(e) => setUpdatedName(e.target.value)}
               />
-              {/* <Autocomplete
-              value={value}
-              onChange={(event: any, newValue: string | null) => {
-                setValue(newValue);
-              }}
-              inputValue={inputValue}
-              onInputChange={(event, newInputValue) => {
-                setInputValue(newInputValue);
-              }}
-              options={options}
-              renderInput={(params) => <TextField {...params} label={t('PROFILE.LOCATION')} />}
-            /> */}
               <TextField
                 label={t('PROFILE.PHONE')}
                 variant="outlined"
-                defaultValue="+91 000000000"
                 onChange={(e) => setUpdatedPhone(e.target.value)}
               />
               <TextField
@@ -515,8 +495,6 @@ const Profile = () => {
                   }}
                   value={bio}
                   onChange={handleBioChange}
-                  // helperText={`${charCount}/150`}
-
                   variant="outlined"
                 />
 
@@ -535,8 +513,7 @@ const Profile = () => {
                   }
                 }}
                 onClick={handleUpdateClick}
-                variant="contained"
-              >
+                variant="contained">
                 {t('COMMON.UPDATE')}
               </Button>
             </Box>
