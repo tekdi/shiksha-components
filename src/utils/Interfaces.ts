@@ -9,6 +9,7 @@ export interface CohortCardProps {
   showBackground: boolean;
   isRemote: boolean;
   cohortName: string;
+  cohortId: string;
 }
 
 export interface MarkAttendanceProps {
@@ -48,7 +49,7 @@ export interface cohortListParam {
 }
 
 export interface cohortDetailsList {
-  contextId: string;
+  contextId?: string;
   report: boolean;
   limit: number;
   offset: number;
@@ -86,7 +87,7 @@ export interface UserData {
 
 export interface AttendanceReports {
   contextId: string;
-  userId:string;
+  userId: string;
   report: boolean;
   limit: number;
   filters: object;
@@ -97,4 +98,5 @@ export interface Student {
   attendance_percentage: number;
   label1: string;
   label2: string;
+  userId?: string;
 }

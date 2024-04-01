@@ -3,12 +3,15 @@ import React from 'react';
 import { Box, Grid, Link, Pagination, Stack, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 interface StudentsStatsListProps {
   name: string;
   label1: string;
   value1: number;
   label2: string;
   value2: number;
+  userId?: string;
+  cohortId?: string;
 }
 
 const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
@@ -16,10 +19,18 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
   label1,
   value1,
   label2,
-  value2
+  value2,
+  userId,
+  cohortId
 }) => {
   const theme = useTheme<any>();
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
+  const handleStudentDetails = () => {
+    navigate(`/student-details/${cohortId}/${userId}`);
+  };
+
   return (
     <Stack>
       <Box
@@ -32,14 +43,15 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
         <Grid container alignItems="center" justifyContent="space-between" p={2}>
           <Grid item xs={8}>
             <Link
-              href="#"
+              
               underline="always"
               color={theme.palette.text.primary}
               fontSize="0.875rem"
               fontWeight="400"
-              lineHeight="1.25rem"
-            >
-              <Typography m={0}>{name}</Typography>
+              lineHeight="1.25rem">
+              <Typography m={0} onClick={handleStudentDetails}>
+                {name}
+              </Typography>
             </Link>
           </Grid>
           <Grid item xs={4}>
@@ -49,8 +61,7 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
               fontWeight="bold"
               lineHeight="1.5rem"
               color={theme.palette.text.primary}
-              textAlign="end"
-            >
+              textAlign="end">
               {value1}
             </Typography>
             <Typography
@@ -59,8 +70,7 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
               fontWeight="500"
               lineHeight="1rem"
               color={theme.palette.warning.main}
-              textAlign="end"
-            >
+              textAlign="end">
               {t('COMMON.ATTENDANCE')}
             </Typography>
           </Grid>
