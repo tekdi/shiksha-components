@@ -64,7 +64,7 @@ const StudentDetails: React.FC = () => {
       const pageLimit = limitvalue;
       const response = await getAttendanceReport({
         contextId,
-        userId, 
+        userId,
         report,
         limit: pageLimit,
         filters: filter
@@ -192,7 +192,7 @@ const StudentDetails: React.FC = () => {
               }}>
               {renderStatsCard(
                 'Attendance',
-                attendanceReport?.average?.average_attendance_percentage || ''
+                Math.floor(attendanceReport?.average?.average_attendance_percentage || 0).toString()
               )}
               {renderStatsCard('Classes Missed', '0')}
             </Box>
