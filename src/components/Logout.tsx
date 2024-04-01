@@ -4,11 +4,13 @@ import { useNavigate } from 'react-router-dom';
 function Logout() {
   const navigate = useNavigate();
   useEffect(() => {
-    localStorage.clear();
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('parentCohortId');
 
-    navigate('/');
+    navigate('/login');
 
-    window.location.reload();
+    // window.location.reload();
   }, []);
 
   return '';

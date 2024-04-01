@@ -17,10 +17,7 @@ import { styled, alpha } from '@mui/material/styles';
 import { MenuProps } from '@mui/material/Menu';
 import Menu from '@mui/material/Menu';
 const Header: React.FC = () => {
-  const [selectedLanguage, setSelectedLanguage] = useState(
-    localStorage.getItem('preferredLanguage') || 'en'
-  );
-  const [language, setLanguage] = useState(selectedLanguage);
+  const [language, setLanguage] = useState(localStorage.getItem('preferredLanguage') || 'en');
   const navigate = useNavigate();
   const { i18n, t } = useTranslation();
 
@@ -114,12 +111,16 @@ const Header: React.FC = () => {
           </FormControl>
         </Box>
         <Box sx={{ margin: '0 auto' }}>
-          <img src={appLogo} alt="logo" />
+          <img
+            src={appLogo}
+            alt="logo"
+            onClick={() => navigate('/')}
+            style={{ cursor: 'pointer' }}
+          />
         </Box>
         <Box
           onClick={handleClick}
           sx={{ cursor: 'pointer', position: 'relative' }}
-          id="akshta"
           aria-controls={open ? 'account-menu' : undefined}
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}

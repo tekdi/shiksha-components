@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   Box,
   Button,
@@ -6,7 +6,8 @@ import {
   IconButton,
   InputAdornment,
   InputLabel,
-  OutlinedInput
+  OutlinedInput,
+  Typography
 } from '@mui/material';
 import appLogo2 from '/appLogo2.svg';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
@@ -21,6 +22,12 @@ import MenuItem from '@mui/material/MenuItem';
 import config from '../config.json';
 import { getUserId } from '../services/profileService.ts';
 import Loader from '../components/Loader.tsx';
+import Snackbar, { SnackbarOrigin } from '@mui/material/Snackbar';
+import CloseIcon from '@mui/icons-material/Close';
+
+interface State extends SnackbarOrigin {
+  openModal: boolean;
+}
 
 const LoginPage = () => {
   const { t, i18n } = useTranslation();
@@ -37,6 +44,13 @@ const LoginPage = () => {
   const [language, setLanguage] = useState(selectedLanguage);
   const navigate = useNavigate();
   const theme = useTheme<any>();
+  const [state, setState] = React.useState<State>({
+    openModal: false,
+    vertical: 'top',
+    horizontal: 'center'
+  });
+  const { vertical, horizontal, openModal } = state;
+
   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     const trimmedValue = value.trim();
@@ -77,9 +91,13 @@ const LoginPage = () => {
         }
         setLoading(false);
         navigate('/dashboard');
-      } catch (error) {
+      } catch (error: any) {
         setLoading(false);
-        console.error('error', error);
+        if (error.response && error.response.status === 401) {
+          handleClick({ vertical: 'top', horizontal: 'center' })();
+        } else {
+          console.error('Error:', error);
+        }
       }
     }
   };
@@ -91,14 +109,38 @@ const LoginPage = () => {
     setLanguage(event.target.value);
     i18n.changeLanguage(event.target.value);
   };
+
+  const handleClick = (newState: SnackbarOrigin) => () => {
+    setState({ ...newState, openModal: true });
+  };
+
+  const handleClose = () => {
+    setState({ ...state, openModal: false });
+  };
+  const action = useMemo(
+    () => (
+      <React.Fragment>
+        {/* <Typography>{t('LOGIN_PAGE.USERNAME_PASSWORD_NOT_CORRECT')}</Typography> */}
+
+        <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+          <CloseIcon fontSize="small" />
+        </IconButton>
+      </React.Fragment>
+    ),
+    [t]
+  );
+
   return (
     <form onSubmit={handleFormSubmit}>
-      <Box display="flex" flexDirection="column" bgcolor={'black'} minHeight={'100vh'}>
+      <Box
+        display="flex"
+        flexDirection="column"
+        bgcolor={theme.palette.warning.A200}
+        minHeight={'100vh'}
+      >
         {loading && <Loader showBackdrop={true} loadingText={t('LOADING')} />}
         <Box
           display={'flex'}
-          // flexGrow={1}
-          bgcolor="black"
           overflow="auto"
           alignItems={'center'}
           justifyContent={'center'}
@@ -203,6 +245,17 @@ const LoginPage = () => {
             </Box>
           </Box>
         </Box>
+
+        <Snackbar
+          anchorOrigin={{ vertical, horizontal }}
+          open={openModal}
+          onClose={handleClose}
+          className="alert"
+          autoHideDuration={5000}
+          key={vertical + horizontal}
+          message={t('LOGIN_PAGE.USERNAME_PASSWORD_NOT_CORRECT')}
+          action={action}
+        />
       </Box>
     </form>
   );

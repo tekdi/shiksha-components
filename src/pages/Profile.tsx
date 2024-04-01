@@ -74,10 +74,6 @@ const Profile = () => {
     textAlign: 'center',
     height: '85vh'
   };
-  const options = ['Option 1', 'Option 2'];
-  const [value, setValue] = React.useState<string | null>(options[0]);
-  const [inputValue, setInputValue] = React.useState('');
-  const [loading, setLoading] = useState(false);
 
   const backButtonEvent = () => {
     window.history.back();

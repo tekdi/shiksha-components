@@ -129,6 +129,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
             .filter(Boolean);
           // console.log(`response cohort list`, filteredData);
           setCohortsData(filteredData);
+          setClasses(filteredData[0].cohortId);
           setLoading(false);
         }
       } catch (error) {
@@ -305,7 +306,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
           width={'auto'}
           padding={'1rem'}
           borderRadius={'1rem'}
-          bgcolor={'black'}
+          bgcolor={theme.palette.warning['A200']}
           textAlign={'left'}
         >
           <Typography
