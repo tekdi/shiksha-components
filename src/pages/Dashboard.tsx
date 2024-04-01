@@ -411,7 +411,8 @@ const Dashboard: React.FC<DashboardProps> = () => {
                 <Typography>
                   {t('ATTENDANCE.TOTAL_STUDENTS', { count: numberOfCohortMembers })}
                 </Typography>
-                <Box height={'57%'} sx={{ overflowY: 'scroll' }}>
+                {cohortMemberList && (cohortMemberList.length !=0) ? <Box height={'58%'} sx={{ overflowY: 'scroll' }}>
+                <Box>
                   <AttendanceStatusListView
                     isEdit={true}
                     isBulkAction={true}
@@ -456,6 +457,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
                     {showUpdateButton ? t('COMMON.UPDATE') : t('COMMON.SAVE')}
                   </Button>
                 </Box>
+                </Box>: <Typography style={{ fontWeight: 'bold' }}>{t('COMMON.NO_DATA_FOUND')}</Typography>}
               </Box>
             </Box>
           </Fade>
@@ -485,7 +487,8 @@ const Dashboard: React.FC<DashboardProps> = () => {
             </Button>
           </Box>
         </Stack>
-
+        {loading && <Loader showBackdrop={true} loadingText={t('COMMON.LOADING')} />}
+        { cohortsData ?  
         <Box
           display={'flex'}
           flexDirection={'column'}
@@ -499,7 +502,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
           {cohortsData &&
             cohortsData.map((cohort) => (
               <Box key={cohort.cohortId}>
-                <Typography>{cohort.value}</Typography>
+                <Typography pt={'1rem'}>{cohort.value.charAt(0).toUpperCase() + cohort.value.slice(1)}</Typography>
                 <CohortCard
                   showBackground={true}
                   isRemote={cohort.value === 'remote'}
@@ -508,6 +511,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
               </Box>
             ))}
         </Box>
+        : <Typography>{t('COMMON.NO_DATA_FOUND')}</Typography>}
       </Box>
       <MarkAttendance
         isOpen={openMarkAttendance}

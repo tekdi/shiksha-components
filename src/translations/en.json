@@ -22,7 +22,8 @@
     "BASIC_DETAILS": "Basic Details",
     "DOB": "Date of Birth",
     "LOGOUT": "Log out",
-    "OVERALL_ATTENDANCE": "Overall Attendance"
+    "OVERALL_ATTENDANCE": "Overall Attendance",
+    "NO_DATA_FOUND": "No Data Found"
   },
   "LOGIN_PAGE": {
     "USERNAME": "Username",
