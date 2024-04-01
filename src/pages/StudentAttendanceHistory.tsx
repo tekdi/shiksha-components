@@ -18,8 +18,10 @@ import AttendanceStatus from '../components/AttendanceStatus';
 import MarkAttendance from '../components/MarkAttendance';
 import { useTranslation } from 'react-i18next';
 import Loader from '../components/Loader.tsx';
+import {  useParams } from 'react-router-dom';
 
 const StudentAttendanceHistory = () => {
+  let { cohortId } = useParams();
   const theme = useTheme<any>();
   const { t } = useTranslation();
   const [attendanceData, setAttendanceData] = useState<any[]>([]);
@@ -45,6 +47,8 @@ const StudentAttendanceHistory = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        if(cohortId)
+        {
         const currentDate = activeStartDate;
         const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
         const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
@@ -63,7 +67,7 @@ const StudentAttendanceHistory = () => {
           toDate: '2024-03-29',
           page: 0,
           filters: {
-            contextId: '252fb59c-d641-417a-815b-d39e6f502fcf',
+            contextId: cohortId.toString(),
             userId: '00772d32-3f60-4a8e-a5e0-d0110c5c42fb'
           }
         };
@@ -108,6 +112,7 @@ const StudentAttendanceHistory = () => {
         setHalfDayDates(halfDayDatesArray);
         setNotMarkedDates(notMarkedDates);
         setFutureDates(futureDates);
+      }
       } catch (error) {
         console.error('Error:', error);
       }
@@ -191,12 +196,13 @@ const StudentAttendanceHistory = () => {
   };
   const submitAttendance = async (date: string, status: string) => {
     //console.log(date, status);
-    if (userId) {
+    if (userId && cohortId) {
       const attendanceData: AttendanceParams = {
         attendanceDate: date,
         attendance: status,
         userId,
-        contextId: '252fb59c-d641-417a-815b-d39e6f502fcf'
+        contextId:cohortId?.toString()
+
       };
       setLoading(true);
       try {

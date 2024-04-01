@@ -20,8 +20,11 @@ import { useTranslation } from 'react-i18next';
 import { UserData } from '../utils/Interfaces';
 import Divider from '@mui/material/Divider';
 import { getAttendanceReport } from '../services/AttendanceService';
+import {  useParams } from 'react-router-dom';
 
 const StudentDetails: React.FC = () => {
+  let { cohortId } = useParams();
+
   const { t } = useTranslation();
   const theme: Theme = useTheme();
   const [userData, setUserData] = useState<UserData | null>(null);
@@ -51,6 +54,7 @@ const StudentDetails: React.FC = () => {
   useEffect(() => {
     getOverallAttendance(limit, page, filter);
   }, [limit, page, filter]);
+  const linkTo = `/student-attendance-history/${cohortId}`;
 
   const getOverallAttendance = async (limitvalue: number, value: number, filter: object) => {
     try {
@@ -137,8 +141,8 @@ const StudentDetails: React.FC = () => {
             gutterBottom>
             {t('COMMON.ATTENDANCE_REPORT')}
           </Typography>
-          <Link to="/student-attendance-history">
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Link to={linkTo}>         
+             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Typography
                 sx={{
                   color: theme.palette.secondary.main,
