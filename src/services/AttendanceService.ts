@@ -78,3 +78,18 @@ export const getTeacherAttendanceByDate = async ({
     throw error;
   }
 };
+
+export const getAttendanceReport = async ({
+  contextId,
+  report,
+  limit,
+  filters
+}: AttendanceReports): Promise<any> => {
+  const apiUrl: string = `${import.meta.env.VITE_BASE_URL}/attendance/report`;
+  try {
+    const response = await post(apiUrl, { contextId, report, limit, filters  });
+    return response?.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
