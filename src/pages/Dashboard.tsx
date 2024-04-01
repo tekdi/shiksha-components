@@ -457,7 +457,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
                     {showUpdateButton ? t('COMMON.UPDATE') : t('COMMON.SAVE')}
                   </Button>
                 </Box>
-                </Box>: <Typography style={{ fontWeight: 'bold' }}>No Student Data Found</Typography>}
+                </Box>: <Typography style={{ fontWeight: 'bold' }}>{t('COMMON.NO_DATA_FOUND')}</Typography>}
               </Box>
             </Box>
           </Fade>
@@ -511,7 +511,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
               </Box>
             ))}
         </Box>
-        : <Typography>No Data Found</Typography>}
+        : <Typography>{t('COMMON.NO_DATA_FOUND')}</Typography>}
       </Box>
       <MarkAttendance
         isOpen={openMarkAttendance}
