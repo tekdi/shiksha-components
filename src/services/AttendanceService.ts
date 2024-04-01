@@ -3,10 +3,7 @@ import {
   AttendanceParams,
   BulkAttendanceParams,
   AttendanceByDateParams,
-  TeacherAttendanceByDateParams,
-  AttendanceReports,
-  
-  
+  TeacherAttendanceByDateParams
 } from '../utils/Interfaces';
 
 export const markAttendance = async ({
