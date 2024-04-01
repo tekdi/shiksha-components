@@ -83,6 +83,7 @@ export interface UserData {
   state: string;
   email: string;
   dob?: string;
+  mobile:string
 }
 
 export interface AttendanceReports {
