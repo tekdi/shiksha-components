@@ -8,7 +8,12 @@ import SmartDisplayIcon from '@mui/icons-material/SmartDisplay';
 import { CohortCardProps } from '../utils/Interfaces';
 import { useNavigate } from 'react-router-dom';
 
-const CohortCard: React.FC<CohortCardProps> = ({ showBackground, isRemote, cohortName }) => {
+const CohortCard: React.FC<CohortCardProps> = ({
+  showBackground,
+  isRemote,
+  cohortName,
+  cohortId
+}) => {
   const { t } = useTranslation();
   const theme = useTheme<any>();
   const navigate = useNavigate();
@@ -44,10 +49,9 @@ const CohortCard: React.FC<CohortCardProps> = ({ showBackground, isRemote, cohor
   return (
     <Box
       onClick={() => {
-        navigate('/class-details');
+        navigate(`/class-details/${cohortId}`);
       }}
-      sx={boxStyling}
-    >
+      sx={boxStyling}>
       <CardMedia sx={cardMedia} title="Class Image">
         {isRemote ? <SmartDisplayIcon /> : <ApartmentIcon />}
       </CardMedia>

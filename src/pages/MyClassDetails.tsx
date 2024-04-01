@@ -18,7 +18,7 @@ import ButtonFunctional from '../components/buttonComponent';
 import StudentsStatsList from '../components/StudentsStatsList';
 import StudentStatsCard from '../components/StudentStatsCard';
 import EastIcon from '@mui/icons-material/East';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { getMyClassDetails } from '../services/MyClassDetailsService';
 import { useTranslation } from 'react-i18next';
 import SearchIcon from '@mui/icons-material/Search';
@@ -28,10 +28,21 @@ import ArrowDropDownSharpIcon from '@mui/icons-material/ArrowDropDownSharp';
 import SortingModal from '../components/SortingModal';
 import { Student } from '../utils/Interfaces';
 import { debounce } from '../utils/Helper';
+import { cohortList } from '../services/CohortServices';
+
+interface cohort {
+  cohortId: string;
+  name: string;
+  value: string;
+}
+
+let userId = localStorage.getItem('userId');
+
 export default function MyClassDetails() {
   // dependancies
   const { t } = useTranslation();
   const theme = useTheme<any>();
+  const { cohortId } = useParams<{ cohortId: string }>();
 
   // state declaration
   const [classData, setClassData] = React.useState([]);
@@ -40,7 +51,9 @@ export default function MyClassDetails() {
   const [searchWord, setSearchWord] = React.useState('');
   const [modalOpen, setModalOpen] = React.useState(false);
   const [averagePercentage, setAveragePercentage] = React.useState(0);
-  
+  const [loading, setLoading] = React.useState(false);
+  const [cohortsData, setCohortsData] = React.useState<Array<cohort>>([]);
+  const [classes, setClasses] = React.useState('');
 
   // functions
 
@@ -58,7 +71,7 @@ export default function MyClassDetails() {
   // get all student list of cohort  or class details
   const getCohortDetails = async (limitvalue: number, value: number, filter: object) => {
     try {
-      const contextId = 'e371526c-28f9-4646-b19a-a54d5f191ad2';
+      const contextId = cohortId;
       const report = true;
       const pageLimit = limitvalue ? limitvalue : limit;
       const response = await getMyClassDetails({
@@ -125,6 +138,50 @@ export default function MyClassDetails() {
     getCohortDetails(limit, page, filter);
   };
 
+  // function for show class details and address fetch
+  React.useEffect(() => {
+    const fetchCohortList = async () => {
+      const userId = localStorage.getItem('userId');
+      setLoading(true);
+      try {
+        if (userId) {
+          const resp = await cohortList(userId);
+          const extractedNames = resp?.result?.cohortData;
+          localStorage.setItem('parentCohortId', extractedNames[0].parentId);
+          //  setTeacherContextId(extractedNames[0].parentId)
+          //  console.log("p",extractedNames[0].parentId)
+
+          const filteredData = extractedNames
+            .flatMap((item: any) => {
+              const addressData = item.customField.find((field: any) => field.label === 'address');
+              const classTypeData = item.customField.find(
+                (field: any) => field.label === 'Class Type'
+              );
+              return [
+                addressData
+                  ? { cohortId: item.cohortId, name: item.name, value: addressData.value }
+                  : null,
+                classTypeData
+                  ? { cohortId: item.cohortId, name: item.name, value: classTypeData.value }
+                  : null
+              ];
+            })
+            .filter(Boolean);
+
+          const classDetails = filteredData.filter((data: any) => cohortId === data?.cohortId);
+          setCohortsData(classDetails);
+          setClasses(filteredData[0].cohortId);
+          // setShowUpdateButton(true);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error('Error fetching  cohort list:', error);
+        setLoading(false);
+      }
+    };
+    fetchCohortList();
+  }, []);
+
   return (
     <>
       <Stack m={'0 8px'}>
@@ -135,17 +192,25 @@ export default function MyClassDetails() {
               <ArrowBackIcon color={theme.palette.warning.A200} fontSize="medium" />
             </Link>
             <Stack>
-              <Typography variant="h1" m={0} fontWeight={'bold'} color={theme.palette.warning.A200}>
-                Class A
-              </Typography>
-              <Typography
-                m={0}
-                fontSize={'11px'}
-                lineHeight={'16px'}
-                color={theme.palette.warning.A200}
-              >
-                Gurukrupa Building, Paud Road
-              </Typography>
+              {cohortsData &&
+                cohortsData.map((cohort) => (
+                  <Box>
+                    <Typography
+                      variant="h1"
+                      m={0}
+                      fontWeight={'bold'}
+                      color={theme.palette.warning.A200}>
+                      {cohort?.name}
+                    </Typography>
+                    <Typography
+                      m={0}
+                      fontSize={'11px'}
+                      lineHeight={'16px'}
+                      color={theme.palette.warning.A200}>
+                      {cohort?.value}
+                    </Typography>
+                  </Box>
+                ))}
             </Stack>
           </Box>
         </Box>
@@ -160,29 +225,25 @@ export default function MyClassDetails() {
             borderRadius: '24px',
             marginTop: '20px',
             boxShadow: 'none'
-          }}
-        >
+          }}>
           <CardContent>
             <Box
               sx={{
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center'
-              }}
-            >
+              }}>
               <Box>
                 <Typography
                   sx={{ fontSize: '16px', fontWeight: 600, color: theme.palette.warning.A200 }}
                   variant="h6"
-                  gutterBottom
-                >
+                  gutterBottom>
                   {t('COMMON.ATTENDANCE_REPORT')}
                 </Typography>
                 <Typography
                   sx={{ fontSize: '14px', fontWeight: 600, color: theme.palette.warning['500'] }}
                   variant="h6"
-                  gutterBottom
-                >
+                  gutterBottom>
                   As of 24 May
                 </Typography>
               </Box>
@@ -192,8 +253,7 @@ export default function MyClassDetails() {
                     sx={{ color: theme.palette.secondary.main, fontSize: '16px' }}
                     mr={1}
                     variant="h6"
-                    gutterBottom
-                  >
+                    gutterBottom>
                     {t('DASHBOARD.HISTORY')}
                   </Typography>
                   <EastIcon fontSize="small" sx={{ color: theme.palette.secondary.main }} />
@@ -210,7 +270,7 @@ export default function MyClassDetails() {
               alignItems="center"
               gap={1}> */}
             <Grid container display={'flex'} justifyContent={'space-between'}>
-              <Grid item xs={5}>
+              <Grid item xs={7}>
                 <StudentStatsCard
                   label1="Attendance"
                   value1={averagePercentage + '%'} // Sample attendance data, replace with actual data
@@ -218,6 +278,8 @@ export default function MyClassDetails() {
                   value2="5" // Sample late arrivals data, replace with actual data
                 />
               </Grid>
+              {/*  ------ commented as per requirement--------------
+              
               <Grid item xs={5}>
                 <StudentStatsCard
                   label1="Classes Missed"
@@ -225,7 +287,7 @@ export default function MyClassDetails() {
                   label2={false}
                   value2="5" // Sample late arrivals data, replace with actual data
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
             {/* </Box> */}
           </CardContent>
@@ -237,8 +299,7 @@ export default function MyClassDetails() {
           mb={3}
           // justifyContent={'space-between'}
           // alignItems={'center'}
-          boxShadow={'none'}
-        >
+          boxShadow={'none'}>
           <Grid container alignItems="center" display={'flex'} justifyContent="space-between">
             <Grid item xs={8}>
               <Paper
@@ -251,8 +312,7 @@ export default function MyClassDetails() {
                   borderRadius: '100px',
                   background: theme.palette.warning.A700,
                   boxShadow: 'none'
-                }}
-              >
+                }}>
                 <InputBase
                   sx={{ ml: 3, flex: 1, mb: '0', fontSize: '14px' }}
                   placeholder={t('COMMON.SEARCH_STUDENT') + '..'}
@@ -263,8 +323,7 @@ export default function MyClassDetails() {
                   type="button"
                   sx={{ p: '10px' }}
                   aria-label="search"
-                  onClick={handleSearchSubmit}
-                >
+                  onClick={handleSearchSubmit}>
                   <SearchIcon />
                 </IconButton>
               </Paper>
@@ -281,8 +340,7 @@ export default function MyClassDetails() {
                 }}
                 endIcon={<ArrowDropDownSharpIcon />}
                 size="small"
-                variant="outlined"
-              >
+                variant="outlined">
                 {/* {t('COMMON.SORT_BY')} */}
                 {t('COMMON.SORT_BY').length > 7
                   ? `${t('COMMON.SORT_BY').substring(0, 6)}...`
@@ -300,7 +358,8 @@ export default function MyClassDetails() {
       {/*------------------student list */}
       <Stack>
         {classData?.map((student: Student, i: number) => {
-          const word = student.name;
+          const word = student?.name;
+          const userId = student?.userId;
           const firstLetter = word.charAt(0);
           const firstLetterCap = firstLetter.toUpperCase();
           const remainingLetters = word.slice(1);
@@ -308,11 +367,13 @@ export default function MyClassDetails() {
           return (
             <div key={i}>
               <StudentsStatsList
+                cohortId={cohortId}
+                userId={userId}
                 name={capitalizedWord}
-                value1={student.attendance_percentage}
-                label1={student.label1}
+                value1={student?.attendance_percentage}
+                label1={student?.label1}
                 value2={i}
-                label2={student.label2}
+                label2={student?.label2}
               />
             </div>
           );
