@@ -4,7 +4,7 @@ import {
   BulkAttendanceParams,
   AttendanceByDateParams,
   TeacherAttendanceByDateParams,
-  AttendanceReports
+  AttendanceReports,
 } from '../utils/Interfaces';
 
 export const markAttendance = async ({

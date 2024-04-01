@@ -54,7 +54,11 @@ const StudentDetails: React.FC = () => {
 
   const getOverallAttendance = async (limitvalue: number, value: number, filter: object) => {
     try {
-      const userId = localStorage.getItem('userId');
+      const userId: string | null = localStorage.getItem('userId');
+      if (userId === null) {
+        console.error('User ID is not available');
+        return;
+      }
       const contextId = 'e371526c-28f9-4646-b19a-a54d5f191ad2';
       const report = true;
       const pageLimit = limitvalue;
@@ -71,7 +75,7 @@ const StudentDetails: React.FC = () => {
         setAttendanceReport(data);
       }
     } catch (error) {
-      console.error('Error fetching  attendance report:', error);
+      console.error('Error fetching attendance report:', error);
     }
   };
 
