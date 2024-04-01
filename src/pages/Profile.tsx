@@ -226,20 +226,20 @@ const Profile = () => {
           </Typography>
 
           <Box display="flex" flexDirection="column" gap="10px">
-            <Box display="flex" flexDirection="row" gap="10px">
-              {/* <LocalPhoneOutlinedIcon
+          {userData?.mobile  &&( <Box display="flex" flexDirection="row" gap="10px">
+              <LocalPhoneOutlinedIcon
                 style={{
                   marginTop: '9px'
                 }}
-              /> */}
+              />
               <Box display="flex" flexDirection={'column'}>
-                {/* <Typography
+                <Typography
                   variant="h4"
                   style={{
                     letterSpacing: '0.25px',
                     textAlign: 'left'
                   }}>
-                  8793607919
+                 {userData?.mobile}
                 </Typography>
                 <Typography
                   variant="h5"
@@ -248,10 +248,11 @@ const Profile = () => {
                     color: theme.palette.warning['400']
                   }}>
                   {t('PROFILE.PHONE')}
-                </Typography> */}
+                </Typography>
               </Box>
-            </Box>
-            <Box display="flex" flexDirection="row" gap="10px">
+            </Box>)
+}
+         {userData?.email &&( <Box display="flex" flexDirection="row" gap="10px">
               <MailOutlineIcon
                 style={{
                   marginTop: '9px'
@@ -277,6 +278,7 @@ const Profile = () => {
                 </Typography>
               </Box>
             </Box>
+)}
           </Box>
         </Box>
       {  
@@ -295,7 +297,7 @@ const Profile = () => {
           {customFieldsData &&
             customFieldsData.map((field) => (
               <Grid item xs={12} key={field.fieldId}>
-                {field.type === 'text' && (
+                {field.type === 'text' &&  field.value &&(
                   <Box display="flex" flexDirection="row" gap="10px">
                     <Typography
                       variant="h3"
