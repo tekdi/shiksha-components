@@ -294,7 +294,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
   return (
     <Box minHeight="100vh" textAlign={'center'}>
       <Header />
-      {loading && <Loader showBackdrop={true} loadingText={t('LOADING')} />}
+      {loading && <Loader showBackdrop={true} loadingText={t('COMMON.LOADING')} />}
       <Box display={'flex'} flexDirection={'column'} gap={'1rem'} padding={'1rem'}>
         <Box display={'flex'} sx={{ color: theme.palette.warning['A200'] }}>
           <TodayIcon />
@@ -383,7 +383,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
                   </Box>
                 </Box>
                 <Divider sx={{ borderBottomWidth: '0.15rem' }} />
-                {loading && <Loader showBackdrop={true} loadingText={t('LOADING')} />}
+                {loading && <Loader showBackdrop={true} loadingText={t('COMMON.LOADING')} />}
                 <Box sx={{ mt: 2 }}>
                   <Box sx={{ minWidth: 120 }}>
                     <FormControl fullWidth>
