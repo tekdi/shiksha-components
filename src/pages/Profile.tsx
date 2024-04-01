@@ -114,7 +114,7 @@ const Profile = () => {
 
     try {
       if (userId) {
-        const response = await getUser(userId);
+        const response = await getUser(userId, "teacher");
         const userDataFromJson = response?.result?.userData;
         setUserData(userDataFromJson);
         setCustomFieldsData(response?.result?.userData?.customFields);
@@ -226,7 +226,7 @@ const Profile = () => {
           </Typography>
 
           <Box display="flex" flexDirection="column" gap="10px">
-            <Box display="flex" flexDirection="row" gap="10px">
+          {userData?.mobile  &&( <Box display="flex" flexDirection="row" gap="10px">
               <LocalPhoneOutlinedIcon
                 style={{
                   marginTop: '9px'
@@ -239,7 +239,7 @@ const Profile = () => {
                     letterSpacing: '0.25px',
                     textAlign: 'left'
                   }}>
-                  8793607919
+                 {userData?.mobile}
                 </Typography>
                 <Typography
                   variant="h5"
@@ -250,8 +250,9 @@ const Profile = () => {
                   {t('PROFILE.PHONE')}
                 </Typography>
               </Box>
-            </Box>
-            <Box display="flex" flexDirection="row" gap="10px">
+            </Box>)
+}
+         {userData?.email &&( <Box display="flex" flexDirection="row" gap="10px">
               <MailOutlineIcon
                 style={{
                   marginTop: '9px'
@@ -277,10 +278,11 @@ const Profile = () => {
                 </Typography>
               </Box>
             </Box>
+)}
           </Box>
         </Box>
-
-        <Box sx={{ flex: '1', minWidth: '100%' }}>
+      {  
+        (<Box sx={{ flex: '1', minWidth: '100%' }}>
           <Typography
             variant="h3"
             style={{
@@ -295,7 +297,7 @@ const Profile = () => {
           {customFieldsData &&
             customFieldsData.map((field) => (
               <Grid item xs={12} key={field.fieldId}>
-                {field.type === 'text' && (
+                {field.type === 'text' &&  field.value &&(
                   <Box display="flex" flexDirection="row" gap="10px">
                     <Typography
                       variant="h3"
@@ -317,10 +319,11 @@ const Profile = () => {
                 )}
               </Grid>
             ))}
-        </Box>
+        </Box>)
+}
 
         <Box sx={{ flex: '1', minWidth: '100%' }}>
-          <Typography
+          {/* <Typography
             variant="h3"
             style={{
               letterSpacing: '0.1px',
@@ -338,7 +341,7 @@ const Profile = () => {
             }}>
             Teaching for a decade, my mission is to make math enjoyable and accessible, turning each
             lesson into a mathematical adventure.
-          </Typography>
+          </Typography> */}
         </Box>
         <Box
           sx={{
@@ -486,7 +489,7 @@ const Profile = () => {
                   </Grid>
                 ))}
               <Box>
-                <TextField
+                {/* <TextField
                   label={t('PROFILE.BIO')}
                   multiline
                   rows={4}
@@ -496,7 +499,7 @@ const Profile = () => {
                   value={bio}
                   onChange={handleBioChange}
                   variant="outlined"
-                />
+                /> */}
 
                 <FormHelperText style={{ textAlign: 'right' }}>{`${charCount}/150`}</FormHelperText>
               </Box>

@@ -184,7 +184,7 @@ export default function MyClassDetails() {
 
   return (
     <>
-      <Stack mr={4} ml={4}>
+      <Stack m={'0 8px'}>
         <Box>
           <Header />
           <Box mt={3} display={'flex'} gap={2} alignItems={'flex-start'}>
@@ -194,7 +194,7 @@ export default function MyClassDetails() {
             <Stack>
               {cohortsData &&
                 cohortsData.map((cohort) => (
-                  <Box>
+                  <Box key={cohort?.name}>
                     <Typography
                       variant="h1"
                       m={0}

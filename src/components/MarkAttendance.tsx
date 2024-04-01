@@ -37,7 +37,6 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     padding: theme.spacing(2)
   }
 }));
-
 const MarkAttendance: React.FC<MarkAttendanceProps> = ({
   isOpen,
   isSelfAttendance = true,
@@ -59,7 +58,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
   const handleMarkClearAttendanceModal = () => {
     setOpenMarkClearAttendance(!openMarkClearAttendance);
   };
-
+console.log("cu",currentStatus)
   const [state, setState] = React.useState<State>({
     openModal: false,
     vertical: 'top',
@@ -77,7 +76,16 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
 
   const submitAttendance = (newState: SnackbarOrigin) => () => {
     handleSubmit(date, status);
-    setOpenMarkUpdateAttendance(!openMarkUpdateAttendance);
+  //  setOpenMarkUpdateAttendance(!openMarkUpdateAttendance);
+    setState({ ...newState, openModal: true });
+    setTimeout(() => {
+      handleClose2();
+    }, SNACKBAR_AUTO_HIDE_DURATION);
+  };
+
+  const submitConfirmAttendance = (newState: SnackbarOrigin) => () => {
+  
+    handleSubmit(date, status);
     setState({ ...newState, openModal: true });
     setTimeout(() => {
       handleClose2();
@@ -228,7 +236,7 @@ console.log("s",currentStatus,value)
           </Button>
           <Button
             variant="contained"
-            onClick={submitAttendance({ vertical: 'bottom', horizontal: 'center' })}
+            onClick={submitConfirmAttendance({ vertical: 'bottom', horizontal: 'center' })}
             disabled={status === ATTENDANCE_ENUM.NOT_MARKED || status === currentStatus}
             sx={{
               width: '100%'

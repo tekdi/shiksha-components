@@ -17,19 +17,19 @@ function AttendanceStatus({ status, onUpdate }: AttendanceStatusProps) {
 
   let icon, message;
   switch (status) {
-    case 'Present':
+    case 'present':
       icon = <CheckCircleOutlineOutlined />;
       message = 'Present';
       break;
-    case 'Absent':
+    case 'absent':
       icon = <CancelOutlined />;
       message = 'Absent';
       break;
     case 'on-leave':
       icon = <CancelOutlined />;
-      message = 'Absent';
+      message = 'On leave';
       break;
-    case 'Half-day':
+    case 'half-day':
       icon = <RemoveCircleOutline />;
       message = 'Half-day';
       break;

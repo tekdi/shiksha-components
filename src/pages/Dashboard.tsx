@@ -27,7 +27,7 @@ import MarkAttendance from '../components/MarkAttendance';
 import { markAttendance, bulkAttendance } from '../services/AttendanceService';
 import { AttendanceParams, TeacherAttendanceByDateParams } from '../utils/Interfaces';
 import { cohortList } from '../services/CohortServices';
-import { getMyCohortList } from '../services/MyClassDetailsService'; //getMyCohortList
+import { getMyCohortList } from '../services/MyClassDetailsService';
 import { getTodayDate } from '../utils/Helper';
 import Loader from '../components/Loader';
 import { getTeacherAttendanceByDate } from '../services/AttendanceService';
@@ -174,14 +174,17 @@ const Dashboard: React.FC<DashboardProps> = () => {
   };
 
   const submitAttendance = async (date: string, status: string) => {
-    const teachercontextId = localStorage.getItem('parentCohortId');
+    const parentCohortId = localStorage.getItem('parentCohortId');
+
     //console.log(date, status);
-    if (userId && teachercontextId) {
+    if (userId && parentCohortId) {
+      const TeachercontextId = parentCohortId.replace(/\n/g, '');
+
       const attendanceData: AttendanceParams = {
         attendanceDate: date,
         attendance: status,
         userId,
-        contextId: teachercontextId
+        contextId: TeachercontextId
       };
       setLoading(true);
       try {
@@ -273,13 +276,25 @@ const Dashboard: React.FC<DashboardProps> = () => {
       try {
         const parentCohortId = localStorage.getItem('parentCohortId');
         
-
+        const today: Date = new Date();
+        const year: number = today.getFullYear();
+        let month: number | string = today.getMonth() + 1; // Month is zero-based, so we add 1
+        let day: number | string = today.getDate();
+        
+        // Pad single-digit months and days with a leading zero
+        month = month < 10 ? '0' + month : month;
+        day = day < 10 ? '0' + day : day;
+        
+        const formattedDate: string = `${year}-${month}-${day}`;
+        
+        
+        
         if (userId && parentCohortId) {
           const TeachercontextId = parentCohortId.replace(/\n/g, '');
 
           const attendanceData: TeacherAttendanceByDateParams = {
-            fromDate: '2024-02-01',
-            toDate: '2024-03-02',
+            fromDate: formattedDate,
+            toDate: formattedDate,
             filters: {
               userId,
               contextId:TeachercontextId
@@ -380,8 +395,8 @@ const Dashboard: React.FC<DashboardProps> = () => {
                       {currentDate}
                     </Typography>
                   </Box>
-                  <Box onClick={() => handleModalToggle()}>
-                    <CloseIcon />
+                  <Box onClick={() => handleModalToggle()} >
+                    <CloseIcon sx={{ cursor: 'pointer' }} />
                   </Box>
                 </Box>
                 <Divider sx={{ borderBottomWidth: '0.15rem' }} />
@@ -391,11 +406,11 @@ const Dashboard: React.FC<DashboardProps> = () => {
                     <FormControl fullWidth>
                       <InputLabel>{t('DASHBOARD.CLASS')}</InputLabel>
                       <Select value={classes} label="Class" onChange={handleChange}>
-                        {cohortsData?.map((cohort) => (
+                        {(cohortsData.length !=0) ? (cohortsData?.map((cohort) => (
                           <MenuItem key={cohort.cohortId} value={cohort.cohortId}>
                             {cohort.name}
                           </MenuItem>
-                        ))}
+                        ))): <Typography style={{ fontWeight: 'bold' }}>{t('COMMON.NO_DATA_FOUND')}</Typography>}
                       </Select>
                     </FormControl>
                   </Box>
@@ -446,7 +461,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
                     {showUpdateButton ? t('COMMON.UPDATE') : t('COMMON.SAVE')}
                   </Button>
                 </Box>
-                </Box>: <Typography style={{ fontWeight: 'bold' }}>{t('COMMON.NO_DATA_FOUND')}</Typography>}
+                </Box>: <Typography style={{ fontWeight: 'bold', marginLeft:"1rem" }}>{t('COMMON.NO_DATA_FOUND')}</Typography>}
               </Box>
             </Box>
           </Fade>
@@ -475,7 +490,6 @@ const Dashboard: React.FC<DashboardProps> = () => {
           </Box>
         </Stack>
         {loading && <Loader showBackdrop={true} loadingText={t('COMMON.LOADING')} />}
-        { cohortsData ?  
         <Box
           display={'flex'}
           flexDirection={'column'}
@@ -484,8 +498,9 @@ const Dashboard: React.FC<DashboardProps> = () => {
           width={'auto'}
           sx={{ bgcolor: theme.palette.secondary.light }}
           p={'1rem'}
-          borderRadius={'1rem'}>
-          {cohortsData &&
+          borderRadius={'1rem'}
+        >
+          {cohortsData && (cohortsData.length !=0)? 
             cohortsData.map((cohort) => (
               <Box key={cohort.cohortId}>
                 <Typography pt={'1rem'}>{cohort.value.charAt(0).toUpperCase() + cohort.value.slice(1)}</Typography>
@@ -496,9 +511,8 @@ const Dashboard: React.FC<DashboardProps> = () => {
                   cohortId={cohort.cohortId}
                 />
               </Box>
-            ))}
+            )): <Typography>{t('COMMON.NO_DATA_FOUND')}</Typography>}
         </Box>
-        : <Typography>{t('COMMON.NO_DATA_FOUND')}</Typography>}
       </Box>
       <MarkAttendance
         isOpen={openMarkAttendance}

@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import Header from '../components/Header';
 import { useTheme } from '@mui/material/styles';
-import KeyboardBackspaceOutlinedIcon from '@mui/icons-material/KeyboardBackspaceOutlined';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { getAttendanceByDate } from '../services/AttendanceService';
 import { AttendanceByDateParams } from '../utils/Interfaces';
 import AttendanceStatus from '../components/AttendanceStatus';
@@ -29,6 +29,7 @@ import ArrowDropDownSharpIcon from '@mui/icons-material/ArrowDropDownSharp';
 import { debounce, getTodayDate } from '../utils/Helper';
 import AttendanceStatusListView from '../components/AttendanceStatusListView';
 import { getMyClassDetails, getMyCohortList } from '../services/MyClassDetailsService';
+import { useNavigate } from 'react-router-dom';
 
 interface user {
   key: string;
@@ -77,6 +78,8 @@ const ClassAttendanceHistory = () => {
   //const [contextId, setContextId] = React.useState(classes);
   const report = false;
   const offset = 0;
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -329,7 +332,7 @@ const ClassAttendanceHistory = () => {
           justifyContent={'center'}
           position={'relative'}>
           <Box position={'absolute'} left={'0'}>
-            <KeyboardBackspaceOutlinedIcon sx={{ color: theme.palette.warning['A200'] }} />
+            <ArrowBackIcon sx={{ color: theme.palette.warning['A200'], cursor: 'pointer' }}  onClick={() => navigate(-1)}  />
           </Box>
           <Box>
             <Typography marginBottom={'0px'} fontSize={'25px'}>
