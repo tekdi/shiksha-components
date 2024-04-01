@@ -71,6 +71,10 @@
   color: #ba1a1a !important;
 }
 
+.on-leave-marker {
+  color: #ba1a1a !important;
+}
+
 .tile-day {
   border: 1px solid #b2a9b5 !important;
   height: 90px !important;
