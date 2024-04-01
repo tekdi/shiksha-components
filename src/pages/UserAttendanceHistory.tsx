@@ -40,38 +40,41 @@ const UserAttendanceHistory = () => {
   const [loading, setLoading] = React.useState(false);
   const [AttendanceMessage, setAttendanceMessage] = React.useState('');
 
-  let contextId: string = '';
-  let userId: string = '00772d32-3f60-4a8e-a5e0-d0110c5c42fb';
+  const userId: string = localStorage.getItem('userId') || '';
+  const contextId: string = localStorage.getItem('parentCohortId') || '';
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const currentDate = activeStartDate;
         const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
         const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
-
+        
         const formattedFirstDay = formatDate(firstDayOfMonth);
         const formattedLastDay = formatDate(lastDayOfMonth);
-
+        
+        const trimmedContextId = contextId.trim();
         const attendanceData: AttendanceByDateParams = {
-          // fromDate: formattedFirstDay,
-          // toDate: formattedLastDay,
-          // filters: {
-          //   userId
-          // }
-
-          fromDate: '2024-03-01',
-          toDate: '2024-03-29',
+          fromDate: formattedFirstDay,
+          toDate: formattedLastDay,
           page: 0,
           filters: {
-            contextId: '252fb59c-d641-417a-815b-d39e6f502fcf',
-            userId: '00772d32-3f60-4a8e-a5e0-d0110c5c42fb'
+            userId,
+            contextId: trimmedContextId
           }
         };
-
+        
         const response = await getAttendanceByDate(attendanceData);
-        setAttendanceData(response?.data || []);
-
+        console.log(response);
+        setAttendanceData(response?.data);
+        const cdDate= formatDate(currentDate)
+        response?.data.forEach((item: any) => {
+          if (item.attendanceDate === cdDate) {
+              setStatus((prevStatus) => item.attendance);
+          }
+      });
+      
         const presentDatesArray: string[] = [];
         const absentDatesArray: string[] = [];
         const halfDayDatesArray: string[] = [];
@@ -109,6 +112,7 @@ const UserAttendanceHistory = () => {
         setHalfDayDates(halfDayDatesArray);
         setNotMarkedDates(notMarkedDates);
         setFutureDates(futureDates);
+        setLoading(false);
       } catch (error) {
         console.error('Error:', error);
       }
@@ -116,6 +120,10 @@ const UserAttendanceHistory = () => {
 
     fetchData();
   }, [activeStartDate]);
+
+  useEffect(() => {
+    console.log(status); 
+}, [status]);
 
   useEffect(() => {
     localStorage.setItem('activeStartDate', activeStartDate.toISOString());
@@ -174,7 +182,7 @@ const UserAttendanceHistory = () => {
     } else if (halfDayDates.includes(formattedSelectedDate)) {
       status = 'Half-day';
     } else if (notMarkedDates.includes(formattedSelectedDate)) {
-      status = 'Not marked';
+      status = 'notmarked';
     } else if (futureDates.includes(formattedSelectedDate)) {
       status = 'Future date';
     }
@@ -191,24 +199,21 @@ const UserAttendanceHistory = () => {
     return new Intl.DateTimeFormat('en-US', options).format(date);
   };
 
-  const submitAttendance = async (date: string, status: string) => {
-    console.log('submit');
-    const teachercontextId = localStorage.getItem('parentCohortId');
-    //console.log(date, status);
-    if (userId && teachercontextId) {
+  const handleUpdate = async (date: string, status: string) => {
+    const trimmedContextId = contextId.trim();
+    if (userId && trimmedContextId) {
       const attendanceData: AttendanceParams = {
         attendanceDate: date,
         attendance: status,
         userId,
-        contextId: teachercontextId
+        contextId: trimmedContextId
       };
       setLoading(true);
       try {
         const response = await markAttendance(attendanceData);
         if (response) {
-          //console.log(response);
-          handleMarkAttendanceModal();
           setAttendanceMessage(t('ATTENDANCE.ATTENDANCE_MARKED_SUCCESSFULLY'));
+          window.location.reload();
         }
         setLoading(false);
       } catch (error) {
@@ -218,10 +223,11 @@ const UserAttendanceHistory = () => {
       }
     }
   };
+
   return (
     <Box minHeight="100vh" textAlign={'center'}>
       <Header />
-
+      {loading && <Loader showBackdrop={true} loadingText={t('LOADING')} />}
       <Box
         display={'flex'}
         flexDirection={'column'}
@@ -286,10 +292,10 @@ const UserAttendanceHistory = () => {
       <MarkAttendance
         isOpen={openMarkAttendance}
         isSelfAttendance={true}
-        date={selectedDate.toISOString().split('T')[0]}
+        date={formatDate(selectedDate)}
         currentStatus={status}
         handleClose={handleMarkAttendanceModal}
-        handleSubmit={submitAttendance}
+        handleSubmit={handleUpdate}
         message={AttendanceMessage}
       />
     </Box>

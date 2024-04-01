@@ -70,7 +70,6 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
     handleClose();
     handleMarkUpdateAttendanceModal();
   };
-
   const submitClearAttendance = () => {
     handleClose();
     handleMarkClearAttendanceModal();
@@ -78,7 +77,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
 
   const submitAttendance = (newState: SnackbarOrigin) => () => {
     handleSubmit(date, status);
-
+    setOpenMarkUpdateAttendance(!openMarkUpdateAttendance);
     setState({ ...newState, openModal: true });
     setTimeout(() => {
       handleClose2();
@@ -94,6 +93,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
     }
   };
   const getButtonComponent = (value: string, icon1: IconType, icon2: IconType, text: string) => {
+console.log("s",currentStatus,value)
     return (
       <Box
         display="flex"
@@ -102,7 +102,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
         p={2}
         onClick={() => setStatus(value)}
       >
-        {status === value ? icon1 : icon2}
+      {status === value ? icon1 : icon2}
         <Typography marginTop={1}>{text}</Typography>
       </Box>
     );
@@ -186,7 +186,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
             onClick={() => {
               if (currentStatus === ATTENDANCE_ENUM.NOT_MARKED) {
                 {
-                  submitAttendance({ vertical: 'bottom', horizontal: 'center' });
+                  submitAttendance({ vertical: 'bottom', horizontal: 'center' })();
                 }
               } else {
                 submitUpdateAttendance();
@@ -210,7 +210,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
       >
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-update-dialog-title">
           <Typography variant="h2" sx={{ marginBottom: 0 }}>
-            t('ATTENDANCE.UPDATE_ATTENDANCE_ALERT')
+           { t('ATTENDANCE.UPDATE_ATTENDANCE_ALERT')}
           </Typography>
         </DialogTitle>
         {/* <Typography variant="h2">Mark Attendance</Typography> */}
@@ -247,7 +247,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
       >
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-clear-dialog-title">
           <Typography variant="h2" sx={{ marginBottom: 0 }}>
-            t('ATTENDANCE.CLEAR_ATTENDANCE_ALERT')
+           { t('ATTENDANCE.CLEAR_ATTENDANCE_ALERT')}
           </Typography>
         </DialogTitle>
         {/* <Typography variant="h2">Mark Attendance</Typography> */}

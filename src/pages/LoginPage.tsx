@@ -138,7 +138,7 @@ const LoginPage = () => {
         bgcolor={theme.palette.warning.A200}
         minHeight={'100vh'}
       >
-        {loading && <Loader showBackdrop={true} loadingText={t('LOADING')} />}
+        {loading && <Loader showBackdrop={true} loadingText={t('COMMON.LOADING')} />}
         <Box
           display={'flex'}
           overflow="auto"

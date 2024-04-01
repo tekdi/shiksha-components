@@ -72,6 +72,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
   const [AttendanceMessage, setAttendanceMessage] = React.useState('');
   const [attendanceStatus, setAttendanceStatus] = React.useState('');
   const [isAllAttendanceMarked, setIsAllAttendanceMarked] = React.useState(false);
+  const [showUpdateButton, setShowUpdateButton] = React.useState(false);
 
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -100,8 +101,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
 
   useEffect(() => {
     const fetchCohortList = async () => {
-      // const userId = localStorage.getItem('userId');
-      let userId = '0f7c947f-3258-4959-80a6-d340c3639e7d'; //
+      const userId = localStorage.getItem('userId');
       setLoading(true);
       try {
         if (userId) {
@@ -130,6 +130,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
           // console.log(`response cohort list`, filteredData);
           setCohortsData(filteredData);
           setClasses(filteredData[0].cohortId);
+          setShowUpdateButton(true)
           setLoading(false);
         }
       } catch (error) {
@@ -220,6 +221,9 @@ const Dashboard: React.FC<DashboardProps> = () => {
     const hasEmptyAttendance = () => {
       const allAttendance = updatedAttendanceList.some((user) => user.attendance === '');
       setIsAllAttendanceMarked(!allAttendance);
+      if(!allAttendance){
+        setShowUpdateButton(true)
+      }
     };
     hasEmptyAttendance();
   };
@@ -247,6 +251,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
           // console.log(`response bulkAttendance`, response?.responses);
           // const resp = response?.data;
           // console.log(`data`, data);
+          setShowUpdateButton(true)
           setLoading(false);
         } catch (error) {
           console.error('Error fetching  cohort list:', error);
@@ -256,6 +261,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
       markBulkAttendance();
     }
   };
+    console.log("att", attendanceStatus)   
 
   useEffect(() => {
     //let userId = '70861cf2-d00c-475a-a909-d58d0062c880';
@@ -265,15 +271,18 @@ const Dashboard: React.FC<DashboardProps> = () => {
     //setContextId('17a82258-8b11-4c71-8b93-b0cac11826e3') // this one is for testing purpose
     const fetchUserDetails = async () => {
       try {
-        const TeachercontextId = localStorage.getItem('parentCohortId');
+        const parentCohortId = localStorage.getItem('parentCohortId');
+        
 
-        if (userId && TeachercontextId) {
+        if (userId && parentCohortId) {
+          const TeachercontextId = parentCohortId.replace(/\n/g, '');
+
           const attendanceData: TeacherAttendanceByDateParams = {
             fromDate: '2024-02-01',
             toDate: '2024-03-02',
             filters: {
               userId,
-              contextId: TeachercontextId
+              contextId:TeachercontextId
             }
           };
           const response = await getTeacherAttendanceByDate(attendanceData);
@@ -288,13 +297,14 @@ const Dashboard: React.FC<DashboardProps> = () => {
 
         console.error(Error);
       }
+
     };
     fetchUserDetails();
   }, []);
   return (
     <Box minHeight="100vh" textAlign={'center'}>
       <Header />
-      {loading && <Loader showBackdrop={true} loadingText={t('LOADING')} />}
+      {loading && <Loader showBackdrop={true} loadingText={t('COMMON.LOADING')} />}
       <Box display={'flex'} flexDirection={'column'} gap={'1rem'} padding={'1rem'}>
         <Box display={'flex'} sx={{ color: theme.palette.warning['A200'] }}>
           <TodayIcon />
@@ -383,7 +393,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
                   </Box>
                 </Box>
                 <Divider sx={{ borderBottomWidth: '0.15rem' }} />
-                {loading && <Loader showBackdrop={true} loadingText={t('LOADING')} />}
+                {loading && <Loader showBackdrop={true} loadingText={t('COMMON.LOADING')} />}
                 <Box sx={{ mt: 2 }}>
                   <Box sx={{ minWidth: 120 }}>
                     <FormControl fullWidth>
@@ -401,7 +411,8 @@ const Dashboard: React.FC<DashboardProps> = () => {
                 <Typography>
                   {t('ATTENDANCE.TOTAL_STUDENTS', { count: numberOfCohortMembers })}
                 </Typography>
-                <Box height={'57%'} sx={{ overflowY: 'scroll' }}>
+                {cohortMemberList && (cohortMemberList.length !=0) ? <Box height={'58%'} sx={{ overflowY: 'scroll' }}>
+                <Box>
                   <AttendanceStatusListView
                     isEdit={true}
                     isBulkAction={true}
@@ -443,9 +454,10 @@ const Dashboard: React.FC<DashboardProps> = () => {
                     disabled={isAllAttendanceMarked ? false : true}
                     onClick={handleSave}
                   >
-                    {t('COMMON.SAVE')}
+                    {showUpdateButton ? t('COMMON.UPDATE') : t('COMMON.SAVE')}
                   </Button>
                 </Box>
+                </Box>: <Typography style={{ fontWeight: 'bold' }}>{t('COMMON.NO_DATA_FOUND')}</Typography>}
               </Box>
             </Box>
           </Fade>
@@ -475,7 +487,8 @@ const Dashboard: React.FC<DashboardProps> = () => {
             </Button>
           </Box>
         </Stack>
-
+        {loading && <Loader showBackdrop={true} loadingText={t('COMMON.LOADING')} />}
+        { cohortsData ?  
         <Box
           display={'flex'}
           flexDirection={'column'}
@@ -489,7 +502,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
           {cohortsData &&
             cohortsData.map((cohort) => (
               <Box key={cohort.cohortId}>
-                <Typography>{cohort.value}</Typography>
+                <Typography pt={'1rem'}>{cohort.value.charAt(0).toUpperCase() + cohort.value.slice(1)}</Typography>
                 <CohortCard
                   showBackground={true}
                   isRemote={cohort.value === 'remote'}
@@ -498,6 +511,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
               </Box>
             ))}
         </Box>
+        : <Typography>{t('COMMON.NO_DATA_FOUND')}</Typography>}
       </Box>
       <MarkAttendance
         isOpen={openMarkAttendance}

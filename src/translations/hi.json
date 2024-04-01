@@ -22,7 +22,8 @@
     "BASIC_DETAILS": "बेसिक विवरण",
     "DOB": "जन्म की तारीख",
     "LOGOUT": "लॉग आउट",
-    "OVERALL_ATTENDANCE": "समग्र उपस्थिति"
+    "OVERALL_ATTENDANCE": "समग्र उपस्थिति",
+    "NO_DATA_FOUND":  "कोई डेटा नहीं मिला"
   },
   "LOGIN_PAGE": {
     "USERNAME": "उपयोगकर्ता नाम",
@@ -57,6 +58,7 @@
   "PROFILE": {
     "EDIT_PROFILE": "प्रोफ़ाइल संपादित करें",
     "CONTACT_INFORMATION": "संपर्क जानकारी",
+    "OTHER_INFORMATION": "Other Information",
     "PHONE": "फ़ोन",
     "EMAIL_ID": "ईमेल आईडी",
     "BIO": "बायो",
