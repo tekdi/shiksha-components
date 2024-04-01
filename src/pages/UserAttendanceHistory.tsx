@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import CalendarWithAttendance from '../components/CalenderWithAttendance';
 import {
   Box,
+  Button,
   FormControl,
   InputLabel,
   MenuItem,
@@ -42,6 +43,11 @@ const UserAttendanceHistory = () => {
 
   const userId: string = localStorage.getItem('userId') || '';
   const contextId: string = localStorage.getItem('parentCohortId') || '';
+
+
+  const handleBackEvent = ()=>{
+    window.history.back();
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -85,6 +91,9 @@ const UserAttendanceHistory = () => {
               presentDatesArray.push(item.attendanceDate);
               break;
             case 'on-leave':
+              absentDatesArray.push(item.attendanceDate);
+              break;
+              case 'absent':
               absentDatesArray.push(item.attendanceDate);
               break;
             case 'half-day':
@@ -176,11 +185,11 @@ const UserAttendanceHistory = () => {
     const formattedSelectedDate = formatDate(date);
     let status = '';
     if (presentDates.includes(formattedSelectedDate)) {
-      status = 'Present';
+      status = 'present';
     } else if (absentDates.includes(formattedSelectedDate)) {
-      status = 'Absent';
+      status = 'absent';
     } else if (halfDayDates.includes(formattedSelectedDate)) {
-      status = 'Half-day';
+      status = 'half-day';
     } else if (notMarkedDates.includes(formattedSelectedDate)) {
       status = 'notmarked';
     } else if (futureDates.includes(formattedSelectedDate)) {
@@ -243,8 +252,10 @@ const UserAttendanceHistory = () => {
           justifyContent={'center'}
           position={'relative'}
         >
-          <Box position={'absolute'} left={'0'}>
+          <Box position={'absolute'} left={'0'} onClick={handleBackEvent}>
+            <Button>
             <KeyboardBackspaceOutlinedIcon sx={{ color: theme.palette.warning['A200'] }} />
+            </Button>
           </Box>
 
           <Typography marginBottom={'0px'} fontSize={'25px'}>
