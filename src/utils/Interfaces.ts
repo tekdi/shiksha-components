@@ -84,6 +84,14 @@ export interface UserData {
   dob?: string;
 }
 
+export interface AttendanceReports {
+  contextId: string;
+  userId:string;
+  report: boolean;
+  limit: number;
+  filters: object;
+}
+
 export interface Student {
   name: string;
   attendance_percentage: number;

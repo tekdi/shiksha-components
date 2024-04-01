@@ -98,14 +98,12 @@
   padding: 5px;
 }
 
-.sample .MuiSnackbarContent-root
-{
+.sample .MuiSnackbarContent-root {
   background-color: green !important;
 }
 
-.alert .MuiSnackbarContent-root
-{
-  background-color: #FFDAD6 !important;
-  color:#BA1A1A;
+.alert .MuiSnackbarContent-root {
+  background-color: #ffdad6 !important;
+  color: #ba1a1a;
   font-size: 0.75rem;
 }

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { Box, Stack } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useTranslation } from 'react-i18next';
@@ -16,6 +16,7 @@ import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { styled, alpha } from '@mui/material/styles';
 import { MenuProps } from '@mui/material/Menu';
 import Menu from '@mui/material/Menu';
+
 const Header: React.FC = () => {
   const [language, setLanguage] = useState(localStorage.getItem('preferredLanguage') || 'en');
   const navigate = useNavigate();
@@ -88,7 +89,7 @@ const Header: React.FC = () => {
         alignItems={'center'}
         height="auto"
       >
-        <Box mt={'0.5rem'}>
+        <Box mt={'0.5rem'} paddingLeft={'1rem'}>
           <FormControl sx={{ m: 1 }}>
             <Select
               className="SelectLanguages"
@@ -111,7 +112,12 @@ const Header: React.FC = () => {
           </FormControl>
         </Box>
         <Box sx={{ margin: '0 auto' }}>
-          <img src={appLogo} alt="logo" onClick={() => navigate('/')} style={{ cursor: 'pointer' }} />
+          <img
+            src={appLogo}
+            alt="logo"
+            onClick={() => navigate('/')}
+            style={{ cursor: 'pointer' }}
+          />
         </Box>
         <Box
           onClick={handleClick}
@@ -119,8 +125,10 @@ const Header: React.FC = () => {
           aria-controls={open ? 'account-menu' : undefined}
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
+          paddingRight={'1rem'}
         >
           <AccountCircleIcon fontSize="large" color="action" />
+          <Typography>{t('PROFILE.MY_PROFILE')}</Typography>
         </Box>
         <div>
           <StyledMenu

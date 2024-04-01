@@ -12,7 +12,6 @@ export const getMyClassDetails = async ({
   const apiUrl: string = `${import.meta.env.VITE_BASE_URL}/attendance/report`;
   try {
     const response = await post(apiUrl, { contextId, report, limit, offset, filters });
-    console.log('data', response?.data);
     return response?.data;
   } catch (error) {
     console.error('error in attendance report api ', error);

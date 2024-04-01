@@ -25,11 +25,15 @@ function AttendanceStatus({ status, onUpdate }: AttendanceStatusProps) {
       icon = <CancelOutlined />;
       message = 'Absent';
       break;
+    case 'on-leave':
+      icon = <CancelOutlined />;
+      message = 'Absent';
+      break;
     case 'Half-day':
       icon = <RemoveCircleOutline />;
       message = 'Half-day';
       break;
-    case 'Not marked':
+    case 'notmarked':
       message = 'Attendance not marked';
       break;
     case 'Future date':
@@ -41,15 +45,15 @@ function AttendanceStatus({ status, onUpdate }: AttendanceStatusProps) {
 
   return (
     <Box>
-      <Grid container display={'flex'} justifyContent="space-around" alignItems={'center'}>
-        <Grid item xs={6} display={'flex'}>
+      <Grid container display={'flex'} justifyContent="space-between" alignItems={'center'}>
+        <Grid item xs={8} display={'flex'}>
           {icon && <div className={`${status.toLowerCase()}-marker`}>{icon}</div>}
           <Typography marginBottom={0} fontSize="16px" ml={1}>
             {message}
           </Typography>
-        </Grid>{' '}
+        </Grid>
         {onUpdate && (
-          <Grid item xs={6}>
+          <Grid item xs={4} display={'flex'} justifyContent={'end'}>
             <Button
               variant="text"
               endIcon={<CreateOutlined />}

@@ -22,7 +22,8 @@
     "BASIC_DETAILS": "Basic Details",
     "DOB": "Date of Birth",
     "LOGOUT": "Log out",
-    "OVERALL_ATTENDANCE": "Overall Attendance"
+    "OVERALL_ATTENDANCE": "Overall Attendance",
+    "NO_DATA_FOUND": "No Data Found"
   },
   "LOGIN_PAGE": {
     "USERNAME": "Username",
@@ -30,7 +31,7 @@
     "LOGIN": "Login",
     "USERNAME_PLACEHOLDER": "Enter username",
     "PASSWORD_PLACEHOLDER": "Enter password",
-    "USERNAME_PASSWORD_NOT_CORRECT":"The username or password you entered is incorrect"
+    "USERNAME_PASSWORD_NOT_CORRECT": "The username or password you entered is incorrect"
   },
   "DASHBOARD": {
     "HISTORY": "History",
@@ -57,6 +58,7 @@
   "PROFILE": {
     "EDIT_PROFILE": "Edit Profile",
     "CONTACT_INFORMATION": "Contact information",
+    "OTHER_INFORMATION": "Other Information",
     "PHONE": "Phone",
     "EMAIL_ID": "Email ID",
     "BIO": "Bio",

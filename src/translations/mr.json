@@ -20,7 +20,8 @@
     "DOB": "जन्मतारीख",
     "LOGOUT": "बाहेर पडणे",
 
-    "OVERALL_ATTENDANCE": "एकूण उपस्थिती"
+    "OVERALL_ATTENDANCE": "एकूण उपस्थिती",
+    "NO_DATA_FOUND": "कोणताही डेटा सापडला नाही"
   },
   "LOGIN_PAGE": {
     "USERNAME": "वापरकर्तानाव",
@@ -29,7 +30,6 @@
     "USERNAME_PLACEHOLDER": "वापरकर्तानाव प्रविष्ट करा",
     "PASSWORD_PLACEHOLDER": "पासवर्ड टाका",
     "USERNAME_PASSWORD_NOT_CORRECT": "आपलं वापरकर्तानाव किंवा संकेतशब्द चुकीचं आहे"
-
   },
   "DASHBOARD": {
     "HISTORY": "इतिहास",
@@ -53,6 +53,7 @@
   "PROFILE": {
     "EDIT_PROFILE": "प्रोफाइल संपादित करा",
     "CONTACT_INFORMATION": "संपर्क माहिती",
+    "OTHER_INFORMATION": "Other Information",
     "PHONE": "फोन",
     "EMAIL_ID": "ईमेल आयडी",
     "BIO": "बायो",
