@@ -41,13 +41,13 @@ const StudentAttendanceHistory = () => {
   const handleMarkAttendanceModal = () => setOpenMarkAttendance(!openMarkAttendance);
   const [AttendanceMessage, setAttendanceMessage] = React.useState('');
   const [loading, setLoading] = useState(false);
-
-  let userId: string = '00772d32-3f60-4a8e-a5e0-d0110c5c42fb';
+  let { userId } = useParams();
+ // let userId: string = '00772d32-3f60-4a8e-a5e0-d0110c5c42fb';
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if(cohortId)
+        if(cohortId && userId)
         {
         const currentDate = activeStartDate;
         const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
@@ -68,7 +68,7 @@ const StudentAttendanceHistory = () => {
           page: 0,
           filters: {
             contextId: cohortId.toString(),
-            userId: '00772d32-3f60-4a8e-a5e0-d0110c5c42fb'
+            userId:  userId.toString()
           }
         };
 
@@ -200,7 +200,7 @@ const StudentAttendanceHistory = () => {
       const attendanceData: AttendanceParams = {
         attendanceDate: date,
         attendance: status,
-        userId,
+        userId:userId.toString(),
         contextId:cohortId?.toString()
 
       };
