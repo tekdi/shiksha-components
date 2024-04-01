@@ -61,7 +61,7 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
               color={theme.palette.warning.main}
               textAlign="end"
             >
-             {t("COMMON.ATTENDANCE")}
+              {t('COMMON.ATTENDANCE')}
             </Typography>
           </Grid>
           {/* -------------------- code commented as per requirement -------------------

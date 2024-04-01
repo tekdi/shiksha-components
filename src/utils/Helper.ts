@@ -59,7 +59,6 @@ export const debounce = <T extends (...args: any[]) => any>(
   };
 };
 
-
 export const getTodayDate = () => {
   const currentDate = new Date();
   const year = currentDate.getFullYear();

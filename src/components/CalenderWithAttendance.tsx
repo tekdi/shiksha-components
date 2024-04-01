@@ -136,11 +136,9 @@ const CalendarWithAttendance: React.FC<CalendarWithAttendanceProps> = ({
     onChange(activeStartDate);
   };
 
-  const handleDateChange: (value: any, event: React.MouseEvent<HTMLButtonElement>) => void = ({
-    newDate
-  }) => {
+  const handleDateChange: (value: any) => void = (newDate) => {
     // Handle the selected date here
-    console.log('Selected date:', newDate);
+    console.log('Selected date:', newDate?.toDateString());
     setDate(newDate); // Update state with the new selected date if needed
     onDateChange(newDate);
   };

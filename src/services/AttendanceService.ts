@@ -2,7 +2,8 @@ import { post } from './RestClient';
 import {
   AttendanceParams,
   BulkAttendanceParams,
-  AttendanceByDateParams
+  AttendanceByDateParams,
+  TeacherAttendanceByDateParams
 } from '../utils/Interfaces';
 
 export const markAttendance = async ({
@@ -36,16 +37,40 @@ export const bulkAttendance = async ({
 };
 
 export const getAttendanceByDate = async ({
-  filters: { userId },
   fromDate,
-  toDate
+  toDate,
+  page,
+  filters: { userId, contextId }
 }: AttendanceByDateParams): Promise<any> => {
   const apiUrl: string = `${import.meta.env.VITE_BASE_URL}/attendance/bydate`;
   try {
     const response = await post(apiUrl, {
       fromDate,
       toDate,
-      filters: { userId }
+      page,
+      filters: { contextId, userId }
+    });
+    return response?.data;
+  } catch (error) {
+    console.error('error in marking attendance', error);
+    throw error;
+  }
+};
+
+export const getTeacherAttendanceByDate = async ({
+  fromDate,
+  toDate,
+  filters: { userId, contextId }
+}: TeacherAttendanceByDateParams): Promise<any> => {
+  const apiUrl: string = `${import.meta.env.VITE_BASE_URL}/attendance/bydate`;
+  try {
+    const response = await post(apiUrl, {
+      fromDate,
+      toDate,
+      filters: {
+        contextId,
+        userId
+      }
     });
     return response?.data;
   } catch (error) {

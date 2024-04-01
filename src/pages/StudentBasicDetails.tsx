@@ -103,7 +103,7 @@ const StudentDetails: React.FC = () => {
           >
             {t('COMMON.ATTENDANCE_REPORT')}
           </Typography>
-          <Link to="/history">
+          <Link to="/student-attendance-history">
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Typography
                 sx={{

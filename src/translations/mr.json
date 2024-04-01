@@ -27,7 +27,8 @@
     "PASSWORD": "पासवर्ड",
     "LOGIN": "लॉग इन करा",
     "USERNAME_PLACEHOLDER": "वापरकर्तानाव प्रविष्ट करा",
-    "PASSWORD_PLACEHOLDER": "पासवर्ड टाका"
+    "PASSWORD_PLACEHOLDER": "पासवर्ड टाका",
+    "USERNAME_PASSWORD_NOT_CORRECT": "आपलं वापरकर्तानाव किंवा संकेतशब्द चुकीचं आहे"
   },
   "DASHBOARD": {
     "HISTORY": "इतिहास",
@@ -39,7 +40,14 @@
   },
   "ATTENDANCE": {
     "TOTAL_STUDENTS": "एकूण विद्यार्थी: {{count}}",
-    "MARK_ALL": "सर्व चिन्हित करा"
+    "MARK_ALL": "सर्व चिन्हित करा",
+    "CLEAR": "स्पष्ट",
+    "ATTENDANCE_MARKED_SUCCESSFULLY": "उपस्थिती यशस्वीरित्या चिन्हांकित केली गेली आहे",
+    "ATTENDANCE_MARKED_UNSUCCESSFULLY": "उपस्थिती चिन्हांकित केली नाही",
+    "MY_ATTENDANCE_HISTORY": "माझ्या उपस्थितीचा इतिहास",
+
+    "UPDATE_ATTENDANCE_ALERT": "आपलं खात्री करायला खात्री आहे का?",
+    "CLEAR_ATTENDANCE_ALERT": "आपल्याकडून हजेरी साफ करायला खात्री आहे का?"
   },
   "PROFILE": {
     "EDIT_PROFILE": "प्रोफाइल संपादित करा",

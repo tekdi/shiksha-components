@@ -2,24 +2,45 @@ import React, { useEffect, useState } from 'react';
 import CalendarWithAttendance from '../components/CalenderWithAttendance';
 import {
   Box,
+  Button,
   FormControl,
+  Grid,
+  IconButton,
+  InputBase,
   InputLabel,
   MenuItem,
+  Paper,
   Select,
   SelectChangeEvent,
+  Stack,
   Typography
 } from '@mui/material';
 import Header from '../components/Header';
 import { useTheme } from '@mui/material/styles';
 import KeyboardBackspaceOutlinedIcon from '@mui/icons-material/KeyboardBackspaceOutlined';
-import { getAttendanceByDate, markAttendance } from '../services/AttendanceService';
-import { AttendanceByDateParams, AttendanceParams } from '../utils/Interfaces';
+import { getAttendanceByDate } from '../services/AttendanceService';
+import { AttendanceByDateParams } from '../utils/Interfaces';
 import AttendanceStatus from '../components/AttendanceStatus';
 import MarkAttendance from '../components/MarkAttendance';
 import { useTranslation } from 'react-i18next';
-import Loader from '../components/Loader';
+import SortingModal from '../components/SortingModal';
+import SearchIcon from '@mui/icons-material/Search';
+import ArrowDropDownSharpIcon from '@mui/icons-material/ArrowDropDownSharp';
+import { debounce, getTodayDate } from '../utils/Helper';
+import AttendanceStatusListView from '../components/AttendanceStatusListView';
+import { getMyClassDetails, getMyCohortList } from '../services/MyClassDetailsService';
 
-const UserAttendanceHistory = () => {
+interface user {
+  key: string;
+}
+
+interface cohort {
+  cohortId: string;
+  name: string;
+  value: string;
+}
+
+const ClassAttendanceHistory = () => {
   const theme = useTheme<any>();
   const { t } = useTranslation();
   const [attendanceData, setAttendanceData] = useState<any[]>([]);
@@ -35,13 +56,27 @@ const UserAttendanceHistory = () => {
   });
   const [status, setStatus] = useState('');
   const [center, setCenter] = useState('');
+  const [classes, setClasses] = React.useState('');
+  const [searchWord, setSearchWord] = React.useState('');
+  const [modalOpen, setModalOpen] = React.useState(false);
   const [openMarkAttendance, setOpenMarkAttendance] = useState(false);
-  const handleMarkAttendanceModal = () => setOpenMarkAttendance(!openMarkAttendance);
+  const [bulkAttendanceStatus, setBulkAttendanceStatus] = React.useState('');
+  const [cohortMemberList, setCohortMemberList] = React.useState<Array<user>>([]);
+  const [numberOfCohortMembers, setNumberOfCohortMembers] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
-  const [AttendanceMessage, setAttendanceMessage] = React.useState('');
+  const [currentDate, setCurrentDate] = React.useState(getTodayDate);
+  const handleMarkAttendanceModal = () => setOpenMarkAttendance(!openMarkAttendance);
 
-  let contextId: string = '';
   let userId: string = '00772d32-3f60-4a8e-a5e0-d0110c5c42fb';
+
+  const limit = 100;
+  const page = 0;
+  // const userAttendance = [{ userId: localStorage.getItem('userId'), attendance: 'present' }];
+  const attendanceDate = currentDate;
+  let contextId = '252fb59c-d641-417a-815b-d39e6f502fcf';
+  //const [contextId, setContextId] = React.useState(classes);
+  const report = false;
+  const offset = 0;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,12 +89,6 @@ const UserAttendanceHistory = () => {
         const formattedLastDay = formatDate(lastDayOfMonth);
 
         const attendanceData: AttendanceByDateParams = {
-          // fromDate: formattedFirstDay,
-          // toDate: formattedLastDay,
-          // filters: {
-          //   userId
-          // }
-
           fromDate: '2024-03-01',
           toDate: '2024-03-29',
           page: 0,
@@ -182,42 +211,106 @@ const UserAttendanceHistory = () => {
     setStatus(status);
   };
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setCenter(event.target.value as string);
-  };
+  //   const handleChange = (event: SelectChangeEvent) => {
+  //     setCenter(event.target.value as string);
+  //   };
 
   const formatToShowDateMonth = (date: Date) => {
     const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: 'long' };
     return new Intl.DateTimeFormat('en-US', options).format(date);
   };
 
-  const submitAttendance = async (date: string, status: string) => {
-    console.log('submit');
-    const teachercontextId = localStorage.getItem('parentCohortId');
-    //console.log(date, status);
-    if (userId && teachercontextId) {
-      const attendanceData: AttendanceParams = {
-        attendanceDate: date,
-        attendance: status,
-        userId,
-        contextId: teachercontextId
-      };
+  const handleUpdate = () => {};
+
+  // handle search student data
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // setSearchWord(event.target.value);
+    // debouncedSearch(event.target.value);
+  };
+
+  // debounce use for searching time period is 2 sec
+  const debouncedSearch = debounce((value: string) => {
+    // let filter = {
+    //   search: value ? value : searchWord
+    // };
+    // getCohortDetails(limit, page, filter);
+  }, 200);
+
+  const handleSearchSubmit = () => {
+    // let filter = {
+    //   search: searchWord ? searchWord : ''
+    // };
+    // getCohortDetails(limit, page, filter);
+  };
+
+  // open modal of sort
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
+
+  // close modal of sort
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
+
+  // handle sorting data
+  const handleSorting = (sortByName: string, sortByAttendance: string) => {
+    // handleCloseModal();
+    // let filter = {
+    //   nameOrder: sortByName,
+    //   percentageOrder: sortByAttendance
+    // };
+    // getCohortDetails(limit, page, filter);
+  };
+
+  const submitBulkAttendanceAction = (
+    isBulkAction: boolean,
+    status: string,
+    id?: string | undefined
+  ) => {
+    const updatedAttendanceList = cohortMemberList?.map((user: any) => {
+      if (isBulkAction) {
+        user.attendance = status;
+        setBulkAttendanceStatus(status);
+      } else {
+        setBulkAttendanceStatus('');
+        if (user.userId === id) {
+          user.attendance = status;
+        }
+      }
+      return user;
+    });
+    setCohortMemberList(updatedAttendanceList);
+  };
+
+  useEffect(() => {
+    const getCohortMemberList = async () => {
       setLoading(true);
       try {
-        const response = await markAttendance(attendanceData);
-        if (response) {
-          //console.log(response);
-          handleMarkAttendanceModal();
-          setAttendanceMessage(t('ATTENDANCE.ATTENDANCE_MARKED_SUCCESSFULLY'));
-        }
+        const response = await getMyCohortList({
+          contextId,
+          attendanceDate,
+          report,
+          limit,
+          offset
+        });
+        const resp = response?.data;
+        console.log('resp', resp);
+        setCohortMemberList(resp);
+        setNumberOfCohortMembers(resp?.length);
         setLoading(false);
       } catch (error) {
-        setAttendanceMessage(t('ATTENDANCE.ATTENDANCE_MARKED_UNSUCCESSFULLY'));
-        console.error('error', error);
+        console.error('Error fetching cohort list:', error);
         setLoading(false);
       }
-    }
+    };
+    getCohortMemberList();
+  }, [classes]);
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setClasses(event.target.value as string);
   };
+
   return (
     <Box minHeight="100vh" textAlign={'center'}>
       <Header />
@@ -227,37 +320,24 @@ const UserAttendanceHistory = () => {
         flexDirection={'column'}
         gap={'1rem'}
         padding={'1rem'}
-        alignItems={'center'}
-      >
+        alignItems={'center'}>
         <Box
           display={'flex'}
           sx={{ color: theme.palette.warning['A200'] }}
           gap={'10px'}
           width={'100%'}
           justifyContent={'center'}
-          position={'relative'}
-        >
+          position={'relative'}>
           <Box position={'absolute'} left={'0'}>
             <KeyboardBackspaceOutlinedIcon sx={{ color: theme.palette.warning['A200'] }} />
           </Box>
+          <Box>
+            <Typography marginBottom={'0px'} fontSize={'25px'}>
+              {t('ATTENDANCE.MY_ATTENDANCE_HISTORY')}
+            </Typography>
 
-          <Typography marginBottom={'0px'} fontSize={'25px'}>
-            {t('ATTENDANCE.MY_ATTENDANCE_HISTORY')}
-          </Typography>
-        </Box>
-      </Box>
-      <Box mt={2} display={'flex'} justifyContent={'center'} m={2}>
-        <Box sx={{ width: '100%', maxWidth: 580 }}>
-          <FormControl fullWidth>
-            <InputLabel>Center</InputLabel>
-            <Select value={center} label="Center" onChange={handleChange}>
-              {/* {cohorts?.map((item: string, index: number) => ( */}
-              <MenuItem key={'index'} value={'item'}>
-                item
-              </MenuItem>
-              {/* ))} */}
-            </Select>
-          </FormControl>
+            <Typography fontSize={'15px'}>Khapari Dharmu (Chimur, Chandrapur)</Typography>
+          </Box>
         </Box>
       </Box>
 
@@ -278,22 +358,102 @@ const UserAttendanceHistory = () => {
             Attendance on {formatToShowDateMonth(selectedDate)}
           </Typography>
         </Box>
+        {/*----------------------------search and Sort---------------------------------------*/}
+        <Stack mr={1} ml={1}>
+          <Box
+            // display={'flex'}
+            mt={3}
+            mb={3}
+            // justifyContent={'space-between'}
+            // alignItems={'center'}
+            boxShadow={'none'}>
+            <Grid container alignItems="center" display={'flex'} justifyContent="space-between">
+              <Grid item xs={8}>
+                <Paper
+                  component="form"
+                  sx={{
+                    // p: '2px 4px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    width: 'auto',
+                    borderRadius: '100px',
+                    background: theme.palette.warning.A700,
+                    boxShadow: 'none'
+                  }}>
+                  <InputBase
+                    sx={{ ml: 3, flex: 1, mb: '0', fontSize: '14px' }}
+                    placeholder={t('COMMON.SEARCH_STUDENT') + '..'}
+                    inputProps={{ 'aria-label': 'search student' }}
+                    onChange={handleSearch}
+                  />
+                  <IconButton
+                    type="button"
+                    sx={{ p: '10px' }}
+                    aria-label="search"
+                    onClick={handleSearchSubmit}>
+                    <SearchIcon />
+                  </IconButton>
+                </Paper>
+              </Grid>
+              <Grid item xs={4} display={'flex'} justifyContent={'flex-end'}>
+                <Button
+                  onClick={handleOpenModal}
+                  sx={{
+                    color: theme.palette.warning.A200,
+                    height: 'auto',
+                    width: 'auto',
+                    borderRadius: '10px',
+                    fontSize: '14px'
+                  }}
+                  endIcon={<ArrowDropDownSharpIcon />}
+                  size="small"
+                  variant="outlined">
+                  {/* {t('COMMON.SORT_BY')} */}
+                  {t('COMMON.SORT_BY').length > 7
+                    ? `${t('COMMON.SORT_BY').substring(0, 6)}...`
+                    : t('COMMON.SORT_BY')}
+                </Button>
+              </Grid>
+            </Grid>
+          </Box>
+          <SortingModal
+            isModalOpen={modalOpen}
+            handleCloseModal={handleCloseModal}
+            handleSorting={handleSorting}
+          />
+        </Stack>
         <Box>
           {status && <AttendanceStatus status={status} onUpdate={handleMarkAttendanceModal} />}
+        </Box>
+        <Box height={'57%'} sx={{ overflowY: 'scroll' }}>
+          <AttendanceStatusListView
+            isEdit={true}
+            isBulkAction={true}
+            bulkAttendanceStatus={bulkAttendanceStatus}
+            handleBulkAction={submitBulkAttendanceAction}
+          />
+          {cohortMemberList?.map((user: any) => (
+            <AttendanceStatusListView
+              key={user.userId}
+              userData={user}
+              isEdit={true}
+              bulkAttendanceStatus={bulkAttendanceStatus}
+              handleBulkAction={submitBulkAttendanceAction}
+            />
+          ))}
         </Box>
       </Box>
 
       <MarkAttendance
         isOpen={openMarkAttendance}
         isSelfAttendance={true}
-        date={selectedDate.toISOString().split('T')[0]}
-        currentStatus={status}
+        date={formatToShowDateMonth(selectedDate)}
+        currentStatus="notmarked"
         handleClose={handleMarkAttendanceModal}
-        handleSubmit={submitAttendance}
-        message={AttendanceMessage}
+        handleSubmit={handleUpdate}
       />
     </Box>
   );
 };
 
-export default UserAttendanceHistory;
+export default ClassAttendanceHistory;
