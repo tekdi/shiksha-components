@@ -111,7 +111,12 @@ const Header: React.FC = () => {
           </FormControl>
         </Box>
         <Box sx={{ margin: '0 auto' }}>
-          <img src={appLogo} alt="logo" onClick={() => navigate('/')} style={{ cursor: 'pointer' }} />
+          <img
+            src={appLogo}
+            alt="logo"
+            onClick={() => navigate('/')}
+            style={{ cursor: 'pointer' }}
+          />
         </Box>
         <Box
           onClick={handleClick}

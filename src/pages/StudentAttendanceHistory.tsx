@@ -191,12 +191,12 @@ const StudentAttendanceHistory = () => {
   };
   const submitAttendance = async (date: string, status: string) => {
     //console.log(date, status);
-    if (userId ) {
+    if (userId) {
       const attendanceData: AttendanceParams = {
         attendanceDate: date,
         attendance: status,
         userId,
-        contextId:"252fb59c-d641-417a-815b-d39e6f502fcf"
+        contextId: '252fb59c-d641-417a-815b-d39e6f502fcf'
       };
       setLoading(true);
       try {
@@ -204,7 +204,7 @@ const StudentAttendanceHistory = () => {
         if (response) {
           //console.log(response);
           handleMarkAttendanceModal();
-          setAttendanceMessage(t('ATTENDANCE.ATTENDANCE_MARKED_SUCCESSFULLY') );
+          setAttendanceMessage(t('ATTENDANCE.ATTENDANCE_MARKED_SUCCESSFULLY'));
         }
         setLoading(false);
       } catch (error) {
@@ -226,14 +226,16 @@ const StudentAttendanceHistory = () => {
         flexDirection={'column'}
         gap={'1rem'}
         padding={'1rem'}
-        alignItems={'center'}>
+        alignItems={'center'}
+      >
         <Box
           display={'flex'}
           sx={{ color: theme.palette.warning['A200'] }}
           gap={'10px'}
           width={'100%'}
           justifyContent={'center'}
-          position={'relative'}>
+          position={'relative'}
+        >
           <Box position={'absolute'} left={'0'}>
             <KeyboardBackspaceOutlinedIcon sx={{ color: theme.palette.warning['A200'] }} />
           </Box>
@@ -273,7 +275,7 @@ const StudentAttendanceHistory = () => {
         isOpen={openMarkAttendance}
         isSelfAttendance={true}
         date={selectedDate.toISOString().split('T')[0]}
-        currentStatus={ status}
+        currentStatus={status}
         handleClose={handleMarkAttendanceModal}
         handleSubmit={submitAttendance}
       />

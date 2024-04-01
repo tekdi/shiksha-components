@@ -30,7 +30,7 @@
     "LOGIN": "Login",
     "USERNAME_PLACEHOLDER": "Enter username",
     "PASSWORD_PLACEHOLDER": "Enter password",
-    "USERNAME_PASSWORD_NOT_CORRECT":"The username or password you entered is incorrect"
+    "USERNAME_PASSWORD_NOT_CORRECT": "The username or password you entered is incorrect"
   },
   "DASHBOARD": {
     "HISTORY": "History",
