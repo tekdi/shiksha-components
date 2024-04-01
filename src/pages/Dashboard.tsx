@@ -174,14 +174,17 @@ const Dashboard: React.FC<DashboardProps> = () => {
   };
 
   const submitAttendance = async (date: string, status: string) => {
-    const teachercontextId = localStorage.getItem('parentCohortId');
+    const parentCohortId = localStorage.getItem('parentCohortId');
+
     //console.log(date, status);
-    if (userId && teachercontextId) {
+    if (userId && parentCohortId) {
+      const TeachercontextId = parentCohortId.replace(/\n/g, '');
+
       const attendanceData: AttendanceParams = {
         attendanceDate: date,
         attendance: status,
         userId,
-        contextId: teachercontextId
+        contextId: TeachercontextId
       };
       setLoading(true);
       try {
@@ -273,13 +276,25 @@ const Dashboard: React.FC<DashboardProps> = () => {
       try {
         const parentCohortId = localStorage.getItem('parentCohortId');
         
-
+        const today: Date = new Date();
+        const year: number = today.getFullYear();
+        let month: number | string = today.getMonth() + 1; // Month is zero-based, so we add 1
+        let day: number | string = today.getDate();
+        
+        // Pad single-digit months and days with a leading zero
+        month = month < 10 ? '0' + month : month;
+        day = day < 10 ? '0' + day : day;
+        
+        const formattedDate: string = `${year}-${month}-${day}`;
+        
+        
+        
         if (userId && parentCohortId) {
           const TeachercontextId = parentCohortId.replace(/\n/g, '');
 
           const attendanceData: TeacherAttendanceByDateParams = {
-            fromDate: '2024-02-01',
-            toDate: '2024-03-02',
+            fromDate: formattedDate,
+            toDate: formattedDate,
             filters: {
               userId,
               contextId:TeachercontextId
