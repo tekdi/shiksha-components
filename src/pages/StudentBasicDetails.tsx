@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import {
   Box,
   Card,
@@ -13,17 +13,18 @@ import {
 import { ArrowBack as ArrowBackIcon, East as EastIcon } from '@mui/icons-material';
 import { useTheme, Theme } from '@mui/material/styles';
 import StudentStatsCard from '../components/StudentStatsCard';
-import Header from '../components/Header';
 import CustomSelect from '../components/CustomSelect';
 import { getUser } from '../services/profileService';
 import { useTranslation } from 'react-i18next';
 import { UserData } from '../utils/Interfaces';
 import Divider from '@mui/material/Divider';
 import { getAttendanceReport } from '../services/AttendanceService';
+import Header from '../components/Header';
 
 const StudentDetails: React.FC = () => {
   const { t } = useTranslation();
   const theme: Theme = useTheme();
+  const { cohortId, userId } = useParams<{ cohortId: string; userId?: string }>(); 
   const [userData, setUserData] = useState<UserData | null>(null);
   const [attendanceReport, setAttendanceReport] = useState<any>(null);
   const [limit, setLimit] = useState<number>(10);
@@ -32,7 +33,6 @@ const StudentDetails: React.FC = () => {
 
   useEffect(() => {
     const fetchUserDetails = async () => {
-      const userId = localStorage.getItem('userId');
       try {
         if (userId) {
           const response = await getUser(userId, "student");
@@ -46,25 +46,21 @@ const StudentDetails: React.FC = () => {
       }
     };
     fetchUserDetails();
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     getOverallAttendance(limit, page, filter);
-  }, [limit, page, filter]);
+  }, [limit, page, filter, userId]); 
 
   const getOverallAttendance = async (limitvalue: number, value: number, filter: object) => {
     try {
-      const userId: string | null = localStorage.getItem('userId');
-      if (userId === null) {
-        console.error('User ID is not available');
-        return;
-      }
+      if (!userId) return; 
       const contextId = 'e371526c-28f9-4646-b19a-a54d5f191ad2';
       const report = true;
       const pageLimit = limitvalue;
       const response = await getAttendanceReport({
         contextId,
-        userId, 
+        userId,
         report,
         limit: pageLimit,
         filters: filter
@@ -105,8 +101,8 @@ const StudentDetails: React.FC = () => {
 
   return (
     <>
-      {/* <Header /> */}
       <Box mt={3} display="flex" gap={2} alignItems="flex-start">
+        <Header/>
         <Link to="/">
           <ArrowBackIcon
             sx={{ color: (theme.palette.warning as any)['A200'], fontSize: '1.5rem' }}
@@ -137,24 +133,26 @@ const StudentDetails: React.FC = () => {
             gutterBottom>
             {t('COMMON.ATTENDANCE_REPORT')}
           </Typography>
-          <Link to="/student-attendance-history">
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <Typography
-                sx={{
-                  color: theme.palette.secondary.main,
-                  marginRight: '4px',
-                  fontSize: '14px'
-                }}
-                variant="h6"
-                gutterBottom>
-                {t('DASHBOARD.HISTORY')}
-              </Typography>
-              <EastIcon
-                fontSize="inherit"
-                sx={{ color: theme.palette.secondary.main, marginBottom: '5px' }}
-              />
-            </Box>
-          </Link>
+          {userId && ( 
+            <Link to={`/student-attendance-history/${userId}`}>
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Typography
+                  sx={{
+                    color: theme.palette.secondary.main,
+                    marginRight: '4px',
+                    fontSize: '14px'
+                  }}
+                  variant="h6"
+                  gutterBottom>
+                  {t('DASHBOARD.HISTORY')}
+                </Typography>
+                <EastIcon
+                  fontSize="inherit"
+                  sx={{ color: theme.palette.secondary.main, marginBottom: '5px' }}
+                />
+              </Box>
+            </Link>
+          )}
         </Box>
         <Box>
           <FormControl sx={{ m: 1, minWidth: 320, minHeight: 20 }}>
@@ -162,9 +160,7 @@ const StudentDetails: React.FC = () => {
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              <MenuItem value={10}>As of 24 May</MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -192,7 +188,7 @@ const StudentDetails: React.FC = () => {
               }}>
               {renderStatsCard(
                 'Attendance',
-                attendanceReport?.average?.average_attendance_percentage || ''
+                Math.floor(attendanceReport?.average?.average_attendance_percentage || 0).toString()
               )}
               {renderStatsCard('Classes Missed', '0')}
             </Box>
