@@ -78,7 +78,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
 
   const submitAttendance = (newState: SnackbarOrigin) => () => {
     handleSubmit(date, status);
-
+    setOpenMarkUpdateAttendance(!openMarkUpdateAttendance);
     setState({ ...newState, openModal: true });
     setTimeout(() => {
       handleClose2();
