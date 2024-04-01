@@ -41,9 +41,8 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
         // padding="1rem"
       >
         <Grid container alignItems="center" justifyContent="space-between" p={2}>
-          <Grid item xs={8}>
+          <Grid item xs={10}>
             <Link
-              
               underline="always"
               color={theme.palette.text.primary}
               fontSize="0.875rem"
@@ -54,15 +53,15 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
               </Typography>
             </Link>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={2}>
             <Typography
               m={0}
               fontSize="1rem"
               fontWeight="bold"
               lineHeight="1.5rem"
               color={theme.palette.text.primary}
-              textAlign="end">
-              {value1}
+              textAlign="center">
+              {value1}%
             </Typography>
             <Typography
               m={0}
@@ -70,7 +69,7 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
               fontWeight="500"
               lineHeight="1rem"
               color={theme.palette.warning.main}
-              textAlign="end">
+              textAlign="center">
               {t('COMMON.ATTENDANCE')}
             </Typography>
           </Grid>
