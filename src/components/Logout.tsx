@@ -8,9 +8,9 @@ function Logout() {
     localStorage.removeItem('userId');
     localStorage.removeItem('parentCohortId');
 
-    navigate('/');
+    navigate('/login');
 
-    window.location.reload();
+    // window.location.reload();
   }, []);
 
   return '';

@@ -22,6 +22,9 @@ instance.interceptors.response.use(
     return response;
   },
   (error) => {
+    if (error.response.data.statusCode === 401) {
+      window.location.href = '/logout';
+    }
     return Promise.reject(error);
   }
 );
