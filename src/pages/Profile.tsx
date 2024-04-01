@@ -120,7 +120,7 @@ const Profile = () => {
 
       try {
         if (userId) {
-          const response = await getUser(userId);
+          const response = await getUser(userId, "teacher");
           const userDataFromJson = response?.result?.userData;
           setUserData(userDataFromJson);
           setCustomFieldsData(response?.result?.userData?.customFields);
@@ -229,13 +229,13 @@ const Profile = () => {
 
           <Box display="flex" flexDirection="column" gap="10px">
             <Box display="flex" flexDirection="row" gap="10px">
-              <LocalPhoneOutlinedIcon
+              {/* <LocalPhoneOutlinedIcon
                 style={{
                   marginTop: '9px'
                 }}
-              />
+              /> */}
               <Box display="flex" flexDirection={'column'}>
-                <Typography
+                {/* <Typography
                   variant="h4"
                   style={{
                     letterSpacing: '0.25px',
@@ -253,7 +253,8 @@ const Profile = () => {
                 >
                   {t('PROFILE.PHONE')}
                 </Typography>
-              </Box>
+              */}
+               </Box>
             </Box>
             <Box display="flex" flexDirection="row" gap="10px">
               <MailOutlineIcon
@@ -317,7 +318,7 @@ const Profile = () => {
         </Box>
 
         <Box sx={{ flex: '1', minWidth: '100%' }}>
-          <Typography
+          {/* <Typography
             variant="h3"
             style={{
               letterSpacing: '0.1px',
@@ -326,9 +327,9 @@ const Profile = () => {
             }}
           >
             {t('PROFILE.BIO')}
-          </Typography>
+          </Typography> */}
 
-          <Typography
+          {/* <Typography
             variant="h4"
             style={{
               letterSpacing: '0.1px',
@@ -337,7 +338,7 @@ const Profile = () => {
           >
             Teaching for a decade, my mission is to make math enjoyable and accessible, turning each
             lesson into a mathematical adventure.
-          </Typography>
+          </Typography> */}
         </Box>
         <Box
           sx={{
@@ -478,12 +479,12 @@ const Profile = () => {
               options={options}
               renderInput={(params) => <TextField {...params} label={t('PROFILE.LOCATION')} />}
             /> */}
-              <TextField
+              {/* <TextField
                 label={t('PROFILE.PHONE')}
                 variant="outlined"
                 defaultValue="+91 000000000"
                 onChange={(e) => setUpdatedPhone(e.target.value)}
-              />
+              /> */}
               <TextField
                 label={t('PROFILE.EMAIL_ID')}
                 variant="outlined"
@@ -506,7 +507,7 @@ const Profile = () => {
                   </Grid>
                 ))}
               <Box>
-                <TextField
+                {/* <TextField
                   label={t('PROFILE.BIO')}
                   multiline
                   rows={4}
@@ -518,7 +519,7 @@ const Profile = () => {
                   // helperText={`${charCount}/150`}
 
                   variant="outlined"
-                />
+                /> */}
 
                 <FormHelperText style={{ textAlign: 'right' }}>{`${charCount}/150`}</FormHelperText>
               </Box>

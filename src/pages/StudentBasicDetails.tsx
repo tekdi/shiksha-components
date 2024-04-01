@@ -30,7 +30,7 @@ const StudentDetails: React.FC = () => {
       const userId = localStorage.getItem('userId');
       try {
         if (userId) {
-          const response = await getUser(userId);
+          const response = await getUser(userId, "student");
           const userDataFromJson: UserData | undefined = response?.result?.userData;
           if (userDataFromJson) {
             setUserData(userDataFromJson);
