@@ -130,7 +130,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
           // console.log(`response cohort list`, filteredData);
           setCohortsData(filteredData);
           setClasses(filteredData[0].cohortId);
-          setShowUpdateButton(true)
+          setShowUpdateButton(true);
           setLoading(false);
         }
       } catch (error) {
@@ -221,8 +221,8 @@ const Dashboard: React.FC<DashboardProps> = () => {
     const hasEmptyAttendance = () => {
       const allAttendance = updatedAttendanceList.some((user) => user.attendance === '');
       setIsAllAttendanceMarked(!allAttendance);
-      if(!allAttendance){
-        setShowUpdateButton(true)
+      if (!allAttendance) {
+        setShowUpdateButton(true);
       }
     };
     hasEmptyAttendance();
@@ -251,7 +251,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
           // console.log(`response bulkAttendance`, response?.responses);
           // const resp = response?.data;
           // console.log(`data`, data);
-          setShowUpdateButton(true)
+          setShowUpdateButton(true);
           setLoading(false);
         } catch (error) {
           console.error('Error fetching  cohort list:', error);
@@ -317,13 +317,11 @@ const Dashboard: React.FC<DashboardProps> = () => {
           padding={'1rem'}
           borderRadius={'1rem'}
           bgcolor={theme.palette.warning['A200']}
-          textAlign={'left'}
-        >
+          textAlign={'left'}>
           <Typography
             marginBottom={'0px'}
             sx={{ color: theme.palette.warning['A400'] }}
-            style={{ fontWeight: '800', fontSize: '1.2rem' }}
-          >
+            style={{ fontWeight: '800', fontSize: '1.2rem' }}>
             {t('COMMON.MARK_MY_ATTENDANCE')}
           </Typography>
           <Typography sx={{ color: theme.palette.warning['A400'] }}>{currentDate}</Typography>
@@ -331,16 +329,14 @@ const Dashboard: React.FC<DashboardProps> = () => {
             <Button
               variant="text"
               sx={{ color: theme.palette.primary.main, padding: theme.spacing(1) }}
-              onClick={viewAttendanceHistory}
-            >
+              onClick={viewAttendanceHistory}>
               {t('DASHBOARD.HISTORY')}
             </Button>
             <Button
               variant="contained"
               color="primary"
               style={{ width: '12.5rem', padding: theme.spacing(1) }}
-              onClick={handleMarkAttendanceModal}
-            >
+              onClick={handleMarkAttendanceModal}>
               {t('COMMON.MARK_MY_ATTENDANCE')}
             </Button>
           </Stack>
@@ -350,8 +346,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
           variant="outlined"
           fullWidth
           onClick={handleModalToggle}
-          style={{ padding: theme.spacing(1) }}
-        >
+          style={{ padding: theme.spacing(1) }}>
           {t('COMMON.MARK_STUDENT_ATTENDANCE')}
         </Button>
         <Modal
@@ -365,14 +360,12 @@ const Dashboard: React.FC<DashboardProps> = () => {
             backdrop: {
               timeout: 500
             }
-          }}
-        >
+          }}>
           <Fade in={open}>
             <Box
               sx={{ ...modalContainer, borderColor: theme.palette.warning['A400'] }}
               borderRadius={'1rem'}
-              height={'80%'}
-            >
+              height={'80%'}>
               <Box height={'100%'} width={'100%'}>
                 <Box display={'flex'} justifyContent={'space-between'}>
                   <Box marginBottom={'0px'}>
@@ -380,16 +373,15 @@ const Dashboard: React.FC<DashboardProps> = () => {
                       variant="h2"
                       component="h2"
                       marginBottom={'0px'}
-                      fontWeight={'bold'}
-                    >
+                      fontWeight={'bold'}>
                       {t('COMMON.MARK_STUDENT_ATTENDANCE')}
                     </Typography>
                     <Typography variant="h2" component="h2">
                       {currentDate}
                     </Typography>
                   </Box>
-                  <Box onClick={() => handleModalToggle()}>
-                    <CloseIcon />
+                  <Box onClick={() => handleModalToggle()} >
+                    <CloseIcon sx={{ cursor: 'pointer' }} />
                   </Box>
                 </Box>
                 <Divider sx={{ borderBottomWidth: '0.15rem' }} />
@@ -436,14 +428,12 @@ const Dashboard: React.FC<DashboardProps> = () => {
                   gap={'20px'}
                   flexDirection={'row'}
                   justifyContent={'space-evenly'}
-                  marginBottom={0}
-                >
+                  marginBottom={0}>
                   <Button
                     variant="outlined"
                     style={{ width: '8rem' }}
                     disabled={isAllAttendanceMarked ? false : true}
-                    onClick={() => submitBulkAttendanceAction(true, '', '')}
-                  >
+                    onClick={() => submitBulkAttendanceAction(true, '', '')}>
                     {' '}
                     {t('COMMON.CLEAR_ALL')}
                   </Button>
@@ -452,8 +442,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
                     color="primary"
                     style={{ width: '8rem' }}
                     disabled={isAllAttendanceMarked ? false : true}
-                    onClick={handleSave}
-                  >
+                    onClick={handleSave}>
                     {showUpdateButton ? t('COMMON.UPDATE') : t('COMMON.SAVE')}
                   </Button>
                 </Box>
@@ -469,8 +458,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
           direction={'row'}
           justifyContent={'space-between'}
           alignItems={'center'}
-          padding={'2px'}
-        >
+          padding={'2px'}>
           <Box>
             <Button variant="text" sx={{ color: theme.palette.warning['300'] }}>
               {t('DASHBOARD.MY_CLASSES')}
@@ -480,8 +468,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
             display={'flex'}
             justifyContent={'center'}
             alignItems={'center'}
-            sx={{ color: theme.palette.secondary.main }}
-          >
+            sx={{ color: theme.palette.secondary.main }}>
             <Button variant="text" sx={{ color: theme.palette.secondary.main }} disabled>
               {t('DASHBOARD.ADD_NEW_CLASS')} <AddIcon />
             </Button>
@@ -497,8 +484,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
           width={'auto'}
           sx={{ bgcolor: theme.palette.secondary.light }}
           p={'1rem'}
-          borderRadius={'1rem'}
-        >
+          borderRadius={'1rem'}>
           {cohortsData &&
             cohortsData.map((cohort) => (
               <Box key={cohort.cohortId}>
@@ -507,6 +493,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
                   showBackground={true}
                   isRemote={cohort.value === 'remote'}
                   cohortName={cohort.name}
+                  cohortId={cohort.cohortId}
                 />
               </Box>
             ))}

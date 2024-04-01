@@ -126,6 +126,11 @@ const Header: React.FC = () => {
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
           paddingRight={'1rem'}
+          display={'flex'}
+          justifyContent={'center'}
+          alignItems={'center'}
+          flexDirection={'column'}
+          mt={'0.5rem'}
         >
           <AccountCircleIcon fontSize="large" color="action" />
           <Typography>{t('PROFILE.MY_PROFILE')}</Typography>

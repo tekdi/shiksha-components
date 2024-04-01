@@ -105,7 +105,7 @@ const StudentDetails: React.FC = () => {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <Box mt={3} display="flex" gap={2} alignItems="flex-start">
         <Link to="/">
           <ArrowBackIcon
