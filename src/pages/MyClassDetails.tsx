@@ -194,7 +194,7 @@ export default function MyClassDetails() {
             <Stack>
               {cohortsData &&
                 cohortsData.map((cohort) => (
-                  <Box>
+                  <Box key={cohort?.name}>
                     <Typography
                       variant="h1"
                       m={0}
