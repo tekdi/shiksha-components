@@ -24,7 +24,7 @@ import Header from '../components/Header';
 const StudentDetails: React.FC = () => {
   const { t } = useTranslation();
   const theme: Theme = useTheme();
-  const { cohortId, userId } = useParams<{ cohortId: string; userId?: string }>();
+  const { cohortId, userId } = useParams<{ cohortId: string; userId?: string }>(); 
   const [userData, setUserData] = useState<UserData | null>(null);
   const [attendanceReport, setAttendanceReport] = useState<any>(null);
   const [limit, setLimit] = useState<number>(10);
@@ -35,7 +35,7 @@ const StudentDetails: React.FC = () => {
     const fetchUserDetails = async () => {
       try {
         if (userId) {
-          const response = await getUser(userId, 'student');
+          const response = await getUser(userId, "student");
           const userDataFromJson: UserData | undefined = response?.result?.userData;
           if (userDataFromJson) {
             setUserData(userDataFromJson);
@@ -50,11 +50,11 @@ const StudentDetails: React.FC = () => {
 
   useEffect(() => {
     getOverallAttendance(limit, page, filter);
-  }, [limit, page, filter, userId]);
+  }, [limit, page, filter, userId]); 
 
   const getOverallAttendance = async (limitvalue: number, value: number, filter: object) => {
     try {
-      if (!userId) return;
+      if (!userId) return; 
       const contextId = 'e371526c-28f9-4646-b19a-a54d5f191ad2';
       const report = true;
       const pageLimit = limitvalue;
@@ -102,7 +102,7 @@ const StudentDetails: React.FC = () => {
   return (
     <>
       <Box mt={3} display="flex" gap={2} alignItems="flex-start">
-        <Header />
+        <Header/>
         <Link to="/">
           <ArrowBackIcon
             sx={{ color: (theme.palette.warning as any)['A200'], fontSize: '1.5rem' }}
@@ -133,7 +133,7 @@ const StudentDetails: React.FC = () => {
             gutterBottom>
             {t('COMMON.ATTENDANCE_REPORT')}
           </Typography>
-          {userId && (
+          {userId && ( 
             <Link to={`/student-attendance-history/${userId}`}>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Typography
