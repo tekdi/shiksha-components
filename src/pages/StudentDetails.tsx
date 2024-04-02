@@ -8,7 +8,9 @@ import {
   MenuItem,
   Select,
   Stack,
-  Typography
+  Typography,
+  Divider,
+  Grid
 } from '@mui/material';
 import { ArrowBack as ArrowBackIcon, East as EastIcon } from '@mui/icons-material';
 import { useTheme, Theme } from '@mui/material/styles';
@@ -17,25 +19,27 @@ import CustomSelect from '../components/CustomSelect';
 import { getUser } from '../services/profileService';
 import { useTranslation } from 'react-i18next';
 import { UserData } from '../utils/Interfaces';
-import Divider from '@mui/material/Divider';
 import { getAttendanceReport } from '../services/AttendanceService';
 import Header from '../components/Header';
+import { formatDate, getTodayDate } from '../utils/Helper';
 
 const StudentDetails: React.FC = () => {
   const { t } = useTranslation();
   const theme: Theme = useTheme();
-  const { cohortId, userId } = useParams<{ cohortId: string; userId?: string }>(); 
+  const { cohortId, userId } = useParams<{ cohortId: string; userId?: string }>();
   const [userData, setUserData] = useState<UserData | null>(null);
   const [attendanceReport, setAttendanceReport] = useState<any>(null);
   const [limit, setLimit] = useState<number>(10);
   const [page, setPage] = useState<number>(1);
   const [filter, setFilter] = useState<object>({});
+  const [maritalStatus, setMaritalStatus] = useState<string>('');
+  const [currentDate, setCurrentDate] = React.useState(getTodayDate);
 
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
         if (userId) {
-          const response = await getUser(userId, "student");
+          const response = await getUser(userId, 'student');
           const userDataFromJson: UserData | undefined = response?.result?.userData;
           if (userDataFromJson) {
             setUserData(userDataFromJson);
@@ -50,11 +54,11 @@ const StudentDetails: React.FC = () => {
 
   useEffect(() => {
     getOverallAttendance(limit, page, filter);
-  }, [limit, page, filter, userId]); 
+  }, [limit, page, filter, userId]);
 
   const getOverallAttendance = async (limitvalue: number, value: number, filter: object) => {
     try {
-      if (!userId) return; 
+      if (!userId) return;
       const contextId = 'e371526c-28f9-4646-b19a-a54d5f191ad2';
       const report = true;
       const pageLimit = limitvalue;
@@ -79,30 +83,26 @@ const StudentDetails: React.FC = () => {
     { title: t('Overall'), linkText: attendanceReport?.overallPercentage || '' },
     {
       title: t('Mathematics'),
-      linkText: attendanceReport?.mathAttendancePercentage || ''
+      linkText: '79%'
     },
     {
       title: t('English'),
-      linkText: attendanceReport?.englishAttendancePercentage || ''
+      linkText: '65%'
     },
     {
       title: t('Home Science'),
-      linkText: attendanceReport?.homeScienceAttendancePercentage || ''
+      linkText: '73%'
     },
     {
       title: t('Hindi'),
-      linkText: attendanceReport?.hindiAttendancePercentage || ''
+      linkText: '56%'
     }
   ];
-
-  const renderStatsCard = (label1: string, value1: string) => (
-    <StudentStatsCard label1={label1} value1={value1} label2={false} value2="5" />
-  );
-
   return (
     <>
+      <Header />
+
       <Box mt={3} display="flex" gap={2} alignItems="flex-start">
-        <Header/>
         <Link to="/">
           <ArrowBackIcon
             sx={{ color: (theme.palette.warning as any)['A200'], fontSize: '1.5rem' }}
@@ -133,8 +133,10 @@ const StudentDetails: React.FC = () => {
             gutterBottom>
             {t('COMMON.ATTENDANCE_REPORT')}
           </Typography>
-          {userId && ( 
-            <Link to={`/student-attendance-history/${userId}/${cohortId}`}>
+          {userId && (
+            <Link
+              to={`/student-attendance-history/${userId}/${cohortId}`}
+              style={{ textDecoration: 'none' }}>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Typography
                   sx={{
@@ -157,10 +159,10 @@ const StudentDetails: React.FC = () => {
         <Box>
           <FormControl sx={{ m: 1, minWidth: 320, minHeight: 20 }}>
             <Select sx={{ height: '32px' }}>
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={10}>As of 24 May</MenuItem>
+              <MenuItem value={10}>{t('NONE')}</MenuItem>
+              <MenuItem value={10}>{t('AS_OF_TODAY')}</MenuItem>
+              <MenuItem value={10}>{t('AS_OF_LAST_WEEK')}</MenuItem>
+              <MenuItem value={10}>{t('AS_OF_LAST_SIX_MONTH')}</MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -176,7 +178,7 @@ const StudentDetails: React.FC = () => {
               sx={{ color: theme.palette.text.secondary, fontSize: '14px', fontWeight: 500 }}
               variant="h6"
               gutterBottom>
-              As of 24 May
+              {'As of today' + ' ' + formatDate(currentDate)}
             </Typography>
             <Box
               gap={1}
@@ -186,11 +188,16 @@ const StudentDetails: React.FC = () => {
                 display: 'flex',
                 marginTop: 2
               }}>
-              {renderStatsCard(
-                'Attendance',
-                Math.floor(attendanceReport?.average?.average_attendance_percentage || 0).toString()
-              )}
-              {renderStatsCard('Classes Missed', '0')}
+              <Grid container display={'flex'} justifyContent={'space-between'}>
+                <Grid item xs={7}>
+                  <StudentStatsCard
+                    label1="Attendance %"
+                    value1={`${Math.round(attendanceReport?.average?.average_attendance_percentage || 0)}%`}
+                    label2={false}
+                    value2="5"
+                  />
+                </Grid>
+              </Grid>
             </Box>
           </CardContent>
         </Card>
@@ -276,16 +283,28 @@ const StudentDetails: React.FC = () => {
             borderRadius: theme.spacing(2),
             boxShadow: 'none'
           }}>
-          <Box sx={{ padding: '16px' }}>
-            <Typography
-              sx={{
-                color: theme.palette.text.secondary,
-                fontSize: '14px',
-                fontWeight: 600
-              }}>
-              {t('COMMON.DOB')}
-            </Typography>
-            <Typography sx={{ fontWeight: 500 }}>{userData?.dob}</Typography>
+          <Box>
+            {userData?.customFields.map(
+              (field, index) =>
+                field.label &&
+                field.value && (
+                  <React.Fragment key={index}>
+                    <Typography
+                      sx={{
+                        color: theme.palette.text.secondary,
+                        fontSize: '14px',
+                        fontWeight: 600,
+                        marginLeft: '20px',
+                        marginTop: '20px'
+                      }}>
+                      {field.label}
+                    </Typography>
+                    <Typography sx={{ fontWeight: 500, marginLeft: '20px' }}>
+                      {field.value}
+                    </Typography>
+                  </React.Fragment>
+                )
+            )}{' '}
           </Box>
         </Card>
       </Card>
