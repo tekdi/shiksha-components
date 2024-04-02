@@ -197,7 +197,7 @@ const StudentDetails: React.FC = () => {
               <Grid container display={'flex'} justifyContent={'space-between'}>
                 <Grid item xs={7}>
                   <StudentStatsCard
-                    label1="Attendance"
+                    label1="Attendance %"
                     value1={`${Math.round(attendanceReport?.average?.average_attendance_percentage || 0)}%`}
                     label2={false}
                     value2="5"
