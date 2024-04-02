@@ -9,7 +9,8 @@ import {
   Select,
   Stack,
   Typography,
-  Divider
+  Divider,
+  Grid
 } from '@mui/material';
 import { ArrowBack as ArrowBackIcon, East as EastIcon } from '@mui/icons-material';
 import { useTheme, Theme } from '@mui/material/styles';
@@ -20,6 +21,7 @@ import { useTranslation } from 'react-i18next';
 import { UserData } from '../utils/Interfaces';
 import { getAttendanceReport } from '../services/AttendanceService';
 import Header from '../components/Header';
+import { formatDate, getTodayDate } from '../utils/Helper';
 
 const StudentDetails: React.FC = () => {
   const { t } = useTranslation();
@@ -31,6 +33,7 @@ const StudentDetails: React.FC = () => {
   const [page, setPage] = useState<number>(1);
   const [filter, setFilter] = useState<object>({});
   const [maritalStatus, setMaritalStatus] = useState<string>('');
+  const [currentDate, setCurrentDate] = React.useState(getTodayDate);
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -101,11 +104,6 @@ const StudentDetails: React.FC = () => {
       linkText: '56%'
     }
   ];
-
-  const renderStatsCard = (label1: string, value1: string) => (
-    <StudentStatsCard label1={label1} value1={value1} label2={false} value2="5" />
-  );
-
   return (
     <>
       <Header />
@@ -142,7 +140,9 @@ const StudentDetails: React.FC = () => {
             {t('COMMON.ATTENDANCE_REPORT')}
           </Typography>
           {userId && (
-            <Link to={`/student-attendance-history/${userId}/${cohortId}`}>
+            <Link
+              to={`/student-attendance-history/${userId}/${cohortId}`}
+              style={{ textDecoration: 'none' }}>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Typography
                   sx={{
@@ -165,10 +165,10 @@ const StudentDetails: React.FC = () => {
         <Box>
           <FormControl sx={{ m: 1, minWidth: 320, minHeight: 20 }}>
             <Select sx={{ height: '32px' }}>
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={10}>As of 24 May</MenuItem>
+              <MenuItem value={10}>None</MenuItem>
+              <MenuItem value={10}>As of today</MenuItem>
+              <MenuItem value={10}>As of last week</MenuItem>
+              <MenuItem value={10}>As of last 6 months</MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -184,7 +184,7 @@ const StudentDetails: React.FC = () => {
               sx={{ color: theme.palette.text.secondary, fontSize: '14px', fontWeight: 500 }}
               variant="h6"
               gutterBottom>
-              As of 24 May
+              {formatDate(currentDate)}
             </Typography>
             <Box
               gap={1}
@@ -194,11 +194,16 @@ const StudentDetails: React.FC = () => {
                 display: 'flex',
                 marginTop: 2
               }}>
-              {renderStatsCard(
-                'Attendance',
-                Math.floor(attendanceReport?.average?.average_attendance_percentage || 0).toString()
-              )}
-              {renderStatsCard('Classes Missed', '0')}
+              <Grid container display={'flex'} justifyContent={'space-between'}>
+                <Grid item xs={7}>
+                  <StudentStatsCard
+                    label1="Attendance"
+                    value1={`${Math.round(attendanceReport?.average?.average_attendance_percentage || 0)}%`}
+                    label2={false}
+                    value2="5"
+                  />
+                </Grid>
+              </Grid>
             </Box>
           </CardContent>
         </Card>
@@ -284,72 +289,28 @@ const StudentDetails: React.FC = () => {
             borderRadius: theme.spacing(2),
             boxShadow: 'none'
           }}>
-          <Box sx={{ padding: '16px' }}>
-            <Typography
-              sx={{
-                color: theme.palette.text.secondary,
-                fontSize: '14px',
-                fontWeight: 600
-              }}>
-              {t('COMMON.DOB')}
-            </Typography>
-            <Typography sx={{ fontWeight: 500 }}>{userData?.dob ? userData?.dob : '-'}</Typography>
-            <Typography
-              sx={{
-                color: theme.palette.text.secondary,
-                fontSize: '14px',
-                fontWeight: 600
-              }}>
-              {t('COMMON.LOCATION')}
-            </Typography>
-            <Typography sx={{ fontWeight: 500 }}>
-              {userData?.state ? userData?.state : '-'}
-            </Typography>
-            <Typography
-              sx={{
-                color: theme.palette.text.secondary,
-                fontSize: '14px',
-                fontWeight: 600
-              }}>
-              {t('COMMON.LATEST_EDUCATION')}
-            </Typography>
-            <Typography sx={{ fontWeight: 500 }}>-</Typography>
-            <Typography
-              sx={{
-                color: theme.palette.text.secondary,
-                fontSize: '14px',
-                fontWeight: 600
-              }}>
-              {t('COMMON.MARITAL_STATUS')}
-            </Typography>
-            <Typography sx={{ fontWeight: 500 }}>{maritalStatus || '-'}</Typography>
-            <Typography
-              sx={{
-                color: theme.palette.text.secondary,
-                fontSize: '14px',
-                fontWeight: 600
-              }}>
-              {t('COMMON.DROPOUT_YEAR')}
-            </Typography>
-            <Typography sx={{ fontWeight: 500 }}>-</Typography>
-            <Typography
-              sx={{
-                color: theme.palette.text.secondary,
-                fontSize: '14px',
-                fontWeight: 600
-              }}>
-              {t('COMMON.EMPLOYMENT_STATUS')}
-            </Typography>
-            <Typography sx={{ fontWeight: 500 }}>-</Typography>
-            <Typography
-              sx={{
-                color: theme.palette.text.secondary,
-                fontSize: '14px',
-                fontWeight: 600
-              }}>
-              {t('COMMON.ENROLLMENT_DATE')}
-            </Typography>
-            <Typography sx={{ fontWeight: 500 }}>-</Typography>
+          <Box>
+            {userData?.customFields.map(
+              (field, index) =>
+                field.label &&
+                field.value && (
+                  <React.Fragment key={index}>
+                    <Typography
+                      sx={{
+                        color: theme.palette.text.secondary,
+                        fontSize: '14px',
+                        fontWeight: 600,
+                        marginLeft: '20px',
+                        marginTop: '20px'
+                      }}>
+                      {field.label}
+                    </Typography>
+                    <Typography sx={{ fontWeight: 500, marginLeft: '20px' }}>
+                      {field.value}
+                    </Typography>
+                  </React.Fragment>
+                )
+            )}{' '}
           </Box>
         </Card>
       </Card>

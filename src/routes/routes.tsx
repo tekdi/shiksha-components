@@ -11,7 +11,7 @@ import PageNotFound from '../pages/PageNotFound';
 const MyClassDetails = lazy(() => import('../pages/MyClassDetails'));
 const LoginPage = lazy(() => import('../pages/LoginPage'));
 const Profile = lazy(() => import('../pages/Profile'));
-const StudentDetails = lazy(() => import('../pages/StudentBasicDetails'));
+const StudentDetails = lazy(() => import('../pages/StudentDetails'));
 const Logout = lazy(() => import('../components/Logout'));
 const UserAttendanceHistory = lazy(() => import('../pages/UserAttendanceHistory'));
 const ClassAttendanceHistory = lazy(() => import('../pages/ClassAttendanceHistory'));
