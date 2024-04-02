@@ -145,7 +145,7 @@ const CalendarWithAttendance: React.FC<CalendarWithAttendanceProps> = ({
 
   return (
     <div>
-      <div className="day-tile-wrapper">
+      <div className="day-tile-wrapper custom-calendar-container">
         <Calendar
           onChange={handleDateChange}
           value={date}

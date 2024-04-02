@@ -65,19 +65,26 @@
 
 .present-marker {
   color: #1a8825;
+  margin: auto !important;
+  width: fit-content !important;
 }
 
 .absent-marker {
   color: #ba1a1a !important;
+  width: fit-content !important;
+  margin: auto !important;
 }
 
 .on-leave-marker {
   color: #ba1a1a !important;
+  width: fit-content !important;
+  margin: auto !important;
 }
 
 .tile-day {
-  border: 1px solid #b2a9b5 !important;
-  height: 90px !important;
+  border: 1px solid #D0C5B4 !important;
+  height: 70px !important;
+  width: 100% !important;
   border-radius: 5px;
   margin-bottom: 5px !important;
   /* margin-left: 2px !important; */
@@ -89,6 +96,11 @@
 
 .react-calendar__tile--active {
   background-color: #fbbc13 !important;
+  color: black !important;
+}
+
+.react-calendar__tile{
+  margin: auto !important;;
 }
 
 .today {
@@ -100,6 +112,11 @@
   color: #ba1a1a !important;
   border-radius: 50%;
   padding: 5px;
+  height: 25px;
+  display: flex;
+  width: 25px;
+  justify-content: center;
+  align-items: center;
 }
 
 .sample .MuiSnackbarContent-root {
@@ -110,4 +127,34 @@
   background-color: #ffdad6 !important;
   color: #ba1a1a;
   font-size: 0.75rem;
+}
+
+.custom-calendar-container {
+  display: flex !important;
+  justify-content: center !important; /* Centers the calendar horizontally */
+}
+
+.react-calendar {
+  max-width: 100% !important; /* Ensures the calendar doesn't overflow its container */
+}
+
+.react-calendar__month-view__days {
+  display: grid !important;
+  grid-template-columns: repeat(7, 1fr) !important; /* Creates 7 columns */
+  gap: 8px !important; /* Adjust the spacing between the date cells */
+}
+
+.react-calendar__month-view__days__day {
+  text-align: center !important; /* Centers the text within each date cell */
+}
+
+.react-calendar button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.calender-body{
+  padding: 20px !important;
 }
