@@ -184,7 +184,7 @@ const StudentDetails: React.FC = () => {
               sx={{ color: theme.palette.text.secondary, fontSize: '14px', fontWeight: 500 }}
               variant="h6"
               gutterBottom>
-              {formatDate(currentDate)}
+              {'As of today' + ' ' + formatDate(currentDate)}
             </Typography>
             <Box
               gap={1}
