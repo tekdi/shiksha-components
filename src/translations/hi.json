@@ -28,7 +28,11 @@
     "MARITAL_STATUS": "वैवाहिक स्थिती",
     "DROPOUT_YEAR": "ड्रॉपआउट वर्ष",
     "EMPLOYMENT_STATUS": "रोज़गार स्थिति",
-    "ENROLLMENT_DATE": "नामांकन की तिथि"
+    "ENROLLMENT_DATE": "नामांकन की तिथि",
+    "AS_OF_TODAY": "आज से",
+    "AS_OF_LAST_WEEK": "पिछले सप्ताह तक",
+    "AS_OF_LAST_SIX_MONTH": "पिछले छह महीने से",
+    "NONE": "कोई नहीं"
   },
   "LOGIN_PAGE": {
     "USERNAME": "उपयोगकर्ता नाम",

@@ -25,8 +25,12 @@
     "LOCATION": "स्थान",
     "MARITAL_STATUS": "वैवाहिक स्थिती",
     "DROPOUT_YEAR": "ड्रॉपआउट वर्ष",
-    "EMPLOYMENT_STATUS":"रोज़गार की स्थिति",
-    "ENROLLMENT_DATE":"नावनोंदणी तारीख"
+    "EMPLOYMENT_STATUS": "रोज़गार की स्थिति",
+    "ENROLLMENT_DATE": "नावनोंदणी तारीख",
+    "AS_OF_TODAY": "आजपासून",
+    "AS_OF_LAST_WEEK": "गेल्या आठवड्याप्रमाणे",
+    "AS_OF_LAST_SIX_MONTH": "गेल्या सहा महिन्यांपासून",
+    "NONE": "काहीही नाही"
   },
   "LOGIN_PAGE": {
     "USERNAME": "वापरकर्तानाव",

@@ -43,12 +43,6 @@ const StudentDetails: React.FC = () => {
           const userDataFromJson: UserData | undefined = response?.result?.userData;
           if (userDataFromJson) {
             setUserData(userDataFromJson);
-            const maritalStatusField = (
-              userDataFromJson.customFields as { label: string; value: string }[]
-            ).find((field) => field.label === 'Marital Status');
-            if (maritalStatusField) {
-              setMaritalStatus(maritalStatusField.value);
-            }
           }
         }
       } catch (error) {
@@ -165,10 +159,10 @@ const StudentDetails: React.FC = () => {
         <Box>
           <FormControl sx={{ m: 1, minWidth: 320, minHeight: 20 }}>
             <Select sx={{ height: '32px' }}>
-              <MenuItem value={10}>None</MenuItem>
-              <MenuItem value={10}>As of today</MenuItem>
-              <MenuItem value={10}>As of last week</MenuItem>
-              <MenuItem value={10}>As of last 6 months</MenuItem>
+              <MenuItem value={10}>{t('NONE')}</MenuItem>
+              <MenuItem value={10}>{t('AS_OF_TODAY')}</MenuItem>
+              <MenuItem value={10}>{t('AS_OF_LAST_WEEK')}</MenuItem>
+              <MenuItem value={10}>{t('AS_OF_LAST_SIX_MONTH')}</MenuItem>
             </Select>
           </FormControl>
         </Box>
