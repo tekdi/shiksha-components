@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import {
   Box,
   Button,
@@ -15,7 +15,7 @@ import { useState } from 'react';
 import '../App.css';
 import { login } from '../services/LoginService';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useTheme } from '@mui/material/styles';
 import MenuItem from '@mui/material/MenuItem';
@@ -43,6 +43,8 @@ const LoginPage = () => {
   );
   const [language, setLanguage] = useState(selectedLanguage);
   const navigate = useNavigate();
+  const location = useLocation();
+
   const theme = useTheme<any>();
   const [state, setState] = React.useState<State>({
     openModal: false,
@@ -50,6 +52,13 @@ const LoginPage = () => {
     horizontal: 'center'
   });
   const { vertical, horizontal, openModal } = state;
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate(location.state?.from || '/dashboard');
+    }
+  }, []);
 
   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
