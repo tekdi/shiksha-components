@@ -17,7 +17,10 @@ import { styled, alpha } from '@mui/material/styles';
 import { MenuProps } from '@mui/material/Menu';
 import Menu from '@mui/material/Menu';
 
-const Header: React.FC = () => {
+interface MyheaderComponentProps {
+  fromProfilePage?: boolean; 
+}
+const Header: React.FC<MyheaderComponentProps> = ({ fromProfilePage = false }) => {
   const [language, setLanguage] = useState(localStorage.getItem('preferredLanguage') || 'en');
   const navigate = useNavigate();
   const { i18n, t } = useTranslation();
@@ -66,7 +69,12 @@ const Header: React.FC = () => {
     localStorage.setItem('preferredLanguage', value);
   };
   const handleProfileClick = () => {
-    navigate('/profile');
+    if(!fromProfilePage)
+    {
+      navigate('/profile');
+
+    }
+
   };
   const handleLogoutClick = () => {
     navigate('/logout');

@@ -87,6 +87,7 @@ export interface UserData {
   state: string;
   email: string;
   dob?: string;
+  mobile?:string
   customFields: CustomField[];
 
 }

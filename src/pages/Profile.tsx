@@ -131,7 +131,7 @@ const Profile = () => {
 
   return (
     <Box display="flex" flexDirection="column" minHeight="100vh" minWidth={'100%'}>
-      <Header />
+      <Header fromProfilePage={true}/>
       <Box
         display="flex"
         flexDirection="column"
@@ -430,8 +430,14 @@ const Profile = () => {
                 bgcolor="warning.A400"
                 display="flex"
                 flexDirection="column">
-                <img src={defaultUser} alt="user" />
-                <Box>
+ <img
+            src={defaultUser}
+            alt="user"
+            style={{ marginLeft: '35%' }}
+      
+            height={'100px'}
+            width={'100px'}
+          />                <Box>
                   <Button
                     sx={{
                       minWidth: '100%',
