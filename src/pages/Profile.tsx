@@ -131,7 +131,7 @@ const Profile = () => {
 
   return (
     <Box display="flex" flexDirection="column" minHeight="100vh" minWidth={'100%'}>
-      <Header fromProfilePage={true}/>
+      <Header/>
       <Box
         display="flex"
         flexDirection="column"
