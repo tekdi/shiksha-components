@@ -77,3 +77,16 @@ export const maskEmailAddress=(email: string)=> {
   const maskedEmail = email.replace(/(?<=.{1}).(?=[^@]*?@)/g, '*');
   return maskedEmail;
 }
+
+
+
+export const verifyTokenStorage=()=> {
+  if(localStorage.getItem('isRememberMe')==="true")
+  {
+    return true;
+  }
+  else{
+    return false
+  }
+
+}

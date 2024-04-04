@@ -134,7 +134,8 @@ const LoginPage = () => {
     console.log("event",event.target.checked)
     const value=event.target.checked
     setChecked(value);
-    console.log(checked)
+    localStorage.setItem('isRememberMe' ,value.toString())
+    //console.log(checked)
 
   };
   // const loginButtonClick = async (event: React.FormEvent) => {};
