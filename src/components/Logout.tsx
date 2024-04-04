@@ -5,6 +5,7 @@ function Logout() {
   const navigate = useNavigate();
   useEffect(() => {
     localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
     localStorage.removeItem('userId');
     localStorage.removeItem('parentCohortId');
 

@@ -23,7 +23,17 @@
     "DOB": "Date of Birth",
     "LOGOUT": "Log out",
     "OVERALL_ATTENDANCE": "Overall Attendance",
-    "NO_DATA_FOUND": "No Data Found"
+    "NO_DATA_FOUND": "No Data Found",
+    "LOCATION": "Location",
+    "LATEST_EDUCATION": "Latest Education",
+    "MARITAL_STATUS": "Marital Status",
+    "DROPOUT_YEAR": "Dropout Year",
+    "EMPLOYMENT_STATUS": "Employment Status",
+    "ENROLLMENT_DATE":"Enrollment Date",
+    "AS_OF_TODAY":"As of today",
+    "AS_OF_LAST_WEEK":"As of last week",
+    "AS_OF_LAST_SIX_MONTH":"As of last six month",
+    "NONE":"None"
   },
   "LOGIN_PAGE": {
     "USERNAME": "Username",

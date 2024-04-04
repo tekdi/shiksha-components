@@ -252,7 +252,7 @@ const UserAttendanceHistory = () => {
           justifyContent={'center'}
           position={'relative'}
         >
-          <Box position={'absolute'} left={'0'} onClick={handleBackEvent}>
+          <Box position={'absolute'} left={'0'} onClick={handleBackEvent} padding={'0px'} padding-right={'30px'}>
             <Button>
             <KeyboardBackspaceOutlinedIcon sx={{ color: theme.palette.warning['A200'] }} />
             </Button>

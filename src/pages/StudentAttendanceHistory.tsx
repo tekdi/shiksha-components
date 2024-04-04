@@ -18,8 +18,10 @@ import AttendanceStatus from '../components/AttendanceStatus';
 import MarkAttendance from '../components/MarkAttendance';
 import { useTranslation } from 'react-i18next';
 import Loader from '../components/Loader.tsx';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const StudentAttendanceHistory = () => {
+  let { cohortId } = useParams();
   const theme = useTheme<any>();
   const { t } = useTranslation();
   const [attendanceData, setAttendanceData] = useState<any[]>([]);
@@ -39,75 +41,78 @@ const StudentAttendanceHistory = () => {
   const handleMarkAttendanceModal = () => setOpenMarkAttendance(!openMarkAttendance);
   const [AttendanceMessage, setAttendanceMessage] = React.useState('');
   const [loading, setLoading] = useState(false);
-
-  let userId: string = '00772d32-3f60-4a8e-a5e0-d0110c5c42fb';
+  let { userId } = useParams();
+  const navigate = useNavigate();
+  // let userId: string = '00772d32-3f60-4a8e-a5e0-d0110c5c42fb';
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const currentDate = activeStartDate;
-        const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-        const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+        if (cohortId && userId) {
+          const currentDate = activeStartDate;
+          const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+          const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
 
-        const formattedFirstDay = formatDate(firstDayOfMonth);
-        const formattedLastDay = formatDate(lastDayOfMonth);
+          const formattedFirstDay = formatDate(firstDayOfMonth);
+          const formattedLastDay = formatDate(lastDayOfMonth);
 
-        const attendanceData: AttendanceByDateParams = {
-          // fromDate: formattedFirstDay,
-          // toDate: formattedLastDay,
-          // filters: {
-          //   userId
-          // }
+          const attendanceData: AttendanceByDateParams = {
+            // fromDate: formattedFirstDay,
+            // toDate: formattedLastDay,
+            // filters: {
+            //   userId
+            // }
 
-          fromDate: '2024-03-01',
-          toDate: '2024-03-29',
-          page: 0,
-          filters: {
-            contextId: '252fb59c-d641-417a-815b-d39e6f502fcf',
-            userId: '00772d32-3f60-4a8e-a5e0-d0110c5c42fb'
-          }
-        };
+            fromDate: '2024-03-01',
+            toDate: '2024-03-29',
+            page: 0,
+            filters: {
+              contextId: cohortId.toString(),
+              userId: userId.toString()
+            }
+          };
 
-        const response = await getAttendanceByDate(attendanceData);
-        setAttendanceData(response?.data || []);
+          const response = await getAttendanceByDate(attendanceData);
+          setAttendanceData(response?.data || []);
 
-        const presentDatesArray: string[] = [];
-        const absentDatesArray: string[] = [];
-        const halfDayDatesArray: string[] = [];
+          const presentDatesArray: string[] = [];
+          const absentDatesArray: string[] = [];
+          const halfDayDatesArray: string[] = [];
 
-        response?.data.forEach((item: any) => {
-          switch (item.attendance) {
-            case 'present':
-              presentDatesArray.push(item.attendanceDate);
-              break;
-            case 'on-leave':
-              absentDatesArray.push(item.attendanceDate);
-              break;
-            case 'half-day':
-              halfDayDatesArray.push(item.attendanceDate);
-              break;
-            default:
-              break;
-          }
-        });
+          response?.data.forEach((item: any) => {
+            switch (item.attendance) {
+              case 'present':
+                presentDatesArray.push(item.attendanceDate);
+                break;
+              case 'on-leave':
+                absentDatesArray.push(item.attendanceDate);
+                break;
+              case 'half-day':
+                halfDayDatesArray.push(item.attendanceDate);
+                break;
+              default:
+                break;
+            }
+          });
 
-        const allDatesInRange: string[] = getAllDatesInRange(formattedFirstDay, formattedLastDay);
-        const markedDates: Set<string> = new Set([
-          ...presentDatesArray,
-          ...absentDatesArray,
-          ...halfDayDatesArray
-        ]);
-        const notMarkedDates: string[] = allDatesInRange.filter((date) => {
-          return !markedDates.has(date) && !isWeekend(date) && !isFutureDate(date);
-        });
+          const allDatesInRange: string[] = getAllDatesInRange(formattedFirstDay, formattedLastDay);
+          const markedDates: Set<string> = new Set([
+            ...presentDatesArray,
+            ...absentDatesArray,
+            ...halfDayDatesArray
+          ]);
+          const notMarkedDates: string[] = allDatesInRange.filter((date) => {
+            return !markedDates.has(date) && !isWeekend(date) && !isFutureDate(date);
+          });
 
-        const futureDates: string[] = allDatesInRange.filter((date) => isFutureDate(date));
+          const futureDates: string[] = allDatesInRange.filter((date) => isFutureDate(date));
 
-        setPresentDates(presentDatesArray);
-        setAbsentDates(absentDatesArray);
-        setHalfDayDates(halfDayDatesArray);
-        setNotMarkedDates(notMarkedDates);
-        setFutureDates(futureDates);
+          setPresentDates(presentDatesArray);
+          setAbsentDates(absentDatesArray);
+          setHalfDayDates(halfDayDatesArray);
+          setNotMarkedDates(notMarkedDates);
+          setFutureDates(futureDates);
+        }
       } catch (error) {
         console.error('Error:', error);
       }
@@ -191,12 +196,12 @@ const StudentAttendanceHistory = () => {
   };
   const submitAttendance = async (date: string, status: string) => {
     //console.log(date, status);
-    if (userId) {
+    if (userId && cohortId) {
       const attendanceData: AttendanceParams = {
         attendanceDate: date,
         attendance: status,
-        userId,
-        contextId: '252fb59c-d641-417a-815b-d39e6f502fcf'
+        userId: userId.toString(),
+        contextId: cohortId?.toString()
       };
       setLoading(true);
       try {
@@ -216,6 +221,9 @@ const StudentAttendanceHistory = () => {
   };
 
   const handleUpdate = () => {};
+  const handleBackEvent = () => {
+    navigate(-1);
+  };
 
   return (
     <Box minHeight="100vh" textAlign={'center'}>
@@ -226,21 +234,22 @@ const StudentAttendanceHistory = () => {
         flexDirection={'column'}
         gap={'1rem'}
         padding={'1rem'}
-        alignItems={'center'}
-      >
+        alignItems={'center'}>
         <Box
           display={'flex'}
           sx={{ color: theme.palette.warning['A200'] }}
           gap={'10px'}
           width={'100%'}
           justifyContent={'center'}
-          position={'relative'}
-        >
+          position={'relative'}>
           <Box position={'absolute'} left={'0'}>
-            <KeyboardBackspaceOutlinedIcon sx={{ color: theme.palette.warning['A200'] }} />
+            <KeyboardBackspaceOutlinedIcon
+              onClick={handleBackEvent}
+              sx={{ color: theme.palette.warning['A200'] }}
+            />
           </Box>
           <Box>
-            <Typography marginBottom={'0px'} fontSize={'25px'}>
+            <Typography marginLeft={'30px'} marginBottom={'0px'} fontSize={'25px'}>
               {t('ATTENDANCE.MY_ATTENDANCE_HISTORY')}
             </Typography>
 

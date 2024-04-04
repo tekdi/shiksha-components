@@ -75,6 +75,10 @@ export interface TeacherAttendanceByDateParams {
   };
 }
 
+interface CustomField {
+  label: string;
+  value: string;
+}
 export interface UserData {
   id: number;
   name: string;
@@ -83,7 +87,9 @@ export interface UserData {
   state: string;
   email: string;
   dob?: string;
-  mobile:string
+  mobile?:string
+  customFields: CustomField[];
+
 }
 
 export interface AttendanceReports {
