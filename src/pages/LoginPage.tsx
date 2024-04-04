@@ -24,6 +24,7 @@ import { getUserId } from '../services/profileService.ts';
 import Loader from '../components/Loader.tsx';
 import Snackbar, { SnackbarOrigin } from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
+import FormHelperText from '@mui/material/FormHelperText';
 
 interface State extends SnackbarOrigin {
   openModal: boolean;
@@ -128,6 +129,10 @@ const LoginPage = () => {
   const handleClose = () => {
     setState({ ...state, openModal: false });
   };
+
+  const handleForgotPassword = () => {
+    navigate('/forgot-password')
+  };
   const action = useMemo(
     () => (
       <React.Fragment>
@@ -229,6 +234,12 @@ const LoginPage = () => {
                   onChange={handlePasswordChange}
                   error={passwordError}
                 />
+                  {/* <FormHelperText >
+                  <Button
+                 onClick={handleForgotPassword}
+               >
+                 {t('LOGIN_PAGE.FORGOT_PASSWORD')}
+              </Button>      </FormHelperText> */}
               </FormControl>
             </Box>
 
