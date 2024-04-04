@@ -6,7 +6,7 @@ interface LoginParams {
 }
 
 interface RefreshParams {
-  refresh_token: string;
+  refreshToken: string;
 }
 
 export const login = async ({ username, password }: LoginParams): Promise<any> => {
@@ -20,10 +20,10 @@ export const login = async ({ username, password }: LoginParams): Promise<any> =
   }
 };
 
-export const refresh = async ({ refresh_token }: RefreshParams): Promise<any> => {
+export const handleRefreshToken = async ({ refreshToken }: RefreshParams): Promise<any> => {
   const apiUrl: string = `${import.meta.env.VITE_BASE_URL}/auth/refresh`;
   try {
-    const response = await post(apiUrl, { refresh_token });
+    const response = await post(apiUrl, { refreshToken });
     return response?.data;
   } catch (error) {
     console.error('error in login', error);

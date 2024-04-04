@@ -1,17 +1,16 @@
 import axios from 'axios';
-import { refresh } from './LoginService';
+import { handleRefreshToken } from './LoginService';
 
 const instance = axios.create();
 
 const refreshToken = async () => {
   const sessionRefreshToken = sessionStorage.getItem('refreshToken');
 
-  const refresh_token = localStorage.getItem('refreshToken');
-  if(refresh_token)
-  {
-  if (refresh_token !== '' && refresh_token !== null) {
+  const refreshTokenValue = localStorage.getItem('refreshToken');
+
+  if (refreshTokenValue) {
     try {
-      const response = await refresh({ refresh_token });
+      const response = await handleRefreshToken({ refreshToken: refreshTokenValue });
       if (response) {
         const accessToken = response?.access_token;
         const newRefreshToken = response?.refresh_token;
@@ -23,27 +22,23 @@ const refreshToken = async () => {
       console.error('Token refresh failed:', error);
       throw error;
     }
-  }
-}
-else{
-
-
-  if (sessionRefreshToken !== '' && sessionRefreshToken !== null) {
-    try {
-      const response = await refresh({ refresh_token:sessionRefreshToken });
-      if (response) {
-        const accessToken = response?.access_token;
-        const newRefreshToken = response?.refresh_token;
-        sessionStorage.setItem('token', accessToken);
-      sessionStorage.setItem('refreshToken', newRefreshToken);
-        return accessToken;
+  } else {
+    if (sessionRefreshToken) {
+      try {
+        const response = await handleRefreshToken({ refreshToken: sessionRefreshToken });
+        if (response) {
+          const accessToken = response?.access_token;
+          const newRefreshToken = response?.refresh_token;
+          sessionStorage.setItem('token', accessToken);
+          sessionStorage.setItem('refreshToken', newRefreshToken);
+          return accessToken;
+        }
+      } catch (error) {
+        console.error('Token refresh failed:', error);
+        throw error;
       }
-    } catch (error) {
-      console.error('Token refresh failed:', error);
-      throw error;
     }
   }
-}
 };
 
 instance.interceptors.request.use(
@@ -51,15 +46,12 @@ instance.interceptors.request.use(
     const token = localStorage.getItem('token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
-    }
-    else{
-      const sessionToken=  sessionStorage.getItem('token')
-      if(sessionToken)
-      {
-        console.log("s",sessionToken)
-      config.headers.Authorization = `Bearer ${sessionToken}`;
+    } else {
+      const sessionToken = sessionStorage.getItem('token');
+      if (sessionToken) {
+        console.log('s', sessionToken);
+        config.headers.Authorization = `Bearer ${sessionToken}`;
       }
-
     }
     // config.headers.tenantid = '4783a636-1191-487a-8b09-55eca51b5036';
     config.headers.tenantid = 'fbe108db-e236-48a7-8230-80d34c370800';
