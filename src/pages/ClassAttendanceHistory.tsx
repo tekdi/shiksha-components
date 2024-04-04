@@ -286,6 +286,10 @@ const ClassAttendanceHistory = () => {
     setCohortMemberList(updatedAttendanceList);
   };
 
+  const handleBackEvent = () => {
+    navigate(-1);
+  };
+
   useEffect(() => {
     const getCohortMemberList = async () => {
       setLoading(true);
@@ -332,7 +336,10 @@ const ClassAttendanceHistory = () => {
           justifyContent={'center'}
           position={'relative'}>
           <Box position={'absolute'} left={'0'}>
-            <ArrowBackIcon sx={{ color: theme.palette.warning['A200'], cursor: 'pointer' }}  onClick={() => navigate(-1)}  />
+            <ArrowBackIcon
+              sx={{ color: theme.palette.warning['A200'], cursor: 'pointer' }}
+              onClick={handleBackEvent}
+            />
           </Box>
           <Box>
             <Typography marginBottom={'0px'} fontSize={'25px'}>
