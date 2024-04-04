@@ -120,7 +120,8 @@ export default function MyClassDetails() {
   // handle search student data
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchWord(event.target.value);
-    if (event.target.value.length >= 3) {
+    const MIN_SEARCH_LENGTH = 3;
+    if (event.target.value.length >= MIN_SEARCH_LENGTH) {
       debouncedSearch(event.target.value);
     } else {
       let filter = {
@@ -147,10 +148,7 @@ export default function MyClassDetails() {
 
   const handleSearchClear = () => {
     setSearchWord('');
-    let filter = {
-      search: ''
-    };
-    getCohortDetails(limit, page, filter);
+    getCohortDetails(limit, page, { search: '' });
   };
 
   // handle sorting data

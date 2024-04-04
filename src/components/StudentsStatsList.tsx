@@ -49,9 +49,9 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
               fontWeight="400"
               lineHeight="1.25rem"
               sx={{
-                cursor: 'pointer', // Show pointer cursor on hover
+                cursor: 'pointer',
                 '&:hover': {
-                  textDecoration: 'underline' // Optional: underline on hover
+                  textDecoration: 'underline'
                 }
               }}>
               <Typography m={0} onClick={handleStudentDetails}>
