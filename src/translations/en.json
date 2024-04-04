@@ -48,7 +48,7 @@
     "TROUBLE_WITH_LOGIN":"Trouble with logging in?",
     "ENTER_USERNAME_EMAIL":"Enter your username or email address and we’ll send you a link to get back into your account.",
     "BACK_TO_LOGIN":"Back to Login",
-    "WE_SENT_EMAIL":"We sent an email to m******i@email.com with a link to get back to your account",
+    "WE_SENT_EMAIL":"We sent an email to  {{email}} with a link to get back to your account",
     "CREATE_PASSWORD":"Create a strong password",
     "CREATE_NEW_STRONG_PASSWORD":"Create a new, strong password that you don't use for other websites",
     "CONFIRM_PASSWORD":"Confirm password",

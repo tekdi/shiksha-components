@@ -1,11 +1,10 @@
 import React from 'react';
-import { Box, Button, IconButton, Typography, TextField, Grid, Divider } from '@mui/material';
+import { Box, Button, IconButton, Typography, TextField, Grid, Divider , FormHelperText} from '@mui/material';
 import { useState } from 'react';
 import '../App.css';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
-import FormHelperText from '@mui/material/FormHelperText';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
@@ -13,6 +12,8 @@ import { styled, useTheme } from '@mui/material/styles';
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
+import { maskEmailAddress } from '../utils/Helper';
+
 const ForgotPassword = () => {
   const { t } = useTranslation();
   const [resetPassword, setResetPassword] = useState(false);
@@ -25,6 +26,8 @@ const ForgotPassword = () => {
   const [lengthCondition, setlengthCondition] = useState(false);
   const [specialCharCondition, setSpecialCharCondition] = useState(false);
   const [numberCondition, setNumberCondition] = useState(false);
+  const [email, setEmail] = useState('');
+
   const navigate = useNavigate();
   const [openModal, setOpenModal] = React.useState(false);
   const handleModal = () => setOpenModal(!openModal);
@@ -77,8 +80,10 @@ const ForgotPassword = () => {
       setPasswordError(true);
     }
   };
-  const handleUserNameEmail = () => {
+  const handleUserNameEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNextButtonDisabled(false);
+  const value=maskEmailAddress(event.target.value);
+  setEmail(value)
   };
   const handleBackButton = () => {
     navigate('/login');
@@ -267,7 +272,7 @@ const ForgotPassword = () => {
                             ? theme.palette.success['main']
                             : theme.palette.error['main']
                         }>
-                        {t('LOGIN_PAGE.MUST_EIGHT_CHARACTER')}{' '}
+                        {t('LOGIN_PAGE.MUST_EIGHT_CHARACTER')}
                       </Typography>
                     </IconButton>
                   </FormHelperText>
@@ -301,7 +306,10 @@ const ForgotPassword = () => {
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-clear-dialog-title">
           <CheckCircleOutlinedIcon sx={{ marginLeft: '45%', marginTop: '10px' }} />
           <Typography variant="h2" sx={{ textAlign: 'center', marginTop: '10px' }}>
-            {t('LOGIN_PAGE.WE_SENT_EMAIL')}
+
+            {t('LOGIN_PAGE.WE_SENT_EMAIL', {
+                      email: email
+                    }) }
           </Typography>
         </DialogTitle>
 

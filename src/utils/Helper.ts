@@ -66,3 +66,14 @@ export const getTodayDate = () => {
   const day = String(currentDate.getDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
 };
+
+
+export const maskEmailAddress=(email: string)=> {
+  const atIndex = email.indexOf('@');
+  if (atIndex === -1 || atIndex < 2) {
+      throw new Error('Invalid email address');
+  }
+
+  const maskedEmail = email.replace(/(?<=.{1}).(?=[^@]*?@)/g, '*');
+  return maskedEmail;
+}
