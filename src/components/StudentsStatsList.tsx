@@ -47,7 +47,8 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
               color={theme.palette.text.primary}
               fontSize="0.875rem"
               fontWeight="400"
-              lineHeight="1.25rem">
+              lineHeight="1.25rem"
+            >
               <Typography m={0} onClick={handleStudentDetails}>
                 {name}
               </Typography>
@@ -60,7 +61,8 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
               fontWeight="bold"
               lineHeight="1.5rem"
               color={theme.palette.text.primary}
-              textAlign="center">
+              textAlign="center"
+            >
               {value1}%
             </Typography>
             <Typography
@@ -69,7 +71,8 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
               fontWeight="500"
               lineHeight="1rem"
               color={theme.palette.warning.main}
-              textAlign="center">
+              textAlign="center"
+            >
               {t('COMMON.ATTENDANCE')}
             </Typography>
           </Grid>

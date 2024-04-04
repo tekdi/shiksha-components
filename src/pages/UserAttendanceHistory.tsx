@@ -44,8 +44,7 @@ const UserAttendanceHistory = () => {
   const userId: string = localStorage.getItem('userId') || '';
   const contextId: string = localStorage.getItem('parentCohortId') || '';
 
-
-  const handleBackEvent = ()=>{
+  const handleBackEvent = () => {
     window.history.back();
   };
 
@@ -56,10 +55,10 @@ const UserAttendanceHistory = () => {
         const currentDate = activeStartDate;
         const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
         const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
-        
+
         const formattedFirstDay = formatDate(firstDayOfMonth);
         const formattedLastDay = formatDate(lastDayOfMonth);
-        
+
         const trimmedContextId = contextId.trim();
         const attendanceData: AttendanceByDateParams = {
           fromDate: formattedFirstDay,
@@ -70,17 +69,17 @@ const UserAttendanceHistory = () => {
             contextId: trimmedContextId
           }
         };
-        
+
         const response = await getAttendanceByDate(attendanceData);
         console.log(response);
         setAttendanceData(response?.data);
-        const cdDate= formatDate(currentDate)
+        const cdDate = formatDate(currentDate);
         response?.data.forEach((item: any) => {
           if (item.attendanceDate === cdDate) {
-              setStatus((prevStatus) => item.attendance);
+            setStatus((prevStatus) => item.attendance);
           }
-      });
-      
+        });
+
         const presentDatesArray: string[] = [];
         const absentDatesArray: string[] = [];
         const halfDayDatesArray: string[] = [];
@@ -93,7 +92,7 @@ const UserAttendanceHistory = () => {
             case 'on-leave':
               absentDatesArray.push(item.attendanceDate);
               break;
-              case 'absent':
+            case 'absent':
               absentDatesArray.push(item.attendanceDate);
               break;
             case 'half-day':
@@ -131,8 +130,8 @@ const UserAttendanceHistory = () => {
   }, [activeStartDate]);
 
   useEffect(() => {
-    console.log(status); 
-}, [status]);
+    console.log(status);
+  }, [status]);
 
   useEffect(() => {
     localStorage.setItem('activeStartDate', activeStartDate.toISOString());
@@ -252,9 +251,15 @@ const UserAttendanceHistory = () => {
           justifyContent={'center'}
           position={'relative'}
         >
-          <Box position={'absolute'} left={'0'} onClick={handleBackEvent} padding={'0px'} padding-right={'30px'}>
+          <Box
+            position={'absolute'}
+            left={'0'}
+            onClick={handleBackEvent}
+            padding={'0px'}
+            padding-right={'30px'}
+          >
             <Button>
-            <KeyboardBackspaceOutlinedIcon sx={{ color: theme.palette.warning['A200'] }} />
+              <KeyboardBackspaceOutlinedIcon sx={{ color: theme.palette.warning['A200'] }} />
             </Button>
           </Box>
 

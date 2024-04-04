@@ -51,7 +51,8 @@ const CohortCard: React.FC<CohortCardProps> = ({
       onClick={() => {
         navigate(`/class-details/${cohortId}`);
       }}
-      sx={boxStyling}>
+      sx={boxStyling}
+    >
       <CardMedia sx={cardMedia} title="Class Image">
         {isRemote ? <SmartDisplayIcon /> : <ApartmentIcon />}
       </CardMedia>

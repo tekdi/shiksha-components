@@ -323,16 +323,21 @@ const ClassAttendanceHistory = () => {
         flexDirection={'column'}
         gap={'1rem'}
         padding={'1rem'}
-        alignItems={'center'}>
+        alignItems={'center'}
+      >
         <Box
           display={'flex'}
           sx={{ color: theme.palette.warning['A200'] }}
           gap={'10px'}
           width={'100%'}
           justifyContent={'center'}
-          position={'relative'}>
+          position={'relative'}
+        >
           <Box position={'absolute'} left={'0'}>
-            <ArrowBackIcon sx={{ color: theme.palette.warning['A200'], cursor: 'pointer' }}  onClick={() => navigate(-1)}  />
+            <ArrowBackIcon
+              sx={{ color: theme.palette.warning['A200'], cursor: 'pointer' }}
+              onClick={() => navigate(-1)}
+            />
           </Box>
           <Box>
             <Typography marginBottom={'0px'} fontSize={'25px'}>
@@ -369,7 +374,8 @@ const ClassAttendanceHistory = () => {
             mb={3}
             // justifyContent={'space-between'}
             // alignItems={'center'}
-            boxShadow={'none'}>
+            boxShadow={'none'}
+          >
             <Grid container alignItems="center" display={'flex'} justifyContent="space-between">
               <Grid item xs={8}>
                 <Paper
@@ -382,7 +388,8 @@ const ClassAttendanceHistory = () => {
                     borderRadius: '100px',
                     background: theme.palette.warning.A700,
                     boxShadow: 'none'
-                  }}>
+                  }}
+                >
                   <InputBase
                     sx={{ ml: 3, flex: 1, mb: '0', fontSize: '14px' }}
                     placeholder={t('COMMON.SEARCH_STUDENT') + '..'}
@@ -393,7 +400,8 @@ const ClassAttendanceHistory = () => {
                     type="button"
                     sx={{ p: '10px' }}
                     aria-label="search"
-                    onClick={handleSearchSubmit}>
+                    onClick={handleSearchSubmit}
+                  >
                     <SearchIcon />
                   </IconButton>
                 </Paper>
@@ -410,7 +418,8 @@ const ClassAttendanceHistory = () => {
                   }}
                   endIcon={<ArrowDropDownSharpIcon />}
                   size="small"
-                  variant="outlined">
+                  variant="outlined"
+                >
                   {/* {t('COMMON.SORT_BY')} */}
                   {t('COMMON.SORT_BY').length > 7
                     ? `${t('COMMON.SORT_BY').substring(0, 6)}...`

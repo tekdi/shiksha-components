@@ -234,14 +234,16 @@ const StudentAttendanceHistory = () => {
         flexDirection={'column'}
         gap={'1rem'}
         padding={'1rem'}
-        alignItems={'center'}>
+        alignItems={'center'}
+      >
         <Box
           display={'flex'}
           sx={{ color: theme.palette.warning['A200'] }}
           gap={'10px'}
           width={'100%'}
           justifyContent={'center'}
-          position={'relative'}>
+          position={'relative'}
+        >
           <Box position={'absolute'} left={'0'}>
             <KeyboardBackspaceOutlinedIcon
               onClick={handleBackEvent}

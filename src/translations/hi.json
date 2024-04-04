@@ -33,8 +33,8 @@
     "AS_OF_LAST_WEEK": "पिछले सप्ताह तक",
     "AS_OF_LAST_SIX_MONTH": "पिछले छह महीने से",
     "NONE": "कोई नहीं",
-    "NEXT":"अगला",
-    "OK":"ठीक है"
+    "NEXT": "अगला",
+    "OK": "ठीक है"
   },
   "LOGIN_PAGE": {
     "USERNAME": "उपयोगकर्ता नाम",
@@ -43,24 +43,23 @@
     "USERNAME_PLACEHOLDER": "उपयोगकर्ता नाम दर्ज करें",
     "PASSWORD_PLACEHOLDER": "पासवर्ड दर्ज करें",
     "USERNAME_PASSWORD_NOT_CORRECT": "आपका यूजरनेम या पासवर्ड गलत है",
-    "FORGOT_PASSWORD":"पासवर्ड भूल गए",
-    "TROUBLE_WITH_LOGIN":"लॉग इन करने में समस्या?",
+    "FORGOT_PASSWORD": "पासवर्ड भूल गए",
+    "TROUBLE_WITH_LOGIN": "लॉग इन करने में समस्या?",
     "ENTER_USERNAME_EMAIL_FOR_LINK": "अपना उपयोगकर्ता नाम या ईमेल पता दर्ज करें और हम आपके खाते में वापस जाने के लिए आपको एक लिंक भेजेंगे।",
-    "BACK_TO_LOGIN":"लॉगिन पर वापस जाएँ",
+    "BACK_TO_LOGIN": "लॉगिन पर वापस जाएँ",
     "WE_SENT_EMAIL": "हमने {{email}} को एक ईमेल भेजा है, जिसमें आपके खाते में वापस जाने के लिए एक लिंक है।",
-    "CREATE_PASSWORD":"एक मजबूत पासवर्ड बनाएं",
+    "CREATE_PASSWORD": "एक मजबूत पासवर्ड बनाएं",
     "CREATE_NEW_STRONG_PASSWORD": "एक नया, मजबूत पासवर्ड बनाएं जिसका उपयोग आप अन्य वेबसाइटों के लिए न करें",
-    "CONFIRM_PASSWORD":"पासवर्ड की पुष्टि करें",
+    "CONFIRM_PASSWORD": "पासवर्ड की पुष्टि करें",
     "RESEST_PASSWORD": "पासवर्ड रीसेट करें",
-    "YOUR_PASSWORD_NEED":"आपके पासवर्ड की आवश्यकता है:",
-    "INCLUDE_UPPER_LOWER_CASE":"अपर केस और लोअर केस दोनों शामिल करें",
-    "INCLUDE_NUMBER":"कम से कम एक संख्या शामिल करें",
-    "INCLUDE_SPECIAL_CHARACTER":"कम से कम एक विशेष वर्ण शामिल करें",
-    "MUST_EIGHT_CHARACTER":"कम से कम 8 अक्षर लंबा होना चाहिए",
+    "YOUR_PASSWORD_NEED": "आपके पासवर्ड की आवश्यकता है:",
+    "INCLUDE_UPPER_LOWER_CASE": "अपर केस और लोअर केस दोनों शामिल करें",
+    "INCLUDE_NUMBER": "कम से कम एक संख्या शामिल करें",
+    "INCLUDE_SPECIAL_CHARACTER": "कम से कम एक विशेष वर्ण शामिल करें",
+    "MUST_EIGHT_CHARACTER": "कम से कम 8 अक्षर लंबा होना चाहिए",
     "PASSWORD_NOT_MATCH": "पासवर्ड मेल नहीं खाते",
     "ENTER_USERNAME_EMAIL": "अपना उपयोगकर्ता नाम या ईमेल पता दर्ज करें",
-    "REMEMBER_ME":"मुझे लॉग इन करने के लिए याद रखें"
-
+    "REMEMBER_ME": "मुझे लॉग इन करने के लिए याद रखें"
   },
   "DASHBOARD": {
     "HISTORY": "इतिहास",

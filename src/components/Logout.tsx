@@ -5,14 +5,12 @@ import { verifyTokenStorage } from '../utils/Helper';
 function Logout() {
   const navigate = useNavigate();
   useEffect(() => {
-   
     if (verifyTokenStorage()) {
       localStorage.removeItem('token');
       localStorage.removeItem('refreshToken');
     } else {
-        sessionStorage.removeItem('token');
-        sessionStorage.removeItem('refreshToken');
-      
+      sessionStorage.removeItem('token');
+      sessionStorage.removeItem('refreshToken');
     }
     localStorage.removeItem('userId');
     localStorage.removeItem('parentCohortId');

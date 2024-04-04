@@ -9,7 +9,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '@mui/material/styles';
 import config from '../config.json';
-import { useNavigate ,useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import appLogo from '/appLogo.svg';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
@@ -17,14 +17,12 @@ import { styled, alpha } from '@mui/material/styles';
 import { MenuProps } from '@mui/material/Menu';
 import Menu from '@mui/material/Menu';
 
-
-
 const Header: React.FC = () => {
   const [language, setLanguage] = useState(localStorage.getItem('preferredLanguage') || 'en');
   const navigate = useNavigate();
   const { i18n, t } = useTranslation();
   const location = useLocation();
-  
+
   const StyledMenu = styled((props: MenuProps) => (
     <Menu
       elevation={0}
@@ -69,12 +67,9 @@ const Header: React.FC = () => {
     localStorage.setItem('preferredLanguage', value);
   };
   const handleProfileClick = () => {
-    if(location.pathname!=='/profile')
-    {
+    if (location.pathname !== '/profile') {
       navigate('/profile');
-
     }
-
   };
   const handleLogoutClick = () => {
     navigate('/logout');

@@ -114,7 +114,7 @@ const Profile = () => {
 
     try {
       if (userId) {
-        const response = await getUser(userId, "teacher");
+        const response = await getUser(userId, 'teacher');
         const userDataFromJson = response?.result?.userData;
         setUserData(userDataFromJson);
         setCustomFieldsData(response?.result?.userData?.customFields);
@@ -131,14 +131,15 @@ const Profile = () => {
 
   return (
     <Box display="flex" flexDirection="column" minHeight="100vh" minWidth={'100%'}>
-      <Header/>
+      <Header />
       <Box
         display="flex"
         flexDirection="column"
         padding={2}
         gap={'10px'}
         justifyContent={'center'}
-        alignItems={'center'}>
+        alignItems={'center'}
+      >
         <Box sx={{ flex: '1', minWidth: '100%' }} display="flex" flexDirection="row" gap="5px">
           <ArrowBackIcon onClick={backButtonEvent} sx={{ cursor: 'pointer' }} />
 
@@ -148,7 +149,8 @@ const Profile = () => {
               letterSpacing: '0.1px',
               textAlign: 'left',
               marginBottom: '2px'
-            }}>
+            }}
+          >
             {t('PROFILE.MY_PROFILE')}
           </Typography>
         </Box>
@@ -165,7 +167,8 @@ const Profile = () => {
           border={'1px'}
           bgcolor="warning.A400"
           display="flex"
-          flexDirection="row">
+          flexDirection="row"
+        >
           <img
             src={defaultUser}
             alt="user"
@@ -180,7 +183,8 @@ const Profile = () => {
               flexDirection: 'column',
               gap: '10px',
               justifyContent: 'center'
-            }}>
+            }}
+          >
             <Typography variant="h2">
               {userData?.name}
               <br />
@@ -210,7 +214,8 @@ const Profile = () => {
             }
           }}
           startIcon={<CreateOutlinedIcon />}
-          onClick={handleOpen}>
+          onClick={handleOpen}
+        >
           {t('PROFILE.EDIT_PROFILE')}
         </Button>
 
@@ -221,106 +226,116 @@ const Profile = () => {
               letterSpacing: '0.1px',
               textAlign: 'left',
               color: theme.palette.warning['400']
-            }}>
+            }}
+          >
             {t('PROFILE.CONTACT_INFORMATION')}
           </Typography>
 
           <Box display="flex" flexDirection="column" gap="10px">
-          {userData?.mobile  &&( <Box display="flex" flexDirection="row" gap="10px">
-              <LocalPhoneOutlinedIcon
-                style={{
-                  marginTop: '9px'
-                }}
-              />
-              <Box display="flex" flexDirection={'column'}>
-                <Typography
-                  variant="h4"
+            {userData?.mobile && (
+              <Box display="flex" flexDirection="row" gap="10px">
+                <LocalPhoneOutlinedIcon
                   style={{
-                    letterSpacing: '0.25px',
-                    textAlign: 'left'
-                  }}>
-                 {userData?.mobile}
-                </Typography>
-                <Typography
-                  variant="h5"
-                  style={{
-                    textAlign: 'left',
-                    color: theme.palette.warning['400']
-                  }}>
-                  {t('PROFILE.PHONE')}
-                </Typography>
+                    marginTop: '9px'
+                  }}
+                />
+                <Box display="flex" flexDirection={'column'}>
+                  <Typography
+                    variant="h4"
+                    style={{
+                      letterSpacing: '0.25px',
+                      textAlign: 'left'
+                    }}
+                  >
+                    {userData?.mobile}
+                  </Typography>
+                  <Typography
+                    variant="h5"
+                    style={{
+                      textAlign: 'left',
+                      color: theme.palette.warning['400']
+                    }}
+                  >
+                    {t('PROFILE.PHONE')}
+                  </Typography>
+                </Box>
               </Box>
-            </Box>)
-}
-         {userData?.email &&( <Box display="flex" flexDirection="row" gap="10px">
-              <MailOutlineIcon
-                style={{
-                  marginTop: '9px'
-                }}
-              />
+            )}
+            {userData?.email && (
+              <Box display="flex" flexDirection="row" gap="10px">
+                <MailOutlineIcon
+                  style={{
+                    marginTop: '9px'
+                  }}
+                />
 
-              <Box display="flex" flexDirection={'column'}>
-                <Typography
-                  variant="h4"
-                  style={{
-                    letterSpacing: '0.25px',
-                    textAlign: 'left'
-                  }}>
-                  {userData?.email}
-                </Typography>
-                <Typography
-                  variant="h5"
-                  style={{
-                    textAlign: 'left',
-                    color: theme.palette.warning['400']
-                  }}>
-                  {t('PROFILE.EMAIL_ID')}
-                </Typography>
+                <Box display="flex" flexDirection={'column'}>
+                  <Typography
+                    variant="h4"
+                    style={{
+                      letterSpacing: '0.25px',
+                      textAlign: 'left'
+                    }}
+                  >
+                    {userData?.email}
+                  </Typography>
+                  <Typography
+                    variant="h5"
+                    style={{
+                      textAlign: 'left',
+                      color: theme.palette.warning['400']
+                    }}
+                  >
+                    {t('PROFILE.EMAIL_ID')}
+                  </Typography>
+                </Box>
               </Box>
-            </Box>
-)}
+            )}
           </Box>
         </Box>
-      {  
-        (<Box sx={{ flex: '1', minWidth: '100%' }}>
-          <Typography
-            variant="h3"
-            style={{
-              padding: '10px 0px',
-              letterSpacing: '0.1px',
-              textAlign: 'left',
-              color: theme.palette.warning['400']
-            }}>
-            {t('PROFILE.OTHER_INFORMATION')}
-          </Typography>
+        {
+          <Box sx={{ flex: '1', minWidth: '100%' }}>
+            <Typography
+              variant="h3"
+              style={{
+                padding: '10px 0px',
+                letterSpacing: '0.1px',
+                textAlign: 'left',
+                color: theme.palette.warning['400']
+              }}
+            >
+              {t('PROFILE.OTHER_INFORMATION')}
+            </Typography>
 
-          {customFieldsData &&
-            customFieldsData.map((field) => (
-              <Grid item xs={12} key={field.fieldId}>
-                {field.type === 'text' &&  field.value &&(
-                  <Box display="flex" flexDirection="row" gap="10px">
-                    <Typography
-                      variant="h3"
-                      style={{
-                        textAlign: 'left',
-                        color: theme.palette.warning['400']
-                      }}>
-                      {field.label}:
-                    </Typography>{' '}
-                    <Typography
-                      variant="h4"
-                      style={{
-                        letterSpacing: '0.25px',
-                        textAlign: 'left'
-                      }}>
-                      {field.value}
-                    </Typography>
-                  </Box>
-                )}
-              </Grid>
-            ))}
-        </Box>)
-}
+            {customFieldsData &&
+              customFieldsData.map((field) => (
+                <Grid item xs={12} key={field.fieldId}>
+                  {field.type === 'text' && field.value && (
+                    <Box display="flex" flexDirection="row" gap="10px">
+                      <Typography
+                        variant="h3"
+                        style={{
+                          textAlign: 'left',
+                          color: theme.palette.warning['400']
+                        }}
+                      >
+                        {field.label}:
+                      </Typography>{' '}
+                      <Typography
+                        variant="h4"
+                        style={{
+                          letterSpacing: '0.25px',
+                          textAlign: 'left'
+                        }}
+                      >
+                        {field.value}
+                      </Typography>
+                    </Box>
+                  )}
+                </Grid>
+              ))}
+          </Box>
+        }
 
         <Box sx={{ flex: '1', minWidth: '100%' }}>
           {/* <Typography
@@ -355,14 +370,16 @@ const Profile = () => {
           bgcolor="#E7F3F8"
           p={5}
           display="flex"
-          flexDirection="column">
+          flexDirection="column"
+        >
           <Typography
             variant="h2"
             color={theme.palette.warning['A200']}
             style={{
               textAlign: 'left',
               marginTop: '10px'
-            }}>
+            }}
+          >
             {t('PROFILE.INTERVIEW_TEST_SCORES')}
           </Typography>
           <Box
@@ -371,7 +388,8 @@ const Profile = () => {
             gap="10px"
             marginTop="10px"
             alignItems={'center'}
-            justifyContent={'center'}>
+            justifyContent={'center'}
+          >
             <StudentStatsCard
               label1={t('PROFILE.INTERVIEW_TEST_SCORES')}
               value1="82%"
@@ -385,7 +403,8 @@ const Profile = () => {
           open={open}
           onClose={handleClose}
           aria-labelledby="edit-profile-modal"
-          aria-describedby="edit-profile-description">
+          aria-describedby="edit-profile-description"
+        >
           <Box sx={style} gap="10px" display="flex" flexDirection="column" borderRadius={'1rem'}>
             <Box
               sx={{
@@ -393,13 +412,15 @@ const Profile = () => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 mb: 2
-              }}>
+              }}
+            >
               <Typography
                 variant="h2"
                 style={{
                   textAlign: 'left',
                   color: '#4D4639'
-                }}>
+                }}
+              >
                 {t('PROFILE.EDIT_PROFILE')}
               </Typography>
 
@@ -410,7 +431,8 @@ const Profile = () => {
                 aria-label="close"
                 style={{
                   justifyContent: 'flex-end'
-                }}>
+                }}
+              >
                 <CloseIcon cursor="pointer" />
               </IconButton>
             </Box>
@@ -418,7 +440,8 @@ const Profile = () => {
               style={{
                 overflowY: 'auto'
               }}
-              id="modal-modal-description">
+              id="modal-modal-description"
+            >
               <Box
                 sx={{
                   //flex: '1',
@@ -429,15 +452,16 @@ const Profile = () => {
                 border={'1px'}
                 bgcolor="warning.A400"
                 display="flex"
-                flexDirection="column">
- <img
-            src={defaultUser}
-            alt="user"
-            style={{ marginLeft: '35%' }}
-      
-            height={'100px'}
-            width={'100px'}
-          />                <Box>
+                flexDirection="column"
+              >
+                <img
+                  src={defaultUser}
+                  alt="user"
+                  style={{ marginLeft: '35%' }}
+                  height={'100px'}
+                  width={'100px'}
+                />{' '}
+                <Box>
                   <Button
                     sx={{
                       minWidth: '100%',
@@ -454,7 +478,8 @@ const Profile = () => {
                       '&:hover': {
                         backgroundColor: 'warning.A400'
                       }
-                    }}>
+                    }}
+                  >
                     {t('PROFILE.UPDATE_PICTURE')}
                   </Button>
                 </Box>
@@ -522,7 +547,8 @@ const Profile = () => {
                   }
                 }}
                 onClick={handleUpdateClick}
-                variant="contained">
+                variant="contained"
+              >
                 {t('COMMON.UPDATE')}
               </Button>
             </Box>

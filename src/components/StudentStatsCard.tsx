@@ -25,13 +25,15 @@ const StudentStatsCard: React.FC<StudentStatsCard> = ({ label1, value1, label2, 
       bgcolor="white"
       margin="0px"
       flexDirection={'row'}
-      sx={{ padding: '1rem' }}>
+      sx={{ padding: '1rem' }}
+    >
       <Box>
         <Typography
           fontSize={{ xs: '9px', md: '11px' }}
           marginTop={'10px'}
           fontWeight={600}
-          marginBottom={'4px'}>
+          marginBottom={'4px'}
+        >
           {label1}
         </Typography>
         <Typography fontSize="1.375rem" fontWeight={500} lineHeight="16px" marginBottom={'5px'}>
@@ -45,7 +47,8 @@ const StudentStatsCard: React.FC<StudentStatsCard> = ({ label1, value1, label2, 
           fontWeight="bold"
           lineHeight="1rem"
           sx={{ color: theme.palette.warning['400'] }}
-          marginBottom={'0px'}>
+          marginBottom={'0px'}
+        >
           {t('PROFILE.HELD_ON')}&nbsp;
           {value2}
         </Typography>
