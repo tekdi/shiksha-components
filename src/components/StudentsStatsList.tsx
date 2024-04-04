@@ -47,7 +47,13 @@ const StudentsStatsList: React.FC<StudentsStatsListProps> = ({
               color={theme.palette.text.primary}
               fontSize="0.875rem"
               fontWeight="400"
-              lineHeight="1.25rem">
+              lineHeight="1.25rem"
+              sx={{
+                cursor: 'pointer',
+                '&:hover': {
+                  textDecoration: 'underline'
+                }
+              }}>
               <Typography m={0} onClick={handleStudentDetails}>
                 {name}
               </Typography>

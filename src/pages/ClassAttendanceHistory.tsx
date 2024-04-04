@@ -29,7 +29,8 @@ import ArrowDropDownSharpIcon from '@mui/icons-material/ArrowDropDownSharp';
 import { debounce, getTodayDate } from '../utils/Helper';
 import AttendanceStatusListView from '../components/AttendanceStatusListView';
 import { getMyClassDetails, getMyCohortMemberList } from '../services/MyClassDetailsService';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import ClearIcon from '@mui/icons-material/Clear';
 
 interface user {
   key: string;
@@ -44,6 +45,7 @@ interface cohort {
 const ClassAttendanceHistory = () => {
   const theme = useTheme<any>();
   const { t } = useTranslation();
+  const { cohortId } = useParams<{ cohortId: string }>();
   const [attendanceData, setAttendanceData] = useState<any[]>([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [presentDates, setPresentDates] = useState<string[]>([]);
@@ -72,10 +74,7 @@ const ClassAttendanceHistory = () => {
 
   const limit = 100;
   const page = 0;
-  // const userAttendance = [{ userId: localStorage.getItem('userId'), attendance: 'present' }];
   const attendanceDate = currentDate;
-  let contextId = '252fb59c-d641-417a-815b-d39e6f502fcf';
-  //const [contextId, setContextId] = React.useState(classes);
   const report = false;
   const offset = 0;
 
@@ -96,7 +95,7 @@ const ClassAttendanceHistory = () => {
           toDate: '2024-03-29',
           page: 0,
           filters: {
-            contextId: '252fb59c-d641-417a-815b-d39e6f502fcf',
+            contextId: cohortId,
             userId: '00772d32-3f60-4a8e-a5e0-d0110c5c42fb'
           }
         };
@@ -225,24 +224,41 @@ const ClassAttendanceHistory = () => {
 
   const handleUpdate = () => {};
 
+  const handleSearchClear = () => {
+    setSearchWord('');
+    let filter = {
+      search: ''
+    };
+    getCohortMemberList(filter);
+  };
   // handle search student data
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // setSearchWord(event.target.value);
-    // debouncedSearch(event.target.value);
+    setSearchWord(event.target.value);
+    if (event.target.value.length >= 3) {
+      debouncedSearch(event.target.value);
+    } else {
+      let filter = {
+        search: ''
+      };
+      getCohortMemberList(filter);
+      // getCohortDetails(limit, page, filter);
+    }
   };
 
   // debounce use for searching time period is 2 sec
   const debouncedSearch = debounce((value: string) => {
-    // let filter = {
-    //   search: value ? value : searchWord
-    // };
+    let filter = {
+      search: value ? value : searchWord
+    };
+    getCohortMemberList(filter);
     // getCohortDetails(limit, page, filter);
   }, 200);
 
   const handleSearchSubmit = () => {
-    // let filter = {
-    //   search: searchWord ? searchWord : ''
-    // };
+    let filter = {
+      search: searchWord ? searchWord : ''
+    };
+    getCohortMemberList(filter);
     // getCohortDetails(limit, page, filter);
   };
 
@@ -283,31 +299,44 @@ const ClassAttendanceHistory = () => {
       }
       return user;
     });
+    console.log('updatedAttendanceList', updatedAttendanceList);
     setCohortMemberList(updatedAttendanceList);
   };
 
-  useEffect(() => {
-    const getCohortMemberList = async () => {
-      setLoading(true);
-      try {
-        const response = await getMyCohortMemberList({
-          contextId,
-          attendanceDate,
-          report,
-          limit,
-          offset
-        });
+  const handleBackEvent = () => {
+    navigate(-1);
+  };
+
+  //get cohortMembersList
+  const getCohortMemberList = async (filters: object) => {
+    setLoading(true);
+    try {
+      const contextId = cohortId;
+      const response = await getMyCohortMemberList({
+        contextId,
+        attendanceDate,
+        report,
+        limit,
+        offset,
+        filters
+      });
+      if (response?.statusCode === 200) {
         const resp = response?.data;
-        console.log('resp', resp);
-        setCohortMemberList(resp);
-        setNumberOfCohortMembers(resp?.length);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching cohort list:', error);
-        setLoading(false);
+        if (resp?.length > 0) {
+          setCohortMemberList(resp);
+          setNumberOfCohortMembers(resp?.length);
+          setLoading(false);
+        }
       }
-    };
-    getCohortMemberList();
+    } catch (error) {
+      console.error('Error fetching cohort list:', error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    let filter = {};
+    getCohortMemberList(filter);
   }, [classes]);
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -332,7 +361,10 @@ const ClassAttendanceHistory = () => {
           justifyContent={'center'}
           position={'relative'}>
           <Box position={'absolute'} left={'0'}>
-            <ArrowBackIcon sx={{ color: theme.palette.warning['A200'], cursor: 'pointer' }}  onClick={() => navigate(-1)}  />
+            <ArrowBackIcon
+              sx={{ color: theme.palette.warning['A200'], cursor: 'pointer' }}
+              onClick={handleBackEvent}
+            />
           </Box>
           <Box>
             <Typography marginBottom={'0px'} fontSize={'25px'}>
@@ -358,7 +390,7 @@ const ClassAttendanceHistory = () => {
         <Box display={'flex'} gap={'10px'} width={'100%'} mb={3}>
           <Typography marginBottom={'0px'} fontSize={'16px'} fontWeight={'500'}>
             {' '}
-            Attendance on {formatToShowDateMonth(selectedDate)}
+            {t('COMMON.ATTENDANCE')} {formatToShowDateMonth(selectedDate)}
           </Typography>
         </Box>
         {/*----------------------------search and Sort---------------------------------------*/}
@@ -378,12 +410,13 @@ const ClassAttendanceHistory = () => {
                     // p: '2px 4px',
                     display: 'flex',
                     alignItems: 'center',
-                    width: 'auto',
+
                     borderRadius: '100px',
                     background: theme.palette.warning.A700,
                     boxShadow: 'none'
                   }}>
                   <InputBase
+                    value={searchWord}
                     sx={{ ml: 3, flex: 1, mb: '0', fontSize: '14px' }}
                     placeholder={t('COMMON.SEARCH_STUDENT') + '..'}
                     inputProps={{ 'aria-label': 'search student' }}
@@ -396,6 +429,17 @@ const ClassAttendanceHistory = () => {
                     onClick={handleSearchSubmit}>
                     <SearchIcon />
                   </IconButton>
+
+                  {searchWord?.length > 0 && (
+                    <IconButton
+                      type="button"
+                      // sx={{ p: '10px' }}
+
+                      aria-label="Clear"
+                      onClick={handleSearchClear}>
+                      <ClearIcon />
+                    </IconButton>
+                  )}
                 </Paper>
               </Grid>
               <Grid item xs={4} display={'flex'} justifyContent={'flex-end'}>
@@ -403,8 +447,7 @@ const ClassAttendanceHistory = () => {
                   onClick={handleOpenModal}
                   sx={{
                     color: theme.palette.warning.A200,
-                    height: 'auto',
-                    width: 'auto',
+
                     borderRadius: '10px',
                     fontSize: '14px'
                   }}
@@ -428,23 +471,29 @@ const ClassAttendanceHistory = () => {
         <Box>
           {status && <AttendanceStatus status={status} onUpdate={handleMarkAttendanceModal} />}
         </Box>
-        <Box height={'57%'} sx={{ overflowY: 'scroll' }}>
-          <AttendanceStatusListView
-            isEdit={true}
-            isBulkAction={true}
-            bulkAttendanceStatus={bulkAttendanceStatus}
-            handleBulkAction={submitBulkAttendanceAction}
-          />
-          {cohortMemberList?.map((user: any) => (
-            <AttendanceStatusListView
-              key={user.userId}
-              userData={user}
-              isEdit={true}
-              bulkAttendanceStatus={bulkAttendanceStatus}
-              handleBulkAction={submitBulkAttendanceAction}
-            />
-          ))}
-        </Box>
+        {cohortMemberList?.length > 0 ? (
+          <Box height={'57%'} sx={{ overflowY: 'scroll' }}>
+            {cohortMemberList?.map((user: any) => (
+              <AttendanceStatusListView
+                key={user.userId}
+                userData={user}
+                isEdit={false}
+                bulkAttendanceStatus={bulkAttendanceStatus}
+                handleBulkAction={submitBulkAttendanceAction}
+              />
+            ))}
+          </Box>
+        ) : (
+          <Box
+            display={'flex'}
+            justifyContent={'center'}
+            mt={2}
+            p={'1rem'}
+            borderRadius={'1rem'}
+            bgcolor={'secondary.light'}>
+            <Typography>{t('COMMON.NO_DATA_FOUND')}</Typography>
+          </Box>
+        )}
       </Box>
 
       <MarkAttendance
