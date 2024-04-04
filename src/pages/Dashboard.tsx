@@ -118,7 +118,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
       try {
         if (userId) {
           const resp = await cohortList(userId);
-          const extractedNames = resp?.result?.cohortData;
+          const extractedNames = resp?.data?.cohortData;
           localStorage.setItem('parentCohortId', extractedNames[0].parentId);
           //  setTeacherContextId(extractedNames[0].parentId)
           //  console.log("p",extractedNames[0].parentId)
@@ -141,7 +141,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
             .filter(Boolean);
           // console.log(`response cohort list`, filteredData);
           setCohortsData(filteredData);
-            setClasses(filteredData[0].cohortId);
+          setClasses(filteredData[0].cohortId);
           setShowUpdateButton(true);
           setLoading(false);
         }
@@ -247,7 +247,6 @@ const Dashboard: React.FC<DashboardProps> = () => {
   };
 
   const handleSave = () => {
-
     const userAttendance = cohortMemberList?.map((user: any) => {
       return {
         userId: user.userId,
@@ -273,13 +272,12 @@ const Dashboard: React.FC<DashboardProps> = () => {
           console.error('Error fetching  cohort list:', error);
           setLoading(false);
         }
-        handleClick(({ vertical: 'bottom', horizontal: 'center' }))();
-
+        handleClick({ vertical: 'bottom', horizontal: 'center' })();
       };
       markBulkAttendance();
     }
   };
-    console.log("att", attendanceStatus)   
+  console.log('att', attendanceStatus);
 
   useEffect(() => {
     //let userId = '70861cf2-d00c-475a-a909-d58d0062c880';
@@ -290,20 +288,18 @@ const Dashboard: React.FC<DashboardProps> = () => {
     const fetchUserDetails = async () => {
       try {
         const parentCohortId = localStorage.getItem('parentCohortId');
-        
+
         const today: Date = new Date();
         const year: number = today.getFullYear();
         let month: number | string = today.getMonth() + 1; // Month is zero-based, so we add 1
         let day: number | string = today.getDate();
-        
+
         // Pad single-digit months and days with a leading zero
         month = month < 10 ? '0' + month : month;
         day = day < 10 ? '0' + day : day;
-        
+
         const formattedDate: string = `${year}-${month}-${day}`;
-        
-        
-        
+
         if (userId && parentCohortId) {
           const TeachercontextId = parentCohortId.replace(/\n/g, '');
 
@@ -312,7 +308,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
             toDate: formattedDate,
             filters: {
               userId,
-              contextId:TeachercontextId
+              contextId: TeachercontextId
             }
           };
           const response = await getTeacherAttendanceByDate(attendanceData);
@@ -327,7 +323,6 @@ const Dashboard: React.FC<DashboardProps> = () => {
 
         console.error(Error);
       }
-
     };
     fetchUserDetails();
   }, []);
@@ -362,7 +357,9 @@ const Dashboard: React.FC<DashboardProps> = () => {
             style={{ fontWeight: '800', fontSize: '1.2rem' }}>
             {t('COMMON.MARK_MY_ATTENDANCE')}
           </Typography>
-          <Typography sx={{ color: theme.palette.warning['A400'] }}>{formatDate(currentDate)}</Typography>
+          <Typography sx={{ color: theme.palette.warning['A400'] }}>
+            {formatDate(currentDate)}
+          </Typography>
           <Stack direction="row" spacing={1} marginTop={1} justifyContent={'space-between'}>
             <Button
               variant="text"
@@ -418,7 +415,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
                       {formatDate(currentDate)}
                     </Typography>
                   </Box>
-                  <Box onClick={() => handleModalToggle()} >
+                  <Box onClick={() => handleModalToggle()}>
                     <CloseIcon sx={{ cursor: 'pointer' }} />
                   </Box>
                 </Box>
@@ -429,11 +426,17 @@ const Dashboard: React.FC<DashboardProps> = () => {
                     <FormControl fullWidth>
                       <InputLabel>{t('DASHBOARD.CLASS')}</InputLabel>
                       <Select value={classes} label="Class" onChange={handleChange}>
-                        {(cohortsData.length !=0) ? (cohortsData?.map((cohort) => (
-                          <MenuItem key={cohort.cohortId} value={cohort.cohortId}>
-                            {cohort.name}
-                          </MenuItem>
-                        ))): <Typography style={{ fontWeight: 'bold' }}>{t('COMMON.NO_DATA_FOUND')}</Typography>}
+                        {cohortsData.length != 0 ? (
+                          cohortsData?.map((cohort) => (
+                            <MenuItem key={cohort.cohortId} value={cohort.cohortId}>
+                              {cohort.name}
+                            </MenuItem>
+                          ))
+                        ) : (
+                          <Typography style={{ fontWeight: 'bold' }}>
+                            {t('COMMON.NO_DATA_FOUND')}
+                          </Typography>
+                        )}
                       </Select>
                     </FormControl>
                   </Box>
@@ -441,50 +444,56 @@ const Dashboard: React.FC<DashboardProps> = () => {
                 <Typography>
                   {t('ATTENDANCE.TOTAL_STUDENTS', { count: numberOfCohortMembers })}
                 </Typography>
-                {cohortMemberList && (cohortMemberList.length !=0) ? <Box height={'58%'} sx={{ overflowY: 'scroll' }}>
-                <Box>
-                  <AttendanceStatusListView
-                    isEdit={true}
-                    isBulkAction={true}
-                    bulkAttendanceStatus={bulkAttendanceStatus}
-                    handleBulkAction={submitBulkAttendanceAction}
-                  />
-                  {cohortMemberList?.map((user: any) => (
-                    <AttendanceStatusListView
-                      key={user.userId}
-                      userData={user}
-                      isEdit={true}
-                      bulkAttendanceStatus={bulkAttendanceStatus}
-                      handleBulkAction={submitBulkAttendanceAction}
-                    />
-                  ))}
-                </Box>
-                <Box
-                  position={'absolute'}
-                  bottom="30px"
-                  display={'flex'}
-                  gap={'20px'}
-                  flexDirection={'row'}
-                  justifyContent={'space-evenly'}
-                  marginBottom={0}>
-                  <Button
-                    variant="outlined"
-                    style={{ width: '8rem' }}
-                    disabled={isAllAttendanceMarked ? false : true}
-                    onClick={() => submitBulkAttendanceAction(true, '', '')}>
-                    {' '}
-                    {t('COMMON.CLEAR_ALL')}
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    style={{ width: '8rem' }}
-                    disabled={isAllAttendanceMarked ? false : true}
-                    onClick={handleSave}>
-                    {showUpdateButton ? t('COMMON.UPDATE') : t('COMMON.SAVE')}
-                  </Button>
-                </Box>
-                </Box>: <Typography style={{ fontWeight: 'bold', marginLeft:"1rem" }}>{t('COMMON.NO_DATA_FOUND')}</Typography>}
+                {cohortMemberList && cohortMemberList.length != 0 ? (
+                  <Box height={'58%'} sx={{ overflowY: 'scroll' }}>
+                    <Box>
+                      <AttendanceStatusListView
+                        isEdit={true}
+                        isBulkAction={true}
+                        bulkAttendanceStatus={bulkAttendanceStatus}
+                        handleBulkAction={submitBulkAttendanceAction}
+                      />
+                      {cohortMemberList?.map((user: any) => (
+                        <AttendanceStatusListView
+                          key={user.userId}
+                          userData={user}
+                          isEdit={true}
+                          bulkAttendanceStatus={bulkAttendanceStatus}
+                          handleBulkAction={submitBulkAttendanceAction}
+                        />
+                      ))}
+                    </Box>
+                    <Box
+                      position={'absolute'}
+                      bottom="30px"
+                      display={'flex'}
+                      gap={'20px'}
+                      flexDirection={'row'}
+                      justifyContent={'space-evenly'}
+                      marginBottom={0}>
+                      <Button
+                        variant="outlined"
+                        style={{ width: '8rem' }}
+                        disabled={isAllAttendanceMarked ? false : true}
+                        onClick={() => submitBulkAttendanceAction(true, '', '')}>
+                        {' '}
+                        {t('COMMON.CLEAR_ALL')}
+                      </Button>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        style={{ width: '8rem' }}
+                        disabled={isAllAttendanceMarked ? false : true}
+                        onClick={handleSave}>
+                        {showUpdateButton ? t('COMMON.UPDATE') : t('COMMON.SAVE')}
+                      </Button>
+                    </Box>
+                  </Box>
+                ) : (
+                  <Typography style={{ fontWeight: 'bold', marginLeft: '1rem' }}>
+                    {t('COMMON.NO_DATA_FOUND')}
+                  </Typography>
+                )}
               </Box>
             </Box>
           </Fade>
@@ -521,12 +530,13 @@ const Dashboard: React.FC<DashboardProps> = () => {
           width={'auto'}
           sx={{ bgcolor: theme.palette.secondary.light }}
           p={'1rem'}
-          borderRadius={'1rem'}
-        >
-          {cohortsData && (cohortsData.length !=0)? 
+          borderRadius={'1rem'}>
+          {cohortsData && cohortsData.length != 0 ? (
             cohortsData.map((cohort) => (
               <Box key={cohort.cohortId}>
-                <Typography pt={'1rem'}>{cohort.value.charAt(0).toUpperCase() + cohort.value.slice(1)}</Typography>
+                <Typography pt={'1rem'}>
+                  {cohort.value.charAt(0).toUpperCase() + cohort.value.slice(1)}
+                </Typography>
                 <CohortCard
                   showBackground={true}
                   isRemote={cohort.value === 'remote'}
@@ -534,7 +544,10 @@ const Dashboard: React.FC<DashboardProps> = () => {
                   cohortId={cohort.cohortId}
                 />
               </Box>
-            )): <Typography>{t('COMMON.NO_DATA_FOUND')}</Typography>}
+            ))
+          ) : (
+            <Typography>{t('COMMON.NO_DATA_FOUND')}</Typography>
+          )}
         </Box>
       </Box>
       <MarkAttendance
@@ -547,15 +560,15 @@ const Dashboard: React.FC<DashboardProps> = () => {
         message={AttendanceMessage}
       />
       <Snackbar
-          anchorOrigin={{ vertical, horizontal }}
-          open={openModal}
-          onClose={handleClose}
-          className="sample"
-          autoHideDuration={5000}
-          key={vertical + horizontal}
-          message={t('ATTENDANCE.ATTENDANCE_MARKED_SUCCESSFULLY')}
-         // action={action}
-        />
+        anchorOrigin={{ vertical, horizontal }}
+        open={openModal}
+        onClose={handleClose}
+        className="sample"
+        autoHideDuration={5000}
+        key={vertical + horizontal}
+        message={t('ATTENDANCE.ATTENDANCE_MARKED_SUCCESSFULLY')}
+        // action={action}
+      />
     </Box>
   );
 };

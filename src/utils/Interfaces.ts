@@ -61,8 +61,8 @@ export interface AttendanceByDateParams {
   toDate: string;
   page: number;
   filters: {
-    userId: string;
-    contextId: string;
+    userId?: string;
+    contextId?: string;
   };
 }
 
@@ -87,9 +87,8 @@ export interface UserData {
   state: string;
   email: string;
   dob?: string;
-  mobile?:string
+  mobile?: string;
   customFields: CustomField[];
-
 }
 
 export interface AttendanceReports {

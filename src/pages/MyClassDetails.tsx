@@ -33,7 +33,6 @@ import { cohortList } from '../services/CohortServices';
 import Loader from '../components/Loader';
 
 interface cohort {
-  of;
   cohortId: string;
   name: string;
   value: string;
@@ -177,7 +176,7 @@ export default function MyClassDetails() {
       try {
         if (userId) {
           const resp = await cohortList(userId);
-          const extractedNames = resp?.result?.cohortData;
+          const extractedNames = resp?.data?.cohortData;
           localStorage.setItem('parentCohortId', extractedNames[0].parentId);
           //  setTeacherContextId(extractedNames[0].parentId)
           //  console.log("p",extractedNames[0].parentId)
@@ -279,7 +278,7 @@ export default function MyClassDetails() {
                 </Typography>
               </Box>
               <Box sx={{ display: 'flex' }}>
-                <Link to={'/class-attendance-history'} style={{ display: 'flex' }}>
+                <Link to={`/class-attendance-history/${cohortId}`} style={{ display: 'flex' }}>
                   <Typography
                     sx={{ color: theme.palette.secondary.main, fontSize: '16px' }}
                     mr={1}
