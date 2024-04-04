@@ -33,6 +33,7 @@ import { cohortList } from '../services/CohortServices';
 import Loader from '../components/Loader';
 
 interface cohort {
+  of;
   cohortId: string;
   name: string;
   value: string;
@@ -274,7 +275,7 @@ export default function MyClassDetails() {
                   sx={{ fontSize: '14px', fontWeight: 600, color: theme.palette.warning['500'] }}
                   variant="h6"
                   gutterBottom>
-                  As of {formatDate(currentDate)}
+                  {t('COMMON.ASOF')} {formatDate(currentDate)}
                 </Typography>
               </Box>
               <Box sx={{ display: 'flex' }}>
@@ -339,7 +340,7 @@ export default function MyClassDetails() {
                   // p: '2px 4px',
                   display: 'flex',
                   alignItems: 'center',
-                  width: 'auto',
+
                   borderRadius: '100px',
                   background: theme.palette.warning.A700,
                   boxShadow: 'none'
@@ -376,8 +377,7 @@ export default function MyClassDetails() {
                 onClick={handleOpenModal}
                 sx={{
                   color: theme.palette.warning.A200,
-                  height: 'auto',
-                  width: 'auto',
+
                   borderRadius: '10px',
                   fontSize: '14px'
                 }}
@@ -404,7 +404,7 @@ export default function MyClassDetails() {
           <Loader showBackdrop={true} loadingText={'Loading'} />
         ) : classData?.length > 0 ? (
           <Stack>
-            {classData.map((student, i) => {
+            {classData.map((student: Student, i) => {
               const word = student?.name;
               const userId = student?.userId;
               const firstLetter = word.charAt(0);
@@ -431,8 +431,6 @@ export default function MyClassDetails() {
             display={'flex'}
             justifyContent={'center'}
             mt={2}
-            height={'auto'}
-            width={'auto'}
             p={'1rem'}
             borderRadius={'1rem'}
             bgcolor={'secondary.light'}>

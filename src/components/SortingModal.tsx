@@ -66,13 +66,12 @@ const SortingModal: React.FC<sortCardProps> = ({
   };
 
   return (
-    
     <ModalComponent
       open={isModalOpen}
       onClose={handleCloseModal}
-      heading={'Sort By'}
+      heading={t('COMMON.SORT_BY')}
       handleApplySort={handleApplySort}
-      btnText="Apply">
+      btnText={t('COMMON.APPLY')}>
       <Divider
         style={{
           backgroundColor: theme.palette.warning['400'],
@@ -99,14 +98,14 @@ const SortingModal: React.FC<sortCardProps> = ({
                 labelPlacement="start"
                 value="asc"
                 control={<Radio sx={{ ml: '120px' }} />}
-                label="A to Z"
+                label={t('COMMON.ATOZ')}
               />
 
               <FormControlLabel
                 labelPlacement="start"
                 value="desc"
                 control={<Radio sx={{ ml: '120px' }} />}
-                label="Z to A"
+                label={t('COMMON.ZTOA')}
               />
             </RadioGroup>
           </FormControl>
@@ -126,13 +125,13 @@ const SortingModal: React.FC<sortCardProps> = ({
                 labelPlacement="start"
                 value="asc"
                 control={<Radio sx={{ ml: '80px' }} />}
-                label="Low to High"
+                label={t('COMMON.LOWTOHIGH')}
               />
               <FormControlLabel
                 labelPlacement="start"
                 value="desc"
                 control={<Radio sx={{ ml: '80px' }} />}
-                label="High to Low"
+                label={t('COMMON.HIGHTOLOW')}
               />
             </RadioGroup>
           </FormControl>
