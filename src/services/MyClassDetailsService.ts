@@ -19,7 +19,7 @@ export const getMyClassDetails = async ({
   }
 };
 
-export const getMyCohortList = async ({
+export const getMyCohortMemberList = async ({
   contextId,
   attendanceDate,
   report,

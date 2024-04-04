@@ -28,7 +28,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import ArrowDropDownSharpIcon from '@mui/icons-material/ArrowDropDownSharp';
 import { debounce, getTodayDate } from '../utils/Helper';
 import AttendanceStatusListView from '../components/AttendanceStatusListView';
-import { getMyClassDetails, getMyCohortList } from '../services/MyClassDetailsService';
+import { getMyClassDetails, getMyCohortMemberList } from '../services/MyClassDetailsService';
 import { useNavigate } from 'react-router-dom';
 
 interface user {
@@ -290,7 +290,7 @@ const ClassAttendanceHistory = () => {
     const getCohortMemberList = async () => {
       setLoading(true);
       try {
-        const response = await getMyCohortList({
+        const response = await getMyCohortMemberList({
           contextId,
           attendanceDate,
           report,

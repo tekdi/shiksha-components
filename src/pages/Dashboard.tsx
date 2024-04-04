@@ -27,11 +27,17 @@ import MarkAttendance from '../components/MarkAttendance';
 import { markAttendance, bulkAttendance } from '../services/AttendanceService';
 import { AttendanceParams, TeacherAttendanceByDateParams } from '../utils/Interfaces';
 import { cohortList } from '../services/CohortServices';
-import { getMyCohortList } from '../services/MyClassDetailsService';
-import { getTodayDate } from '../utils/Helper';
+import { getMyCohortMemberList } from '../services/MyClassDetailsService';
+import { getTodayDate, formatDate } from '../utils/Helper';
 import Loader from '../components/Loader';
 import { getTeacherAttendanceByDate } from '../services/AttendanceService';
 import { ATTENDANCE_ENUM } from '../utils/Helper';
+import Snackbar, { SnackbarOrigin } from '@mui/material/Snackbar';
+// import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+
+interface State extends SnackbarOrigin {
+  openModal: boolean;
+}
 
 interface DashboardProps {
   //   buttonText: string;
@@ -73,6 +79,12 @@ const Dashboard: React.FC<DashboardProps> = () => {
   const [attendanceStatus, setAttendanceStatus] = React.useState('');
   const [isAllAttendanceMarked, setIsAllAttendanceMarked] = React.useState(false);
   const [showUpdateButton, setShowUpdateButton] = React.useState(false);
+  const [state, setState] = React.useState<State>({
+    openModal: false,
+    vertical: 'top',
+    horizontal: 'center'
+  });
+  const { vertical, horizontal, openModal } = state;
 
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -129,7 +141,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
             .filter(Boolean);
           // console.log(`response cohort list`, filteredData);
           setCohortsData(filteredData);
-          setClasses(filteredData[0].cohortId);
+            setClasses(filteredData[0].cohortId);
           setShowUpdateButton(true);
           setLoading(false);
         }
@@ -145,7 +157,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
     const getCohortMemberList = async () => {
       setLoading(true);
       try {
-        const response = await getMyCohortList({
+        const response = await getMyCohortMemberList({
           contextId,
           attendanceDate,
           report,
@@ -235,6 +247,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
   };
 
   const handleSave = () => {
+
     const userAttendance = cohortMemberList?.map((user: any) => {
       return {
         userId: user.userId,
@@ -260,6 +273,8 @@ const Dashboard: React.FC<DashboardProps> = () => {
           console.error('Error fetching  cohort list:', error);
           setLoading(false);
         }
+        handleClick(({ vertical: 'bottom', horizontal: 'center' }))();
+
       };
       markBulkAttendance();
     }
@@ -316,6 +331,14 @@ const Dashboard: React.FC<DashboardProps> = () => {
     };
     fetchUserDetails();
   }, []);
+
+  const handleClick = (newState: SnackbarOrigin) => () => {
+    setState({ ...newState, openModal: true });
+  };
+  const handleClose = () => {
+    setState({ ...state, openModal: false });
+  };
+
   return (
     <Box minHeight="100vh" textAlign={'center'}>
       <Header />
@@ -339,7 +362,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
             style={{ fontWeight: '800', fontSize: '1.2rem' }}>
             {t('COMMON.MARK_MY_ATTENDANCE')}
           </Typography>
-          <Typography sx={{ color: theme.palette.warning['A400'] }}>{currentDate}</Typography>
+          <Typography sx={{ color: theme.palette.warning['A400'] }}>{formatDate(currentDate)}</Typography>
           <Stack direction="row" spacing={1} marginTop={1} justifyContent={'space-between'}>
             <Button
               variant="text"
@@ -392,7 +415,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
                       {t('COMMON.MARK_STUDENT_ATTENDANCE')}
                     </Typography>
                     <Typography variant="h2" component="h2">
-                      {currentDate}
+                      {formatDate(currentDate)}
                     </Typography>
                   </Box>
                   <Box onClick={() => handleModalToggle()} >
@@ -523,6 +546,16 @@ const Dashboard: React.FC<DashboardProps> = () => {
         handleSubmit={submitAttendance}
         message={AttendanceMessage}
       />
+      <Snackbar
+          anchorOrigin={{ vertical, horizontal }}
+          open={openModal}
+          onClose={handleClose}
+          className="sample"
+          autoHideDuration={5000}
+          key={vertical + horizontal}
+          message={t('ATTENDANCE.ATTENDANCE_MARKED_SUCCESSFULLY')}
+         // action={action}
+        />
     </Box>
   );
 };
