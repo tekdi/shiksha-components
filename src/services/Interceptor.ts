@@ -4,7 +4,11 @@ import { refresh } from './LoginService';
 const instance = axios.create();
 
 const refreshToken = async () => {
+  const sessionRefreshToken = sessionStorage.getItem('refreshToken');
+
   const refresh_token = localStorage.getItem('refreshToken');
+  if(refresh_token)
+  {
   if (refresh_token !== '' && refresh_token !== null) {
     try {
       const response = await refresh({ refresh_token });
@@ -20,6 +24,26 @@ const refreshToken = async () => {
       throw error;
     }
   }
+}
+else{
+
+
+  if (sessionRefreshToken !== '' && sessionRefreshToken !== null) {
+    try {
+      const response = await refresh({ refresh_token:sessionRefreshToken });
+      if (response) {
+        const accessToken = response?.access_token;
+        const newRefreshToken = response?.refresh_token;
+        sessionStorage.setItem('token', accessToken);
+      sessionStorage.setItem('refreshToken', newRefreshToken);
+        return accessToken;
+      }
+    } catch (error) {
+      console.error('Token refresh failed:', error);
+      throw error;
+    }
+  }
+}
 };
 
 instance.interceptors.request.use(
@@ -27,6 +51,15 @@ instance.interceptors.request.use(
     const token = localStorage.getItem('token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+    }
+    else{
+      const sessionToken=  sessionStorage.getItem('token')
+      if(sessionToken)
+      {
+        console.log("s",sessionToken)
+      config.headers.Authorization = `Bearer ${sessionToken}`;
+      }
+
     }
     // config.headers.tenantid = '4783a636-1191-487a-8b09-55eca51b5036';
     config.headers.tenantid = 'fbe108db-e236-48a7-8230-80d34c370800';

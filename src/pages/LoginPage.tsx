@@ -7,7 +7,10 @@ import {
   InputAdornment,
   InputLabel,
   OutlinedInput,
-  Typography
+  Checkbox,
+  Typography,
+  FormHelperText,
+  FormControlLabel
 } from '@mui/material';
 import appLogo2 from '/appLogo2.svg';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
@@ -24,7 +27,6 @@ import { getUserId } from '../services/profileService.ts';
 import Loader from '../components/Loader.tsx';
 import Snackbar, { SnackbarOrigin } from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
-import FormHelperText from '@mui/material/FormHelperText';
 
 interface State extends SnackbarOrigin {
   openModal: boolean;
@@ -38,6 +40,7 @@ const LoginPage = () => {
   const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [checked, setChecked] = React.useState(false);
 
   const [selectedLanguage, setSelectedLanguage] = useState(
     localStorage.getItem('preferredLanguage') || 'en'
@@ -58,6 +61,12 @@ const LoginPage = () => {
     const token = localStorage.getItem('token');
     if (token) {
       navigate('/dashboard');
+    }
+    else{
+      const sessionToken = sessionStorage.getItem('token');
+      if(sessionToken)
+    {  navigate('/dashboard'); }
+
     }
   }, []);
 
@@ -91,13 +100,19 @@ const LoginPage = () => {
       event.preventDefault();
       try {
         const response = await login({ username: username, password: password });
-        console.log(response);
+       // console.log(response);
         if (response) {
           const token = response?.access_token;
           const refreshToken = response?.refresh_token;
-
-          localStorage.setItem('token', token);
-          localStorage.setItem('refreshToken', refreshToken);
+             if(checked){
+              localStorage.setItem('token', token);
+              localStorage.setItem('refreshToken', refreshToken);
+             }
+             else{
+              sessionStorage.setItem('token', token);
+              sessionStorage.setItem('refreshToken', refreshToken);
+            
+             }
           const userResponse = await getUserId();
           localStorage.setItem('userId', userResponse?.userId);
         }
@@ -115,7 +130,13 @@ const LoginPage = () => {
   };
 
   const isButtonDisabled = !username || !password || usernameError || passwordError;
+  const handleRememberMe = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("event",event.target.checked)
+    const value=event.target.checked
+    setChecked(value);
+    console.log(checked)
 
+  };
   // const loginButtonClick = async (event: React.FormEvent) => {};
   const handleChange = (event: SelectChangeEvent) => {
     setLanguage(event.target.value);
@@ -242,6 +263,11 @@ const LoginPage = () => {
               </Button>      </FormHelperText> */}
               </FormControl>
             </Box>
+            <FormControlLabel control={<Checkbox  checked={checked}   defaultChecked color="default" sx={{marginBottom:"15px"}}
+  onChange={handleRememberMe}
+/>} label="Remember me" 
+
+/>
 
             <Box
               alignContent={'center'}
