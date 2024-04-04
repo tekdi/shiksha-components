@@ -46,7 +46,7 @@
     "USERNAME_PASSWORD_NOT_CORRECT": "The username or password you entered is incorrect",
     "FORGOT_PASSWORD":"Forgot Password",
     "TROUBLE_WITH_LOGIN":"Trouble with logging in?",
-    "ENTER_USERNAME_EMAIL":"Enter your username or email address and we’ll send you a link to get back into your account.",
+    "ENTER_USERNAME_EMAIL_FOR_LINK":"Enter your username or email address and we’ll send you a link to get back into your account.",
     "BACK_TO_LOGIN":"Back to Login",
     "WE_SENT_EMAIL":"We sent an email to  {{email}} with a link to get back to your account",
     "CREATE_PASSWORD":"Create a strong password",
@@ -58,7 +58,8 @@
     "INCLUDE_NUMBER":"Include at least one number",
     "INCLUDE_SPECIAL_CHARACTER":"Include at least one special character",
     "MUST_EIGHT_CHARACTER":"Must be at least 8 characters long",
-    "PASSWORD_NOT_MATCH":"Passwords do not match"
+    "PASSWORD_NOT_MATCH":"Passwords do not match",
+    "ENTER_USERNAME_EMAIL":"Enter your username or email address"
   },
   "DASHBOARD": {
     "HISTORY": "History",

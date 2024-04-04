@@ -136,10 +136,10 @@ const ForgotPassword = () => {
 
                     alignItems: 'center'
                   }}>
-                  {t('LOGIN_PAGE.ENTER_USERNAME_EMAIL')}
+                  {t('LOGIN_PAGE.ENTER_USERNAME_EMAIL_FOR_LINK')}
                 </Typography>
                 <TextField
-                  label="Enter username or email"
+                  label=  {t('LOGIN_PAGE.ENTER_USERNAME_EMAIL')}
                   variant="outlined"
                   onChange={handleUserNameEmail}
                 />
