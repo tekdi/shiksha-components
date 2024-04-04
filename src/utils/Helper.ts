@@ -67,26 +67,16 @@ export const getTodayDate = () => {
   return `${year}-${month}-${day}`;
 };
 
-
-export const maskEmailAddress=(email: string)=> {
+export const maskEmailAddress = (email: string) => {
   const atIndex = email.indexOf('@');
   if (atIndex === -1 || atIndex < 2) {
-      throw new Error('Invalid email address');
+    throw new Error('Invalid email address');
   }
 
   const maskedEmail = email.replace(/(?<=.{1}).(?=[^@]*?@)/g, '*');
   return maskedEmail;
-}
+};
 
-
-
-export const verifyTokenStorage=()=> {
-  if(localStorage.getItem('isRememberMe')==="true")
-  {
-    return true;
-  }
-  else{
-    return false
-  }
-
-}
+export const verifyTokenStorage = () => {
+  return localStorage.getItem('isRememberMe') === 'true';
+};
