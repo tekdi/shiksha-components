@@ -59,7 +59,8 @@
     "INCLUDE_SPECIAL_CHARACTER":"Include at least one special character",
     "MUST_EIGHT_CHARACTER":"Must be at least 8 characters long",
     "PASSWORD_NOT_MATCH":"Passwords do not match",
-    "ENTER_USERNAME_EMAIL":"Enter your username or email address"
+    "ENTER_USERNAME_EMAIL":"Enter your username or email address",
+    "REMEMBER_ME":"Remember me"
   },
   "DASHBOARD": {
     "HISTORY": "History",

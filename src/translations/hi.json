@@ -58,7 +58,9 @@
     "INCLUDE_SPECIAL_CHARACTER":"कम से कम एक विशेष वर्ण शामिल करें",
     "MUST_EIGHT_CHARACTER":"कम से कम 8 अक्षर लंबा होना चाहिए",
     "PASSWORD_NOT_MATCH": "पासवर्ड मेल नहीं खाते",
-    "ENTER_USERNAME_EMAIL": "अपना उपयोगकर्ता नाम या ईमेल पता दर्ज करें"
+    "ENTER_USERNAME_EMAIL": "अपना उपयोगकर्ता नाम या ईमेल पता दर्ज करें",
+    "REMEMBER_ME":"मुझे लॉग इन करने के लिए याद रखें"
+
   },
   "DASHBOARD": {
     "HISTORY": "इतिहास",

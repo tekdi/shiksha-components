@@ -266,7 +266,7 @@ const LoginPage = () => {
             </Box>
             <FormControlLabel control={<Checkbox  checked={checked}   defaultChecked color="default" sx={{marginBottom:"15px"}}
   onChange={handleRememberMe}
-/>} label="Remember me" 
+/>} label=  {t('LOGIN_PAGE.REMEMBER_ME')}
 
 />
 
