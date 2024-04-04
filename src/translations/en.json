@@ -38,7 +38,9 @@
     "ZTOA":"Z to A",
     "LOWTOHIGH":"Low to High",
     "HIGHTOLOW":"High To Low",
-    "ASOF":"As of"
+    "ASOF":"As of",
+    "NEXT":"next",
+    "OK":"ok"
   },
   "LOGIN_PAGE": {
     "USERNAME": "Username",
@@ -46,7 +48,22 @@
     "LOGIN": "Login",
     "USERNAME_PLACEHOLDER": "Enter username",
     "PASSWORD_PLACEHOLDER": "Enter password",
-    "USERNAME_PASSWORD_NOT_CORRECT": "The username or password you entered is incorrect"
+    "USERNAME_PASSWORD_NOT_CORRECT": "The username or password you entered is incorrect",
+    "FORGOT_PASSWORD":"Forgot Password",
+    "TROUBLE_WITH_LOGIN":"Trouble with logging in?",
+    "ENTER_USERNAME_EMAIL":"Enter your username or email address and we’ll send you a link to get back into your account.",
+    "BACK_TO_LOGIN":"Back to Login",
+    "WE_SENT_EMAIL":"We sent an email to  {{email}} with a link to get back to your account",
+    "CREATE_PASSWORD":"Create a strong password",
+    "CREATE_NEW_STRONG_PASSWORD":"Create a new, strong password that you don't use for other websites",
+    "CONFIRM_PASSWORD":"Confirm password",
+    "RESEST_PASSWORD":"Reset password",
+    "YOUR_PASSWORD_NEED":"Your password needs to:",
+    "INCLUDE_UPPER_LOWER_CASE":"Include both upper case and lower case",
+    "INCLUDE_NUMBER":"Include at least one number",
+    "INCLUDE_SPECIAL_CHARACTER":"Include at least one special character",
+    "MUST_EIGHT_CHARACTER":"Must be at least 8 characters long",
+    "PASSWORD_NOT_MATCH":"Passwords do not match"
   },
   "DASHBOARD": {
     "HISTORY": "History",

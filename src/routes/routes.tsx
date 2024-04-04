@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes, redirect, Navigate } from 'reac
 import { useTranslation } from 'react-i18next';
 import { TextField } from '@mui/material';
 import Dashboard from '../pages/Dashboard';
-
+import ForgotPassword from '../pages/ForgotPassword';
 import PrivateRoute from '../utils/PrivateRoute';
 import PageNotFound from '../pages/PageNotFound';
 
@@ -26,7 +26,6 @@ function AllRoutes(): JSX.Element {
           <Route element={<PrivateRoute />}>
             <Route path="/" element={<Navigate to="/dashboard" replace />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/profile" element={<Profile />} />
             <Route path="/student-details/:cohortId/:userId" element={<StudentDetails />} />/
             <Route path="/class-details/:cohortId" element={<MyClassDetails />} />
             <Route path="/user-attendance-history" element={<UserAttendanceHistory />} />
@@ -39,8 +38,12 @@ function AllRoutes(): JSX.Element {
               element={<ClassAttendanceHistory />}
             />
             <Route path="/logout" element={<Logout />} />
+          <Route path="/profile" element={<Profile />} />
+
           </Route>
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Suspense>
