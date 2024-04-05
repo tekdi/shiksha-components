@@ -40,7 +40,10 @@
     "LOWTOHIGH":"Low to High",
     "HIGHTOLOW":"High To Low",
     "ASOF":"As of",
-    "OK":"ok"
+    "OK":"ok",
+    "NO_GO_BACK" :"No go back",
+    "YES":"yes"
+
   },
   "LOGIN_PAGE": {
     "USERNAME": "Username",

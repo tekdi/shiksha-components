@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import { useTranslation } from 'react-i18next';
 import { ATTENDANCE_ENUM, formatDate } from '../utils/Helper';
@@ -48,7 +48,11 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
   message
 }) => {
   const { t } = useTranslation();
+
   const [status, setStatus] = React.useState(currentStatus);
+  useEffect(() => {
+    setStatus(currentStatus);
+  }, [currentStatus]);
   const theme = useTheme<any>();
   const SNACKBAR_AUTO_HIDE_DURATION = 5000;
   const [openMarkUpdateAttendance, setOpenMarkUpdateAttendance] = React.useState(false);
@@ -58,7 +62,6 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
   const handleMarkClearAttendanceModal = () => {
     setOpenMarkClearAttendance(!openMarkClearAttendance);
   };
-  console.log('cu', currentStatus);
   const [state, setState] = React.useState<State>({
     openModal: false,
     vertical: 'top',
@@ -70,10 +73,10 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
     handleMarkUpdateAttendanceModal();
   };
   const submitClearAttendance = () => {
+    setStatus(ATTENDANCE_ENUM.NOT_MARKED);
     handleClose();
     handleMarkClearAttendanceModal();
   };
-
   const submitAttendance = (newState: SnackbarOrigin) => () => {
     handleSubmit(date, status);
     //  setOpenMarkUpdateAttendance(!openMarkUpdateAttendance);
@@ -84,7 +87,10 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
   };
 
   const submitConfirmAttendance = (newState: SnackbarOrigin) => () => {
+    // setOpenMarkClearAttendance(!openMarkClearAttendance);
+    handleMarkUpdateAttendanceModal();
     handleSubmit(date, status);
+
     setState({ ...newState, openModal: true });
     setTimeout(() => {
       handleClose2();
@@ -100,15 +106,16 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
     }
   };
   const getButtonComponent = (value: string, icon1: IconType, icon2: IconType, text: string) => {
-    console.log('s', currentStatus, value);
+    //setStatus(currentStatus)
+    // console.log(status === value)
+
     return (
       <Box
         display="flex"
         flexDirection="column"
         alignItems="center"
         p={2}
-        onClick={() => setStatus(value)}
-      >
+        onClick={() => setStatus(value)}>
         {status === value ? icon1 : icon2}
         <Typography marginTop={1}>{text}</Typography>
       </Box>
@@ -120,8 +127,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={isOpen}
-        sx={{ borderRadius: '16px' }}
-      >
+        sx={{ borderRadius: '16px' }}>
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
           <Typography variant="h2" sx={{ marginBottom: 0 }}>
             {currentStatus === ATTENDANCE_ENUM.NOT_MARKED
@@ -141,8 +147,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
             right: 8,
             top: 8,
             color: theme.palette.warning['A200']
-          }}
-        >
+          }}>
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
@@ -184,8 +189,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
             }}
             sx={{
               width: '100%'
-            }}
-          >
+            }}>
             {t('ATTENDANCE.CLEAR')}
           </Button>
           <Button
@@ -202,8 +206,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
             disabled={status === ATTENDANCE_ENUM.NOT_MARKED || status === currentStatus}
             sx={{
               width: '100%'
-            }}
-          >
+            }}>
             {currentStatus === ATTENDANCE_ENUM.NOT_MARKED ? t('COMMON.SAVE') : t('COMMON.UPDATE')}
           </Button>
         </DialogActions>
@@ -213,8 +216,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
         onClose={handleMarkUpdateAttendanceModal}
         aria-labelledby="customized-update-dialog-title"
         open={openMarkUpdateAttendance}
-        sx={{ borderRadius: '16px' }}
-      >
+        sx={{ borderRadius: '16px' }}>
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-update-dialog-title">
           <Typography variant="h2" sx={{ marginBottom: 0 }}>
             {t('ATTENDANCE.UPDATE_ATTENDANCE_ALERT')}
@@ -229,8 +231,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
             onClick={handleMarkUpdateAttendanceModal}
             sx={{
               width: '100%'
-            }}
-          >
+            }}>
             No, go back
           </Button>
           <Button
@@ -239,8 +240,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
             disabled={status === ATTENDANCE_ENUM.NOT_MARKED || status === currentStatus}
             sx={{
               width: '100%'
-            }}
-          >
+            }}>
             {t('COMMON.UPDATE')}
           </Button>
         </DialogActions>
@@ -250,8 +250,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
         onClose={handleMarkClearAttendanceModal}
         aria-labelledby="customized-clear-dialog-title"
         open={openMarkClearAttendance}
-        sx={{ borderRadius: '16px' }}
-      >
+        sx={{ borderRadius: '16px' }}>
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-clear-dialog-title">
           <Typography variant="h2" sx={{ marginBottom: 0 }}>
             {t('ATTENDANCE.CLEAR_ATTENDANCE_ALERT')}
@@ -266,18 +265,16 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
             onClick={handleMarkClearAttendanceModal}
             sx={{
               width: '100%'
-            }}
-          >
-            No, go back
+            }}>
+           {t('COMMON.NO_GO_BACK')}
           </Button>
           <Button
             variant="contained"
-            onClick={submitAttendance({ vertical: 'bottom', horizontal: 'center' })}
+            onClick={submitClearAttendance}
             sx={{
               width: '100%'
-            }}
-          >
-            Yes
+            }}>
+           {t('COMMON.YES')}
           </Button>
         </DialogActions>
       </BootstrapDialog>
