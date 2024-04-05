@@ -35,7 +35,12 @@
     "AS_OF_LAST_SIX_MONTH": "As of last six month",
     "NONE": "None",
     "NEXT": "next",
-    "OK": "ok"
+    "ATOZ":"A to Z",
+    "ZTOA":"Z to A",
+    "LOWTOHIGH":"Low to High",
+    "HIGHTOLOW":"High To Low",
+    "ASOF":"As of",
+    "OK":"ok"
   },
   "LOGIN_PAGE": {
     "USERNAME": "Username",

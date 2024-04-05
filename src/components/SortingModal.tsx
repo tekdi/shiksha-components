@@ -39,19 +39,25 @@ const SortingModal: React.FC<sortCardProps> = ({
   isModalOpen,
   handleCloseModal
 }) => {
-  const [sortByName, setsortByName] = React.useState('');
+  const [sortByName, setsortByName] = React.useState('asc');
   const [sortByAttendance, setsortByAttendance] = React.useState('');
   const { t } = useTranslation();
   const theme = useTheme<any>();
 
   // handle changes names from sorting
-  const handleChangeNames = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setsortByName(event.target.value);
+  const handleChangeSort = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setsortByAttendance('');
+    if (event.target.value === 'asc' || event.target.value === 'desc') {
+      setsortByName(event.target.value);
+    } else {
+      setsortByAttendance(event.target.value);
+    }
   };
 
   // handle chnage attandance in sorting
   const handleChangeAttendance = (event: React.ChangeEvent<HTMLInputElement>) => {
     setsortByAttendance(event.target.value);
+    setsortByName('');
   };
 
   const handleApplySort = () => {
@@ -60,133 +66,85 @@ const SortingModal: React.FC<sortCardProps> = ({
   };
 
   return (
-    <>
-      {/* ------------------modal for sorting ------------------- */}
-      <ModalComponent
-        open={isModalOpen}
-        onClose={handleCloseModal}
-        heading={'Sort By'}
-        handleApplySort={handleApplySort}
-        // SubHeading={"Sort"}
-        btnText="apply"
-      >
-        <Box>
-          <Divider
-            style={{
-              backgroundColor: theme.palette.warning['400'],
-              marginBottom: '10px',
-              marginTop: '15px'
-            }}
-          />
+    <ModalComponent
+      open={isModalOpen}
+      onClose={handleCloseModal}
+      heading={t('COMMON.SORT_BY')}
+      handleApplySort={handleApplySort}
+      btnText={t('COMMON.APPLY')}>
+      <Divider
+        style={{
+          backgroundColor: theme.palette.warning['400'],
+          marginBottom: '10px',
+          marginTop: '15px'
+        }}
+      />
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <FormControl component="fieldset">
+            <FormLabel style={{ color: theme.palette.warning['400'] }} component="legend">
+              {t('COMMON.NAMES')}
+            </FormLabel>
+            <RadioGroup
+              aria-labelledby="demo-controlled-radio-buttons-group"
+              //           name="controlled-radio-buttons-group"
+              //           value={sortByName}
+              //           onChange={handleChangeSort}
+              aria-label="sortByName"
+              name="sortByName"
+              value={sortByName}
+              onChange={handleChangeSort}>
+              <FormControlLabel
+                labelPlacement="start"
+                value="asc"
+                control={<Radio sx={{ ml: '120px' }} />}
+                label={t('COMMON.ATOZ')}
+              />
 
-          <Box mt={2}>
-            <FormControl>
-              <FormLabel
-                id="demo-controlled-radio-buttons-group"
-                style={{ color: theme.palette.warning['400'] }}
-              >
-                {t('COMMON.NAMES')}
-              </FormLabel>
-
-              <RadioGroup
-                aria-labelledby="demo-controlled-radio-buttons-group"
-                name="controlled-radio-buttons-group"
-                value={sortByName}
-                onChange={handleChangeNames}
-              >
-                <FormControlLabel
-                  value="asc"
-                  control={<Radio sx={{ ml: '300px' }} />}
-                  label="A to Z"
-                  labelPlacement="start"
-                  sx={{ fontWeight: '500', fontSize: '14px' }}
-                />
-                <FormControlLabel
-                  value="desc"
-                  labelPlacement="start"
-                  sx={{ fontWeight: '500', fontSize: '14px' }}
-                  control={<Radio sx={{ ml: '300px' }} />}
-                  label="Z to A"
-                />
-              </RadioGroup>
-            </FormControl>
-          </Box>
-          <Box mt={2}>
-            {' '}
-            <FormControl>
-              <FormLabel
-                id="demo-controlled-radio-buttons-group"
-                style={{ color: theme.palette.warning['400'] }}
-              >
-                {t('COMMON.ATTENDANCE')}
-              </FormLabel>
-
-              <RadioGroup
-                aria-labelledby="demo-controlled-radio-buttons-group"
-                name="controlled-radio-buttons-group"
-                value={sortByAttendance}
-                onChange={handleChangeAttendance}
-              >
-                <FormControlLabel
-                  value="asc"
-                  control={<Radio sx={{ ml: '270px' }} />}
-                  label={t('COMMON.LOW_TO_HIGH')}
-                  labelPlacement="start"
-                  sx={{ fontWeight: '500', fontSize: '14px', m: '0px' }}
-                />
-                <FormControlLabel
-                  value="desc"
-                  labelPlacement="start"
-                  sx={{ fontWeight: '500', fontSize: '14px', m: '0px' }}
-                  control={<Radio sx={{ ml: '270px' }} />}
-                  label={t('COMMON.HIGH_TO_LOW')}
-                />
-              </RadioGroup>
-            </FormControl>
-          </Box>
-          {/* <Box mt={2}>
-              {' '}
-              <FormControl>
-                <FormLabel
-                  id="demo-controlled-radio-buttons-group"
-                  style={{ color: theme.palette.warning['400'] }}>
-                  {t('COMMON.CLASS_MISSED')}
-                </FormLabel>
-
-                <RadioGroup
-                  aria-labelledby="demo-controlled-radio-buttons-group"
-                  name="controlled-radio-buttons-group"
-                  value={valueClassMissed}
-                  onChange={handleChangeClassMissed}
-                  // style={{ flexDirection: "row" }}
-                >
-                  <FormControlLabel
-                    value="lowToHigh"
-                    control={<Radio sx={{ ml: '270px' }} />}
-                    label={t('COMMON.LOW_TO_HIGH')}
-                    labelPlacement="start"
-                    sx={{ fontWeight: '500', fontSize: '14px', m: '0px' }}
-                  />
-                  <FormControlLabel
-                    value="highToLow"
-                    labelPlacement="start"
-                    sx={{ fontWeight: '500', fontSize: '14px', m: '0px' }}
-                    control={<Radio sx={{ ml: '270px' }} />}
-                    label={t('COMMON.HIGH_TO_LOW')}
-                  />
-                </RadioGroup>
-              </FormControl>
-            </Box> */}
-          <Divider
-            style={{
-              backgroundColor: theme.palette.warning['400'],
-              marginBottom: '10px',
-              marginTop: '15px'
-            }}
-          />
-        </Box>
-      </ModalComponent>
-    </>
+              <FormControlLabel
+                labelPlacement="start"
+                value="desc"
+                control={<Radio sx={{ ml: '120px' }} />}
+                label={t('COMMON.ZTOA')}
+              />
+            </RadioGroup>
+          </FormControl>
+        </Grid>
+        <Grid item xs={12}></Grid>
+        <Grid item xs={12}>
+          <FormControl component="fieldset">
+            <FormLabel style={{ color: theme.palette.warning['400'] }} component="legend">
+              {t('COMMON.ATTENDANCE')}
+            </FormLabel>
+            <RadioGroup
+              aria-label="sortByAttendance"
+              name="sortByAttendance"
+              value={sortByAttendance}
+              onChange={handleChangeAttendance}>
+              <FormControlLabel
+                labelPlacement="start"
+                value="asc"
+                control={<Radio sx={{ ml: '80px' }} />}
+                label={t('COMMON.LOWTOHIGH')}
+              />
+              <FormControlLabel
+                labelPlacement="start"
+                value="desc"
+                control={<Radio sx={{ ml: '80px' }} />}
+                label={t('COMMON.HIGHTOLOW')}
+              />
+            </RadioGroup>
+          </FormControl>
+        </Grid>
+      </Grid>
+      <Divider
+        style={{
+          backgroundColor: theme.palette.warning['400'],
+          marginBottom: '10px',
+          marginTop: '15px'
+        }}
+      />
+    </ModalComponent>
   );
 };
 

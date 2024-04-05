@@ -61,8 +61,8 @@ export interface AttendanceByDateParams {
   toDate: string;
   page: number;
   filters: {
-    userId: string;
-    contextId: string;
+    userId?: string;
+    contextId?: string;
   };
 }
 

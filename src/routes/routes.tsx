@@ -34,6 +34,10 @@ function AllRoutes(): JSX.Element {
               element={<StudentAttendanceHistory />}
             />
             <Route path="/class-attendance-history" element={<ClassAttendanceHistory />} />
+            <Route
+              path="/class-attendance-history/:cohortId"
+              element={<ClassAttendanceHistory />}
+            />
             <Route path="/logout" element={<Logout />} />
             <Route path="/profile" element={<Profile />} />
           </Route>
