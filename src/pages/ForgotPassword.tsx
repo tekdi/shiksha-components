@@ -1,5 +1,14 @@
 import React from 'react';
-import { Box, Button, IconButton, Typography, TextField, Grid, Divider , FormHelperText} from '@mui/material';
+import {
+  Box,
+  Button,
+  IconButton,
+  Typography,
+  TextField,
+  Grid,
+  Divider,
+  FormHelperText
+} from '@mui/material';
 import { useState } from 'react';
 import '../App.css';
 import { useTranslation } from 'react-i18next';
@@ -82,8 +91,8 @@ const ForgotPassword = () => {
   };
   const handleUserNameEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNextButtonDisabled(false);
-  const value=maskEmailAddress(event.target.value);
-  setEmail(value)
+    const value = maskEmailAddress(event.target.value);
+    setEmail(value);
   };
   const handleBackButton = () => {
     navigate('/login');
@@ -102,13 +111,15 @@ const ForgotPassword = () => {
           container
           direction="column"
           justifyContent="space-between"
-          style={{ minHeight: '100vh' }}>
+          style={{ minHeight: '100vh' }}
+        >
           <Grid item>
             <Grid
               container
               justifyContent="center"
               alignItems="center"
-              style={{ minHeight: '80vh' }}>
+              style={{ minHeight: '80vh' }}
+            >
               <Box
                 gap="10px"
                 sx={{
@@ -116,7 +127,8 @@ const ForgotPassword = () => {
                   flexDirection: 'column',
                   alignItems: 'center',
                   padding: '20px'
-                }}>
+                }}
+              >
                 <LockOpenIcon />
 
                 <Typography
@@ -124,7 +136,8 @@ const ForgotPassword = () => {
                   style={{
                     letterSpacing: '0.1px',
                     textAlign: 'left'
-                  }}>
+                  }}
+                >
                   {t('LOGIN_PAGE.TROUBLE_WITH_LOGIN')}
                 </Typography>
 
@@ -135,11 +148,12 @@ const ForgotPassword = () => {
                     textAlign: 'center',
 
                     alignItems: 'center'
-                  }}>
-                  {t('LOGIN_PAGE.ENTER_USERNAME_EMAIL')}
+                  }}
+                >
+                  {t('LOGIN_PAGE.ENTER_USERNAME_EMAIL_FOR_LINK')}
                 </Typography>
                 <TextField
-                  label="Enter username or email"
+                  label={t('LOGIN_PAGE.ENTER_USERNAME_EMAIL')}
                   variant="outlined"
                   onChange={handleUserNameEmail}
                 />
@@ -148,7 +162,8 @@ const ForgotPassword = () => {
                   type="submit"
                   fullWidth={true}
                   disabled={isNextButtonDisabled}
-                  onClick={handleNext}>
+                  onClick={handleNext}
+                >
                   {t('COMMON.NEXT')}
                 </Button>
               </Box>
@@ -163,7 +178,8 @@ const ForgotPassword = () => {
               container
               justifyContent="center"
               alignItems="center"
-              style={{ minHeight: '20vh' }}>
+              style={{ minHeight: '20vh' }}
+            >
               <Button fullWidth={true} onClick={handleBackButton}>
                 {' '}
                 {t('LOGIN_PAGE.BACK_TO_LOGIN')}
@@ -178,14 +194,16 @@ const ForgotPassword = () => {
           container
           direction="column"
           justifyContent="space-between"
-          style={{ minHeight: '100vh' }}>
+          style={{ minHeight: '100vh' }}
+        >
           <Grid item>
             {/* Content Center */}
             <Grid
               container
               justifyContent="center"
               alignItems="center"
-              style={{ minHeight: '80vh' }}>
+              style={{ minHeight: '80vh' }}
+            >
               <Box
                 gap="10px"
                 sx={{
@@ -195,7 +213,8 @@ const ForgotPassword = () => {
                   alignItems: 'center',
 
                   padding: '20px'
-                }}>
+                }}
+              >
                 <LockOpenIcon />
 
                 <Typography
@@ -204,7 +223,8 @@ const ForgotPassword = () => {
                     letterSpacing: '0.1px',
                     textAlign: 'left'
                     // marginBottom: '2px'
-                  }}>
+                  }}
+                >
                   {t('LOGIN_PAGE.CREATE_PASSWORD')}
                 </Typography>
 
@@ -215,7 +235,8 @@ const ForgotPassword = () => {
                     textAlign: 'center',
 
                     alignItems: 'center'
-                  }}>
+                  }}
+                >
                   {t('LOGIN_PAGE.CREATE_NEW_STRONG_PASSWORD')}
                 </Typography>
                 <TextField
@@ -234,7 +255,8 @@ const ForgotPassword = () => {
                           charTypeCondition
                             ? theme.palette.success['main']
                             : theme.palette.error['main']
-                        }>
+                        }
+                      >
                         {t('LOGIN_PAGE.INCLUDE_UPPER_LOWER_CASE')}
                       </Typography>
                     </IconButton>
@@ -246,7 +268,8 @@ const ForgotPassword = () => {
                           numberCondition
                             ? theme.palette.success['main']
                             : theme.palette.error['main']
-                        }>
+                        }
+                      >
                         {t('LOGIN_PAGE.INCLUDE_NUMBER')}
                       </Typography>
                     </IconButton>
@@ -258,7 +281,8 @@ const ForgotPassword = () => {
                           specialCharCondition
                             ? theme.palette.success['main']
                             : theme.palette.error['main']
-                        }>
+                        }
+                      >
                         {' '}
                         {t('LOGIN_PAGE.INCLUDE_SPECIAL_CHARACTER')}
                       </Typography>
@@ -271,7 +295,8 @@ const ForgotPassword = () => {
                           lengthCondition
                             ? theme.palette.success['main']
                             : theme.palette.error['main']
-                        }>
+                        }
+                      >
                         {t('LOGIN_PAGE.MUST_EIGHT_CHARACTER')}
                       </Typography>
                     </IconButton>
@@ -290,7 +315,8 @@ const ForgotPassword = () => {
                   type="submit"
                   fullWidth={true}
                   // onClick={(event) => loginButtonClick(event)}
-                  disabled={isButtonDisabled}>
+                  disabled={isButtonDisabled}
+                >
                   {t('LOGIN_PAGE.RESEST_PASSWORD')}
                 </Button>
               </Box>
@@ -302,14 +328,14 @@ const ForgotPassword = () => {
         onClose={handleModal}
         aria-labelledby="customized-clear-dialog-title"
         open={openModal}
-        sx={{ borderRadius: '16px' }}>
+        sx={{ borderRadius: '16px' }}
+      >
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-clear-dialog-title">
           <CheckCircleOutlinedIcon sx={{ marginLeft: '45%', marginTop: '10px' }} />
           <Typography variant="h2" sx={{ textAlign: 'center', marginTop: '10px' }}>
-
             {t('LOGIN_PAGE.WE_SENT_EMAIL', {
-                      email: email
-                    }) }
+              email: email
+            })}
           </Typography>
         </DialogTitle>
 

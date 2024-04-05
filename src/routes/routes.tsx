@@ -33,13 +33,13 @@ function AllRoutes(): JSX.Element {
               path="/student-attendance-history/:userId/:cohortId"
               element={<StudentAttendanceHistory />}
             />
+            <Route path="/class-attendance-history" element={<ClassAttendanceHistory />} />
             <Route
               path="/class-attendance-history/:cohortId"
               element={<ClassAttendanceHistory />}
             />
             <Route path="/logout" element={<Logout />} />
-          <Route path="/profile" element={<Profile />} />
-
+            <Route path="/profile" element={<Profile />} />
           </Route>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />

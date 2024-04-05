@@ -82,7 +82,7 @@
 }
 
 .tile-day {
-  border: 1px solid #D0C5B4 !important;
+  border: 1px solid #d0c5b4 !important;
   height: 70px !important;
   width: 100% !important;
   border-radius: 5px;
@@ -99,8 +99,8 @@
   color: black !important;
 }
 
-.react-calendar__tile{
-  margin: auto !important;;
+.react-calendar__tile {
+  margin: auto !important;
 }
 
 .today {
@@ -155,6 +155,6 @@
   align-items: center;
 }
 
-.calender-body{
+.calender-body {
   padding: 20px !important;
 }

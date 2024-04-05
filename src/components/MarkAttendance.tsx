@@ -58,7 +58,7 @@ const MarkAttendance: React.FC<MarkAttendanceProps> = ({
   const handleMarkClearAttendanceModal = () => {
     setOpenMarkClearAttendance(!openMarkClearAttendance);
   };
-console.log("cu",currentStatus)
+  console.log('cu', currentStatus);
   const [state, setState] = React.useState<State>({
     openModal: false,
     vertical: 'top',
@@ -76,7 +76,7 @@ console.log("cu",currentStatus)
 
   const submitAttendance = (newState: SnackbarOrigin) => () => {
     handleSubmit(date, status);
-  //  setOpenMarkUpdateAttendance(!openMarkUpdateAttendance);
+    //  setOpenMarkUpdateAttendance(!openMarkUpdateAttendance);
     setState({ ...newState, openModal: true });
     setTimeout(() => {
       handleClose2();
@@ -84,7 +84,6 @@ console.log("cu",currentStatus)
   };
 
   const submitConfirmAttendance = (newState: SnackbarOrigin) => () => {
-  
     handleSubmit(date, status);
     setState({ ...newState, openModal: true });
     setTimeout(() => {
@@ -101,7 +100,7 @@ console.log("cu",currentStatus)
     }
   };
   const getButtonComponent = (value: string, icon1: IconType, icon2: IconType, text: string) => {
-console.log("s",currentStatus,value)
+    console.log('s', currentStatus, value);
     return (
       <Box
         display="flex"
@@ -110,7 +109,7 @@ console.log("s",currentStatus,value)
         p={2}
         onClick={() => setStatus(value)}
       >
-      {status === value ? icon1 : icon2}
+        {status === value ? icon1 : icon2}
         <Typography marginTop={1}>{text}</Typography>
       </Box>
     );
@@ -218,7 +217,7 @@ console.log("s",currentStatus,value)
       >
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-update-dialog-title">
           <Typography variant="h2" sx={{ marginBottom: 0 }}>
-           { t('ATTENDANCE.UPDATE_ATTENDANCE_ALERT')}
+            {t('ATTENDANCE.UPDATE_ATTENDANCE_ALERT')}
           </Typography>
         </DialogTitle>
         {/* <Typography variant="h2">Mark Attendance</Typography> */}
@@ -255,7 +254,7 @@ console.log("s",currentStatus,value)
       >
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-clear-dialog-title">
           <Typography variant="h2" sx={{ marginBottom: 0 }}>
-           { t('ATTENDANCE.CLEAR_ATTENDANCE_ALERT')}
+            {t('ATTENDANCE.CLEAR_ATTENDANCE_ALERT')}
           </Typography>
         </DialogTitle>
         {/* <Typography variant="h2">Mark Attendance</Typography> */}

@@ -7,7 +7,10 @@ import {
   InputAdornment,
   InputLabel,
   OutlinedInput,
-  Typography
+  Checkbox,
+  Typography,
+  FormHelperText,
+  FormControlLabel
 } from '@mui/material';
 import appLogo2 from '/appLogo2.svg';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
@@ -24,7 +27,6 @@ import { getUserId } from '../services/profileService.ts';
 import Loader from '../components/Loader.tsx';
 import Snackbar, { SnackbarOrigin } from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
-import FormHelperText from '@mui/material/FormHelperText';
 
 interface State extends SnackbarOrigin {
   openModal: boolean;
@@ -38,6 +40,7 @@ const LoginPage = () => {
   const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [checked, setChecked] = React.useState(false);
 
   const [selectedLanguage, setSelectedLanguage] = useState(
     localStorage.getItem('preferredLanguage') || 'en'
@@ -58,6 +61,11 @@ const LoginPage = () => {
     const token = localStorage.getItem('token');
     if (token) {
       navigate('/dashboard');
+    } else {
+      const sessionToken = sessionStorage.getItem('token');
+      if (sessionToken) {
+        navigate('/dashboard');
+      }
     }
   }, []);
 
@@ -91,13 +99,17 @@ const LoginPage = () => {
       event.preventDefault();
       try {
         const response = await login({ username: username, password: password });
-        console.log(response);
+        // console.log(response);
         if (response) {
           const token = response?.access_token;
           const refreshToken = response?.refresh_token;
-
-          localStorage.setItem('token', token);
-          localStorage.setItem('refreshToken', refreshToken);
+          if (checked) {
+            localStorage.setItem('token', token);
+            localStorage.setItem('refreshToken', refreshToken);
+          } else {
+            sessionStorage.setItem('token', token);
+            sessionStorage.setItem('refreshToken', refreshToken);
+          }
           const userResponse = await getUserId();
           localStorage.setItem('userId', userResponse?.userId);
         }
@@ -115,7 +127,13 @@ const LoginPage = () => {
   };
 
   const isButtonDisabled = !username || !password || usernameError || passwordError;
-
+  const handleRememberMe = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('event', event.target.checked);
+    const value = event.target.checked;
+    setChecked(value);
+    localStorage.setItem('isRememberMe', value.toString());
+    //console.log(checked)
+  };
   // const loginButtonClick = async (event: React.FormEvent) => {};
   const handleChange = (event: SelectChangeEvent) => {
     setLanguage(event.target.value);
@@ -131,7 +149,7 @@ const LoginPage = () => {
   };
 
   const handleForgotPassword = () => {
-    navigate('/forgot-password')
+    navigate('/forgot-password');
   };
   const action = useMemo(
     () => (
@@ -152,7 +170,8 @@ const LoginPage = () => {
         display="flex"
         flexDirection="column"
         bgcolor={theme.palette.warning.A200}
-        minHeight={'100vh'}>
+        minHeight={'100vh'}
+      >
         {loading && <Loader showBackdrop={true} loadingText={t('COMMON.LOADING')} />}
         <Box
           display={'flex'}
@@ -160,7 +179,8 @@ const LoginPage = () => {
           alignItems={'center'}
           justifyContent={'center'}
           zIndex={99}
-          sx={{ margin: '32px 0' }}>
+          sx={{ margin: '32px 0' }}
+        >
           <img src={appLogo2} />
         </Box>
         <Box
@@ -172,7 +192,8 @@ const LoginPage = () => {
           borderRadius={'2rem 2rem 0 0'}
           zIndex={99}
           justifyContent={'center'}
-          p={'2rem'}>
+          p={'2rem'}
+        >
           <Box position={'relative'}>
             <Box mt={'0.5rem'}>
               <FormControl sx={{ m: '2rem 0 1rem' }}>
@@ -186,7 +207,8 @@ const LoginPage = () => {
                     color: theme.palette.warning['200'],
                     width: 'auto',
                     marginBottom: '0rem'
-                  }}>
+                  }}
+                >
                   {config?.languages.map((lang) => (
                     <MenuItem value={lang.code} key={lang.code}>
                       {lang.label}
@@ -223,7 +245,8 @@ const LoginPage = () => {
                         aria-label="toggle password visibility"
                         onClick={handleClickShowPassword}
                         onMouseDown={handleMouseDownPassword}
-                        edge="end">
+                        edge="end"
+                      >
                         {showPassword ? <VisibilityOff /> : <Visibility />}
                       </IconButton>
                     </InputAdornment>
@@ -234,7 +257,7 @@ const LoginPage = () => {
                   onChange={handlePasswordChange}
                   error={passwordError}
                 />
-                  {/* <FormHelperText >
+                {/* <FormHelperText >
                   <Button
                  onClick={handleForgotPassword}
                >
@@ -242,19 +265,33 @@ const LoginPage = () => {
               </Button>      </FormHelperText> */}
               </FormControl>
             </Box>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={checked}
+                  defaultChecked
+                  color="default"
+                  sx={{ marginBottom: '15px' }}
+                  onChange={handleRememberMe}
+                />
+              }
+              label={t('LOGIN_PAGE.REMEMBER_ME')}
+            />
 
             <Box
               alignContent={'center'}
               textAlign={'center'}
               marginTop={'1rem'}
               bottom={'1rem'}
-              width={'100%'}>
+              width={'100%'}
+            >
               <Button
                 variant="contained"
                 type="submit"
                 fullWidth={true}
                 // onClick={(event) => loginButtonClick(event)}
-                disabled={isButtonDisabled}>
+                disabled={isButtonDisabled}
+              >
                 {t('LOGIN_PAGE.LOGIN')}
               </Button>
             </Box>
