@@ -119,9 +119,9 @@ const Dashboard: React.FC<DashboardProps> = () => {
         if (userId) {
           let name = 'User';
           const resp = await cohortList(name, userId);
-         
+
           const extractedNames = resp?.result?.cohortData;
-        
+
           localStorage.setItem('parentCohortId', extractedNames?.[0].parentId);
           //  setTeacherContextId(extractedNames[0].parentId)
 
@@ -141,7 +141,6 @@ const Dashboard: React.FC<DashboardProps> = () => {
               ];
             })
             ?.filter(Boolean);
-          // console.log(`response cohort list`, filteredData);
           setCohortsData(filteredData);
           setClasses(filteredData?.[0].cohortId);
           setShowUpdateButton(true);
@@ -428,7 +427,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
                     <FormControl fullWidth>
                       <InputLabel>{t('DASHBOARD.CLASS')}</InputLabel>
                       <Select value={classes} label="Class" onChange={handleChange}>
-                        {cohortsData?.length != 0 ? (
+                        {cohortsData?.length !== 0 ? (
                           cohortsData?.map((cohort) => (
                             <MenuItem key={cohort.cohortId} value={cohort.cohortId}>
                               {cohort.name}
