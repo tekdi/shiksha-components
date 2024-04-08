@@ -14,7 +14,7 @@ interface AttendanceStatusProps {
 
 function AttendanceStatus({ status, onUpdate }: AttendanceStatusProps) {
   const { t } = useTranslation();
-
+  
   let icon, message;
   switch (status) {
     case 'present':
@@ -34,6 +34,7 @@ function AttendanceStatus({ status, onUpdate }: AttendanceStatusProps) {
       message = 'Half-day';
       break;
     case 'notmarked':
+    case 'Not marked':
       message = 'Attendance not marked';
       break;
     case 'Future date':
@@ -58,8 +59,7 @@ function AttendanceStatus({ status, onUpdate }: AttendanceStatusProps) {
               variant="text"
               endIcon={<CreateOutlined />}
               onClick={onUpdate}
-              disabled={status === 'Future date'}
-            >
+              disabled={status === 'Future date'}>
               {t('COMMON.UPDATE')}
             </Button>
           </Grid>
