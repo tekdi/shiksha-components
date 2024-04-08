@@ -45,7 +45,8 @@ export interface BulkAttendanceParams {
 }
 
 export interface cohortListParam {
-  userId: string;
+  name?: string;
+  userId?: string;
 }
 
 export interface cohortDetailsList {

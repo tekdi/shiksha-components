@@ -172,33 +172,43 @@ export default function MyClassDetails() {
       const userId = localStorage.getItem('userId');
       setLoading(true);
       try {
-        if (userId) {
-          const resp = await cohortList(userId);
-          const extractedNames = resp?.data?.cohortData;
-          localStorage.setItem('parentCohortId', extractedNames[0].parentId);
+        if (userId && cohortId) {
+          let name = 'Cohort';
+          let cohort = cohortId;
+          const resp = await cohortList(name, cohort);
+          const extractedNames = resp?.result;
+          localStorage.setItem('parentCohortId', extractedNames?.parentId);
           //  setTeacherContextId(extractedNames[0].parentId)
           //  console.log("p",extractedNames[0].parentId)
 
-          const filteredData = extractedNames
-            .flatMap((item: any) => {
-              const addressData = item.customField.find((field: any) => field.label === 'address');
-              const classTypeData = item.customField.find(
-                (field: any) => field.label === 'Class Type'
-              );
-              return [
-                addressData
-                  ? { cohortId: item.cohortId, name: item.name, value: addressData.value }
-                  : null,
-                classTypeData
-                  ? { cohortId: item.cohortId, name: item.name, value: classTypeData.value }
-                  : null
-              ];
+      
+
+          const filteredData = extractedNames?.customField
+            ?.flatMap((item: any) => {
+              const label = item.label;
+              const value = item.value;
+
+              if (label === 'address') {
+                return {
+                  cohortId: extractedNames?.cohortId,
+                  name: extractedNames?.name,
+                  value: value
+                };
+              } else if (label === 'Class Type') {
+                return {
+                  cohortId: extractedNames?.cohortId,
+                  name: extractedNames?.name,
+                  value: value
+                };
+              }
+              return null;
             })
             .filter(Boolean);
 
-          const classDetails = filteredData.filter((data: any) => cohortId === data?.cohortId);
+          const classDetails = filteredData?.filter((data: any) => cohortId === data?.cohortId);
+
           setCohortsData(classDetails);
-          setClasses(filteredData[0].cohortId);
+          setClasses(filteredData?.[0].cohortId);
           // setShowUpdateButton(true);
           setLoading(false);
         }
@@ -221,7 +231,7 @@ export default function MyClassDetails() {
             </Link>
             <Stack>
               {cohortsData &&
-                cohortsData.map((cohort) => (
+                cohortsData?.map((cohort) => (
                   <Box key={cohort?.name}>
                     <Typography
                       variant="h1"
@@ -401,7 +411,7 @@ export default function MyClassDetails() {
           <Loader showBackdrop={true} loadingText={'Loading'} />
         ) : classData?.length > 0 ? (
           <Stack>
-            {classData.map((student: Student, i) => {
+            {classData?.map((student: Student, i) => {
               const word = student?.name;
               const userId = student?.userId;
               const firstLetter = word.charAt(0);
