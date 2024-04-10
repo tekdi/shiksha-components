@@ -33,7 +33,7 @@ function AttendanceStatus({ status, onUpdate }: AttendanceStatusProps) {
       icon = <RemoveCircleOutline />;
       message = 'Half-day';
       break;
-    case 'notmarked':
+    case 'Not marked':
       message = 'Attendance not marked';
       break;
     case 'Future date':
@@ -58,8 +58,7 @@ function AttendanceStatus({ status, onUpdate }: AttendanceStatusProps) {
               variant="text"
               endIcon={<CreateOutlined />}
               onClick={onUpdate}
-              disabled={status === 'Future date'}
-            >
+              disabled={status === 'Future date'}>
               {t('COMMON.UPDATE')}
             </Button>
           </Grid>

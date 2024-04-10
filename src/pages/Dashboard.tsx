@@ -116,16 +116,18 @@ const Dashboard: React.FC<DashboardProps> = () => {
       setLoading(true);
       try {
         if (userId) {
-          const resp = await cohortList(userId);
-          const extractedNames = resp?.data?.cohortData;
-          localStorage.setItem('parentCohortId', extractedNames[0].parentId);
+          let name = 'User';
+          const resp = await cohortList(name, userId);
+
+          const extractedNames = resp?.result?.cohortData;
+
+          localStorage.setItem('parentCohortId', extractedNames?.[0].parentId);
           //  setTeacherContextId(extractedNames[0].parentId)
-          //  console.log("p",extractedNames[0].parentId)
 
           const filteredData = extractedNames
-            .flatMap((item: any) => {
-              const addressData = item.customField.find((field: any) => field.label === 'address');
-              const classTypeData = item.customField.find(
+            ?.flatMap((item: any) => {
+              const addressData = item.customField?.find((field: any) => field.label === 'address');
+              const classTypeData = item.customField?.find(
                 (field: any) => field.label === 'Class Type'
               );
               return [
@@ -137,10 +139,9 @@ const Dashboard: React.FC<DashboardProps> = () => {
                   : null
               ];
             })
-            .filter(Boolean);
-          // console.log(`response cohort list`, filteredData);
+            ?.filter(Boolean);
           setCohortsData(filteredData);
-          setClasses(filteredData[0].cohortId);
+          setClasses(filteredData?.[0].cohortId);
           setShowUpdateButton(true);
           setLoading(false);
         }
@@ -468,7 +469,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
                     <FormControl fullWidth>
                       <InputLabel>{t('DASHBOARD.CLASS')}</InputLabel>
                       <Select value={classes} label="Class" onChange={handleChange}>
-                        {cohortsData.length != 0 ? (
+                        {cohortsData?.length !== 0 ? (
                           cohortsData?.map((cohort) => (
                             <MenuItem key={cohort.cohortId} value={cohort.cohortId}>
                               {cohort.name}
@@ -486,7 +487,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
                 <Typography>
                   {t('ATTENDANCE.TOTAL_STUDENTS', { count: numberOfCohortMembers })}
                 </Typography>
-                {cohortMemberList && cohortMemberList.length != 0 ? (
+                {cohortMemberList && cohortMemberList?.length != 0 ? (
                   <Box height={'58%'} sx={{ overflowY: 'scroll' }}>
                     <Box>
                       <AttendanceStatusListView
@@ -573,8 +574,8 @@ const Dashboard: React.FC<DashboardProps> = () => {
           sx={{ bgcolor: theme.palette.secondary.light }}
           p={'1rem'}
           borderRadius={'1rem'}>
-          {cohortsData && cohortsData.length != 0 ? (
-            cohortsData.map((cohort) => (
+          {cohortsData && cohortsData?.length != 0 ? (
+            cohortsData?.map((cohort) => (
               <Box key={cohort.cohortId}>
                 <Typography pt={'1rem'}>
                   {cohort.value.charAt(0).toUpperCase() + cohort.value.slice(1)}

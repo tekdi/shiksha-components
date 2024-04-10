@@ -89,14 +89,14 @@ const ClassAttendanceHistory = () => {
 
         const formattedFirstDay = formatDate(firstDayOfMonth);
         const formattedLastDay = formatDate(lastDayOfMonth);
-
+        const userId = localStorage.getItem('userId');
         const attendanceData: AttendanceByDateParams = {
-          fromDate: '2024-03-01',
-          toDate: '2024-03-29',
+          fromDate: formattedFirstDay,
+          toDate: formattedLastDay,
           page: 0,
           filters: {
             contextId: cohortId,
-            userId: '00772d32-3f60-4a8e-a5e0-d0110c5c42fb'
+            userId: userId ? userId : ''
           }
         };
 
@@ -106,9 +106,11 @@ const ClassAttendanceHistory = () => {
         const presentDatesArray: string[] = [];
         const absentDatesArray: string[] = [];
         const halfDayDatesArray: string[] = [];
+        
 
         response?.data.forEach((item: any) => {
           switch (item.attendance) {
+        
             case 'present':
               presentDatesArray.push(item.attendanceDate);
               break;
@@ -118,6 +120,7 @@ const ClassAttendanceHistory = () => {
             case 'half-day':
               halfDayDatesArray.push(item.attendanceDate);
               break;
+
             default:
               break;
           }
@@ -127,7 +130,7 @@ const ClassAttendanceHistory = () => {
         const markedDates: Set<string> = new Set([
           ...presentDatesArray,
           ...absentDatesArray,
-          ...halfDayDatesArray
+          ...halfDayDatesArray,
         ]);
         const notMarkedDates: string[] = allDatesInRange.filter((date) => {
           return !markedDates.has(date) && !isWeekend(date) && !isFutureDate(date);
@@ -139,6 +142,7 @@ const ClassAttendanceHistory = () => {
         setAbsentDates(absentDatesArray);
         setHalfDayDates(halfDayDatesArray);
         setNotMarkedDates(notMarkedDates);
+
         setFutureDates(futureDates);
       } catch (error) {
         console.error('Error:', error);
