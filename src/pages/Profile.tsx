@@ -131,7 +131,7 @@ const Profile = () => {
 
   return (
     <Box display="flex" flexDirection="column" minHeight="100vh" minWidth={'100%'}>
-      <Header />
+      <Header />  
       <Box
         display="flex"
         flexDirection="column"
@@ -245,8 +245,7 @@ const Profile = () => {
                     style={{
                       letterSpacing: '0.25px',
                       textAlign: 'left'
-                    }}
-                  >
+                    }}>
                     {userData?.mobile}
                   </Typography>
                   <Typography
@@ -254,8 +253,7 @@ const Profile = () => {
                     style={{
                       textAlign: 'left',
                       color: theme.palette.warning['400']
-                    }}
-                  >
+                    }}>
                     {t('PROFILE.PHONE')}
                   </Typography>
                 </Box>
@@ -275,8 +273,7 @@ const Profile = () => {
                     style={{
                       letterSpacing: '0.25px',
                       textAlign: 'left'
-                    }}
-                  >
+                    }}>
                     {userData?.email}
                   </Typography>
                   <Typography
@@ -284,8 +281,7 @@ const Profile = () => {
                     style={{
                       textAlign: 'left',
                       color: theme.palette.warning['400']
-                    }}
-                  >
+                    }}>
                     {t('PROFILE.EMAIL_ID')}
                   </Typography>
                 </Box>
@@ -302,8 +298,7 @@ const Profile = () => {
                 letterSpacing: '0.1px',
                 textAlign: 'left',
                 color: theme.palette.warning['400']
-              }}
-            >
+              }}>
               {t('PROFILE.OTHER_INFORMATION')}
             </Typography>
 
@@ -317,8 +312,7 @@ const Profile = () => {
                         style={{
                           textAlign: 'left',
                           color: theme.palette.warning['400']
-                        }}
-                      >
+                        }}>
                         {field.label}:
                       </Typography>{' '}
                       <Typography
@@ -326,8 +320,7 @@ const Profile = () => {
                         style={{
                           letterSpacing: '0.25px',
                           textAlign: 'left'
-                        }}
-                      >
+                        }}>
                         {field.value}
                       </Typography>
                     </Box>
@@ -452,8 +445,7 @@ const Profile = () => {
                 border={'1px'}
                 bgcolor="warning.A400"
                 display="flex"
-                flexDirection="column"
-              >
+                flexDirection="column">
                 <img
                   src={defaultUser}
                   alt="user"

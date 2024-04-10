@@ -45,7 +45,6 @@ interface DashboardProps {
 
 interface DataItem {
   name: string;
-  // Add other properties as needed
 }
 
 interface user {
@@ -156,24 +155,47 @@ const Dashboard: React.FC<DashboardProps> = () => {
   useEffect(() => {
     const getCohortMemberList = async () => {
       setLoading(true);
+      const parentCohortId = localStorage.getItem('parentCohortId');    
+      const formattedDate: string = currentDate;
       try {
-        const response = await getMyCohortMemberList({
-          contextId,
-          attendanceDate,
-          report,
-          limit,
-          offset
-        });
-        const resp = response?.data;
-        setCohortMemberList(resp);
-        setNumberOfCohortMembers(resp?.length);
-        setLoading(false);
+        if (userId && parentCohortId) {
+          const response = await getMyCohortMemberList({
+            contextId,
+            attendanceDate,
+            report,
+            limit,
+            offset
+          });
+          const resp = response?.data;
+          setCohortMemberList(resp);
+          setNumberOfCohortMembers(resp?.length);
+          setLoading(false);
+          const TeachercontextId = parentCohortId.replace(/\n/g, '');
+
+          const attendanceData: TeacherAttendanceByDateParams = {
+            fromDate: formattedDate,
+            toDate: formattedDate,
+            filters: {
+              userId,
+              contextId: TeachercontextId
+            }
+          };
+          const response2 = await getTeacherAttendanceByDate(attendanceData);
+          if (response?.data?.length === 0) {
+            setAttendanceStatus(ATTENDANCE_ENUM.NOT_MARKED);
+          } else {
+            setAttendanceStatus(response2.data[0].attendance);
+          }
+        }
       } catch (error) {
         console.error('Error fetching cohort list:', error);
         setLoading(false);
       }
     };
-    getCohortMemberList();
+
+    if (classes.length) {
+      getCohortMemberList();
+    }
   }, [classes]);
 
   const handleModalToggle = () => setOpen(!open);
@@ -188,6 +210,9 @@ const Dashboard: React.FC<DashboardProps> = () => {
   const submitAttendance = async (date: string, status: string) => {
     const parentCohortId = localStorage.getItem('parentCohortId');
 
+   
+
+    const formattedDate: string = currentDate;
     //console.log(date, status);
     if (userId && parentCohortId) {
       const TeachercontextId = parentCohortId.replace(/\n/g, '');
@@ -202,11 +227,30 @@ const Dashboard: React.FC<DashboardProps> = () => {
       try {
         const response = await markAttendance(attendanceData);
         if (response) {
-          //console.log(response);
-          handleMarkAttendanceModal();
-          setAttendanceMessage(t('ATTENDANCE.ATTENDANCE_MARKED_SUCCESSFULLY'));
+         
+            setAttendanceMessage(t('ATTENDANCE.ATTENDANCE_MARKED_SUCCESSFULLY'));
+
+            //  const TeachercontextId = parentCohortId.replace(/\n/g, '');
+
+            const attendanceData: TeacherAttendanceByDateParams = {
+              fromDate: formattedDate,
+              toDate: formattedDate,
+              filters: {
+                userId,
+                contextId: TeachercontextId
+              }
+            };
+            const response = await getTeacherAttendanceByDate(attendanceData);
+            if (response?.data?.length === 0) {
+              setAttendanceStatus(ATTENDANCE_ENUM.NOT_MARKED);
+            } else {
+              setAttendanceStatus(response.data[0].attendance);
+            }
+          
+          
         }
         setLoading(false);
+        
       } catch (error) {
         setAttendanceMessage(t('ATTENDANCE.ATTENDANCE_MARKED_UNSUCCESSFULLY'));
         console.error('error', error);
@@ -315,12 +359,10 @@ const Dashboard: React.FC<DashboardProps> = () => {
           if (response?.data?.length === 0) {
             setAttendanceStatus(ATTENDANCE_ENUM.NOT_MARKED);
           } else {
-            setAttendanceMessage(response.data[0].attendance);
+            setAttendanceStatus(response?.data[0]?.attendance);
           }
         }
       } catch (Error) {
-        console.log('error');
-
         console.error(Error);
       }
     };
