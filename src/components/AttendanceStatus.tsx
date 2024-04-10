@@ -14,7 +14,7 @@ interface AttendanceStatusProps {
 
 function AttendanceStatus({ status, onUpdate }: AttendanceStatusProps) {
   const { t } = useTranslation();
-  
+
   let icon, message;
   switch (status) {
     case 'present':
@@ -33,7 +33,6 @@ function AttendanceStatus({ status, onUpdate }: AttendanceStatusProps) {
       icon = <RemoveCircleOutline />;
       message = 'Half-day';
       break;
-    case 'notmarked':
     case 'Not marked':
       message = 'Attendance not marked';
       break;
