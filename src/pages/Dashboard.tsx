@@ -184,7 +184,6 @@ const Dashboard: React.FC<DashboardProps> = () => {
           if (response?.data?.length === 0) {
             setAttendanceStatus(ATTENDANCE_ENUM.NOT_MARKED);
           } else {
-            console.log('bydate', response2.data[0].attendance);
             setAttendanceStatus(response2.data[0].attendance);
           }
         }
@@ -245,7 +244,6 @@ const Dashboard: React.FC<DashboardProps> = () => {
             if (response?.data?.length === 0) {
               setAttendanceStatus(ATTENDANCE_ENUM.NOT_MARKED);
             } else {
-              console.log('hello');
               setAttendanceStatus(response.data[0].attendance);
             }
           
@@ -361,7 +359,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
           if (response?.data?.length === 0) {
             setAttendanceStatus(ATTENDANCE_ENUM.NOT_MARKED);
           } else {
-            setAttendanceStatus(response.data[0].attendance);
+            setAttendanceStatus(response?.data[0]?.attendance);
           }
         }
       } catch (Error) {
